@@ -95,9 +95,6 @@
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
-				3B98F1392C668DF600C45121 /* Model */,
-				3B98F1382C668DE100C45121 /* ViewModel */,
-				3B98F1372C668DC300C45121 /* Views */,
 				3B98F10B2C668B1000C45121 /* LawSuitApp.swift */,
 				3B98F10D2C668B1000C45121 /* ContentView.swift */,
 				3B98F10F2C668B1100C45121 /* Assets.xcassets */,
@@ -130,27 +127,6 @@
 				3B98F1292C668B1100C45121 /* LawSuitUITestsLaunchTests.swift */,
 			);
 			path = LawSuitUITests;
-			sourceTree = "<group>";
-		};
-		3B98F1372C668DC300C45121 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		3B98F1382C668DE100C45121 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		3B98F1392C668DF600C45121 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
