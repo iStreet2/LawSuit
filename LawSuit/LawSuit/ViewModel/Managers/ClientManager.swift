@@ -24,6 +24,11 @@ class ClientManager {
         client.photo = photo
         client.lawyer = lawyer
         client.id = UUID().uuidString
+        
+        client.rootFolder = Folder(context: context)
+        client.rootFolder.name = "rootFrom\(client.name)"
+        client.rootFolder.id = "rootFrom\(client.name)"
+        
         saveContext()
         
     }
