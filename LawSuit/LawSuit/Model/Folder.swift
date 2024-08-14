@@ -16,8 +16,8 @@ public class Folder: NSManagedObject {
         return NSFetchRequest<Folder>(entityName: "Folder")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var name: String?
+    @NSManaged public var id: String
+    @NSManaged public var name: String
     @NSManaged public var parentFolder: Folder?
     @NSManaged public var folders: NSSet?
     @NSManaged public var files: NSSet?

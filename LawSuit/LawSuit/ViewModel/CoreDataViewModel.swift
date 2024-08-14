@@ -15,6 +15,9 @@ class CoreDataViewModel: ObservableObject {
     var context: NSManagedObjectContext
     var folderManager: FolderManager
     var filePDFManager: FilePDFManager
+    var lawyerManager: LawyerManager
+    var processManager: ProcessManager
+    var clientManager: ClientManager
 
     init() {
         self.container.loadPersistentStores { descricao, error in
@@ -25,6 +28,9 @@ class CoreDataViewModel: ObservableObject {
         self.context = self.container.viewContext
         self.folderManager = FolderManager(context: self.context)
         self.filePDFManager = FilePDFManager(context: self.context)
+        self.lawyerManager = LawyerManager(context: self.context)
+        self.processManager = ProcessManager(context: self.context)
+        self.clientManager = ClientManager(context: context)
     }
 
     

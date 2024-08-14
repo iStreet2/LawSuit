@@ -47,7 +47,7 @@ class FolderManager {
         do {
             try context.save()
         } catch {
-            print("Error in saving the context")
+            print("Error while saving the context on folder")
         }
     }
 }

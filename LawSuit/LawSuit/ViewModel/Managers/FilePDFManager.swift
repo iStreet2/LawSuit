@@ -16,7 +16,7 @@ class FilePDFManager {
         self.context = context
     }
     
-    func createFile(parentFolder: Folder, name: String, content: Data) {
+    func createFilePDF(parentFolder: Folder, name: String, content: Data) {
         let newFilePDF = FilePDF(context: context)
         newFilePDF.id = UUID().uuidString
         newFilePDF.name = name
@@ -26,7 +26,7 @@ class FilePDFManager {
         saveContext()
     }
     
-    func deleteFile(parentFolder: Folder, filePDF: FilePDF) {
+    func deleteFilePDF(parentFolder: Folder, filePDF: FilePDF) {
         parentFolder.removeFromFiles(filePDF)
         context.delete(filePDF)
         saveContext()
@@ -48,7 +48,7 @@ class FilePDFManager {
         do {
             try context.save()
         } catch {
-            print("Error in saving context")
+            print("Error while saving context on file")
         }
         
     }
