@@ -2,7 +2,7 @@
 //  Client+CoreDataClass.swift
 //  LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 14/08/24.
+//  Created by Gabriel Vicentin Negro on 15/08/24.
 //
 //
 
@@ -20,7 +20,8 @@ public class Client: NSManagedObject, Identifiable {
     @NSManaged public var id: String
     @NSManaged public var name: String
     @NSManaged public var photo: Data?
+    @NSManaged public var lawyer: Lawyer?
     @NSManaged public var rootFolder: Folder
-    @NSManaged public var lawyer: Lawyer
+    @NSManaged public var process: Process?
 
 }

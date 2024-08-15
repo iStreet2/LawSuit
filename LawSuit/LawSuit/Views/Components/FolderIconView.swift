@@ -8,13 +8,18 @@
 import SwiftUI
 
 struct FolderIconView: View {
+    
+    @ObservedObject var folder: Folder
+    
     var body: some View {
         VStack {
-            Text("Hello World")
+            Image("folder")
+            Text(folder.name)
+                .lineLimit(2)
         }
     }
 }
-
-#Preview {
-    FolderIconView()
-}
+//
+//#Preview {
+//    FolderIconView(folder: FolderExamples.folderExample())
+//}

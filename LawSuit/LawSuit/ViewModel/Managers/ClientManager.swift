@@ -25,9 +25,12 @@ class ClientManager {
         client.lawyer = lawyer
         client.id = UUID().uuidString
         
-        client.rootFolder = Folder(context: context)
-        client.rootFolder.name = "rootFrom\(client.name)"
-        client.rootFolder.id = "rootFrom\(client.name)"
+        let folder = Folder(context: context)
+        folder.name = "root\(client.name)"
+        folder.id = folder.name
+        
+        client.rootFolder = folder
+        folder.client = client
         
         saveContext()
         
