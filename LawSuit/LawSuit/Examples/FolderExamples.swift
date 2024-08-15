@@ -28,7 +28,6 @@ struct FolderExamples {
             folder.addToFolders(folderInside)
         }
 
-        
         print(folder.folders)
         
         return folder
