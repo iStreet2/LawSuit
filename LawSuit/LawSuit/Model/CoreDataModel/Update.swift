@@ -20,6 +20,6 @@ public class Update: NSManagedObject, Identifiable {
     @NSManaged public var desc: String?
     @NSManaged public var name: String
     @NSManaged public var file: FilePDF?
-    @NSManaged public var process: Process?
+    @NSManaged public var lawsuit: Lawsuit?
 
 }

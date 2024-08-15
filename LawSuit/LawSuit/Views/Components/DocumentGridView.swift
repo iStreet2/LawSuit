@@ -16,8 +16,15 @@ struct DocumentGridView: View {
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
-    @FetchRequest(sortDescriptors: []) var folders: FetchedResults<Folder>
-//    var folders: [Folder] //Vai ser um FetchRequest
+    @FetchRequest var folders: FetchedResults<Folder>
+    
+    init(rootFolder: Folder) {
+        self.rootFolder = rootFolder
+        _folders = FetchRequest<Folder>(
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "parentFolder == %@", rootFolder)
+        )
+    }
     
     //MARK: Calculo da grid
     let spacing: CGFloat = 10

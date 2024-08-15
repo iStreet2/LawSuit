@@ -22,6 +22,6 @@ public class Client: NSManagedObject, Identifiable {
     @NSManaged public var photo: Data?
     @NSManaged public var lawyer: Lawyer?
     @NSManaged public var rootFolder: Folder
-    @NSManaged public var process: Process?
+    @NSManaged public var lawsuit: Lawsuit?
 
 }

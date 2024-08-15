@@ -15,9 +15,9 @@ struct LawSuitApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
 //            DocumentView()
-//            SelectClientView()
+            SelectClientView()
                 .environment(\.managedObjectContext, coreDataViewModel.context)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)

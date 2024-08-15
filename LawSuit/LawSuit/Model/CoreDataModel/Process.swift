@@ -9,11 +9,11 @@
 import Foundation
 import CoreData
 
-@objc(Process)
-public class Process: NSManagedObject, Identifiable {
+@objc(Lawsuit)
+public class Lawsuit: NSManagedObject, Identifiable {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Process> {
-        return NSFetchRequest<Process>(entityName: "Process")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Lawsuit> {
+        return NSFetchRequest<Lawsuit>(entityName: "Lawsuit")
     }
 
     @NSManaged public var actionDate: Date?
@@ -43,23 +43,6 @@ extension Process {
 
     @objc(removeUpdates:)
     @NSManaged public func removeFromUpdates(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for process
-extension Lawyer {
-
-    @objc(addProcessObject:)
-    @NSManaged public func addToProcess(_ value: Process)
-
-    @objc(removeProcessObject:)
-    @NSManaged public func removeFromProcess(_ value: Process)
-
-    @objc(addProcess:)
-    @NSManaged public func addToProcess(_ values: NSSet)
-
-    @objc(removeProcess:)
-    @NSManaged public func removeFromProcess(_ values: NSSet)
 
 }
 
