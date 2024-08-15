@@ -21,7 +21,7 @@ public class Lawyer: NSManagedObject, Identifiable {
     @NSManaged public var oab: String?
     @NSManaged public var photo: Data?
     @NSManaged public var clients: NSSet?
-    @NSManaged public var process: Process?
+    @NSManaged public var lawsuit: Process?
 
 }
 
@@ -39,5 +39,22 @@ extension Lawyer {
 
     @objc(removeClients:)
     @NSManaged public func removeFromClients(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for process
+extension Lawyer {
+
+    @objc(addLawsuitObject:)
+    @NSManaged public func addToLawsuit(_ value: Lawsuit)
+
+    @objc(removeLawsuitObject:)
+    @NSManaged public func removeFromLawsuit(_ value: Lawsuit)
+
+    @objc(addLawsuit:)
+    @NSManaged public func addToProcess(_ values: NSSet)
+
+    @objc(removeLawsuit:)
+    @NSManaged public func removeFromProcess(_ values: NSSet)
 
 }

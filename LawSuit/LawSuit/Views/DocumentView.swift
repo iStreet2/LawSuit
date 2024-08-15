@@ -22,33 +22,13 @@ struct DocumentView: View {
         VStack {
             if let openFolder = folderViewModel.openFolder {
                 DocumentGridView(rootFolder: openFolder)
+                    .padding()
             }
         }
         .onAppear {
             folderViewModel.openFolder = client.rootFolder
-            // Criação de um cliente de teste
-//            let client = Client(context: coreDataViewModel.context)
-//            client.name = "Cliente teste"
-//            client.age = Int64(32)
-//            client.id = UUID().uuidString
             
-            // Criação da pasta root associada ao cliente
-//            let folder = Folder(context: coreDataViewModel.context)
-//            folder.name = "root\(client.name)"
-//            folder.id = "root\(client.name)"
-            
-            // Relacionando as entidades
-//            folder.client = client
-//            client.rootFolder = folder
-            
-            // Salvando o contexto com tratamento de erros
-//            coreDataViewModel.clientManager.saveContext()
-//            let folder = Folder(context: context)
-//            folder.name = "oh meu deus"
-//            folder.id = UUID().uuidString
-//            folder.client = clients[0]
-//            clients[0].rootFolder.addToFolders(folder)
-//            CoreDataViewModel().clientManager.saveContext()
+
         }
 
     }
