@@ -2,7 +2,7 @@
 //  Process+CoreDataClass.swift
 //  LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 14/08/24.
+//  Created by Gabriel Vicentin Negro on 15/08/24.
 //
 //
 
@@ -11,20 +11,20 @@ import CoreData
 
 @objc(Process)
 public class Process: NSManagedObject, Identifiable {
-    
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Process> {
         return NSFetchRequest<Process>(entityName: "Process")
     }
 
+    @NSManaged public var actionDate: Date?
+    @NSManaged public var category: String?
+    @NSManaged public var defendant: String?
+    @NSManaged public var id: String
     @NSManaged public var name: String
     @NSManaged public var number: String
-    @NSManaged public var category: String
-    @NSManaged public var defendant: String
-    @NSManaged public var actionDate: Date
-    @NSManaged public var id: String
-    @NSManaged public var lawyer: Lawyer
-    @NSManaged public var autor: Client
-    @NSManaged public var rootFolder: Folder
+    @NSManaged public var autor: Client?
+    @NSManaged public var lawyer: NSSet?
+    @NSManaged public var rootFolder: Folder?
     @NSManaged public var updates: NSSet?
 
 }
@@ -43,6 +43,23 @@ extension Process {
 
     @objc(removeUpdates:)
     @NSManaged public func removeFromUpdates(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for process
+extension Lawyer {
+
+    @objc(addProcessObject:)
+    @NSManaged public func addToProcess(_ value: Process)
+
+    @objc(removeProcessObject:)
+    @NSManaged public func removeFromProcess(_ value: Process)
+
+    @objc(addProcess:)
+    @NSManaged public func addToProcess(_ values: NSSet)
+
+    @objc(removeProcess:)
+    @NSManaged public func removeFromProcess(_ values: NSSet)
 
 }
 

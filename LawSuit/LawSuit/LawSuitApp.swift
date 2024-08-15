@@ -9,9 +9,18 @@ import SwiftUI
 
 @main
 struct LawSuitApp: App {
+    
+    @StateObject var coreDataViewModel = CoreDataViewModel()
+    @StateObject var folderViewModel = FolderViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+//            DocumentView()
+//            SelectClientView()
+                .environment(\.managedObjectContext, coreDataViewModel.context)
+                .environmentObject(folderViewModel)
+                .environmentObject(coreDataViewModel)
         }
     }
 }
