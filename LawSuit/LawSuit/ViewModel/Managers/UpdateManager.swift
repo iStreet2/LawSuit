@@ -16,11 +16,12 @@ class UpdateManager {
         self.context = context
     }
     
-    func createUpdate(name: String, date: Date, desc: String?) {
+    func createUpdate(name: String, date: Date, desc: String?, process: Process) {
         let update = Update(context: context)
         update.name = name
         update.date = date
         update.desc = desc
+        update.process = process
         saveContext()
     }
     

@@ -2,7 +2,7 @@
 //  Folder+CoreDataClass.swift
 //  LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 12/08/24.
+//  Created by Gabriel Vicentin Negro on 15/08/24.
 //
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Folder)
-public class Folder: NSManagedObject {
+public class Folder: NSManagedObject, Identifiable {
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Folder> {
         return NSFetchRequest<Folder>(entityName: "Folder")
@@ -18,26 +18,11 @@ public class Folder: NSManagedObject {
 
     @NSManaged public var id: String
     @NSManaged public var name: String
-    @NSManaged public var parentFolder: Folder?
-    @NSManaged public var folders: NSSet?
     @NSManaged public var files: NSSet?
-    
-}
-
-// MARK: Generated accessors for folders
-extension Folder {
-
-    @objc(addFoldersObject:)
-    @NSManaged public func addToFolders(_ value: Folder)
-
-    @objc(removeFoldersObject:)
-    @NSManaged public func removeFromFolders(_ value: Folder)
-
-    @objc(addFolders:)
-    @NSManaged public func addToFolders(_ values: NSSet)
-
-    @objc(removeFolders:)
-    @NSManaged public func removeFromFolders(_ values: NSSet)
+    @NSManaged public var folders: NSSet?
+    @NSManaged public var parentFolder: Folder?
+    @NSManaged public var client: Client?
+    @NSManaged public var process: Process?
 
 }
 
@@ -55,5 +40,22 @@ extension Folder {
 
     @objc(removeFiles:)
     @NSManaged public func removeFromFiles(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for folders
+extension Folder {
+
+    @objc(addFoldersObject:)
+    @NSManaged public func addToFolders(_ value: Folder)
+
+    @objc(removeFoldersObject:)
+    @NSManaged public func removeFromFolders(_ value: Folder)
+
+    @objc(addFolders:)
+    @NSManaged public func addToFolders(_ values: NSSet)
+
+    @objc(removeFolders:)
+    @NSManaged public func removeFromFolders(_ values: NSSet)
 
 }
