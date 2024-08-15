@@ -17,20 +17,20 @@ class ProcessManager {
     }
     
     func createProcess(name: String, number: String, category: String, lawyer: Lawyer, defendant: String, autor: Client, actionDate: Date) {
-        let process = Process(context: context)
-        process.name = name
-        process.category = category
-        process.number = number
-        process.lawyer = lawyer
-        process.defendant = defendant
-        process.autor = autor
-        process.actionDate = actionDate
-        process.id = UUID().uuidString
+        let lawsuit = Lawsuit(context: context)
+        lawsuit.name = name
+        lawsuit.category = category
+        lawsuit.number = number
+        lawyer.addToLawsuit(lawsuit)
+        lawsuit.defendant = defendant
+        lawsuit.autor = autor
+        lawsuit.actionDate = actionDate
+        lawsuit.id = UUID().uuidString
         saveContext()
     }
     
-    func deleteProcess(process: Process) {
-        context.delete(process)
+    func deleteProcess(lawsuit: Lawsuit) {
+        context.delete(lawsuit)
         saveContext()
     }
     
@@ -38,7 +38,7 @@ class ProcessManager {
         do {
             try context.save()
         } catch {
-            print("Error while saving context on process")
+            print("Error while saving context on lawsuit")
         }
     }
     

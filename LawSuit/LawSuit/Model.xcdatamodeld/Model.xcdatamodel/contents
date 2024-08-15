@@ -6,7 +6,7 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary"/>
         <relationship name="lawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
-        <relationship name="process" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Process" inverseName="autor" inverseEntity="Process"/>
+        <relationship name="process" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="autor" inverseEntity="Lawsuit"/>
         <relationship name="rootFolder" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="client" inverseEntity="Folder"/>
     </entity>
     <entity name="FilePDF" representedClassName="FilePDF" syncable="YES">
@@ -23,17 +23,9 @@
         <relationship name="files" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FilePDF" inverseName="parentFolder" inverseEntity="FilePDF"/>
         <relationship name="folders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentFolder" inverseEntity="Folder"/>
         <relationship name="parentFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="folders" inverseEntity="Folder"/>
-        <relationship name="process" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Process" inverseName="rootFolder" inverseEntity="Process"/>
+        <relationship name="process" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="rootFolder" inverseEntity="Lawsuit"/>
     </entity>
-    <entity name="Lawyer" representedClassName="Lawyer" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="oab" optional="YES" attributeType="String"/>
-        <attribute name="photo" optional="YES" attributeType="Binary"/>
-        <relationship name="clients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Client" inverseName="lawyer" inverseEntity="Client"/>
-        <relationship name="process" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Process" inverseName="lawyer" inverseEntity="Process"/>
-    </entity>
-    <entity name="Process" representedClassName="Process" syncable="YES">
+    <entity name="Lawsuit" representedClassName="Lawsuit" syncable="YES">
         <attribute name="actionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="defendant" optional="YES" attributeType="String"/>
@@ -45,11 +37,19 @@
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="process" inverseEntity="Folder"/>
         <relationship name="updates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Update" inverseName="process" inverseEntity="Update"/>
     </entity>
+    <entity name="Lawyer" representedClassName="Lawyer" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="oab" optional="YES" attributeType="String"/>
+        <attribute name="photo" optional="YES" attributeType="Binary"/>
+        <relationship name="clients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Client" inverseName="lawyer" inverseEntity="Client"/>
+        <relationship name="process" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="lawyer" inverseEntity="Lawsuit"/>
+    </entity>
     <entity name="Update" representedClassName="Update" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="file" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FilePDF" inverseName="update" inverseEntity="FilePDF"/>
-        <relationship name="process" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Process" inverseName="updates" inverseEntity="Process"/>
+        <relationship name="process" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="updates" inverseEntity="Lawsuit"/>
     </entity>
 </model>
