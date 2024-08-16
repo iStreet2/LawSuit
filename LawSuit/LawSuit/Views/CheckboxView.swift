@@ -2,35 +2,40 @@
 //  CheckboxView.swift
 //  LawSuit
 //
-//  Created by Emily Morimoto on 14/08/24.
+//  Created by Emily Morimoto on 15/08/24.
 //
 
 import SwiftUI
 
 struct CheckboxView: View {
-    
-  
-    
     var body: some View {
-        VStack(alignment:.leading){
-            
+        
+        
+        
+        VStack(alignment: .leading){
             Text("Solicitar documentos")
                 .font(.title)
                 .bold()
             
-            Text("Cliente:")
+            Text("Ciente:")
                 .font(.title3)
                 .bold()
+            ClientCheckboxIconComponent()
             
             Text("Documentos:")
                 .font(.title3)
                 .bold()
             
-            CheckboxIconComponent()
+            HStack{
+                CheckboxIconComponent()
+                CheckboxIconComponent()
+                CheckboxIconComponent()
+            }
             
-          
         }
-        .padding(40)
+        .padding(15)
+        .background(.white)
+
     }
 }
 

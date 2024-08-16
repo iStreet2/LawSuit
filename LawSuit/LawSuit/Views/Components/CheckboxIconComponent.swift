@@ -9,24 +9,17 @@ import SwiftUI
 
 struct CheckboxIconComponent: View {
     
-    @State var isSelected: Bool = false
-    
-    @State var fileNames = ["RG", "CPF", "CNH", "Certidão de nascimento", "Certidão de casamento", "Outro"]
+    @State var isPresented: Bool = false
+    @State var file = "RG"
     
     var body: some View {
-        
         HStack{
-            ForEach(fileNames, id:\.self) { file in
-                HStack{
-                    Toggle( isOn: $isSelected) {
-                        Text(file)
-                    }
-                    .toggleStyle(.checkbox)
-                }
-                
+                Toggle(isOn: $isPresented) {
+                    Text(file)
             }
         }
-        .padding(10)    }
+        .padding(30)
+    }
 }
 
 #Preview {
