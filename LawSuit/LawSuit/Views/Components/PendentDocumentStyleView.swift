@@ -13,61 +13,67 @@ struct PendentDocumentStyleView: View {
     
     var body: some View {
         
-        HStack {
-            
-            Rectangle()
-                .frame(width: 56, height: 56)
-                .foregroundStyle(.secondary)
-            
-            VStack(alignment: .leading) {
-                HStack() {
-                    Text(name)
-                        .lineLimit(2)
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        print("Visualizado")
-                    }, label: {
-                        Text("Visualizar")
-                            .foregroundStyle(.blue)
-                    })
-                    .buttonStyle(.plain)
-                    .padding(.trailing, 10)
-                }
+        VStack {
+            HStack(alignment: .top) {
+                Button(action: {
+                    print("Visualizado")
+                }, label: {
+                    Rectangle()
+                        .frame(width: 60, height: 60)
+                        .foregroundStyle(.quaternary)
+                })
+                .buttonStyle(.plain)
                 
-                HStack {
-                    Button(action: {
-                        print("Recusado")
-                    }, label: {
-                        Text("Recusar")
-                            .foregroundStyle(.red)
-                    })
-                    .buttonStyle(.plain)
-                    
+                
+                VStack() {
+                    HStack(alignment: .top) {
+                        Text(name)
+                            .lineLimit(2)
+                            .font(.callout)
+                            
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            print("Visualizado")
+                        }, label: {
+                            Text("Visualizar")
+                                .foregroundStyle(.blue)
+                        })
+                        .buttonStyle(.plain)
+                        .padding(.trailing, 10)
+                    }
                     Spacer()
-                    Button(action: {
-                        print("Aprovado")
-                    }, label: {
-                        Text("Aprovar")
-                            .font(.title3)
-                            .tint(.blue)
-                    })
-                    .buttonStyle(.borderedProminent)
-//                    .controlSize(.small)
-                    .padding(.trailing, 5)
-                    //                    .frame(width: 100)
-                    
+                
+                    HStack {
+                        Button(action: {
+                            print("Recusado")
+                        }, label: {
+                            Text("Recusar")
+                                .foregroundStyle(.red)
+                        })
+                        .buttonStyle(.plain)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            print("Aprovado")
+                        }, label: {
+                            Image("buttonApprove")
+                        })
+                        .buttonStyle(.plain)
+                        .padding(.trailing, 5)
+                    }
+                                        
                 }
             }
-            
+            .padding(.horizontal)
+            Divider()
         }
-        .frame(width: 235, height: 70)
+        .frame(width: 260)
     }
 }
 
 #Preview {
-    PendentDocumentStyleView(name: "Certidão de Casamento")
+    PendentDocumentStyleView(name: "RG")
 }
