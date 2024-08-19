@@ -26,7 +26,7 @@ class ClientManager {
         client.id = UUID().uuidString
         
         let folder = Folder(context: context)
-        folder.name = "root\(client.name)"
+        folder.name = "root\(client.name ?? "Sem nome")"
         folder.id = folder.name
         
         client.rootFolder = folder
@@ -34,6 +34,22 @@ class ClientManager {
         
         saveContext()
         
+    }
+    
+    func testClient() {
+        let client = Client(context: context)
+        client.name = "Bonito"
+        client.id = UUID().uuidString
+        client.age = Int64(20)
+        
+        let rootFolder = Folder(context: context)
+        rootFolder.name = "rootFolder\(client.name ?? "Sem Nome")"
+        rootFolder.id = rootFolder.name
+        rootFolder.client = client
+        
+        client.rootFolder = rootFolder
+        
+        saveContext()
     }
     
     func deleteClient(client: Client, lawyer: Lawyer) {
@@ -52,7 +68,7 @@ class ClientManager {
         do {
             try context.save()
         } catch {
-            print("Error while saving context on client")
+            print("Error while saving context on client (\(error)")
         }
     }
 }

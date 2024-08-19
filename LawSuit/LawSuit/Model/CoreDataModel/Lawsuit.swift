@@ -1,8 +1,8 @@
 //
-//  Process+CoreDataClass.swift
+//  Lawsuit+CoreDataClass.swift
 //  LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 15/08/24.
+//  Created by Gabriel Vicentin Negro on 19/08/24.
 //
 //
 
@@ -19,18 +19,18 @@ public class Lawsuit: NSManagedObject, Identifiable {
     @NSManaged public var actionDate: Date?
     @NSManaged public var category: String?
     @NSManaged public var defendant: String?
-    @NSManaged public var id: String
-    @NSManaged public var name: String
-    @NSManaged public var number: String
+    @NSManaged public var id: String?
+    @NSManaged public var name: String?
+    @NSManaged public var number: String?
     @NSManaged public var autor: Client?
-    @NSManaged public var lawyer: NSSet?
+    @NSManaged public var lawyer: Lawyer?
     @NSManaged public var rootFolder: Folder?
     @NSManaged public var updates: NSSet?
 
 }
 
 // MARK: Generated accessors for updates
-extension Process {
+extension Lawsuit {
 
     @objc(addUpdatesObject:)
     @NSManaged public func addToUpdates(_ value: Update)
@@ -45,4 +45,3 @@ extension Process {
     @NSManaged public func removeFromUpdates(_ values: NSSet)
 
 }
-

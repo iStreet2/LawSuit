@@ -2,7 +2,7 @@
 //  Folder+CoreDataClass.swift
 //  LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 15/08/24.
+//  Created by Gabriel Vicentin Negro on 19/08/24.
 //
 //
 
@@ -11,18 +11,18 @@ import CoreData
 
 @objc(Folder)
 public class Folder: NSManagedObject, Identifiable {
-    
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Folder> {
         return NSFetchRequest<Folder>(entityName: "Folder")
     }
 
-    @NSManaged public var id: String
-    @NSManaged public var name: String
+    @NSManaged public var id: String?
+    @NSManaged public var name: String?
+    @NSManaged public var client: Client?
     @NSManaged public var files: NSSet?
     @NSManaged public var folders: NSSet?
-    @NSManaged public var parentFolder: Folder?
-    @NSManaged public var client: Client?
     @NSManaged public var lawsuit: Lawsuit?
+    @NSManaged public var parentFolder: Folder?
 
 }
 
