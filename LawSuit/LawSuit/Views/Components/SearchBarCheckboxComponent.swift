@@ -14,19 +14,26 @@ struct SearchBarCheckboxComponent: View {
     @State var active = true
     
     var body: some View {
+        
+        Spacer()
         HStack {
             HStack {
-                Image(systemName: "magnifyingglass").foregroundColor(.gray)
+                Image(systemName: "magnifyingglass").foregroundColor(.black)
                 TextField("Search", text: $searchText, onEditingChanged: { editing in
                     withAnimation {
                         active = editing
                         active.toggle()
                     }
+    
                 })
             }
             .padding(7)
-            .frame(width: 330, height: 36)
-            .cornerRadius(10)
+            .frame(width: 550, height: 36)
+            .cornerRadius(10) /// make the background rounded
+            .overlay( /// apply a rounded border
+                RoundedRectangle(cornerRadius: 7)
+                    .stroke(.secondary, lineWidth: 0.3)
+            )
             
             if active == false {
                 Button("Cancel") {
@@ -36,12 +43,16 @@ struct SearchBarCheckboxComponent: View {
                 }
             }
         }
-
     }
 
 }
 
 
+#Preview {
+    CheckboxView()
+}
+
+//
 //#Preview {
-//    SearchBarCheckboxComponent(searchText: Search)
+//    SearchBarCheckboxComponent(searchText: <#T##Binding<String>#>, active: true)
 //}
