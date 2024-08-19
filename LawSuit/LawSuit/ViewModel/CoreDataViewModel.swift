@@ -11,7 +11,7 @@ import CoreData
 
 class CoreDataViewModel: ObservableObject {
     
-    var container = NSPersistentContainer(name: "Model")
+    let container = NSPersistentContainer(name: "Model")
     var context: NSManagedObjectContext
     var folderManager: FolderManager
     var filePDFManager: FilePDFManager
@@ -20,20 +20,8 @@ class CoreDataViewModel: ObservableObject {
     var clientManager: ClientManager
 
     init() {
-        
-//        guard let storeURL = container.persistentStoreDescriptions.first?.url else { return }
-//
-//                do {
-//                    try container.persistentStoreCoordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
-//                    try container.persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
-//                    print("Persistent store reset successfully.")
-//                } catch {
-//                    print("Failed to reset persistent store: \(error)")
-//                }
-        
-        
-        container.persistentStoreDescriptions.first?.shouldMigrateStoreAutomatically = true
-        container.persistentStoreDescriptions.first?.shouldInferMappingModelAutomatically = true
+//        container.persistentStoreDescriptions.first?.shouldMigrateStoreAutomatically = true
+//        container.persistentStoreDescriptions.first?.shouldInferMappingModelAutomatically = true
         
         self.container.loadPersistentStores { descricao, error in
             if let error = error {
@@ -41,10 +29,35 @@ class CoreDataViewModel: ObservableObject {
             }
         }
         self.context = self.container.viewContext
+        self.context.automaticallyMergesChangesFromParent = true
         self.folderManager = FolderManager(context: context)
         self.filePDFManager = FilePDFManager(context: context)
         self.lawyerManager = LawyerManager(context: context)
         self.processManager = ProcessManager(context: context)
         self.clientManager = ClientManager(context: context)
+    }
+    
+    func deleteAllData() {
+        let entityNames = context.persistentStoreCoordinator?.managedObjectModel.entities.map({ $0.name ?? "" }) ?? []
+
+        for entityName in entityNames {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            fetchRequest.includesPropertyValues = false
+
+            do {
+                let items = try context.fetch(fetchRequest) as! [NSManagedObject]
+                for item in items {
+                    context.delete(item)
+                }
+            } catch {
+                print("Error deleting \(entityName): \(error)")
+            }
+        }
+
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context after deletion: \(error)")
+        }
     }
 }

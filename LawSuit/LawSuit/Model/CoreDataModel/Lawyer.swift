@@ -2,7 +2,7 @@
 //  Lawyer+CoreDataClass.swift
 //  LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 15/08/24.
+//  Created by Gabriel Vicentin Negro on 19/08/24.
 //
 //
 
@@ -11,17 +11,17 @@ import CoreData
 
 @objc(Lawyer)
 public class Lawyer: NSManagedObject, Identifiable {
-    
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Lawyer> {
         return NSFetchRequest<Lawyer>(entityName: "Lawyer")
     }
 
-    @NSManaged public var id: String
-    @NSManaged public var name: String
+    @NSManaged public var id: String?
+    @NSManaged public var name: String?
     @NSManaged public var oab: String?
     @NSManaged public var photo: Data?
     @NSManaged public var clients: NSSet?
-    @NSManaged public var lawsuit: Process?
+    @NSManaged public var lawsuit: NSSet?
 
 }
 
@@ -42,7 +42,7 @@ extension Lawyer {
 
 }
 
-// MARK: Generated accessors for process
+// MARK: Generated accessors for lawsuit
 extension Lawyer {
 
     @objc(addLawsuitObject:)
@@ -52,9 +52,9 @@ extension Lawyer {
     @NSManaged public func removeFromLawsuit(_ value: Lawsuit)
 
     @objc(addLawsuit:)
-    @NSManaged public func addToProcess(_ values: NSSet)
+    @NSManaged public func addToLawsuit(_ values: NSSet)
 
     @objc(removeLawsuit:)
-    @NSManaged public func removeFromProcess(_ values: NSSet)
+    @NSManaged public func removeFromLawsuit(_ values: NSSet)
 
 }

@@ -17,47 +17,26 @@ struct SelectClientView: View {
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
-        NavigationStack {
-            //        ScrollView {
+        NavigationSplitView {
             List {
                 ForEach(clients) { client in
                     NavigationLink {
                         DocumentView(client: client)
+                            .padding()
                     } label: {
-                        Text(client.name)
+                        Text(client.name ?? "Sem nome")
                     }
-                    
                 }
             }
+            
+        } detail : {
+            Text("Nenhum cliente selecionado")
         }
         .onAppear {
-            //             Criação de um cliente de teste
-//            let client = Client(context: coreDataViewModel.context)
-//            client.name = "Cliente teste"
-//            client.age = Int64(32)
-//            client.id = UUID().uuidString
-//            
-//            //             Criação da pasta root associada ao cliente
-//            let folder = Folder(context: coreDataViewModel.context)
-//            folder.name = "root\(client.name)"
-//            folder.id = "root\(client.name)"
-//            
-//            //             Relacionando as entidades
-//            folder.client = client
-//            client.rootFolder = folder
-//            
-//            let subFolder = Folder(context: context)
-//            subFolder.name = "oh meu deus"
-//            subFolder.id = UUID().uuidString
-//            subFolder.parentFolder = client.rootFolder
-//            client.rootFolder.addToFolders(folder)
-//            CoreDataViewModel().clientManager.saveContext()
-//            print("sucesso")
+            //MARK: APENAS PARA TESTES, RETIRAR DEPOIS
+            if clients.isEmpty {
+                coreDataViewModel.clientManager.testClient()
+            }
         }
-        //        }
     }
 }
-
-//#Preview {
-//    SelectClientView()
-//}

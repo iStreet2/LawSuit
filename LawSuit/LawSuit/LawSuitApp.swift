@@ -12,15 +12,18 @@ struct LawSuitApp: App {
     
     @StateObject var coreDataViewModel = CoreDataViewModel()
     @StateObject var folderViewModel = FolderViewModel()
+    @StateObject var dragAndDropViewModel = DragAndDropViewModel()
     
     var body: some Scene {
         WindowGroup {
 //            ContentView()
 //            DocumentView()
             SelectClientView()
-                .environment(\.managedObjectContext, coreDataViewModel.context)
+                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)
+                .environmentObject(dragAndDropViewModel)
+                .preferredColorScheme(.light)
         }
     }
 }
