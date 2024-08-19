@@ -11,21 +11,20 @@ import SwiftUI
 
 class FolderViewModel: ObservableObject {
     
-    @Published public var openFile: FilePDF?
     @Published public var openFolder: Folder?
     @Published public var path = FolderStack()
     
     func openFolder(folder: Folder) {
         withAnimation(.easeIn(duration: 0.1)) {
-            self.openFolder = folder
             self.path.push(folder)
+            self.openFolder = folder
         }
     }
     
     func closeFolder() {
         withAnimation(.easeIn(duration: 0.1)) {
             let lastFolder = path.pop()
-            print(lastFolder.name)
+            print(lastFolder.name ?? "Sem nome")
             self.openFolder = path.top()
         }
     }

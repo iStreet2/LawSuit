@@ -21,22 +21,37 @@ struct DocumentView: View {
     var body: some View {
         VStack {
             if let openFolder = folderViewModel.openFolder {
-                DocumentGridView(rootFolder: openFolder)
-                    .padding()
+                DocumentGridView(parentFolder: openFolder)
+                    .contextMenu {
+                        Button(action: {
+                            //MARK: TESTE REALIZADO, TESTFOLDER
+                            coreDataViewModel.folderManager.createFolder(parentFolder: folderViewModel.openFolder!, name: "Nova Pasta")
+                        }, label: {
+                            Text("Nova Pasta")
+                            Image(systemName: "folder")
+                        })
+                    }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .destructiveAction) {
+                Button(action: {
+                    coreDataViewModel.deleteAllData()
+                }, label: {
+                    Image(systemName: "trash")
+                })
+            }
+            ToolbarItem(placement: .navigation) {
+                Button {
+                    folderViewModel.closeFolder()
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+                .disabled(folderViewModel.openFolder == client.rootFolder)
             }
         }
         .onAppear {
-            folderViewModel.openFolder = client.rootFolder
-            
-
+            folderViewModel.openFolder(folder: client.rootFolder!)
         }
-
     }
 }
-
-//#Preview {
-//    DocumentView()
-//        .environmentObject(CoreDataViewModel())
-//        .environmentObject(FolderViewModel())
-//}
-

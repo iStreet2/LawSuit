@@ -2,7 +2,7 @@
 //  Update+CoreDataClass.swift
 //  LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 15/08/24.
+//  Created by Gabriel Vicentin Negro on 19/08/24.
 //
 //
 
@@ -16,10 +16,10 @@ public class Update: NSManagedObject, Identifiable {
         return NSFetchRequest<Update>(entityName: "Update")
     }
 
-    @NSManaged public var date: Date
+    @NSManaged public var date: Date?
     @NSManaged public var desc: String?
-    @NSManaged public var name: String
+    @NSManaged public var name: String?
     @NSManaged public var file: FilePDF?
     @NSManaged public var lawsuit: Lawsuit?
-
+    
 }

@@ -25,6 +25,20 @@ class FolderManager {
         saveContext()
     }
     
+    func testFolder(client: Client, parentFolder: Folder) {
+        let folder = Folder(context: context)
+        folder.name = "Test1"
+        folder.id = UUID().uuidString
+
+//        folder.client = client
+        folder.parentFolder = parentFolder
+
+        parentFolder.addToFolders(folder)
+
+        
+        saveContext()
+    }
+    
     func deleteFolder(parentFolder: Folder, folder: Folder) {
         parentFolder.removeFromFolders(folder)
         context.delete(folder)
