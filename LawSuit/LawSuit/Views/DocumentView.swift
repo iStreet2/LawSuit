@@ -30,6 +30,13 @@ struct DocumentView: View {
                             Text("Nova Pasta")
                             Image(systemName: "folder")
                         })
+                        Button {
+                            folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
+                        } label: {
+                            Text("Importar PDF")
+                            Image(systemName: "doc")
+                        }
+
                     }
             }
         }

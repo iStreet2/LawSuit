@@ -1,49 +1,47 @@
 //
-//  FolderIconView.swift
+//  FilePDFIconView.swift
 //  LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 14/08/24.
+//  Created by Gabriel Vicentin Negro on 19/08/24.
 //
 
 import SwiftUI
 
-struct FolderIconView: View {
+struct FilePDFIconView: View {
     
-    //MARK: ViewModels
-    @EnvironmentObject var folderViewModel: FolderViewModel
-    
-    //MARK: Variáveis de estado
-    @ObservedObject var folder: Folder
+    //MARK: Variáveis
+    @ObservedObject var filePDF: FilePDF
     @ObservedObject var parentFolder: Folder
     @State var isEditing = false
-    @State var folderName: String
+    @State var fileName: String
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     
-    init(folder: Folder, parentFolder: Folder) {
-        self.folder = folder
+    init(filePDF: FilePDF, parentFolder: Folder) {
+        self.filePDF = filePDF
+        self.fileName = filePDF.name!
         self.parentFolder = parentFolder
-        folderName = folder.name!
+        
     }
     
     var body: some View {
         VStack {
-            Image("folder")
-            
+            Image(systemName: "doc")
+                .font(.system(size: 55))
             if isEditing {
-                TextField("", text: $folderName, onEditingChanged: { _ in
-                    
+                TextField("", text: $fileName, onEditingChanged: { _ in
+                    isEditing = true
                 }, onCommit: {
                     saveChanges()
                 })
                 .onExitCommand(perform: cancelChanges)
                 .lineLimit(1)
-                .frame(height: 12)
+                .frame(height: 4)
             }
             else {
-                Text(folder.name ?? "Sem nome")
+                Text(filePDF.name ?? "Sem nome")
                     .lineLimit(1)
                     .onTapGesture(count: 2) {
                         isEditing = true
@@ -54,16 +52,17 @@ struct FolderIconView: View {
             isEditing = false
         }
         .onAppear {
-            if folderName == "Nova Pasta" {
+            if fileName == "Novo Arquivo" {
                 isEditing = true
             }
         }
         .contextMenu {
             Button(action: {
-                folderViewModel.openFolder(folder: folder)
+                //MARK: Fazer a view de visualizar um pdf ainda
+                
             }) {
-                Text("Abrir Pasta")
-                Image(systemName: "folder")
+                Text("Abrir Arquivo")
+                Image(systemName: "doc")
             }
             Button(action: {
                 isEditing = true
@@ -74,7 +73,7 @@ struct FolderIconView: View {
             Button(action: {
                 // Ação para excluir a pasta
                 withAnimation(.easeIn) {
-                    coreDataViewModel.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                    coreDataViewModel.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
                 }
             }) {
                 Text("Excluir")
@@ -82,26 +81,25 @@ struct FolderIconView: View {
             }
         }
         .onDrag {
-            // Gera uma URL temporária para a pasta
+            // Gera uma URL temporária para o PDF
             let tempDirectory = FileManager.default.temporaryDirectory
-            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
+            let tempPDFURL = tempDirectory.appendingPathComponent(filePDF.name!)
             
-            // Cria a pasta temporária
-            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
+            // Escreve os dados do PDF no local temporário
+            try? filePDF.content?.write(to: tempPDFURL)
             
-            // Retorna o NSItemProvider com a URL da pasta temporária
-            return NSItemProvider(object: tempFolderURL as NSURL)
+            // Retorna o NSItemProvider com a URL do PDF temporário
+            return NSItemProvider(object: tempPDFURL as NSURL)
         }
         
     }
     private func cancelChanges() {
-        folderName = folder.name!
+        fileName = filePDF.name!
         isEditing = false
     }
     
     private func saveChanges() {
-        coreDataViewModel.folderManager.editFolderName(folder: folder, name: folderName)
+        coreDataViewModel.filePDFManager.editFilePDFName(filePDF: filePDF, name: fileName)
         isEditing = false
     }
 }
-

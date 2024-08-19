@@ -22,6 +22,11 @@
 		3B98F1282C668B1100C45121 /* LawSuitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B98F1272C668B1100C45121 /* LawSuitUITests.swift */; };
 		3B98F12A2C668B1100C45121 /* LawSuitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B98F1292C668B1100C45121 /* LawSuitUITestsLaunchTests.swift */; };
 		3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */; };
+		3BAF94C82C73D37E001FCA45 /* FolderGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94C72C73D37E001FCA45 /* FolderGridView.swift */; };
+		3BAF94CA2C73D4C1001FCA45 /* FilePDFGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94C92C73D4C1001FCA45 /* FilePDFGridView.swift */; };
+		3BAF94CC2C73D5BF001FCA45 /* FilePDFIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */; };
+		3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */; };
+		3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */; };
 		3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC731012C6A997E00923BB2 /* FolderManager.swift */; };
 		3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC731032C6A9A9200923BB2 /* FilePDFManager.swift */; };
 		3BD40B2F2C6D3FB8004048FA /* ClientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B2E2C6D3FB8004048FA /* ClientManager.swift */; };
@@ -75,6 +80,11 @@
 		3B98F1272C668B1100C45121 /* LawSuitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitUITests.swift; sourceTree = "<group>"; };
 		3B98F1292C668B1100C45121 /* LawSuitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropViewModel.swift; sourceTree = "<group>"; };
+		3BAF94C72C73D37E001FCA45 /* FolderGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderGridView.swift; sourceTree = "<group>"; };
+		3BAF94C92C73D4C1001FCA45 /* FilePDFGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFGridView.swift; sourceTree = "<group>"; };
+		3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFIconView.swift; sourceTree = "<group>"; };
+		3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitView.swift; sourceTree = "<group>"; };
+		3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFilePDFView.swift; sourceTree = "<group>"; };
 		3BC731012C6A997E00923BB2 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		3BC731032C6A9A9200923BB2 /* FilePDFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFManager.swift; sourceTree = "<group>"; };
 		3BD40B2E2C6D3FB8004048FA /* ClientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientManager.swift; sourceTree = "<group>"; };
@@ -233,7 +243,12 @@
 			isa = PBXGroup;
 			children = (
 				3BD40B3D2C6D4EFF004048FA /* FolderIconView.swift */,
+				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
 				3BD40B432C6E6005004048FA /* DocumentGridView.swift */,
+				3BAF94C72C73D37E001FCA45 /* FolderGridView.swift */,
+				3BAF94C92C73D4C1001FCA45 /* FilePDFGridView.swift */,
+				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
+				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -389,14 +404,18 @@
 				3BD40B2F2C6D3FB8004048FA /* ClientManager.swift in Sources */,
 				3BD40B3E2C6D4EFF004048FA /* FolderIconView.swift in Sources */,
 				3BD40B332C6D41EC004048FA /* ProcessManager.swift in Sources */,
+				3BAF94CC2C73D5BF001FCA45 /* FilePDFIconView.swift in Sources */,
 				3B98F10C2C668B1000C45121 /* LawSuitApp.swift in Sources */,
 				6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */,
 				3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */,
+				3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */,
+				3BAF94C82C73D37E001FCA45 /* FolderGridView.swift in Sources */,
 				3BD40B312C6D40FE004048FA /* LawyerManager.swift in Sources */,
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
 				3BD40B422C6E5E16004048FA /* FolderStack.swift in Sources */,
 				3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */,
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
+				3BAF94CA2C73D4C1001FCA45 /* FilePDFGridView.swift in Sources */,
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
 				3B24D4B02C73781F00CCA763 /* Client.swift in Sources */,
 				3B24D4B22C73781F00CCA763 /* FilePDF.swift in Sources */,
@@ -404,6 +423,7 @@
 				3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */,
 				3BD40B382C6D454B004048FA /* DocumentView.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
+				3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */,
 				3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
