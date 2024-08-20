@@ -42,10 +42,10 @@ struct DocumentGridView: View {
                 dragAndDropViewModel.updateFramesFolder(folders: folders)
                 dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
             }
-            .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
-                dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, context: context, coreDataViewModel: coreDataViewModel)
-                return true
-            }
+//            .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+//                dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, context: context, coreDataViewModel: coreDataViewModel)
+//                return true
+//            }
         }
         .navigationTitle(parentFolder.name ?? "Sem nome")
     }

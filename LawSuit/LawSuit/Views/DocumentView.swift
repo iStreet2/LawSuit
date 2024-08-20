@@ -24,7 +24,6 @@ struct DocumentView: View {
                 DocumentGridView(parentFolder: openFolder)
                     .contextMenu {
                         Button(action: {
-                            //MARK: TESTE REALIZADO, TESTFOLDER
                             coreDataViewModel.folderManager.createFolder(parentFolder: folderViewModel.openFolder!, name: "Nova Pasta")
                         }, label: {
                             Text("Nova Pasta")

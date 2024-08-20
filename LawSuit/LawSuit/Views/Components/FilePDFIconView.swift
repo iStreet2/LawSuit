@@ -80,17 +80,17 @@ struct FilePDFIconView: View {
                 Image(systemName: "trash")
             }
         }
-        .onDrag {
-            // Gera uma URL temporária para o PDF
-            let tempDirectory = FileManager.default.temporaryDirectory
-            let tempPDFURL = tempDirectory.appendingPathComponent(filePDF.name!)
-            
-            // Escreve os dados do PDF no local temporário
-            try? filePDF.content?.write(to: tempPDFURL)
-            
-            // Retorna o NSItemProvider com a URL do PDF temporário
-            return NSItemProvider(object: tempPDFURL as NSURL)
-        }
+//        .onDrag {
+//            // Gera uma URL temporária para o PDF
+//            let tempDirectory = FileManager.default.temporaryDirectory
+//            let tempPDFURL = tempDirectory.appendingPathComponent(filePDF.name!)
+//            
+//            // Escreve os dados do PDF no local temporário
+//            try? filePDF.content?.write(to: tempPDFURL)
+//            
+//            // Retorna o NSItemProvider com a URL do PDF temporário
+//            return NSItemProvider(object: tempPDFURL as NSURL)
+//        }
         
     }
     private func cancelChanges() {

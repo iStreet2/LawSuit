@@ -11,6 +11,7 @@ struct FolderIconView: View {
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
     
     //MARK: Variáveis de estado
     @ObservedObject var folder: Folder
@@ -81,17 +82,17 @@ struct FolderIconView: View {
                 Image(systemName: "trash")
             }
         }
-        .onDrag {
-            // Gera uma URL temporária para a pasta
-            let tempDirectory = FileManager.default.temporaryDirectory
-            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
-            
-            // Cria a pasta temporária
-            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
-            
-            // Retorna o NSItemProvider com a URL da pasta temporária
-            return NSItemProvider(object: tempFolderURL as NSURL)
-        }
+//        .onDrag {
+//            // Gera uma URL temporária para a pasta
+//            let tempDirectory = FileManager.default.temporaryDirectory
+//            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
+//            
+//            // Cria a pasta temporária
+//            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
+//            
+//            // Retorna o NSItemProvider com a URL da pasta temporária
+//            return NSItemProvider(object: tempFolderURL as NSURL)
+//        }
         
     }
     private func cancelChanges() {
