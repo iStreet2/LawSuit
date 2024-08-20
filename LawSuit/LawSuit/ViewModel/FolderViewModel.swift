@@ -25,7 +25,7 @@ class FolderViewModel: ObservableObject {
     func closeFolder() {
         withAnimation(.easeIn(duration: 0.1)) {
             let lastFolder = path.pop()
-            print(lastFolder.name ?? "Sem nome")
+            //print(lastFolder.name ?? "Sem nome")
             self.openFolder = path.top()
         }
     }
@@ -41,7 +41,7 @@ class FolderViewModel: ObservableObject {
                 do {
                     let data = try Data(contentsOf: url)
                     let name = url.lastPathComponent
-                    print(url)
+                    //print(url)
                     
                     // Salvo no CoreData o PDF aberto!
                     coreDataViewModel.filePDFManager.createFilePDF(parentFolder: parentFolder, name: name, content: data)
