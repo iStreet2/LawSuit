@@ -24,12 +24,18 @@ struct DocumentView: View {
                 DocumentGridView(parentFolder: openFolder)
                     .contextMenu {
                         Button(action: {
-                            //MARK: TESTE REALIZADO, TESTFOLDER
                             coreDataViewModel.folderManager.createFolder(parentFolder: folderViewModel.openFolder!, name: "Nova Pasta")
                         }, label: {
                             Text("Nova Pasta")
                             Image(systemName: "folder")
                         })
+                        Button {
+                            folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
+                        } label: {
+                            Text("Importar PDF")
+                            Image(systemName: "doc")
+                        }
+
                     }
             }
         }

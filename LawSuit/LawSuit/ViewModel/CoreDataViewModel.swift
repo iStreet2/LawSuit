@@ -20,9 +20,6 @@ class CoreDataViewModel: ObservableObject {
     var clientManager: ClientManager
 
     init() {
-//        container.persistentStoreDescriptions.first?.shouldMigrateStoreAutomatically = true
-//        container.persistentStoreDescriptions.first?.shouldInferMappingModelAutomatically = true
-        
         self.container.loadPersistentStores { descricao, error in
             if let error = error {
                 print("There was an error loading the data from the model: \(error)")
@@ -39,11 +36,9 @@ class CoreDataViewModel: ObservableObject {
     
     func deleteAllData() {
         let entityNames = context.persistentStoreCoordinator?.managedObjectModel.entities.map({ $0.name ?? "" }) ?? []
-
         for entityName in entityNames {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
             fetchRequest.includesPropertyValues = false
-
             do {
                 let items = try context.fetch(fetchRequest) as! [NSManagedObject]
                 for item in items {
@@ -53,7 +48,6 @@ class CoreDataViewModel: ObservableObject {
                 print("Error deleting \(entityName): \(error)")
             }
         }
-
         do {
             try context.save()
         } catch {
