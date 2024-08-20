@@ -38,6 +38,8 @@
 		6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */; };
 		DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */; };
 		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
+		DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */; };
+		DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,8 @@
 		6A2C68FF2C6D4FA300E017EE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentStyleView.swift; sourceTree = "<group>"; };
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
+		DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentStyle.swift; sourceTree = "<group>"; };
+		DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +226,7 @@
 				3BD40B372C6D454B004048FA /* DocumentView.swift */,
 				3BD40B6E2C6E76EC004048FA /* SelectClientView.swift */,
 				DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */,
+				DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 				3BD40B3D2C6D4EFF004048FA /* FolderIconView.swift */,
 				3BD40B432C6E6005004048FA /* DocumentGridView.swift */,
 				DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */,
+				DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -388,6 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BD40B6F2C6E76EC004048FA /* SelectClientView.swift in Sources */,
+				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
 				3BD40B3B2C6D4624004048FA /* FolderExamples.swift in Sources */,
 				3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */,
@@ -406,6 +413,7 @@
 				3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */,
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
+				DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */,
 				3B24D4B02C73781F00CCA763 /* Client.swift in Sources */,
 				3B24D4B22C73781F00CCA763 /* FilePDF.swift in Sources */,
 				3B24D4B42C73781F00CCA763 /* Update.swift in Sources */,

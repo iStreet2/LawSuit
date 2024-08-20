@@ -10,9 +10,7 @@ import SwiftUI
 struct PendentDocumentStyleView: View {
     
     var name: String
-    
     var body: some View {
-        
         VStack {
             HStack(alignment: .top) {
                 Button(action: {
@@ -23,15 +21,12 @@ struct PendentDocumentStyleView: View {
                         .foregroundStyle(.quaternary)
                 })
                 .buttonStyle(.plain)
-                
-                
                 VStack() {
                     HStack(alignment: .top) {
                         Text(name)
                             .lineLimit(2)
                             .font(.callout)
-                            
-                        
+    
                         Spacer()
                         
                         Button(action: {
@@ -59,18 +54,16 @@ struct PendentDocumentStyleView: View {
                         Button(action: {
                             print("Aprovado")
                         }, label: {
-                            Image("buttonApprove")
+                            Text("Aprovar")
+                                .padding(.horizontal)
                         })
-                        .buttonStyle(.plain)
-                        .padding(.trailing, 5)
+                        .buttonStyle(.borderedProminent)
                     }
-                                        
                 }
             }
             .padding(.horizontal)
             Divider()
         }
-        .frame(width: 260)
     }
 }
 

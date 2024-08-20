@@ -40,10 +40,9 @@ struct PendentDocumentView: View {
                             .foregroundStyle(.secondary)
                     })
                     .buttonStyle(.plain)
-                    .frame(width: 15)
                 }
                 .padding(.top, 5)
-                .frame(width: 245)
+                .frame(width: 270)
                 Divider()
                 ScrollView {
                     VStack( alignment: .leading) {
@@ -53,7 +52,7 @@ struct PendentDocumentView: View {
                     }
                 }
             }
-            .frame(width: 260)
+            .frame(width: 300)
     }
 }
 
