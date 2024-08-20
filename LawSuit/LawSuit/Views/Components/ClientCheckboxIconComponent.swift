@@ -11,6 +11,9 @@ struct ClientCheckboxIconComponent: View {
     
     @State var clients = ["Abigail da Silva", "Abigail Lima", "Andre Miguel"]
     @State var searchQuery = ""
+    @Binding var choosedClient: String
+    @State var isEditing = false
+
     
     var body: some View {
         VStack{
@@ -18,13 +21,15 @@ struct ClientCheckboxIconComponent: View {
             List {
                 ForEach(filteredClients, id: \.self) { client in
                     Text(client)
+                        .onTapGesture {
+                            choosedClient = client
+                        }
+                        .background(isEditing ? Color.blue : Color(.white))        
                 }
-                
                 .padding(2)
-                
             }
-            
         }
+        .padding(10)
         .background(.white)
         .cornerRadius(10) /// make the background rounded
         .overlay( /// apply a rounded border
@@ -40,14 +45,7 @@ struct ClientCheckboxIconComponent: View {
             return clients.filter({ $0.contains(searchQuery)})
         }
     }
-        
-
-
-
 }
 
 
 
-#Preview {
-    ClientCheckboxIconComponent()
-}

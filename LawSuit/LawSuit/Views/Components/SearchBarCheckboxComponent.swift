@@ -10,7 +10,6 @@ import SwiftUI
 struct SearchBarCheckboxComponent: View {
     
     @Binding var searchText: String
-    
     @State var active = true
     
     var body: some View {
@@ -23,9 +22,16 @@ struct SearchBarCheckboxComponent: View {
                     withAnimation {
                         active = editing
                         active.toggle()
+                        
                     }
     
                 })
+                .textFieldStyle(.plain)
+                .onTapGesture {
+
+                }   
+
+                
             }
             .padding(7)
             .frame(width: 550, height: 36)
@@ -35,24 +41,19 @@ struct SearchBarCheckboxComponent: View {
                     .stroke(.secondary, lineWidth: 0.3)
             )
             
-            if active == false {
-                Button("Cancel") {
-                    withAnimation {
-                        active.toggle()
-                    }
-                }
-            }
+//            if active == false {
+//                Button("Cancel") {
+//                    withAnimation {
+//                        active.toggle()
+//                    }
+//                }
+//            }
         }
     }
 
 }
 
-
-#Preview {
-    CheckboxView()
-}
-
-//
 //#Preview {
-//    SearchBarCheckboxComponent(searchText: <#T##Binding<String>#>, active: true)
+//    CheckboxView()
 //}
+//

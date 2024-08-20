@@ -10,18 +10,18 @@ import SwiftUI
 struct CheckboxIconComponent: View {
     
     @State var isPresented: Bool = false
-    @State var file = "RG"
+    var files: String
     
     var body: some View {
         HStack{
                 Toggle(isOn: $isPresented) {
-                    Text(file)
+                    Text(files)
             }
         }
         .padding(30)
     }
 }
 
-#Preview {
-    CheckboxIconComponent()
-}
+//#Preview {
+//    CheckboxIconComponent(.c)
+//}
