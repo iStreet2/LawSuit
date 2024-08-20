@@ -26,8 +26,8 @@ class ClientManager {
         client.id = UUID().uuidString
         
         let folder = Folder(context: context)
-        folder.name = "root\(client.name ?? "Sem nome")"
-        folder.id = folder.name
+        folder.name = "\(client.name ?? "Sem nome")"
+        folder.id = "root\(client.name ?? "Sem nome")"
         
         client.rootFolder = folder
         folder.client = client
@@ -43,8 +43,8 @@ class ClientManager {
         client.age = Int64(20)
         
         let rootFolder = Folder(context: context)
-        rootFolder.name = "rootFolder\(client.name ?? "Sem Nome")"
-        rootFolder.id = rootFolder.name
+        rootFolder.name = "\(client.name ?? "Sem Nome")"
+        rootFolder.id = "root\(client.name ?? "Sem nome")"
         rootFolder.client = client
         
         client.rootFolder = rootFolder
