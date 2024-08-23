@@ -13,9 +13,9 @@ struct EditClientView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                Image(.foto)
-                    .resizable()
-                    .frame(width: 100, height: 100)
+//                Image(.foto)
+//                    .resizable()
+//                    .frame(width: 100, height: 100)
                 VStack(alignment: .leading) {
                     LabeledField(label: "Nome Completo", placeholder: "Nome Completo")
                         .frame(maxWidth: .infinity)
@@ -38,21 +38,11 @@ struct EditClientView: View {
             .padding(.trailing, 100)
             .pickerStyle(.segmented)
             .labelsHidden()
-            
+            Spacer()
             if userInfoType == 0 {
-                HStack(alignment: .top, spacing: 40) {
-                    VStack(spacing: 10) {
-                        LabeledField(label: "RG", placeholder: "Número do RG")
-                        LabeledField(label: "Filiação", placeholder: "Filiação")
-                        LabeledField(label: "Nacionalidade", placeholder: "Nacionalidade")
-                    }
-                    VStack(spacing: 10) {
-                        LabeledField(label: "CPF", placeholder: "Número do CPF")
-                        LabeledField(label: "Estado Civil", placeholder: "Estado Civil")
-                    }
-                }
-                .padding(.vertical, 5)
+                FormsFields()
             }
+            Spacer()
 
             HStack {
                 Button {
@@ -78,6 +68,7 @@ struct EditClientView: View {
                 .buttonStyle(.borderedProminent)
             }
         }
+        .frame(minHeight: 300)
         .padding()
     }
 }
