@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(FilePDF)
-public class FilePDF: NSManagedObject, Identifiable {
+public class FilePDF: NSManagedObject, Identifiable, Recordable {
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<FilePDF> {
         return NSFetchRequest<FilePDF>(entityName: "FilePDF")
@@ -20,5 +20,6 @@ public class FilePDF: NSManagedObject, Identifiable {
     @NSManaged public var id: String?
     @NSManaged public var name: String?
     @NSManaged public var parentFolder: Folder?
-    @NSManaged public var update: Update?
+//    @NSManaged public var parentUpdate: Update?
+    @NSManaged public var recordName: String?
 }
