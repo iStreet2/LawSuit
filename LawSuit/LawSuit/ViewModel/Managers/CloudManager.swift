@@ -10,7 +10,7 @@ import CloudKit
 import CoreData
 
 protocol Recordable {
-	var recordName: String? { get set }
+    var recordName: String? { get set }
 }
 
 class CloudManager {

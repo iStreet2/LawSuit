@@ -23,7 +23,7 @@ class ProcessManager {
         lawsuit.number = number
         lawyer.addToLawsuit(lawsuit)
         lawsuit.defendant = defendant
-        lawsuit.autor = autor
+        lawsuit.parentAutor = autor
         lawsuit.actionDate = actionDate
         lawsuit.id = UUID().uuidString
         saveContext()

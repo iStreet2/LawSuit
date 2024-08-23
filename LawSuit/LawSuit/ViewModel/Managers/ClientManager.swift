@@ -22,7 +22,7 @@ class ClientManager {
         client.name = name
         client.age = age
         client.photo = photo
-        client.lawyer = lawyer
+        client.parentLawyer = lawyer
         client.id = UUID().uuidString
         
         let folder = Folder(context: context)
@@ -30,7 +30,7 @@ class ClientManager {
         folder.id = "root\(client.name ?? "Sem nome")"
         
         client.rootFolder = folder
-        folder.client = client
+        folder.parentClient = client
         
         saveContext()
         
@@ -45,7 +45,7 @@ class ClientManager {
         let rootFolder = Folder(context: context)
         rootFolder.name = "\(client.name ?? "Sem Nome")"
         rootFolder.id = "root\(client.name ?? "Sem nome")"
-        rootFolder.client = client
+        rootFolder.parentClient = client
         
         client.rootFolder = rootFolder
         
