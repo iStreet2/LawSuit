@@ -9,6 +9,10 @@ import Foundation
 import CloudKit
 import CoreData
 
+protocol Recordable {
+    var recordName: String? { get set }
+}
+
 class CloudManager {
 	
 	let container: CKContainer
@@ -88,6 +92,7 @@ class CloudManager {
 			do {
 				let record = try await publicDatabase.record(for: record.recordID)
 				record[key] = newValue as? CKRecordValue
+                try await publicDatabase.save(record)
 			} catch {
 				print("Error updating record of type \(className): \(error)")
 			}

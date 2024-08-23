@@ -11,11 +11,11 @@ import CloudKit
 class Paulo: Recordable {
 	var name: String
 	var age: Int
-	var record: CKRecord?
+	var recordName: String?
 	
 	init(name: String, age: Int) {
 		self.name = name
 		self.age = age
-		self.record = nil
+		self.recordName = nil
 	}
 }

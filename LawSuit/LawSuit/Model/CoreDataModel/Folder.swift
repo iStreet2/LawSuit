@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Folder)
-public class Folder: NSManagedObject, Identifiable {
+public class Folder: NSManagedObject, Identifiable, Recordable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Folder> {
         return NSFetchRequest<Folder>(entityName: "Folder")
@@ -18,10 +18,10 @@ public class Folder: NSManagedObject, Identifiable {
 
     @NSManaged public var id: String?
     @NSManaged public var name: String?
-    @NSManaged public var client: Client?
-    @NSManaged public var files: NSSet?
-    @NSManaged public var folders: NSSet?
-    @NSManaged public var lawsuit: Lawsuit?
+    @NSManaged public var parentClient: Client?
+    @NSManaged public var files: NSSet? //Reference
+    @NSManaged public var folders: NSSet? //Reference
+    @NSManaged public var parentLawsuit: Lawsuit?
     @NSManaged public var parentFolder: Folder?
     @NSManaged public var recordName: String?
 
