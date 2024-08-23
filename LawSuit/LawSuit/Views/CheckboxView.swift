@@ -62,7 +62,7 @@ struct CheckboxView: View {
     }
 }
 
-#Preview {
-    CheckboxView(choosedClient: "aaaaa")
-}
+//#Preview {
+//    CheckboxView(choosedClient: "aaaaa")
+//}
 
