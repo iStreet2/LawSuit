@@ -23,6 +23,7 @@ public class Folder: NSManagedObject, Identifiable {
     @NSManaged public var folders: NSSet?
     @NSManaged public var lawsuit: Lawsuit?
     @NSManaged public var parentFolder: Folder?
+    @NSManaged public var recordName: String?
 
 }
 

@@ -7,10 +7,7 @@
 
 import Foundation
 import CloudKit
-
-protocol Recordable {
-	var record: CKRecord? { get set }
-}
+import CoreData
 
 class CloudManager {
 	
@@ -26,39 +23,43 @@ class CloudManager {
 		print("See you next time!")
 	}
 	
-	func saveObject<T: Recordable>(object: inout T) async {
-		let m3 = Mirror(reflecting: object)
-		let className = String(describing: type(of: object))
-		
-		// MARK: Precisa ser tratado para não deixar qualquer objeto ser criado
-		let record = CKRecord(recordType: "\(className)")
-		
-		for (property, value) in m3.children {
-			guard let property = property
-			else {
-				print("No property")
-				continue
-			}
-			// property & value
-			if let value = value as? Optional<Any> {
-				if let actualValue = value {
-					record.setValue(actualValue, forKey: "\(property)")
-				}
-			}
-			
-		}
-		print(m3.children.count)
-		record.setValue(Date.now, forKey: "createdAt")
-		
-		do {
-			let savedRecord = try await publicDatabase.save(record)
-			// MARK: É bom ter o modelo com um atributo de CKRecord e atribuir o savedRecord a esse atributo
-			object.record = savedRecord
-		} catch {
-			print("Error saving object of type (\(className)): \(error)")
-		}
-	}
-	
+    func saveObject<T: Any>(object: inout T) async {
+        let className = String(describing: type(of: object))
+        let record = CKRecord(recordType: "\(className)")
+        
+        if let managedObject = object as? NSManagedObject {
+            let attributes = managedObject.entity.attributesByName
+            for (attributeName, _) in attributes {
+                if let value = managedObject.value(forKey: attributeName) {
+                    record.setValue(value, forKey: attributeName)
+                }
+            }
+        } else {
+            let mirror = Mirror(reflecting: object)
+            for (property, value) in mirror.children {
+                guard let property = property else {
+                    print("No property")
+                    continue
+                }
+                if let value = value as? Optional<Any> {
+                    if let actualValue = value {
+                        record.setValue(actualValue, forKey: "\(property)")
+                    }
+                }
+            }
+        }
+        
+        record.setValue(Date.now, forKey: "createdAt")
+        
+        do {
+            let savedRecord = try await publicDatabase.save(record)
+            if let managedObject = object as? Client {
+                managedObject.recordName = savedRecord.recordID.recordName
+            }
+        } catch {
+            print("Error saving object of type (\(className)): \(error)")
+        }
+    }
 	
 	func fetchWithQuery(_ query: CKQuery) async -> [CKRecord]? {
 		

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Client" representedClassName="Client" syncable="YES">
         <attribute name="age" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
         <relationship name="lawsuit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="autor" inverseEntity="Lawsuit"/>
         <relationship name="lawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="client" inverseEntity="Folder"/>
@@ -19,6 +20,7 @@
     <entity name="Folder" representedClassName="Folder" syncable="YES">
         <attribute name="id" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
         <relationship name="client" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="rootFolder" inverseEntity="Client"/>
         <relationship name="files" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FilePDF" inverseName="parentFolder" inverseEntity="FilePDF"/>
         <relationship name="folders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentFolder" inverseEntity="Folder"/>

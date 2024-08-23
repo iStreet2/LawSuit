@@ -19,12 +19,12 @@ struct CloudTestingView: View {
 		VStack {
 			Button {
 				Task {
-					var client = Paulo(name: "bonito", age: 20)
-//					client.name = "Bonito"
-//					client.age = 20
+                    var client = Folder(context: context)
+					client.name = "Carlao"
+                    client.id = "id daora"
 					
 					await ckvm.cloudManager.saveObject(object: &client)
-					await ckvm.cloudManager.updateRecordWithID(object: client, key: "age", newValue: 18)
+//					await ckvm.cloudManager.updateRecordWithID(object: client, key: "age", newValue: 18)
 					
 //					await ckvm.cloudManager.deleteObject(object: client)
 				}
