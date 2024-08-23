@@ -50,6 +50,7 @@ class ClientManager {
         client.rootFolder = rootFolder
         
         saveContext()
+//		 return client
     }
     
     func deleteClient(client: Client, lawyer: Lawyer) {
