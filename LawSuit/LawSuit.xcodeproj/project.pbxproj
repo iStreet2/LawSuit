@@ -45,6 +45,13 @@
 		6ABD796F2C6E97AD00A98BA3 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796E2C6E97AD00A98BA3 /* CheckboxView.swift */; };
 		6ABD79712C6E990F00A98BA3 /* ClientCheckboxIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79702C6E990F00A98BA3 /* ClientCheckboxIconComponent.swift */; };
 		6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79722C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift */; };
+
+		6ABD79752C78FB2100A98BA3 /* NewProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79742C78FB2100A98BA3 /* NewProcessView.swift */; };
+		6ABD79792C7918B600A98BA3 /* EditProcessAuthorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79782C7918B600A98BA3 /* EditProcessAuthorComponent.swift */; };
+		6ABD797B2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */; };
+		DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */; };
+		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
+
 		DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */; };
 		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
 		DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */; };
@@ -54,6 +61,7 @@
 		E93BCFA92C77D6B5007CF206 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA82C77D6B5007CF206 /* File.swift */; };
 		E981580F2C77A2680039C2FD /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E981580E2C77A2680039C2FD /* CloudManager.swift */; };
 		E9A949BA2C7CFB310006BC99 /* RecordObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +124,12 @@
 		6ABD796E2C6E97AD00A98BA3 /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
 		6ABD79702C6E990F00A98BA3 /* ClientCheckboxIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCheckboxIconComponent.swift; sourceTree = "<group>"; };
 		6ABD79722C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarCheckboxComponent.swift; sourceTree = "<group>"; };
+
+		6ABD79742C78FB2100A98BA3 /* NewProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProcessView.swift; sourceTree = "<group>"; };
+		6ABD79782C7918B600A98BA3 /* EditProcessAuthorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProcessAuthorComponent.swift; sourceTree = "<group>"; };
+		6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlComponent.swift; sourceTree = "<group>"; };
+		DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentStyleView.swift; sourceTree = "<group>"; };
+		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
 		DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentStyleView.swift; sourceTree = "<group>"; };
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
 		DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentStyle.swift; sourceTree = "<group>"; };
@@ -125,6 +139,7 @@
 		E93BCFA82C77D6B5007CF206 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		E981580E2C77A2680039C2FD /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordObjectManager.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +272,7 @@
 				3BD40B3C2C6D4DE8004048FA /* Components */,
 				3BD40B372C6D454B004048FA /* DocumentView.swift */,
 				6ABD796E2C6E97AD00A98BA3 /* CheckboxView.swift */,
+				6ABD79742C78FB2100A98BA3 /* NewProcessView.swift */,
 				3BD40B6E2C6E76EC004048FA /* SelectClientView.swift */,
 				DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */,
 				DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */,
@@ -283,6 +299,8 @@
 				3BD40B432C6E6005004048FA /* DocumentGridView.swift */,
 				3BAF94C72C73D37E001FCA45 /* FolderGridView.swift */,
 				3BAF94C92C73D4C1001FCA45 /* FilePDFGridView.swift */,
+				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
+				6ABD79782C7918B600A98BA3 /* EditProcessAuthorComponent.swift */,
 				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
 				DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */,
@@ -444,6 +462,7 @@
 				6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */,
 				3B0EE5F72C6A90F100CFC91A /* CoreDataViewModel.swift in Sources */,
 				3BD40B442C6E6005004048FA /* DocumentGridView.swift in Sources */,
+				6ABD79752C78FB2100A98BA3 /* NewProcessView.swift in Sources */,
 				3BD40B2F2C6D3FB8004048FA /* ClientManager.swift in Sources */,
 				E93BCFA92C77D6B5007CF206 /* File.swift in Sources */,
 				3BD40B3E2C6D4EFF004048FA /* FolderIconView.swift in Sources */,
@@ -452,6 +471,7 @@
 				3BAF94CC2C73D5BF001FCA45 /* FilePDFIconView.swift in Sources */,
 				3B98F10C2C668B1000C45121 /* LawSuitApp.swift in Sources */,
 				6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */,
+				6ABD797B2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift in Sources */,
 				6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */,
 				3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */,
 				3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */,
@@ -460,7 +480,11 @@
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
 				6ABD79712C6E990F00A98BA3 /* ClientCheckboxIconComponent.swift in Sources */,
 				3BD40B422C6E5E16004048FA /* FolderStack.swift in Sources */,
+
+				6ABD79792C7918B600A98BA3 /* EditProcessAuthorComponent.swift in Sources */,
+
 				E9A949BA2C7CFB310006BC99 /* RecordObjectManager.swift in Sources */,
+
 				3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */,
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
 				3BAF94CA2C73D4C1001FCA45 /* FilePDFGridView.swift in Sources */,
@@ -641,7 +665,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+
+				DEVELOPMENT_TEAM = JPTYDVK6TT;
+
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -653,7 +679,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.com.TFS.LawSuit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -672,7 +698,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+
+				DEVELOPMENT_TEAM = JPTYDVK6TT;
+
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -684,7 +712,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.com.TFS.LawSuit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;

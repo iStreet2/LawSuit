@@ -19,8 +19,12 @@ struct LawSuitApp: App {
         WindowGroup {
 //            ContentView()
 //            DocumentView()
+
+            EditProcessAuthorComponent()
+
             SelectClientView()
 //			  CloudTestingView()
+
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)

@@ -24,6 +24,7 @@ struct CheckboxView: View {
             Text("Ciente: \(choosedClient)")
                 .font(.title3)
                 .bold()
+            
             ClientCheckboxIconComponent(choosedClient: $choosedClient)
             
             Text("Documentos:")
@@ -62,7 +63,12 @@ struct CheckboxView: View {
     }
 }
 
+
+#Preview {
+    CheckboxView(cliente: ClientCheckboxIconComponent(choosedClient: .constant("kajkjsk")))}
+
 //#Preview {
 //    CheckboxView(choosedClient: "aaaaa")
 //}
+
 
