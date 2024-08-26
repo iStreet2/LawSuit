@@ -21,9 +21,9 @@ class RecordObjectManager {
 	}
 	
 	
-	func makeObjectsFromRecords(records: [CKRecord]) async -> [Any]? {
+	func makeObjectsFromRecords(records: [CKRecord]) async -> [Recordable]? {
 		
-		var objects: [Any] = []
+		var objects: [Recordable] = []
 		
 		for record in records {
 			switch record.recordType {
@@ -61,9 +61,9 @@ class RecordObjectManager {
 				if let id = record["id"] as? String {
 					folderObject.id = id
 				}
-				if let recordName = record["recordName"] as? String {
-					folderObject.recordName = recordName
-				}
+				let recordName = record.recordID.recordName
+				folderObject.recordName = recordName
+				
 				if let folderReferences = record["folders"] as? [CKRecord.Reference] {
 					for reference in folderReferences {
 						do {

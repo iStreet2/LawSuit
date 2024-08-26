@@ -74,6 +74,7 @@ struct CloudTestingView: View {
 							if let records = await ckvm.cloudManager.fetchWithQuery(query) {
 								if let objects = await cdvm.recordObjectManager.makeObjectsFromRecords(records: records) {
 									print(objects)
+									await ckvm.cloudManager.deleteObject(object: objects.first!)
 								}
 							}
 							

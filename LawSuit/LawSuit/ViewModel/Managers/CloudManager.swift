@@ -160,12 +160,12 @@ class CloudManager {
 	}
 	
 	// MARK: - Delete
-	func deleteObject(object: Any) async {
-		let record = getRecord(object: object)
+	func deleteObject(object: Recordable) async {
+		let recordName = object.recordName
 		
-		if let record = record {
+		if let recordName = recordName {
 			do {
-				try await publicDatabase.deleteRecord(withID: record.recordID)
+				try await publicDatabase.deleteRecord(withID: CKRecord.ID(recordName: recordName))
 			} catch {
 				print("Error deleting object: \(error)")
 			}
@@ -182,7 +182,7 @@ class CloudManager {
 				print("No property")
 				continue
 			}
-			if property == "record" {
+			if property == "recordName" {
 				record = value as? CKRecord
 				break
 			}
