@@ -53,6 +53,7 @@
 		E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA62C77D3DE007CF206 /* CloudViewModel.swift */; };
 		E93BCFA92C77D6B5007CF206 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA82C77D6B5007CF206 /* File.swift */; };
 		E981580F2C77A2680039C2FD /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E981580E2C77A2680039C2FD /* CloudManager.swift */; };
+		E9A949BA2C7CFB310006BC99 /* RecordObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		E93BCFA62C77D3DE007CF206 /* CloudViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudViewModel.swift; sourceTree = "<group>"; };
 		E93BCFA82C77D6B5007CF206 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		E981580E2C77A2680039C2FD /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
+		E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordObjectManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 				3BD40B322C6D41EC004048FA /* ProcessManager.swift */,
 				3BD40B342C6D4384004048FA /* UpdateManager.swift */,
 				E981580E2C77A2680039C2FD /* CloudManager.swift */,
+				E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
 				6ABD79712C6E990F00A98BA3 /* ClientCheckboxIconComponent.swift in Sources */,
 				3BD40B422C6E5E16004048FA /* FolderStack.swift in Sources */,
+				E9A949BA2C7CFB310006BC99 /* RecordObjectManager.swift in Sources */,
 				3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */,
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
 				3BAF94CA2C73D4C1001FCA45 /* FilePDFGridView.swift in Sources */,
