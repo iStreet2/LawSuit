@@ -12,13 +12,15 @@ enum FormType {
 }
 
 struct FormsFields: View {
+    @Binding var clientMock: ClientMock
     @State var formType: FormType
     @State var states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
     @State var cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
     
     
-    init(formType: FormType = .personalInfo) {
+    init(formType: FormType = .personalInfo, client: Binding<ClientMock>) {
         self.formType = formType
+        self._clientMock = client
     }
     
     var body: some View {
@@ -26,14 +28,13 @@ struct FormsFields: View {
         if formType == .personalInfo {
             HStack(alignment: .top) {
                 VStack(spacing: 10) {
-//                    LabeledTextField(label: "RG", placeholder: "RG", textfieldText: )
-//                    LabeledField(label: "RG", placeholder: "Número do RG")
-//                    LabeledField(label: "Filiação", placeholder: "Filiação")
-//                    LabeledField(label: "Nacionalidade", placeholder: "Nacionalidade")
+                    LabeledTextField(label: "RG", placeholder: "RG", textfieldText: $clientMock.rg)
+                    LabeledTextField(label: "Filiação", placeholder: "Filiação", textfieldText: $clientMock.affiliation)
+                    LabeledTextField(label: "Nacionalidade", placeholder: "Nacionalidade", textfieldText: $clientMock.nationality)
                 }
                 VStack(spacing: 10) {
-//                    LabeledField(label: "CPF", placeholder: "Número do CPF")
-//                    LabeledField(label: "Estado Civil", placeholder: "Estado Civil")
+                    LabeledTextField(label: "CPF", placeholder: "CPF", textfieldText: $clientMock.cpf)
+                    LabeledTextField(label: "Estado Civil", placeholder: "Estado Civil", textfieldText: $clientMock.maritalStatus)
                 }
             }
             .padding(.vertical, 5)
@@ -61,5 +62,6 @@ struct FormsFields: View {
 }
 
 #Preview {
-    FormsFields(formType: .address)
+    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
+    return FormsFields(formType: .personalInfo, client: $clientMock)
 }
