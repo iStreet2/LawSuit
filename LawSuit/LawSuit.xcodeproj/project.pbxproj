@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B0A7AD12C7D16AA005A5946 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A7AD02C7D16AA005A5946 /* NetworkMonitor.swift */; };
 		3B0EE5F72C6A90F100CFC91A /* CoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0EE5F62C6A90F100CFC91A /* CoreDataViewModel.swift */; };
 		3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4A02C73781F00CCA763 /* Folder.swift */; };
 		3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4A22C73781F00CCA763 /* Lawsuit.swift */; };
@@ -82,6 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B0A7AD02C7D16AA005A5946 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		3B0EE5F62C6A90F100CFC91A /* CoreDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewModel.swift; sourceTree = "<group>"; };
 		3B24D4A02C73781F00CCA763 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		3B24D4A22C73781F00CCA763 /* Lawsuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lawsuit.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */,
 				3BD40B3F2C6E5DD5004048FA /* FolderViewModel.swift */,
 				E93BCFA62C77D3DE007CF206 /* CloudViewModel.swift */,
+				3B0A7AD02C7D16AA005A5946 /* NetworkMonitor.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
 				3BAF94CA2C73D4C1001FCA45 /* FilePDFGridView.swift in Sources */,
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
+				3B0A7AD12C7D16AA005A5946 /* NetworkMonitor.swift in Sources */,
 				E981580F2C77A2680039C2FD /* CloudManager.swift in Sources */,
 				DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */,
 				3B24D4B02C73781F00CCA763 /* Client.swift in Sources */,
