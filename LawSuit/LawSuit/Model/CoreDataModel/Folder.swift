@@ -18,11 +18,11 @@ public class Folder: NSManagedObject, Identifiable, Recordable {
 
     @NSManaged public var id: String?
     @NSManaged public var name: String?
-    @NSManaged public var parentClient: Client?
+    @NSManaged public var parentClient: Client? //Ignorar pro CloudKit
     @NSManaged public var files: NSSet? //Reference
     @NSManaged public var folders: NSSet? //Reference
-    @NSManaged public var parentLawsuit: Lawsuit?
-    @NSManaged public var parentFolder: Folder?
+    @NSManaged public var parentLawsuit: Lawsuit? //Ignorar pro CloudKit
+    @NSManaged public var parentFolder: Folder? //Ignorar pro ClouKit
     @NSManaged public var recordName: String?
 
 }
