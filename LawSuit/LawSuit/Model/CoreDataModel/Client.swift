@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Client)
-public class Client: NSManagedObject, Identifiable {
+public class Client: NSManagedObject, Identifiable, Recordable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Client> {
         return NSFetchRequest<Client>(entityName: "Client")

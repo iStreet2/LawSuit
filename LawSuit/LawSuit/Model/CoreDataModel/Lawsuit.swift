@@ -22,8 +22,8 @@ public class Lawsuit: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var id: String?
     @NSManaged public var name: String?
     @NSManaged public var number: String?
-    @NSManaged public var parentAutor: Client?
-    @NSManaged public var parentLawyer: Lawyer?
+    @NSManaged public var parentAutor: Client? //Ignorar para o CloudKit
+    @NSManaged public var parentLawyer: Lawyer? //Ignorar para o CloudKit
     @NSManaged public var rootFolder: Folder? //Reference
 //    @NSManaged public var updates: NSSet? //Reference
     @NSManaged public var recordName: String?

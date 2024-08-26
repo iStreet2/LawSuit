@@ -13,13 +13,14 @@ struct LawSuitApp: App {
     @StateObject var coreDataViewModel = CoreDataViewModel()
     @StateObject var folderViewModel = FolderViewModel()
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
+    @StateObject var cloudViewModel = CloudViewModel()
     
     var body: some Scene {
         WindowGroup {
 //            ContentView()
 //            DocumentView()
-//            SelectClientView()
-			  CloudTestingView()
+            SelectClientView()
+//			  CloudTestingView()
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)
