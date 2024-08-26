@@ -7,35 +7,40 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct AddClientProgressView: View {
-    @State private var progress: Double = 0.5
-
+    
+    @Binding var stage: Int
+    
     var body: some View {
         VStack {
-            ProgressView(value: progress, total: 1.0)
-                .progressViewStyle(LinearProgressViewStyle())
-                .padding()
-
-            Button("Aumentar Progresso") {
-                if progress < 1.0 {
-                    progress += 0.1
+            HStack {
+                ForEach(1...4, id: \.self) { index in
+                    VStack {
+                        Circle()
+                            .fill(index <= stage ? Color.blue : Color.gray)
+                            .frame(width: 10, height: 10)
+                    }
+                    if index < 4 {
+                        Rectangle()
+                            .fill(index < stage ? Color.blue : Color.gray)
+                            .frame(height: 2)
+                            .padding(.horizontal, -8)
+                    }
                 }
+//                Button(action: {
+//                    if stage < 4 {
+//                        stage += 1
+//                    }
+//                }, label: {
+//                    Text("Button")
+//                })
             }
-            .padding()
-
-            Button("Reduzir Progresso") {
-                if progress > 0.0 {
-                    progress -= 0.1
-                }
-            }
-            .padding()
         }
+        .frame(width: 300)
     }
 }
 
 //#Preview {
-//    ContentView(progress: <#T##Double#>)
+//    AddClientProgressView(stage: 1)
 //}
 
