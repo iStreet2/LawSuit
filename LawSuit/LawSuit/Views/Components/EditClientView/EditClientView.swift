@@ -8,7 +8,17 @@
 import SwiftUI
 
 struct EditClientView: View {
-    @State private var userInfoType = 0
+    @State var userInfoType = 0
+    @State var client: ClientMock
+//    @State var nameInput: String = ""
+//    @State var occupationInput: String = ""
+//    @State var rgInput: String = ""
+//    @State var cpfInput: String = ""
+//    @State var affiliationInput: String = ""
+//    @State var maritalStatusInput: String = ""
+//    @State var nationalityInput: String = ""
+//    @State var birthDateInput: Date = Date()
+    //@State var occupationInput: String
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -17,11 +27,10 @@ struct EditClientView: View {
 //                    .resizable()
 //                    .frame(width: 100, height: 100)
                 VStack(alignment: .leading) {
-                    LabeledField(label: "Nome Completo", placeholder: "Nome Completo")
-                        .frame(maxWidth: .infinity)
+                    LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $client.name)
                     HStack {
-                        LabeledField(label: "Data de Nascimento", placeholder: "", labeledFieldType: .date)
-                        LabeledField(label: "Profissão", placeholder: "Profissão")
+                        LabeledDateField(selectedDate: $client.birthDate, label: "Data de nascimento")
+                        LabeledTextField(label: "Profissão", placeholder: "Profissão", textfieldText: $client.occupation)
                             .frame(maxWidth: .infinity)
                             .padding(.leading, 30)
                     }
@@ -39,9 +48,13 @@ struct EditClientView: View {
             .pickerStyle(.segmented)
             .labelsHidden()
             Spacer()
-            if userInfoType == 0 {
-                FormsFields()
-            }
+//            if userInfoType == 0 {
+//                FormsFields()
+//            } else if userInfoType == 1 {
+//                FormsFields(formType: .address)
+//            } else if userInfoType == 2 {
+//                FormsFields(formType: .contact)
+//            }
             Spacer()
 
             HStack {
@@ -74,5 +87,6 @@ struct EditClientView: View {
 }
 
 #Preview {
-    EditClientView()
+    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
+    return EditClientView(client: clientMock)
 }
