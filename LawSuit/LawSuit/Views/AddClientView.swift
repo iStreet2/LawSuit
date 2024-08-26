@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct AddClientView: View{
-        
+struct AddClientView: View {
+    
+    @Environment(\.dismiss) var dismiss
+    
     @State var fullName: String = ""
     @State var rg: String = ""
     @State var affiliation: String = ""
@@ -16,8 +18,10 @@ struct AddClientView: View{
     @State var profession: String = ""
     @State var cpf: String = ""
     @State var maritalStatus: String = ""
-    @State var dateOfBirth: String = ""
+    @State var dateOfBirth = Date.now
     @State var stage: Int = 1
+    
+    @State var missingInformation = false
     
     var body: some View {
         VStack() {
@@ -29,20 +33,11 @@ struct AddClientView: View{
                 Spacer()
             }
             .padding()
-            
-                // MARK: ProgressBar
+            // MARK: ProgressBar
             VStack() {
                 AddClientProgressView(stage: $stage)
-                
-                Text("Dados Pessoais")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .padding(.trailing, 280)
-                
-                
             }
             Spacer()
-            
             HStack {
                 VStack(alignment: .leading){
                     Group {
@@ -73,12 +68,15 @@ struct AddClientView: View{
                         Text("Estado Civil")
                         TextField("Insira seu Estado Civil", text: $maritalStatus)
                             .font(.caption)
-                        Text("Data de Nascimento")
-                        TextField("Insira sua Data de Nascimento", text: $dateOfBirth)
-                            .font(.caption)
                     }
                     .bold()
                     .textFieldStyle(.roundedBorder)
+                    Text("Data de Nascimento")
+                        .bold()
+                    DatePicker(selection: $dateOfBirth, in: ...Date.now, displayedComponents: .date)
+                    {
+                    }
+                    .datePickerStyle(FieldDatePickerStyle())
                 }
             }
             .frame(width: 450)
@@ -87,26 +85,40 @@ struct AddClientView: View{
             HStack {
                 Spacer()
                 Button(action: {
-                    print("cancelado")
+                    dismiss()
                 }, label: {
                     Text("Cancelar")
                 })
                 Button(action: {
-                    if stage < 4 {
-                        withAnimation (.bouncy) {
-                            stage += 1
+                    if areFieldsFilled() {
+                        if stage < 4 {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                stage += 1
+                            }
                         }
-                        
+                    } else {
+                        missingInformation = true
                     }
                 }, label: {
                     Text("Próximo")
                 })
                 .buttonStyle(.borderedProminent)
+                .alert(isPresented: $missingInformation) {
+                    Alert(title: Text("Informações Faltando"),
+                          message: Text("Por favor, preencha todos os campos antes de continuar."),
+                          dismissButton: .default(Text("OK")))
+                }
             }
             .padding()
-            .padding(.bottom, 10)
         }
-        .frame(width: 490, height: 330)
+        .frame(width: 490, height: 340)
+    }
+    
+    // Função para verificar se todos os campos estão preenchidos
+    func areFieldsFilled() -> Bool {
+        return !fullName.isEmpty && !rg.isEmpty && !affiliation.isEmpty &&
+        !nationality.isEmpty && !profession.isEmpty && !cpf.isEmpty &&
+        !maritalStatus.isEmpty
     }
 }
 
