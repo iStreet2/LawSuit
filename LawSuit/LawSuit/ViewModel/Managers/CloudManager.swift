@@ -8,6 +8,7 @@
 import Foundation
 import CloudKit
 import CoreData
+import PDFKit
 
 protocol Recordable {
 	var recordName: String? { get set }
@@ -39,7 +40,17 @@ class CloudManager {
 			// Save attributes
 			for (attributeName, _) in attributes {
 				if let value = managedObject.value(forKey: attributeName) {
-					record.setValue(value, forKey: attributeName)
+					if attributeName == "content" {
+						if let data = value as? Data {
+							let pdfData = PDFDocument(data: data)
+							if let pdfURL = pdfData?.documentURL {
+								let asset = CKAsset(fileURL: pdfURL)
+								record.setValue(asset, forKey: attributeName)
+							}
+						}
+					} else {
+						record.setValue(value, forKey: attributeName)
+					}
 				}
 			}
 		}
