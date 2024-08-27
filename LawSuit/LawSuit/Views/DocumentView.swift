@@ -17,6 +17,7 @@ struct DocumentView: View {
     @Environment(\.managedObjectContext) var context
     
     @ObservedObject var client: Client
+    var a = 3
     
     var body: some View {
         VStack {
