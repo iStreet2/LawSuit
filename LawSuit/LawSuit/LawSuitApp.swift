@@ -21,11 +21,12 @@ struct LawSuitApp: App {
 //            ContentView()
 //            DocumentView()
 //            SelectClientView()
-//			  CloudTestingView()
+			  CloudTestingView()
 
             //EditProcessAuthorComponent()
 
-            SelectClientView()
+//            SelectClientView()
+            
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)

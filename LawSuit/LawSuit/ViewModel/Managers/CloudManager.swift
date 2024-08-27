@@ -69,67 +69,85 @@ class CloudManager {
 			print("Error saving object of type (\(className)): \(error)")
 		}
 	}
-	
-	private func saveRelatedObjects<T: Recordable>(for object: T) async {
-		if let managedObject = object as? NSManagedObject {
-			let relationships = managedObject.entity.relationshipsByName
-			
-			for (relationshipName, _) in relationships {
-				
-				if let relatedObjects = managedObject.value(forKey: relationshipName) as? NSSet {
-					for relatedObject in relatedObjects {
-						if let relatedManagedObject = relatedObject as? NSManagedObject,
-							relatedManagedObject.value(forKey: "recordName") == nil {
-							var relatedRecordable = relatedManagedObject as! Recordable
-							await saveObject(object: &relatedRecordable)
-						}
-					}
-				}
-				
-			}
-			
-		}
-	}
-	
-	private func saveRelationships<T: Recordable>(for object: T) async {
-		if let managedObject = object as? NSManagedObject {
-			let relationships = managedObject.entity.relationshipsByName
-			
-			// Fetch the CKRecord associated with this object
-			guard let recordName = object.recordName else { return }
-			let recordID = CKRecord.ID(recordName: recordName)
-			
-			do {
-				let record = try await publicDatabase.record(for: recordID)
-				
-				for (relationshipName, _) in relationships {
-//					if relationshipName == "folders"{
-						if let value = managedObject.value(forKey: relationshipName) as? NSSet {
-							let relatedRecords = value.compactMap { relatedObject -> CKRecord.Reference? in
-								if let relatedManagedObject = relatedObject as? NSManagedObject,
-									let relatedRecordName = relatedManagedObject.value(forKey: "recordName") as? String {
-									let relatedRecordID = CKRecord.ID(recordName: relatedRecordName)
-									return CKRecord.Reference(recordID: relatedRecordID, action: .none)
-								}
-								return nil
-							}
-							
-							// Only add the relationship if there are related records
-							if !relatedRecords.isEmpty {
-								record.setValue(relatedRecords, forKey: relationshipName)
-							}
-						}
-//					}
-				}
-				
-				// Save the updated record with relationships
-				try await publicDatabase.save(record)
-				
-			} catch {
-				print("Error saving relationships for object of type \(String(describing: type(of: object)))): \(error)")
-			}
-		}
-	}
+	//Do jeito que esta a função está todas relações sao enviadas, inclusive as parents
+    private func saveRelatedObjects<T: Recordable>(for object: T) async {
+        if let managedObject = object as? NSManagedObject {
+            let relationships = managedObject.entity.relationshipsByName
+            
+            for (relationshipName, relationshipDescription) in relationships {
+                if relationshipDescription.isToMany {
+                    // Lida com relacionamentos to-many
+                    if let relatedObjects = managedObject.value(forKey: relationshipName) as? NSSet {
+                        for relatedObject in relatedObjects {
+                            if let relatedManagedObject = relatedObject as? NSManagedObject,
+                               relatedManagedObject.value(forKey: "recordName") == nil {
+                                var relatedRecordable = relatedManagedObject as! Recordable
+                                await saveObject(object: &relatedRecordable)
+                            }
+                        }
+                    }
+                } else {
+                    // Lida com relacionamentos to-one
+                    if let relatedObject = managedObject.value(forKey: relationshipName) as? NSManagedObject,
+                       relatedObject.value(forKey: "recordName") == nil {
+                        var relatedRecordable = relatedObject as! Recordable
+                        await saveObject(object: &relatedRecordable)
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    //Do jeito que esta a função está todas relações sao enviadas, inclusive as parents
+    private func saveRelationships<T: Recordable>(for object: T) async {
+        if let managedObject = object as? NSManagedObject {
+            let relationships = managedObject.entity.relationshipsByName
+            
+            // Fetch the CKRecord associated with this object
+            guard let recordName = object.recordName else { return }
+            let recordID = CKRecord.ID(recordName: recordName)
+            
+            do {
+                let record = try await publicDatabase.record(for: recordID)
+                
+                for (relationshipName, relationshipDescription) in relationships {
+                    if relationshipDescription.isToMany {
+                        // Relationship is to-many, handle as NSSet
+                        if let value = managedObject.value(forKey: relationshipName) as? NSSet {
+                            let relatedRecords = value.compactMap { relatedObject -> CKRecord.Reference? in
+                                if let relatedManagedObject = relatedObject as? NSManagedObject,
+                                   let relatedRecordName = relatedManagedObject.value(forKey: "recordName") as? String {
+                                    let relatedRecordID = CKRecord.ID(recordName: relatedRecordName)
+                                    return CKRecord.Reference(recordID: relatedRecordID, action: .none)
+                                }
+                                return nil
+                            }
+                            // Only add the reference if there are related records
+                            if !relatedRecords.isEmpty {
+                                record.setValue(relatedRecords, forKey: relationshipName)
+                            }
+                        }
+                    } else {
+                        // Relationship is to-one, handle as a single object
+                        if let relatedObject = managedObject.value(forKey: relationshipName) as? NSManagedObject,
+                           let relatedRecordName = relatedObject.value(forKey: "recordName") as? String {
+                            let relatedRecordID = CKRecord.ID(recordName: relatedRecordName)
+                            let relatedRecordReference = CKRecord.Reference(recordID: relatedRecordID, action: .none)
+                            record.setValue(relatedRecordReference, forKey: relationshipName)
+                        }
+                    }
+                }
+                
+                // Save the updated record with relationships
+                try await publicDatabase.save(record)
+                
+            } catch {
+                print("Error saving relationships for object of type \(String(describing: type(of: object)))): \(error)")
+            }
+        }
+    }
+
 	
 	// MARK: - Fetch
 	func fetchWithQuery(_ query: CKQuery) async -> [CKRecord]? {

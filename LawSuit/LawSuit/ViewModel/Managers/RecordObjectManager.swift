@@ -12,7 +12,7 @@ import PDFKit
 
 class RecordObjectManager {
 	let context: NSManagedObjectContext
-	let container = CKContainer(identifier: "iCloud.com.TFS.LawSuit.CKContainer")
+	let container = CKContainer(identifier: "iCloud.com.TFS.LawSuit")
 	let publicDatabase: CKDatabase
 	
 	init(context: NSManagedObjectContext) {
