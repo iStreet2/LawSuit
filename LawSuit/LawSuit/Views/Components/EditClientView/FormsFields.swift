@@ -13,9 +13,9 @@ enum FormType {
 
 struct FormsFields: View {
     @Binding var clientMock: ClientMock
-    var formType: FormType
-    var states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
-    var cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
+    let formType: FormType
+    let states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
+    let cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
     
     
     init(formType: FormType = .personalInfo, client: Binding<ClientMock>) {
