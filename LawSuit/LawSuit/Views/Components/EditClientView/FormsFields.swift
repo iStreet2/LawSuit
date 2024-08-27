@@ -42,17 +42,17 @@ struct FormsFields: View {
         } else if formType == .address {
             VStack(spacing: 10) {
                 HStack(alignment: .top) {
-//                    LabeledField(label: "CEP", placeholder: "Número do CEP")
-//                    LabeledField(label: "Endereço", placeholder: "Endereço")
+                    LabeledTextField(label: "CEP", placeholder: "CEP", textfieldText: $clientMock.cep)
+                    LabeledTextField(label: "Endereço", placeholder: "Endereço", textfieldText: $clientMock.address)
                 }
                 HStack(alignment: .top) {
-//                    LabeledField(label: "Número", placeholder: "Número")
-//                    LabeledField(label: "Bairro", placeholder: "Bairro")
-//                    LabeledField(label: "Complemento", placeholder: "Complemento")
+                    LabeledTextField(label: "Número", placeholder: "Número", textfieldText: $clientMock.addressNumber)
+                    LabeledTextField(label: "Bairro", placeholder: "Bairro", textfieldText: $clientMock.neighborhood)
+                    LabeledTextField(label: "Complemento", placeholder: "Complemento", textfieldText: $clientMock.complement)
                 }
                 HStack(alignment: .top) {
-//                    LabeledField(label: "Estado", placeholder: "", labeledFieldType: .picker, arrayInfo: states)
-//                    LabeledField(label: "Cidade", placeholder: "", labeledFieldType: .picker, arrayInfo: cities)
+                    LabeledPickerField(selectedOption: $clientMock.state, arrayInfo: states, label: "Estado")
+                    LabeledPickerField(selectedOption: $clientMock.city, arrayInfo: cities, label: "Cidade")
                 }
             }
   

@@ -48,13 +48,13 @@ struct EditClientView: View {
             .pickerStyle(.segmented)
             .labelsHidden()
             Spacer()
-//            if userInfoType == 0 {
-//                FormsFields()
-//            } else if userInfoType == 1 {
-//                FormsFields(formType: .address)
-//            } else if userInfoType == 2 {
-//                FormsFields(formType: .contact)
-//            }
+            if userInfoType == 0 {
+                FormsFields(formType: .personalInfo, client: $client)
+            } else if userInfoType == 1 {
+                FormsFields(formType: .address, client: $client)
+            } else if userInfoType == 2 {
+                    FormsFields(formType: .others, client: $client)
+            }
             Spacer()
 
             HStack {
