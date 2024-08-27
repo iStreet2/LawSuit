@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Lawyer)
-public class Lawyer: NSManagedObject, Identifiable {
+public class Lawyer: NSManagedObject, Identifiable, Recordable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Lawyer> {
         return NSFetchRequest<Lawyer>(entityName: "Lawyer")
@@ -20,8 +20,9 @@ public class Lawyer: NSManagedObject, Identifiable {
     @NSManaged public var name: String?
     @NSManaged public var oab: String?
     @NSManaged public var photo: Data?
-    @NSManaged public var clients: NSSet?
-    @NSManaged public var lawsuit: NSSet?
+    @NSManaged public var clients: NSSet? //Reference
+    @NSManaged public var lawsuits: NSSet? //Reference
+    @NSManaged public var recordName: String?
 
 }
 

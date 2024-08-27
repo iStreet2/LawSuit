@@ -15,18 +15,18 @@ struct PendentClientDocumentView: View {
     ]
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Aprovação Pendente")
-                .font(.title2)
-                .bold()
-                .padding()
-            ForEach(clientsAndDocuments, id: \.name) { item in
-                PendentClientDocumentStyle(name: item.name, document: item.document)
+        ScrollView {
+            VStack(alignment: .leading) {
+                Text("Aprovação Pendente")
+                    .font(.title2)
+                    .bold()
+                    .padding()
+                ForEach(clientsAndDocuments, id: \.name) { item in
+                    PendentClientDocumentStyle(name: item.name, document: item.document)
+                }
             }
         }
-        .padding(.bottom, 100)
-        
-        .frame(width: 370, height: 270)
+        .frame(width: 400, height: 300)
     }
 }
 
