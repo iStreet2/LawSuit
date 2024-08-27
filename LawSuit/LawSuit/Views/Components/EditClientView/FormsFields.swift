@@ -78,5 +78,5 @@ struct FormsFields: View {
 
 #Preview {
     @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
-    return FormsFields(formType: .others, client: $clientMock)
+    return FormsFields(formType: .personalInfo, client: $clientMock)
 }
