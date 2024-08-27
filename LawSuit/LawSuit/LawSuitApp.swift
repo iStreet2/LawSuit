@@ -18,9 +18,17 @@ struct LawSuitApp: App {
     
     var body: some Scene {
         WindowGroup {
+            
+//            AddClientView()
 //            ContentView()
 //            DocumentView()
 //            SelectClientView()
+//                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
+//                .environmentObject(folderViewModel)
+//                .environmentObject(coreDataViewModel)
+//                .environmentObject(dragAndDropViewModel)
+//            CheckboxView()
+//                .preferredColorScheme(.light)
 			  CloudTestingView()
 
             //EditProcessAuthorComponent()
@@ -34,7 +42,6 @@ struct LawSuitApp: App {
                 .environmentObject(networkMonitor)
 //            CheckboxView()
                 .preferredColorScheme(.light)
-
         }
     }
 }
