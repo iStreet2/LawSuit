@@ -17,7 +17,7 @@ struct LabeledPickerField: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .bold()
-                .font(.title3)
+                .font(.body)
                 .foregroundStyle(Color.black)
             
             Picker("", selection: $selectedOption) {
