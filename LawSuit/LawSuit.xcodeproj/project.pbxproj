@@ -67,6 +67,7 @@
 		E981580F2C77A2680039C2FD /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E981580E2C77A2680039C2FD /* CloudManager.swift */; };
 		E9A949BA2C7CFB310006BC99 /* RecordObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */; };
 		E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */; };
+		E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		E981580E2C77A2680039C2FD /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordObjectManager.swift; sourceTree = "<group>"; };
 		E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
+		E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +330,7 @@
 			children = (
 				08E6572E2C7929FA00313FCB /* EditClientView */,
 				3BD40B3D2C6D4EFF004048FA /* FolderIconView.swift */,
+				E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
 				6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */,
 				6ABD79722C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift */,
@@ -493,6 +496,7 @@
 				3BD40B6F2C6E76EC004048FA /* SelectClientView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
+				E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */,
 				3BD40B3B2C6D4624004048FA /* FolderExamples.swift in Sources */,
 				3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */,
 				E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */,
@@ -721,7 +725,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit.dev.micher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -752,7 +756,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit.dev.micher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
