@@ -64,10 +64,7 @@ struct CheckboxView: View {
 }
 
 #Preview {
-    CheckboxView(cliente: ClientCheckboxIconComponent(choosedClient: .constant("kajkjsk")))}
-
-//#Preview {
-//    CheckboxView(choosedClient: "aaaaa")
-//}
+    CheckboxView(cliente: ClientCheckboxIconComponent(choosedClient: .constant("kajkjsk")))
+}
 
 
