@@ -29,11 +29,12 @@ struct LawSuitApp: App {
 //                .environmentObject(dragAndDropViewModel)
 //            CheckboxView()
 //                .preferredColorScheme(.light)
-//			  CloudTestingView()
+			  CloudTestingView()
 
             //EditProcessAuthorComponent()
 
-            SelectClientView()
+//            SelectClientView()
+            
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)
