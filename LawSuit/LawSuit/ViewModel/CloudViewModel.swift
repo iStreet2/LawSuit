@@ -14,7 +14,7 @@ class CloudViewModel: ObservableObject {
 	let cloudManager: CloudManager
 	
 	init() {
-		self.container = CKContainer(identifier: "iCloud.com.TFS.LawSuit.CKContainer")
+		self.container = CKContainer(identifier: "iCloud.com.TFS.LawSuit")
 		self.publicDatabase = container.publicCloudDatabase
 		
 		self.cloudManager = CloudManager(container: container)

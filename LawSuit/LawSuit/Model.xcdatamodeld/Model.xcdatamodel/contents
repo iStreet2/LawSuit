@@ -5,25 +5,27 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary"/>
-        <relationship name="lawsuit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="autor" inverseEntity="Lawsuit"/>
-        <relationship name="lawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
-        <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="client" inverseEntity="Folder"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
+        <relationship name="lawsuits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="parentAutor" inverseEntity="Lawsuit"/>
+        <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
+        <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentClient" inverseEntity="Folder"/>
     </entity>
     <entity name="FilePDF" representedClassName="FilePDF" syncable="YES">
         <attribute name="content" optional="YES" attributeType="Binary"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
         <relationship name="parentFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="files" inverseEntity="Folder"/>
-        <relationship name="update" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Update" inverseName="file" inverseEntity="Update"/>
     </entity>
     <entity name="Folder" representedClassName="Folder" syncable="YES">
         <attribute name="id" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="client" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="rootFolder" inverseEntity="Client"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
         <relationship name="files" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FilePDF" inverseName="parentFolder" inverseEntity="FilePDF"/>
         <relationship name="folders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentFolder" inverseEntity="Folder"/>
-        <relationship name="lawsuit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="rootFolder" inverseEntity="Lawsuit"/>
+        <relationship name="parentClient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="rootFolder" inverseEntity="Client"/>
         <relationship name="parentFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="folders" inverseEntity="Folder"/>
+        <relationship name="parentLawsuit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="rootFolder" inverseEntity="Lawsuit"/>
     </entity>
     <entity name="Lawsuit" representedClassName="Lawsuit" syncable="YES">
         <attribute name="actionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -32,24 +34,18 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="number" optional="YES" attributeType="String"/>
-        <relationship name="autor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="lawsuit" inverseEntity="Client"/>
-        <relationship name="lawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="lawsuit" inverseEntity="Lawyer"/>
-        <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="lawsuit" inverseEntity="Folder"/>
-        <relationship name="updates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Update" inverseName="lawsuit" inverseEntity="Update"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
+        <relationship name="parentAutor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="lawsuits" inverseEntity="Client"/>
+        <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="lawsuits" inverseEntity="Lawyer"/>
+        <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentLawsuit" inverseEntity="Folder"/>
     </entity>
     <entity name="Lawyer" representedClassName="Lawyer" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="oab" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary"/>
-        <relationship name="clients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Client" inverseName="lawyer" inverseEntity="Client"/>
-        <relationship name="lawsuit" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="lawyer" inverseEntity="Lawsuit"/>
-    </entity>
-    <entity name="Update" representedClassName="Update" syncable="YES">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="desc" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="file" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FilePDF" inverseName="update" inverseEntity="FilePDF"/>
-        <relationship name="lawsuit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="updates" inverseEntity="Lawsuit"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
+        <relationship name="clients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Client" inverseName="parentLawyer" inverseEntity="Client"/>
+        <relationship name="lawsuits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="parentLawyer" inverseEntity="Lawsuit"/>
     </entity>
 </model>

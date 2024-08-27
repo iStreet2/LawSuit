@@ -13,20 +13,35 @@ struct LawSuitApp: App {
     @StateObject var coreDataViewModel = CoreDataViewModel()
     @StateObject var folderViewModel = FolderViewModel()
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
+    @StateObject var cloudViewModel = CloudViewModel()
+    @StateObject var networkMonitor = NetworkMonitor()
     
     var body: some Scene {
         WindowGroup {
+            
+//            AddClientView()
 //            ContentView()
 //            DocumentView()
 //            SelectClientView()
+//                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
+//                .environmentObject(folderViewModel)
+//                .environmentObject(coreDataViewModel)
+//                .environmentObject(dragAndDropViewModel)
+//            CheckboxView()
+//                .preferredColorScheme(.light)
 			  CloudTestingView()
+
+            //EditProcessAuthorComponent()
+
+//            SelectClientView()
+            
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)
                 .environmentObject(dragAndDropViewModel)
+                .environmentObject(networkMonitor)
 //            CheckboxView()
                 .preferredColorScheme(.light)
-
         }
     }
 }
