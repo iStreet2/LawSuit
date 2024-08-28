@@ -9,6 +9,9 @@ import SwiftUI
 
 struct SelectClientView: View {
     
+    //MARK: Variáveis de estado
+    @Binding var selectedClient: Client?
+    
     @EnvironmentObject var folderViewModel: FolderViewModel
     
     //MARK: CoreData
@@ -17,21 +20,20 @@ struct SelectClientView: View {
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(clients) { client in
-                    NavigationLink {
-                        DocumentView(client: client)
-                            .padding()
-                    } label: {
-                        Text(client.name ?? "Sem nome")
-                    }
-                }
+        VStack(alignment: .leading) {
+            Text("Clientes")
+                .font(.title)
+                .bold()
+            List(clients, id: \.id) { client in
+                Button(action: {
+                    selectedClient = client
+                }, label: {
+                    Text(client.name ?? "Cliente Sem Nome")
+                })
             }
-            
-        } detail : {
-            Text("Nenhum cliente selecionado")
         }
+        .padding()
+        .background(.white)
         .onAppear {
             //MARK: APENAS PARA TESTES, RETIRAR DEPOIS
             if clients.isEmpty {
@@ -39,4 +41,6 @@ struct SelectClientView: View {
             }
         }
     }
+        
 }
+

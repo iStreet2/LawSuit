@@ -23,6 +23,7 @@ struct DocumentView: View {
         VStack {
             if let openFolder = folderViewModel.openFolder {
                 DocumentGridView(parentFolder: openFolder)
+                    .padding()
                     .contextMenu {
                         Button(action: {
                             coreDataViewModel.folderManager.createFolder(parentFolder: folderViewModel.openFolder!, name: "Nova Pasta")
