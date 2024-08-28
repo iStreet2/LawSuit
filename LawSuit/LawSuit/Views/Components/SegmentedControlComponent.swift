@@ -28,6 +28,3 @@ struct SegmentedControlComponent: View {
     NewProcessView()
 }
 
-
-//#Preview {
-//    SegmentedControlComponent(selectedOption: <#T##Binding<String>#>, options: <#T##[String]#>, title: <#T##String#>)}
