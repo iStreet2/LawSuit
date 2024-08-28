@@ -17,7 +17,7 @@ struct LabeledPickerField: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .bold()
-                .font(.title3)
+                .font(.body)
                 .foregroundStyle(Color.black)
             
             Picker("", selection: $selectedOption) {
@@ -31,6 +31,7 @@ struct LabeledPickerField: View {
     }
 }
 
-//#Preview {
-//    LabeledPickerField(selectedOption: <#T##Binding<String>#>, arrayInfo: <#T##[String]#>, label: <#T##String#>)
-//}
+#Preview {
+    @State var selectedOption: String = ""
+    return LabeledPickerField(selectedOption: $selectedOption, arrayInfo: ["MG","SP"], label: "Estado")
+}
