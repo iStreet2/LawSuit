@@ -36,47 +36,56 @@ struct CloudTestingView: View {
 //					await ckvm.cloudManager.updateRecordWithID(object: client, key: "age", newValue: 18)
 					
 //					await ckvm.cloudManager.deleteObject(object: client)
-					
+//					
 					var folder = Folder(context: context)
-					folder.name = "FolderName"
+					folder.name = "BonitoFolder"
+                    folder.id = "id"
+//
+//					let subFolder = Folder(context: context)
+//					subFolder.name = "UBSOFLDER"
+//					let secondSubFolder = Folder(context: context)
+//					secondSubFolder.name = "SUUUUUBSBUSBFOLDER"
+//					
+//					let subsubfolder = Folder(context: context)
+//					subsubfolder.name = "bonito"
+//					
+//					let subsubsubfolder = Folder(context: context)
+//					subsubsubfolder.name = "Paulo"
+//					
+//					subsubfolder.addToFolders(subsubsubfolder)
+//					
+//					folder.addToFolders(secondSubFolder)
+//					subFolder.addToFolders(subsubfolder)
+//					
+//					let file = FilePDF(context: context)
+//					file.name = "fileNAME"
+//					
+//					folder.addToFolders(subFolder)
+//					folder.addToFiles(file)
+//					print("Count:", folder.folders?.count)
+//					
+                    var client = Client(context: context)
+                    client.name = "Bonito"
+                    client.rootFolder = folder
+                    client.age = 20
+                    client.id = "idBonito"
+                    
 					
-					let subFolder = Folder(context: context)
-					subFolder.name = "UBSOFLDER"
-					let secondSubFolder = Folder(context: context)
-					secondSubFolder.name = "SUUUUUBSBUSBFOLDER"
-					
-					let subsubfolder = Folder(context: context)
-					subsubfolder.name = "bonito"
-					
-					let subsubsubfolder = Folder(context: context)
-					subsubsubfolder.name = "Paulo"
-					
-					subsubfolder.addToFolders(subsubsubfolder)
-					
-					folder.addToFolders(secondSubFolder)
-					subFolder.addToFolders(subsubfolder)
-					
-					let file = FilePDF(context: context)
-					file.name = "fileNAME"
-					
-					folder.addToFolders(subFolder)
-					folder.addToFiles(file)
-					print("Count:", folder.folders?.count)
-					
-					await ckvm.cloudManager.saveObject(object: &folder)
+                    await ckvm.cloudManager.saveObject(object: &client)
+                    await ckvm.cloudManager.saveObject(object: &folder)
 				}
 			} label: {
 				Text("Criar")
 					.onAppear {
-						let query = CKQuery(recordType: "Folder", predicate: NSPredicate(format: "TRUEPREDICATE"))
+//						let query = CKQuery(recordType: "Folder", predicate: NSPredicate(format: "TRUEPREDICATE"))
 						
 						Task {
-							if let records = await ckvm.cloudManager.fetchWithQuery(query) {
-								if let objects = await cdvm.recordObjectManager.makeObjectsFromRecords(records: records) {
-									print(objects)
-									await ckvm.cloudManager.deleteObject(object: objects.first!)
-								}
-							}
+//							if let records = await ckvm.cloudManager.fetchWithQuery(query) {
+//								if let objects = await cdvm.recordObjectManager.makeObjectsFromRecords(records: records) {
+//									print(objects)
+//									await ckvm.cloudManager.deleteObject(object: objects.first!)
+//								}
+//							}
 							
 						}
 					}

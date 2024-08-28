@@ -19,6 +19,20 @@ final class LawSuitTests: XCTestCase {
     }
 
     func testExample() throws {
+//		 let cloudManager = CloudManager()
+//		 
+//		 class Eu {
+//			 var name: String
+//			 init(name: String) {
+//				 self.name = name
+//			 }
+//		 }
+//		 
+//		 let eu = Eu(name: "Paulo")
+//		 
+//		 Task {
+//			await cloudManager.saveObject(object: eu)
+//		 }
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         // Any test you write for XCTest can be annotated as throws and async.

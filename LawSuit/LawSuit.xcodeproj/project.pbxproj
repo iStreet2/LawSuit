@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
+		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
+		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
+		08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E657312C7D08A800313FCB /* LabeledDateField.swift */; };
+		08E657342C7D08D800313FCB /* LabeledPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E657332C7D08D800313FCB /* LabeledPickerField.swift */; };
+		08E657392C7D205D00313FCB /* ClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E657382C7D205D00313FCB /* ClientMock.swift */; };
+		08E6573B2C7E60F900313FCB /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */; };
 		3B0A7AD12C7D16AA005A5946 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A7AD02C7D16AA005A5946 /* NetworkMonitor.swift */; };
 		3B0EE5F72C6A90F100CFC91A /* CoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0EE5F62C6A90F100CFC91A /* CoreDataViewModel.swift */; };
 		3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4A02C73781F00CCA763 /* Folder.swift */; };
@@ -58,11 +65,14 @@
 		DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */; };
 		DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD2F2C77B23900000195 /* AddClientView.swift */; };
 		DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */; };
+		DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDB963F2C7E61C400817814 /* AddClientForm.swift */; };
 		E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */; };
 		E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA62C77D3DE007CF206 /* CloudViewModel.swift */; };
 		E93BCFA92C77D6B5007CF206 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA82C77D6B5007CF206 /* File.swift */; };
 		E981580F2C77A2680039C2FD /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E981580E2C77A2680039C2FD /* CloudManager.swift */; };
 		E9A949BA2C7CFB310006BC99 /* RecordObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */; };
+		E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */; };
+		E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +93,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
+		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
+		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
+		08E657312C7D08A800313FCB /* LabeledDateField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledDateField.swift; sourceTree = "<group>"; };
+		08E657332C7D08D800313FCB /* LabeledPickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledPickerField.swift; sourceTree = "<group>"; };
+		08E657382C7D205D00313FCB /* ClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMock.swift; sourceTree = "<group>"; };
+		08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		3B0A7AD02C7D16AA005A5946 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		3B0EE5F62C6A90F100CFC91A /* CoreDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewModel.swift; sourceTree = "<group>"; };
 		3B24D4A02C73781F00CCA763 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
@@ -138,11 +155,14 @@
 		DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentView.swift; sourceTree = "<group>"; };
 		DCC1BD2F2C77B23900000195 /* AddClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientView.swift; sourceTree = "<group>"; };
 		DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientProgressView.swift; sourceTree = "<group>"; };
+		DCDB963F2C7E61C400817814 /* AddClientForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientForm.swift; sourceTree = "<group>"; };
 		E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudTestingView.swift; sourceTree = "<group>"; };
 		E93BCFA62C77D3DE007CF206 /* CloudViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudViewModel.swift; sourceTree = "<group>"; };
 		E93BCFA82C77D6B5007CF206 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		E981580E2C77A2680039C2FD /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordObjectManager.swift; sourceTree = "<group>"; };
+		E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
+		E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +190,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08E6572E2C7929FA00313FCB /* EditClientView */ = {
+			isa = PBXGroup;
+			children = (
+				08E6572A2C7909FF00313FCB /* EditClientView.swift */,
+				08E6572C2C790B5B00313FCB /* LabeledTextField.swift */,
+				08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */,
+				08E657312C7D08A800313FCB /* LabeledDateField.swift */,
+				08E657332C7D08D800313FCB /* LabeledPickerField.swift */,
+			);
+			path = EditClientView;
+			sourceTree = "<group>";
+		};
+		08E657372C7D204600313FCB /* ModelMock */ = {
+			isa = PBXGroup;
+			children = (
+				08E657382C7D205D00313FCB /* ClientMock.swift */,
+			);
+			path = ModelMock;
+			sourceTree = "<group>";
+		};
 		3B0EE5F52C6A90E600CFC91A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +257,7 @@
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
+				08E657372C7D204600313FCB /* ModelMock */,
 				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
 				3BD40B392C6D4613004048FA /* Examples */,
 				3BD40B362C6D453A004048FA /* Views */,
@@ -281,10 +322,10 @@
 				3BD40B6E2C6E76EC004048FA /* SelectClientView.swift */,
 				DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */,
 				DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */,
-				DCC1BD2F2C77B23900000195 /* AddClientView.swift */,
 				E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */,
 				3B6167FF2C7E43AC00260585 /* SideBarView.swift */,
 				3BFB2D6E2C7E529E00832E90 /* Teste.swift */,
+				DCC1BD2F2C77B23900000195 /* AddClientView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -300,14 +341,15 @@
 		3BD40B3C2C6D4DE8004048FA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				08E6572E2C7929FA00313FCB /* EditClientView */,
 				3BD40B3D2C6D4EFF004048FA /* FolderIconView.swift */,
+				E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
 				6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */,
 				6ABD79722C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift */,
 				3BD40B432C6E6005004048FA /* DocumentGridView.swift */,
 				3BAF94C72C73D37E001FCA45 /* FolderGridView.swift */,
 				3BAF94C92C73D4C1001FCA45 /* FilePDFGridView.swift */,
-				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
 				6ABD79782C7918B600A98BA3 /* EditProcessAuthorComponent.swift */,
 				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
@@ -315,6 +357,10 @@
 				DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */,
 				6ABD79702C6E990F00A98BA3 /* ClientCheckboxIconComponent.swift */,
 				DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */,
+				DCDB963F2C7E61C400817814 /* AddClientForm.swift */,
+				E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */,
+				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
+				08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -465,6 +511,7 @@
 				3BD40B6F2C6E76EC004048FA /* SelectClientView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
+				E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */,
 				3BD40B3B2C6D4624004048FA /* FolderExamples.swift in Sources */,
 				3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */,
 				3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */,
@@ -476,18 +523,21 @@
 				3BFB2D6F2C7E529E00832E90 /* Teste.swift in Sources */,
 				6ABD79752C78FB2100A98BA3 /* NewProcessView.swift in Sources */,
 				3BD40B2F2C6D3FB8004048FA /* ClientManager.swift in Sources */,
+				08E657342C7D08D800313FCB /* LabeledPickerField.swift in Sources */,
 				E93BCFA92C77D6B5007CF206 /* File.swift in Sources */,
 				3BD40B3E2C6D4EFF004048FA /* FolderIconView.swift in Sources */,
 				DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */,
 				3BD40B332C6D41EC004048FA /* ProcessManager.swift in Sources */,
 				3BAF94CC2C73D5BF001FCA45 /* FilePDFIconView.swift in Sources */,
 				3B98F10C2C668B1000C45121 /* LawSuitApp.swift in Sources */,
+				08E6573B2C7E60F900313FCB /* CustomSegmentedControl.swift in Sources */,
 				6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */,
 				DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */,
 				6ABD797B2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift in Sources */,
 				6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */,
 				3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */,
 				3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */,
+				E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */,
 				3BAF94C82C73D37E001FCA45 /* FolderGridView.swift in Sources */,
 				3BD40B312C6D40FE004048FA /* LawyerManager.swift in Sources */,
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
@@ -500,8 +550,11 @@
 				3BAF94CA2C73D4C1001FCA45 /* FilePDFGridView.swift in Sources */,
 				3B6168022C7E45CE00260585 /* Sections.swift in Sources */,
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
+				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
+				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
 				3B0A7AD12C7D16AA005A5946 /* NetworkMonitor.swift in Sources */,
 				E981580F2C77A2680039C2FD /* CloudManager.swift in Sources */,
+				DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */,
 				DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */,
 				3B24D4B02C73781F00CCA763 /* Client.swift in Sources */,
 				3B24D4B22C73781F00CCA763 /* FilePDF.swift in Sources */,
@@ -509,8 +562,11 @@
 				3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */,
 				E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */,
 				3BD40B382C6D454B004048FA /* DocumentView.swift in Sources */,
+				08E657392C7D205D00313FCB /* ClientMock.swift in Sources */,
+				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				6ABD796F2C6E97AD00A98BA3 /* CheckboxView.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
+				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
 				3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */,
 				3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */,
 			);
