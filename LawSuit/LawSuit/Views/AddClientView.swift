@@ -11,16 +11,8 @@ struct AddClientView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @State var fullName: String = ""
-    @State var rg: String = ""
-    @State var affiliation: String = ""
-    @State var nationality: String = ""
-    @State var profession: String = ""
-    @State var cpf: String = ""
-    @State var maritalStatus: String = ""
-    @State var dateOfBirth = Date.now
     @State var stage: Int = 1
-    
+    @State var clientMock = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
     @State var missingInformation = false
     
     var body: some View {
@@ -32,66 +24,36 @@ struct AddClientView: View {
                     .padding(.leading, 2)
                 Spacer()
             }
-            .padding()
             // MARK: ProgressBar
-            VStack() {
-                AddClientProgressView(stage: $stage)
-            }
+            AddClientProgressView(stage: $stage)
             Spacer()
-            HStack {
-                VStack(alignment: .leading){
-                    Group {
-                        Text("Nome Completo")
-                        TextField("Insira seu nome", text: $fullName)
-                            .font(.caption)
-                        Text("RG")
-                        TextField("Insira seu RG", text: $rg)
-                            .font(.caption)
-                        Text("Filiação")
-                        TextField("Insira sua Filiação", text: $affiliation)
-                            .font(.caption)
-                        Text("Nacionalidade")
-                        TextField("Insira sua Nacionalidade", text: $nationality)
-                            .font(.caption)
-                    }
-                    .bold()
-                    .textFieldStyle(.roundedBorder)
-                }
-                VStack(alignment: .leading) {
-                    Group {
-                        Text("Profissão")
-                        TextField("Insira sua profissão", text: $profession)
-                            .font(.caption)
-                        Text("CPF")
-                        TextField("Insira seu CPF", text: $cpf)
-                            .font(.caption)
-                        Text("Estado Civil")
-                        TextField("Insira seu Estado Civil", text: $maritalStatus)
-                            .font(.caption)
-                    }
-                    .bold()
-                    .textFieldStyle(.roundedBorder)
-                    Text("Data de Nascimento")
-                        .bold()
-                    DatePicker(selection: $dateOfBirth, in: ...Date.now, displayedComponents: .date)
-                    {
-                    }
-                    .datePickerStyle(FieldDatePickerStyle())
-                }
-            }
-            .frame(width: 450)
+            AddClientForm(stage: $stage, clientMock: $clientMock)
             Spacer()
             //          MARK: Botões
             HStack {
                 Spacer()
                 Button(action: {
-                    dismiss()
+                    if stage == 1 {
+                        dismiss()
+                    }
+                    else {
+                        if stage > 1 {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                stage -= 1
+                            }
+                        }
+                    }
                 }, label: {
-                    Text("Cancelar")
+                    if stage == 1 {
+                        Text("Cancelar")
+                    }
+                    else {
+                        Text("Voltar")
+                    }
                 })
                 Button(action: {
                     if areFieldsFilled() {
-                        if stage < 4 {
+                        if stage < 3 {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 stage += 1
                             }
@@ -100,7 +62,12 @@ struct AddClientView: View {
                         missingInformation = true
                     }
                 }, label: {
-                    Text("Próximo")
+                    if stage == 3 {
+                        Text("Adicionar Cliente")
+                    }
+                    else {
+                        Text("Próximo")
+                    }
                 })
                 .buttonStyle(.borderedProminent)
                 .alert(isPresented: $missingInformation) {
@@ -109,19 +76,42 @@ struct AddClientView: View {
                           dismissButton: .default(Text("OK")))
                 }
             }
-            .padding()
         }
-        .frame(width: 490, height: 340)
+        .padding()
+        .frame(width: 500)
     }
     
-    // Função para verificar se todos os campos estão preenchidos
+    // Função para verificar se todos os campos estão preenchidos de acordo com o stage
     func areFieldsFilled() -> Bool {
-        return !fullName.isEmpty && !rg.isEmpty && !affiliation.isEmpty &&
-        !nationality.isEmpty && !profession.isEmpty && !cpf.isEmpty &&
-        !maritalStatus.isEmpty
+        if stage == 1 {
+            return !clientMock.name.isEmpty &&
+            !clientMock.rg.isEmpty &&
+            !clientMock.affiliation.isEmpty &&
+            !clientMock.nationality.isEmpty &&
+            !clientMock.occupation.isEmpty &&
+            !clientMock.cpf.isEmpty &&
+            !clientMock.maritalStatus.isEmpty &&
+            !clientMock.birthDate.description.isEmpty
+        }
+        else if stage == 2 {
+            return !clientMock.cep.isEmpty &&
+            !clientMock.address.isEmpty &&
+            !clientMock.addressNumber.isEmpty &&
+            !clientMock.neighborhood.isEmpty &&
+            !clientMock.complement.isEmpty &&
+            !clientMock.city.isEmpty &&
+            !clientMock.state.isEmpty
+        }
+        else if stage == 3 {
+            return !clientMock.email.isEmpty &&
+            !clientMock.telephone.isEmpty &&
+            !clientMock.cellphone.isEmpty
+        }
+        return true
     }
 }
 
 #Preview {
-    AddClientView()
+    @State var clientMock = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
+    return AddClientView(clientMock: clientMock)
 }
