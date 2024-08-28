@@ -12,13 +12,26 @@ import UniformTypeIdentifiers
 
 class FolderViewModel: ObservableObject {
     
-    @Published public var openFolder: Folder?
-    @Published public var path = FolderStack()
+    @Published private var openFolder: Folder?
+    @Published private var path = FolderStack()
     
-    func openFolder(folder: Folder) {
-        withAnimation(.easeIn(duration: 0.1)) {
-            self.path.push(folder)
-            self.openFolder = folder
+    func getOpenFolder() -> Folder? {
+        if let openFolder = openFolder {
+            return openFolder
+        }
+        return nil
+    }
+    
+    func getPath() -> FolderStack {
+        return path
+    }
+    
+    func openFolder(folder: Folder?) {
+        if let folder = folder {
+            withAnimation(.easeIn(duration: 0.1)) {
+                self.path.push(folder)
+                self.openFolder = folder
+            }
         }
     }
     
@@ -29,6 +42,32 @@ class FolderViewModel: ObservableObject {
             self.openFolder = path.top()
         }
     }
+    
+    func resetFolderStack() {
+        withAnimation(.easeIn(duration: 0.1)) {
+            path.reset()
+        }
+    }
+    
+    func importPhoto(imageData: Binding<Data?>) {
+        let openPanel = NSOpenPanel()
+        openPanel.allowedContentTypes = [UTType.image] // Tipos de arquivos permitidos
+        openPanel.allowsMultipleSelection = false // Permitir apenas um arquivo por vez
+        
+        openPanel.begin { response in
+            if response == .OK, let url = openPanel.url {
+                do {
+                    let data = try Data(contentsOf: url)
+                    imageData.wrappedValue = data
+                } catch {
+                    print("Erro ao carregar os dados da imagem: \(error)")
+                }
+            }
+        }
+    }
+
+
+
     
     func importPDF(parentFolder: Folder, coreDataViewModel: CoreDataViewModel) {
         let openPanel = NSOpenPanel()

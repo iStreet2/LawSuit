@@ -11,22 +11,22 @@ struct ContentView: View {
     
     @EnvironmentObject var folderViewModel: FolderViewModel
 //    
-//    //MARK: CoreData
+    //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     @State private var selectedView = SelectedView.clients
     @State private var selectedClient: Client?
+    @State private var addClient = false
     
     var body: some View {   
         HStack {
             SideBarView(selectedView: $selectedView)
-            
             switch selectedView {
             case .clients:
                 NavigationSplitView {
-                    SelectClientView(selectedClient: $selectedClient)
+                    SelectClientView(selectedClient: $selectedClient, addClient: $addClient)
                 } detail: {
                     if let selectedClient = selectedClient {
                         DocumentView(client: selectedClient)
@@ -35,7 +35,6 @@ struct ContentView: View {
                             .foregroundColor(.gray)
                     }
                 }
-                
             case .lawsuits:
                 //MARK: Inserir View de Processos
                 Divider()
@@ -44,7 +43,9 @@ struct ContentView: View {
                 Spacer()
             }
         }
-        
+        .sheet(isPresented: $addClient, content: {
+            AddClientView()
+        })
     }
 }
 

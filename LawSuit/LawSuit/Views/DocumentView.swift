@@ -17,16 +17,17 @@ struct DocumentView: View {
     @Environment(\.managedObjectContext) var context
     
     @ObservedObject var client: Client
-    var a = 3
     
     var body: some View {
         VStack {
-            if let openFolder = folderViewModel.openFolder {
+            ClientInfoView(client: client)
+            Divider()
+            if let openFolder = folderViewModel.getOpenFolder() {
                 DocumentGridView(parentFolder: openFolder)
                     .padding()
                     .contextMenu {
                         Button(action: {
-                            coreDataViewModel.folderManager.createFolder(parentFolder: folderViewModel.openFolder!, name: "Nova Pasta")
+                            coreDataViewModel.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
                         }, label: {
                             Text("Nova Pasta")
                             Image(systemName: "folder")
@@ -37,7 +38,6 @@ struct DocumentView: View {
                             Text("Importar PDF")
                             Image(systemName: "doc")
                         }
-
                     }
             }
         }
@@ -52,14 +52,12 @@ struct DocumentView: View {
             ToolbarItem(placement: .navigation) {
                 Button {
                     folderViewModel.closeFolder()
+                    print(folderViewModel.getPath())
                 } label: {
                     Image(systemName: "chevron.left")
                 }
-                .disabled(folderViewModel.openFolder == client.rootFolder)
+                .disabled(folderViewModel.getPath().count() == 1)
             }
-        }
-        .onAppear {
-            folderViewModel.openFolder(folder: client.rootFolder!)
         }
     }
 }
