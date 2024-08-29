@@ -21,6 +21,14 @@ struct FolderStack: Identifiable, Hashable {
         return itens.count
     }
     
+    func isEmpty() -> Bool {
+        if itens.count == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func top() -> Folder {
         guard let topElement = itens.last else { fatalError("This stack is empty. Top error") }
         return topElement
@@ -33,5 +41,9 @@ struct FolderStack: Identifiable, Hashable {
     
     mutating func push(_ folder: Folder) {
         itens.append(folder)
+    }
+    
+    mutating func reset() {
+        itens.removeAll()
     }
 }
