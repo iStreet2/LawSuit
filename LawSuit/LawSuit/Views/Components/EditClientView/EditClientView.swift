@@ -40,16 +40,16 @@ struct EditClientView: View {
             .labelsHidden()
             
             if userInfoType == 0 {
-                FormsFields(formType: .personalInfo, client: $clientMock)
+                EditClientViewFormsFields(formType: .personalInfo, client: $clientMock)
                     .padding(.vertical, 5)
             } else if userInfoType == 1 {
-                FormsFields(formType: .address, client: $clientMock)
+                EditClientViewFormsFields(formType: .address, client: $clientMock)
                     .padding(.vertical, 5)
             } else if userInfoType == 2 {
-                FormsFields(formType: .contact, client: $clientMock)
+                EditClientViewFormsFields(formType: .contact, client: $clientMock)
                     .padding(.vertical, 5)
             } else {
-                FormsFields(formType: .others, client: $clientMock)
+                EditClientViewFormsFields(formType: .others, client: $clientMock)
                     .padding(.top, 10)
             }
             Spacer()

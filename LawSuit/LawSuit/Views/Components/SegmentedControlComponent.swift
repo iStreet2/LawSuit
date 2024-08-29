@@ -17,17 +17,11 @@ struct SegmentedControlComponent: View {
                 Text(info).tag(info)
             }
         }
-        .pickerStyle(.segmented)
-        .colorMultiply(Color.segmentedControl)
-        
-        
+        .pickerStyle(.segmented).foregroundStyle(Color(.segmentedControl))
+        .pickerStyle(SegmentedPickerStyle()).foregroundColor(Color.orange)
     }
 }
 
 #Preview {
     NewProcessView()
 }
-
-
-//#Preview {
-//    SegmentedControlComponent(selectedOption: <#T##Binding<String>#>, options: <#T##[String]#>, title: <#T##String#>)}

@@ -20,7 +20,8 @@ struct LawSuitApp: App {
         WindowGroup {
             
 //            AddClientView()
-//            ContentView()
+            ContentView()
+//            Teste()
 //            DocumentView()
 //            SelectClientView()
 //                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
@@ -29,18 +30,16 @@ struct LawSuitApp: App {
 //                .environmentObject(dragAndDropViewModel)
 //            CheckboxView()
 //                .preferredColorScheme(.light)
-			  CloudTestingView()
+//			  CloudTestingView()
 
             //EditProcessAuthorComponent()
 
 //            SelectClientView()
-            
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)
                 .environmentObject(dragAndDropViewModel)
                 .environmentObject(networkMonitor)
-//            CheckboxView()
                 .preferredColorScheme(.light)
         }
     }
