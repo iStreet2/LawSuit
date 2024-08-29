@@ -70,7 +70,7 @@ struct ClientMoreInfoView: View {
 
 
 #Preview {
-	ClientMoreInfoView(client: ClientMock(name: "Paulo Sonzzini Ribeiro", occupation: "Developer", rg: "50.276.115-1", cpf: "412.972.543-25", affiliation: "Afiliação Dele", maritalStatus: "Solteiro", nationality: "Brasileiro", birthDate: Date.now, cep: "04149-100", address: "Rua Francisco Maldonado", addressNumber: "467", neighborhood: "Cursino", complement: "Nenhum Complemento", state: "São Paulo", city: "São Paulo", email: "paulo.sonzzini@gmail.com", telephone: "(11)97970-1344", cellphone: "Como é?", age: 21))
+	ClientMoreInfoView(client: ClientMock(name: "Paulo Sonzzini Ribeiro", occupation: "Developer", rg: "50.276.115-1", cpf: "412.972.543-25", affiliation: "Afiliação Dele", maritalStatus: "Solteiro", nationality: "Brasileiro", birthDate: Date.now, cep: "04149-100", address: "Rua Francisco Maldonado", addressNumber: "467", neighborhood: "Cursino", complement: "Nenhum Complemento", state: "São Paulo", city: "São Paulo", email: "paulo.sonzzini@gmail.com", telephone: "(11)97970-1344", cellphone: "Como é?"))
 }
 
 
@@ -100,7 +100,8 @@ extension ClientMoreInfoView {
 				.padding(.bottom, 2)
 			
 			HStack {
-				Text("\(client.age)")
+                //Calma, arrumar com o coredata
+				Text("10")
 					.font(.headline)
 					.bold()
 				Text(formatter.string(from: client.birthDate))

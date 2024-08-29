@@ -29,6 +29,4 @@ struct ClientMock {
     var telephone: String
     var cellphone: String
     //var other: [String:String]
-    
-	var age: Int
 }
