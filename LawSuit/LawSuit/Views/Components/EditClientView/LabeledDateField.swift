@@ -16,9 +16,9 @@ struct LabeledDateField: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .bold()
-                .font(.title3)
+                .font(.body)
                 .foregroundStyle(Color.black)
-            DatePicker("Text", selection: $selectedDate)
+            DatePicker("Text", selection: $selectedDate, displayedComponents: .date)
                 .labelsHidden()
         }
     }

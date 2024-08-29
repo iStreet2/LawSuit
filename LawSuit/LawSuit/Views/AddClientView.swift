@@ -9,12 +9,18 @@ import SwiftUI
 
 struct AddClientView: View {
     
+    //MARK: Environments
     @Environment(\.dismiss) var dismiss
     
-    
+    //MARK: Variáveis de estado
     @State var stage: Int = 1
-    @State var clientMock = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
+    @State var client = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
     @State var missingInformation = false
+    
+    //MARK: CoreData
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
+    
     
     var body: some View {
         VStack() {
@@ -28,7 +34,7 @@ struct AddClientView: View {
             // MARK: ProgressBar
             AddClientProgressView(stage: $stage)
             Spacer()
-            AddClientForm(stage: $stage, clientMock: $clientMock)
+            AddClientForm(stage: $stage, clientMock: $client)
             Spacer()
             //          MARK: Botões
             HStack {
@@ -58,10 +64,35 @@ struct AddClientView: View {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 stage += 1
                             }
+                        } else {
+                            //Lógica para salvar o cliente
+                            coreDataViewModel.clientManager.createClient(
+                                name: client.name,
+                                occupation: client.occupation,
+                                rg: client.rg,
+                                cpf: client.cpf,
+                                /*lawyer: selectedLawyer,*/
+                                affiliation: client.affiliation,
+                                maritalStatus: client.maritalStatus,
+                                nationality: client.nationality,
+                                birthDate: client.birthDate,
+                                cep: client.cep,
+                                address: client.address,
+                                addressNumber: client.addressNumber,
+                                neighborhood: client.neighborhood,
+                                complement: client.complement,
+                                state: client.state,
+                                city: client.city,
+                                email: client.email,
+                                telephone: client.telephone,
+                                cellphone: client.cellphone
+                            )
+                            dismiss()
                         }
                     } else {
                         missingInformation = true
                     }
+                    
                 }, label: {
                     if stage == 3 {
                         Text("Adicionar Cliente")
@@ -86,34 +117,34 @@ struct AddClientView: View {
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage
     func areFieldsFilled() -> Bool {
         if stage == 1 {
-            return !clientMock.name.isEmpty &&
-            !clientMock.rg.isEmpty &&
-            !clientMock.affiliation.isEmpty &&
-            !clientMock.nationality.isEmpty &&
-            !clientMock.occupation.isEmpty &&
-            !clientMock.cpf.isEmpty &&
-            !clientMock.maritalStatus.isEmpty &&
-            !clientMock.birthDate.description.isEmpty
+            return !client.name.isEmpty &&
+            !client.rg.isEmpty &&
+            !client.affiliation.isEmpty &&
+            !client.nationality.isEmpty &&
+            !client.occupation.isEmpty &&
+            !client.cpf.isEmpty &&
+            !client.maritalStatus.isEmpty &&
+            !client.birthDate.description.isEmpty
         }
         else if stage == 2 {
-            return !clientMock.cep.isEmpty &&
-            !clientMock.address.isEmpty &&
-            !clientMock.addressNumber.isEmpty &&
-            !clientMock.neighborhood.isEmpty &&
-            !clientMock.complement.isEmpty &&
-            !clientMock.city.isEmpty &&
-            !clientMock.state.isEmpty
+            return !client.cep.isEmpty &&
+            !client.address.isEmpty &&
+            !client.addressNumber.isEmpty &&
+            !client.neighborhood.isEmpty &&
+            !client.complement.isEmpty &&
+            !client.city.isEmpty &&
+            !client.state.isEmpty
         }
         else if stage == 3 {
-            return !clientMock.email.isEmpty &&
-            !clientMock.telephone.isEmpty &&
-            !clientMock.cellphone.isEmpty
+            return !client.email.isEmpty &&
+            !client.telephone.isEmpty &&
+            !client.cellphone.isEmpty
         }
         return true
     }
 }
 
-#Preview {
-    @State var clientMock = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
-    return AddClientView(clientMock: clientMock)
-}
+//#Preview {
+//    @State var clientMock = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
+//    return AddClientView(clientMock: clientMock)
+//}

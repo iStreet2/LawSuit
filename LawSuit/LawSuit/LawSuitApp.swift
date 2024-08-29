@@ -17,30 +17,13 @@ struct LawSuitApp: App {
     @StateObject var networkMonitor = NetworkMonitor()
     
     var body: some Scene {
-        WindowGroup {
-            
-//            AddClientView(clientMock: ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: ""))
+        WindowGroup {   
             ContentView()
-//            DocumentView()
-//            SelectClientView()
-//                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
-//                .environmentObject(folderViewModel)
-//                .environmentObject(coreDataViewModel)
-//                .environmentObject(dragAndDropViewModel)
-//            CheckboxView()
-//                .preferredColorScheme(.light)
-//			  CloudTestingView()
-
-            //EditProcessAuthorComponent()
-
-//            SelectClientView()
-            
-//                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
-//                .environmentObject(folderViewModel)
-//                .environmentObject(coreDataViewModel)
-//                .environmentObject(dragAndDropViewModel)
-//                .environmentObject(networkMonitor)
-//                 CheckboxView()
+                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
+                .environmentObject(folderViewModel)
+                .environmentObject(coreDataViewModel)
+                .environmentObject(dragAndDropViewModel)
+                .environmentObject(networkMonitor)
                 .preferredColorScheme(.light)
         }
     }
