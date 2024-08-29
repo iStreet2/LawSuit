@@ -12,6 +12,8 @@ struct CheckboxView: View {
     @State var choosedClient: String = ""
     @State var files = ["RG", "CPF"]
     var cliente: ClientCheckboxIconComponent
+    var screen: SizeEnumerator
+
     
     var body: some View {
         
@@ -25,7 +27,7 @@ struct CheckboxView: View {
                 .font(.title3)
                 .bold()
             
-            ClientCheckboxIconComponent(choosedClient: $choosedClient)
+            ClientCheckboxIconComponent(choosedClient: $choosedClient, screen: .big)
             
             Text("Documentos:")
                 .font(.title3)
@@ -56,7 +58,7 @@ struct CheckboxView: View {
 
         }
         }
-        .frame(width: 710, height: 370)
+        .frame(width: 500)
         .padding(15)
         .background(.white)
 
@@ -64,7 +66,8 @@ struct CheckboxView: View {
 }
 
 #Preview {
-    CheckboxView(cliente: ClientCheckboxIconComponent(choosedClient: .constant("kajkjsk")))
+    CheckboxView(cliente: ClientCheckboxIconComponent(choosedClient: .constant("kajkjsk"), screen: .big), screen: .big
+    )
 }
 
 

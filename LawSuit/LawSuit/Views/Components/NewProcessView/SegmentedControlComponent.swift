@@ -24,9 +24,9 @@ struct SegmentedControlComponent: View {
     }
 }
 
-#Preview {
-    NewProcessView()
-}
+//#Preview {
+//    NewProcessView()
+//}
 
 
 //#Preview {

@@ -29,9 +29,9 @@ struct LawSuitApp: App {
 //                .environmentObject(dragAndDropViewModel)
 //            CheckboxView()
 //                .preferredColorScheme(.light)
-			  CloudTestingView()
+//			  CloudTestingView()
 
-            //EditProcessAuthorComponent()
+            NewProcessView(clientMock: ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: ""))
 
 //            SelectClientView()
             
