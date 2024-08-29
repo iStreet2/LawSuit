@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
-		08E657302C792A1200313FCB /* FormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* FormsFields.swift */; };
+		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
 		08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E657312C7D08A800313FCB /* LabeledDateField.swift */; };
 		08E657342C7D08D800313FCB /* LabeledPickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E657332C7D08D800313FCB /* LabeledPickerField.swift */; };
 		08E657392C7D205D00313FCB /* ClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E657382C7D205D00313FCB /* ClientMock.swift */; };
@@ -91,7 +91,7 @@
 /* Begin PBXFileReference section */
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
-		08E6572F2C792A1200313FCB /* FormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormsFields.swift; sourceTree = "<group>"; };
+		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
 		08E657312C7D08A800313FCB /* LabeledDateField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledDateField.swift; sourceTree = "<group>"; };
 		08E657332C7D08D800313FCB /* LabeledPickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledPickerField.swift; sourceTree = "<group>"; };
 		08E657382C7D205D00313FCB /* ClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMock.swift; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 			children = (
 				08E6572A2C7909FF00313FCB /* EditClientView.swift */,
 				08E6572C2C790B5B00313FCB /* LabeledTextField.swift */,
-				08E6572F2C792A1200313FCB /* FormsFields.swift */,
+				08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */,
 				08E657312C7D08A800313FCB /* LabeledDateField.swift */,
 				08E657332C7D08D800313FCB /* LabeledPickerField.swift */,
 			);
@@ -547,7 +547,7 @@
 				E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */,
 				3BD40B382C6D454B004048FA /* DocumentView.swift in Sources */,
 				08E657392C7D205D00313FCB /* ClientMock.swift in Sources */,
-				08E657302C792A1200313FCB /* FormsFields.swift in Sources */,
+				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				6ABD796F2C6E97AD00A98BA3 /* CheckboxView.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,

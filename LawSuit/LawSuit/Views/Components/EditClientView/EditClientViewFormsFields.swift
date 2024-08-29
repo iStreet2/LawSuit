@@ -11,7 +11,7 @@ enum FormType {
     case personalInfo, address, contact, others
 }
 
-struct FormsFields: View {
+struct EditClientViewFormsFields: View {
     @Binding var clientMock: ClientMock
     @State var formType: FormType
     @State var states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
@@ -63,5 +63,5 @@ struct FormsFields: View {
 
 #Preview {
 	@State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn", age: 30)
-    return FormsFields(formType: .personalInfo, client: $clientMock)
+    return EditClientViewFormsFields(formType: .personalInfo, client: $clientMock)
 }

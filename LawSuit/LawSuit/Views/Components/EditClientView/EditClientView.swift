@@ -49,11 +49,11 @@ struct EditClientView: View {
             .labelsHidden()
             Spacer()
             if userInfoType == 0 {
-                FormsFields(formType: .personalInfo, client: $client)
+                EditClientViewFormsFields(formType: .personalInfo, client: $client)
             } else if userInfoType == 1 {
-                FormsFields(formType: .address, client: $client)
+                EditClientViewFormsFields(formType: .address, client: $client)
             } else if userInfoType == 2 {
-                    FormsFields(formType: .others, client: $client)
+                EditClientViewFormsFields(formType: .others, client: $client)
             }
             Spacer()
 
