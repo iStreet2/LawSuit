@@ -9,6 +9,31 @@ import Foundation
 import SwiftUI
 
 enum TagType: CaseIterable, Identifiable {
+	init?(s: String) {
+		switch s.lowercased() {
+		case "trabalhista":
+			self = .trabalhista
+		case "tributário":
+			self = .tributario
+		case "tributario":
+			self = .tributario
+		case "penal":
+			self = .penal
+		case "ambiental":
+			self = .ambiental
+		case "cível":
+			self = .civel
+		case "civel":
+			self = .civel
+		case "falência":
+			self = .falencia
+		case "falencia":
+			self = .falencia
+		default:
+			self = .trabalhista
+		}
+	}
+	
 	var id: Self {
 		return self
 	}
