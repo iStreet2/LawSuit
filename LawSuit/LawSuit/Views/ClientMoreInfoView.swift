@@ -35,71 +35,32 @@ struct ClientMoreInfoView: View {
 	
 	var body: some View {
 		NavigationStack {
-			VStack(alignment: .leading, spacing: 20) {
+			VStack(alignment: .leading, spacing: 17) {
 				HStack(alignment: .top, spacing: 20) {
 					BoxView {
-						//						Image(systemName: "person.fill")
-						//							.resizable()
-						//							.scaledToFit()
-						//							.frame(minWidth: 50, maxWidth: 100)
+//						Image(systemName: "person.fill")
+//							.resizable()
+//							.scaledToFit()
+//							.frame(minWidth: 50, maxWidth: 100)
 						info
 					}
+					.frame(maxHeight: .infinity)
 					BoxView {
 						contact
 					}
+					.frame(maxHeight: .infinity)
 				}
+				.fixedSize(horizontal: false, vertical: true)
+				.frame(minHeight: 160)
+				
 				BoxView {
-					VStack(alignment: .leading) {
-						Text("Endereço")
-							.font(.title2)
-							.bold()
-							.padding(.bottom, 7)
-						
-						Text("CEP")
-							.font(.body)
-							.foregroundStyle(.secondary)
-							.bold()
-						Text(client.cep)
-						
-						Text("Endereço")
-							.font(.body)
-							.foregroundStyle(.secondary)
-							.bold()
-						Text("\(client.address), \(client.addressNumber)")
-						
-						HStack(spacing: 50) {
-							VStack(alignment: .leading) {
-								Text("Bairro")
-									.font(.body)
-									.foregroundStyle(.secondary)
-									.bold()
-								Text(client.neighborhood)
-								
-								Text("Cidade")
-									.font(.body)
-									.foregroundStyle(.secondary)
-									.bold()
-								Text(client.city)
-							}
-							VStack(alignment: .leading) {
-								Text("Complemento")
-									.font(.body)
-									.foregroundStyle(.secondary)
-									.bold()
-								Text(client.complement)
-								
-								Text("Estado")
-									.font(.body)
-									.foregroundStyle(.secondary)
-									.bold()
-								Text(client.state)
-							}
-						}
-					}
+					address
 				}
+				.frame(minHeight: 222)
 			}
+//			.padding(.top)
 		}
-		.frame(maxWidth: .infinity)
+		.frame(maxWidth: .infinity, minHeight: 450, maxHeight: .infinity)  // MARK: Frame da View inteira
 		.onAppear {
 			formatter.dateFormat = "dd/MM/yyy"
 		}
@@ -109,15 +70,32 @@ struct ClientMoreInfoView: View {
 
 
 #Preview {
-	ClientMoreInfoView(client: ClientMock(name: "Paulo", occupation: "Developer", rg: "50.276.115-1", cpf: "412.972.543-25", affiliation: "Afiliação Dele", maritalStatus: "Solteiro", nationality: "Brasileiro", birthDate: Date.now, cep: "04149-100", address: "Rua Francisco Maldonado", addressNumber: "467", neighborhood: "Cursino", complement: "Nenhum Complemento", state: "São Paulo", city: "São Paulo", email: "paulo.sonzzini@gmail.com", telephone: "(11)97970-1344", cellphone: "Como é?", age: 21))
+	ClientMoreInfoView(client: ClientMock(name: "Paulo Sonzzini Ribeiro", occupation: "Developer", rg: "50.276.115-1", cpf: "412.972.543-25", affiliation: "Afiliação Dele", maritalStatus: "Solteiro", nationality: "Brasileiro", birthDate: Date.now, cep: "04149-100", address: "Rua Francisco Maldonado", addressNumber: "467", neighborhood: "Cursino", complement: "Nenhum Complemento", state: "São Paulo", city: "São Paulo", email: "paulo.sonzzini@gmail.com", telephone: "(11)97970-1344", cellphone: "Como é?", age: 21))
 }
+
 
 extension ClientMoreInfoView {
 	private var info: some View {
 		VStack(alignment: .leading) {
-			Text(client.name)
-				.font(.largeTitle)
-				.bold()
+			HStack(alignment: .top) {
+				Text(client.name)
+					.font(.largeTitle)
+					.bold()
+					.padding(0)
+				Button {
+					
+				} label: {
+					Image(systemName: "square.and.pencil")
+						.resizable()
+						.scaledToFit()
+						.frame(height: 27)
+						.foregroundStyle(.secondary)
+				}
+				.buttonStyle(PlainButtonStyle())
+				.padding(0)
+			}
+			.padding(0)
+			
 			Text(client.maritalStatus)
 				.padding(.bottom, 2)
 			
@@ -136,7 +114,7 @@ extension ClientMoreInfoView {
 				.bold()
 				.padding(.bottom, 4)
 			
-			HStack(spacing: 60) {
+			HStack {
 				VStack(alignment: .leading) {
 					Text("RG")
 						.font(.body)
@@ -151,6 +129,7 @@ extension ClientMoreInfoView {
 						.bold()
 					Text(client.affiliation)
 				}
+				Spacer()
 				VStack(alignment: .leading) {
 					Text("CPF")
 						.font(.body)
@@ -199,8 +178,67 @@ extension ClientMoreInfoView {
 				.foregroundStyle(.secondary)
 			Text(client.cellphone)
 				.font(.body)
-				.padding(.bottom, 18)
+				.padding(.bottom, 22)
 		}
 		.padding(.trailing, 30)
+	}
+	
+	private var address: some View {
+		VStack(alignment: .leading) {
+			Text("Endereço")
+				.font(.title2)
+				.bold()
+				.padding(.bottom, 7)
+			
+				Text("CEP")
+					.font(.body)
+					.foregroundStyle(.secondary)
+					.bold()
+				Text(client.cep)
+			.padding(.bottom, 7)
+			
+			Text("Endereço")
+				.font(.body)
+				.foregroundStyle(.secondary)
+				.bold()
+			Text("\(client.address), \(client.addressNumber)")
+				.padding(.bottom, 7)
+			
+			HStack {
+				VStack(alignment: .leading) {
+					Text("Bairro")
+						.font(.body)
+						.foregroundStyle(.secondary)
+						.bold()
+					Text(client.neighborhood)
+						.padding(.bottom, 7)
+					
+					Text("Cidade")
+						.font(.body)
+						.foregroundStyle(.secondary)
+						.bold()
+					Text(client.city)
+				}
+				
+				Spacer()
+				
+				VStack(alignment: .leading) {
+					Text("Complemento")
+						.font(.body)
+						.foregroundStyle(.secondary)
+						.bold()
+					Text(client.complement)
+						.padding(.bottom, 7)
+					
+					Text("Estado")
+						.font(.body)
+						.foregroundStyle(.secondary)
+						.bold()
+					Text(client.state)
+				}
+				
+				Spacer()
+			}
+		}
 	}
 }
