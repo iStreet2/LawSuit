@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0898CE4B2C7FBDED004CC1A5 /* ProcessNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* ProcessNameCell.swift */; };
+		089BDBEA2C7F9B6600A914C9 /* ProcessListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089BDBE92C7F9B6600A914C9 /* ProcessListView.swift */; };
+		089BDBEC2C7F9F7C00A914C9 /* ProcessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089BDBEB2C7F9F7C00A914C9 /* ProcessMock.swift */; };
+		089BDBEE2C7F9FE700A914C9 /* LawyerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089BDBED2C7F9FE700A914C9 /* LawyerMock.swift */; };
+		089BDBF02C7FA3C900A914C9 /* ProcessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089BDBEF2C7FA3C900A914C9 /* ProcessCell.swift */; };
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
 		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
@@ -95,6 +100,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0898CE4A2C7FBDED004CC1A5 /* ProcessNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessNameCell.swift; sourceTree = "<group>"; };
+		089BDBE92C7F9B6600A914C9 /* ProcessListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessListView.swift; sourceTree = "<group>"; };
+		089BDBEB2C7F9F7C00A914C9 /* ProcessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMock.swift; sourceTree = "<group>"; };
+		089BDBED2C7F9FE700A914C9 /* LawyerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawyerMock.swift; sourceTree = "<group>"; };
+		089BDBEF2C7FA3C900A914C9 /* ProcessCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessCell.swift; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
@@ -210,6 +220,8 @@
 			isa = PBXGroup;
 			children = (
 				08E657382C7D205D00313FCB /* ClientMock.swift */,
+				089BDBEB2C7F9F7C00A914C9 /* ProcessMock.swift */,
+				089BDBED2C7F9FE700A914C9 /* LawyerMock.swift */,
 			);
 			path = ModelMock;
 			sourceTree = "<group>";
@@ -343,6 +355,9 @@
 				DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */,
 				DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */,
 				E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */,
+				089BDBE92C7F9B6600A914C9 /* ProcessListView.swift */,
+				089BDBEF2C7FA3C900A914C9 /* ProcessCell.swift */,
+				0898CE4A2C7FBDED004CC1A5 /* ProcessNameCell.swift */,
 				3B6167FF2C7E43AC00260585 /* SideBarView.swift */,
 				3BFB2D6E2C7E529E00832E90 /* Teste.swift */,
 				DCC1BD2F2C77B23900000195 /* AddClientView.swift */,
@@ -525,8 +540,10 @@
 				3BD40B6F2C6E76EC004048FA /* SelectClientView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
+				0898CE4B2C7FBDED004CC1A5 /* ProcessNameCell.swift in Sources */,
 				E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */,
 				3BD40B3B2C6D4624004048FA /* FolderExamples.swift in Sources */,
+				089BDBEC2C7F9F7C00A914C9 /* ProcessMock.swift in Sources */,
 				3B04F11F2C7FC58800991746 /* TelaTemporariaDoPaulo.swift in Sources */,
 				3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */,
 				3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */,
@@ -575,6 +592,7 @@
 				3B24D4B02C73781F00CCA763 /* Client.swift in Sources */,
 				3B24D4B22C73781F00CCA763 /* FilePDF.swift in Sources */,
 				3B24D4B42C73781F00CCA763 /* Update.swift in Sources */,
+				089BDBEA2C7F9B6600A914C9 /* ProcessListView.swift in Sources */,
 				3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */,
 				E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */,
 				3BD40B382C6D454B004048FA /* DocumentView.swift in Sources */,
@@ -582,6 +600,8 @@
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				6ABD796F2C6E97AD00A98BA3 /* CheckboxView.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
+				089BDBF02C7FA3C900A914C9 /* ProcessCell.swift in Sources */,
+				089BDBEE2C7F9FE700A914C9 /* LawyerMock.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
 				3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */,
 				3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */,
