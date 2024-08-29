@@ -12,7 +12,7 @@ import Foundation
 struct ProcessMock2 {
     var processNumber: Int
     var court: String
-
+}
 struct ProcessMock: Identifiable {
     var id: String
     var title: String
