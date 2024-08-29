@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0898CE4B2C7FBDED004CC1A5 /* ProcessNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* ProcessNameCell.swift */; };
 		089BDBEA2C7F9B6600A914C9 /* ProcessListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089BDBE92C7F9B6600A914C9 /* ProcessListView.swift */; };
 		089BDBEC2C7F9F7C00A914C9 /* ProcessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089BDBEB2C7F9F7C00A914C9 /* ProcessMock.swift */; };
 		089BDBEE2C7F9FE700A914C9 /* LawyerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089BDBED2C7F9FE700A914C9 /* LawyerMock.swift */; };
@@ -92,6 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0898CE4A2C7FBDED004CC1A5 /* ProcessNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessNameCell.swift; sourceTree = "<group>"; };
 		089BDBE92C7F9B6600A914C9 /* ProcessListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessListView.swift; sourceTree = "<group>"; };
 		089BDBEB2C7F9F7C00A914C9 /* ProcessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMock.swift; sourceTree = "<group>"; };
 		089BDBED2C7F9FE700A914C9 /* LawyerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawyerMock.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */,
 				089BDBE92C7F9B6600A914C9 /* ProcessListView.swift */,
 				089BDBEF2C7FA3C900A914C9 /* ProcessCell.swift */,
+				0898CE4A2C7FBDED004CC1A5 /* ProcessNameCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				3BD40B6F2C6E76EC004048FA /* SelectClientView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
+				0898CE4B2C7FBDED004CC1A5 /* ProcessNameCell.swift in Sources */,
 				E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */,
 				3BD40B3B2C6D4624004048FA /* FolderExamples.swift in Sources */,
 				089BDBEC2C7F9F7C00A914C9 /* ProcessMock.swift in Sources */,

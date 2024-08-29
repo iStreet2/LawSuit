@@ -23,11 +23,11 @@ struct ProcessCell: View {
                     .font(.callout)
                     .foregroundStyle(Color(.gray))
             }
-            .frame(width: 195)
-            .border(Color.black)
-            Spacer()
+            .padding(.trailing)
+//            .frame(width: 195)
+//            Spacer()
             TagViewComponent(tagType: process.tagType)
-            Spacer()
+//            Spacer()
 
             Group {
                 Text(process.lastMovement)
