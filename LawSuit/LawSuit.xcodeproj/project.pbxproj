@@ -84,6 +84,7 @@
 		E9A949BA2C7CFB310006BC99 /* RecordObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */; };
 		E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */; };
 		E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */; };
+		E9E323E22C7FB6F3000BA6FD /* ClientMoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E323E12C7FB6F3000BA6FD /* ClientMoreInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +187,7 @@
 		E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordObjectManager.swift; sourceTree = "<group>"; };
 		E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
 		E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponent.swift; sourceTree = "<group>"; };
+		E9E323E12C7FB6F3000BA6FD /* ClientMoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMoreInfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,6 +376,7 @@
 				DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */,
 				DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */,
 				E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */,
+				E9E323E12C7FB6F3000BA6FD /* ClientMoreInfoView.swift */,
 				089BDBE92C7F9B6600A914C9 /* ProcessListView.swift */,
 				089BDBEF2C7FA3C900A914C9 /* ProcessCell.swift */,
 				0898CE4A2C7FBDED004CC1A5 /* ProcessNameCell.swift */,
@@ -569,6 +572,7 @@
 			files = (
 				6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */,
 				3BD40B6F2C6E76EC004048FA /* SelectClientView.swift in Sources */,
+				E9E323E22C7FB6F3000BA6FD /* ClientMoreInfoView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
 				0898CE4B2C7FBDED004CC1A5 /* ProcessNameCell.swift in Sources */,
