@@ -49,22 +49,26 @@ class FolderViewModel: ObservableObject {
         }
     }
     
-    func importPhoto(imageData: Binding<Data?>) {
+    func importPhoto(completion: @escaping (Data?) -> Void) {
         let openPanel = NSOpenPanel()
-        openPanel.allowedContentTypes = [UTType.image] // Tipos de arquivos permitidos
-        openPanel.allowsMultipleSelection = false // Permitir apenas um arquivo por vez
+        openPanel.allowedContentTypes = [UTType.image]
+        openPanel.allowsMultipleSelection = false
         
         openPanel.begin { response in
             if response == .OK, let url = openPanel.url {
                 do {
                     let data = try Data(contentsOf: url)
-                    imageData.wrappedValue = data
+                    completion(data)
                 } catch {
                     print("Erro ao carregar os dados da imagem: \(error)")
+                    completion(nil)
                 }
+            } else {
+                completion(nil)
             }
         }
     }
+
 
 
 

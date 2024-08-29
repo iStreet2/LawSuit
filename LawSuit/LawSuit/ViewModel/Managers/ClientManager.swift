@@ -107,6 +107,11 @@ class ClientManager {
         saveContext()
     }
     
+    func addPhotoOnClient(client: Client, photo: Data) {
+        client.photo = photo
+        saveContext()
+    }
+    
     func saveContext() {
         do {
             try context.save()

@@ -16,9 +16,6 @@ struct ClientInfoView: View {
 
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
-   
- 
-    //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     
@@ -28,15 +25,35 @@ struct ClientInfoView: View {
                let nsImage = NSImage(data: photoData) {
                 Image(nsImage: nsImage)
                     .resizable()
-                    .scaledToFit()
                     .frame(width: 80, height: 80)
-            } else {
-                Rectangle()
-                    .foregroundColor(.gray)
-                    .frame(width: 80, height: 80)
-                    .onTapGesture {
-                        folderViewModel.importPhoto(imageData: $imageData)
+                    .onTapGesture(count: 2) {
+                        withAnimation() {
+                            folderViewModel.importPhoto { data in
+                                if let data = data {
+                                    imageData = data
+                                    coreDataViewModel.clientManager.addPhotoOnClient(client: client, photo: data)
+                                    client.photo = data
+                                }
+                            }
+                        }
                     }
+            } else {
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.gray)
+                        .frame(width: 80, height: 80)
+                    Image(systemName: "square.and.arrow.down")
+                }
+                .onTapGesture(count: 2) {
+                    withAnimation {
+                        folderViewModel.importPhoto { data in
+                            if let data = data {
+                                imageData = data
+                                coreDataViewModel.clientManager.addPhotoOnClient(client: client, photo: data)
+                            }
+                        }
+                    }
+                }
             }
             VStack(alignment: .leading) {
                 HStack {
@@ -44,16 +61,16 @@ struct ClientInfoView: View {
                         .font(.title)
                         .bold()
                     Text("\(client.age) anos")
-                    //Botão de editar cliente, ainda nao temos a view
-                    //            Button {
-                    //                /
-                    //            } label: {
-                    //                Image(systemName: "square.and.pencil")
-                    //                    .font(.system(size: 18))
-                    //            }
+                    Button {
+                        // Ação para editar o cliente
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                            .font(.system(size: 18))
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
                 NavigationLink {
-                    //Tela que o paulo esta fazendo
+                    // Tela temporária
                     TelaTemporariaDoPaulo()
                 } label: {
                     Text("Mais informações")
@@ -68,6 +85,7 @@ struct ClientInfoView: View {
         .padding()
     }
 }
+
 
 //#Preview {
 //    ClientInfoView()
