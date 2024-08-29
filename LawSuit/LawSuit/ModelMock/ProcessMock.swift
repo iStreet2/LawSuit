@@ -8,6 +8,7 @@
 import Foundation
 
 struct ProcessMock {
-    var processNumber: Int
+    var processNumber: String
     var court: String
+    var defendant: String
 }

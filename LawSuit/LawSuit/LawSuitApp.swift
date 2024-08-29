@@ -31,9 +31,9 @@ struct LawSuitApp: App {
 //                .preferredColorScheme(.light)
 //			  CloudTestingView()
 
-            NewProcessView(clientMock: ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: ""))
+            NewProcessView(clientMock: ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: ""), processMock: ProcessMock(processNumber: "", court: "", defendant: ""))
 
-//            SelectClientView()
+//            ProcessDistributedView(processMock: ProcessMock(processNumber: "", court: "", defendant: "deudeh"))
             
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
