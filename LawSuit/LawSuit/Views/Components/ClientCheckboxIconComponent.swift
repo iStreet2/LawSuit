@@ -15,15 +15,14 @@ struct ClientCheckboxIconComponent: View {
     @State var isEditing = false
     @State var showingDetail = false
     var screen: SizeEnumerator
-    
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        
         VStack{
             HStack{
                 SearchBarCheckboxComponent(searchText: $searchQuery)
                 Button(action: {
-                    showingDetail = false
+                    dismiss()
                 }, label: {
                     Image(systemName: "xmark.circle")
                 })
@@ -49,12 +48,11 @@ struct ClientCheckboxIconComponent: View {
         )
     }
     
-    
     var filteredClients : [String] {
         if searchQuery.isEmpty {
             return clients
         } else {
-            return clients.filter({ $0.contains(searchQuery)})
+            return clients.filter({ $0.localizedCaseInsensitiveContains(searchQuery)})
         }
     }
 }

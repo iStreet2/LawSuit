@@ -30,17 +30,11 @@ struct EditProcessAuthorComponent: View {
                 })
                 .buttonStyle(.borderless)
                 .foregroundStyle(.blue)
-            }
-                if showingDetail {
+                .sheet(isPresented: $showingDetail) {
                     ClientCheckboxIconComponent(choosedClient: $choosedClient, screen: .small)
-                    
                 }
-               
-                
-                
-            
-            
-            
+            }
+
             Text(choosedClient)
         }
 //        .padding(200)
