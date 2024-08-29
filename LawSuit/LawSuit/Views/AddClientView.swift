@@ -14,7 +14,7 @@ struct AddClientView: View {
     
     //MARK: Variáveis de estado
     @State var stage: Int = 1
-    @State var client = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
+    @State var client = ClientMock()
     @State var missingInformation = false
     
     //MARK: CoreData

@@ -56,6 +56,11 @@ struct ProcessListView: View {
                     }
                 }
             }
+            .toolbar {
+                ToolbarItem {
+                    Text("")
+                }
+            }
         }
 }
 

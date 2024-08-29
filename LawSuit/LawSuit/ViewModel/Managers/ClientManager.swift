@@ -19,33 +19,30 @@ class ClientManager {
     
     func createClient(
         name: String,
-        occupation: String?,
-        rg: String?,
-        cpf: String?,
-        /*lawyer: Lawyer,*/
-        affiliation: String?,
-        maritalStatus: String?,
-        nationality: String?,
-        birthDate: Date?,
-        cep: String?,
-        address: String?,
-        addressNumber: String?,
-        neighborhood: String?,
-        complement: String?,
-        state: String?,
-        city: String?,
-        email: String?,
-        telephone: String?,
-        cellphone: String?
+        occupation: String,
+        rg: String,
+        cpf: String,
+        affiliation: String,
+        maritalStatus: String,
+        nationality: String,
+        birthDate: Date,
+        cep: String,
+        address: String,
+        addressNumber: String,
+        neighborhood: String,
+        complement: String,
+        state: String,
+        city: String,
+        email: String,
+        telephone: String,
+        cellphone: String
     ) {
         let client = Client(context: context)
-        // Relacionamentos
-        //client.parentLawyer = lawyer
         
         // Criação da pasta raiz
         let folder = Folder(context: context)
-        folder.name = "\(client.name ?? "Sem nome")"
-        folder.id = "root\(client.name ?? "Sem nome")"
+        folder.name = "\(name)"
+        folder.id = "root\(name)"
         
         client.rootFolder = folder
         folder.parentClient = client
@@ -60,9 +57,7 @@ class ClientManager {
         client.maritalStatus = maritalStatus
         client.nationality = nationality
         client.birthDate = birthDate
-        if let birthDate = birthDate {
-            client.age = Int64(calculateAge(from: birthDate))
-        }
+        client.age = Int64(calculateAge(from: birthDate))
         client.cep = cep
         client.address = address
         client.addressNumber = addressNumber
@@ -70,13 +65,13 @@ class ClientManager {
         client.complement = complement
         client.state = state
         client.city = city
-        
         client.email = email
         client.telephone = telephone
         client.cellphone = cellphone
         
         saveContext()
     }
+
     
     func testClient() {
         let client = Client(context: context)
@@ -85,8 +80,8 @@ class ClientManager {
         client.age = Int64(20)
         
         let rootFolder = Folder(context: context)
-        rootFolder.name = "\(client.name ?? "Sem Nome")"
-        rootFolder.id = "root\(client.name ?? "Sem nome")"
+        rootFolder.name = "\(client.name)"
+        rootFolder.id = "root\(client.name)"
         rootFolder.parentClient = client
         
         client.rootFolder = rootFolder
@@ -95,17 +90,58 @@ class ClientManager {
 //		 return client
     }
     
-    func deleteClient(client: Client, lawyer: Lawyer) {
+    func deleteClient(client: Client/*, lawyer: Lawyer*/) {
         context.delete(client)
-        lawyer.removeFromClients(client)
+        saveContext()
+//        lawyer.removeFromClients(client)
     }
     
-    func editClient(client: Client, name: String, age: Int64, photo: Data) {
+    func editClient(
+        client: Client,
+        name: String,
+        occupation: String,
+        rg: String,
+        cpf: String,
+        affiliation: String,
+        maritalStatus: String,
+        nationality: String,
+        birthDate: Date,
+        cep: String,
+        address: String,
+        addressNumber: String,
+        neighborhood: String,
+        complement: String,
+        state: String,
+        city: String,
+        email: String,
+        telephone: String,
+        cellphone: String
+    ) {
+        // Atualiza os atributos do cliente
         client.name = name
-        client.age = age
-        client.photo = photo
+        client.occupation = occupation
+        client.rg = rg
+        client.cpf = cpf
+        client.affiliation = affiliation
+        client.maritalStatus = maritalStatus
+        client.nationality = nationality
+        client.birthDate = birthDate
+        client.cep = cep
+        client.address = address
+        client.addressNumber = addressNumber
+        client.neighborhood = neighborhood
+        client.complement = complement
+        client.state = state
+        client.city = city
+        client.email = email
+        client.telephone = telephone
+        client.cellphone = cellphone
+        
+        // Salva o contexto para persistir as mudanças
         saveContext()
     }
+
+
     
     func addPhotoOnClient(client: Client, photo: Data) {
         client.photo = photo

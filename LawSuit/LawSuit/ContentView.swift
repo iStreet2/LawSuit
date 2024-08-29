@@ -39,7 +39,7 @@ struct ContentView: View {
                 //MARK: Inserir View de Processos
                 Divider()
                 Spacer()
-                Text("Aqui sera a view de processos")
+                ProcessListView()
                 Spacer()
             }
         }
