@@ -23,7 +23,7 @@ struct LabeledTextField: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .bold()
-                .font(.title3)
+                .font(.body)
                 .foregroundStyle(Color.black)
             TextField(placeholder, text: $textfieldText)
                 .textFieldStyle(.roundedBorder)

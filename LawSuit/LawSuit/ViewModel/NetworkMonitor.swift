@@ -12,7 +12,7 @@ class NetworkMonitor: ObservableObject {
     
     private let networkMonitor = NWPathMonitor()
     private let workerQueue = DispatchQueue(label: "Monitor")
-    @Published var isConnected = false
+    var isConnected = false
     
     init() {
         networkMonitor.pathUpdateHandler = { path in

@@ -13,9 +13,9 @@ enum FormType {
 
 struct EditClientViewFormsFields: View {
     @Binding var clientMock: ClientMock
-    @State var formType: FormType
-    @State var states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
-    @State var cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
+    let formType: FormType
+    let states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
+    let cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
     
     
     init(formType: FormType = .personalInfo, client: Binding<ClientMock>) {
@@ -37,7 +37,6 @@ struct EditClientViewFormsFields: View {
                     LabeledTextField(label: "Estado Civil", placeholder: "Estado Civil", textfieldText: $clientMock.maritalStatus)
                 }
             }
-            .padding(.vertical, 5)
             
         } else if formType == .address {
             VStack(spacing: 10) {
@@ -55,13 +54,29 @@ struct EditClientViewFormsFields: View {
                     LabeledPickerField(selectedOption: $clientMock.city, arrayInfo: cities, label: "Cidade")
                 }
             }
-  
+            
+            
+        } else if formType == .contact {
+            VStack(spacing: 10) {
+                LabeledTextField(label: "E-mail", placeholder: "E-mail", textfieldText: $clientMock.email)
+                HStack {
+                    LabeledTextField(label: "Telefone", placeholder: "Telefone", textfieldText: $clientMock.telephone)
+                    LabeledTextField(label: "Celular", placeholder: "Celular", textfieldText: $clientMock.cellphone)
+                }
+            }
+        } else {
+            HStack {
+                Text("Adicionar novo campo")
+                Image(systemName: "plus")
+            }
+            .font(.title3)
+            .foregroundStyle(Color(.gray))
         }
-
+        
     }
 }
 
 #Preview {
-	@State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn", age: 30)
+    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
     return EditClientViewFormsFields(formType: .personalInfo, client: $clientMock)
 }
