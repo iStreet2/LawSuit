@@ -29,12 +29,11 @@ struct SearchBarCheckboxComponent: View {
                 .textFieldStyle(.plain)
                 .onTapGesture {
 
-                }   
-
-                
+                }
             }
+            
             .padding(7)
-            .frame(width: 550, height: 36)
+//            .frame(width: 550, height: 36)
             .cornerRadius(10) /// make the background rounded
             .overlay( /// apply a rounded border
                 RoundedRectangle(cornerRadius: 7)

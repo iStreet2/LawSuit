@@ -7,93 +7,62 @@
 
 import SwiftUI
 
+enum ProcessType: String {
+    case distributed = "Distribuído"
+    case notDistributed = "Não Distribuído"
+}
+
 struct NewProcessView: View {
     
-    @State var textInput = ""
-    @State private var birthDate = Date.now
-    @State private var selectedOption: String = "Distribuído"
-    
+    @State var processType: ProcessType = .distributed
+    @State var processTypeString: String = ""
+
+    @State var clientMock: ClientMock
+    @State var processMock: ProcessMock
+
     
     var body: some View {
+        
         VStack(alignment: .leading){
             Text("Novo Processo")
                 .bold()
                 .font(.title)
             
             VStack(alignment: .leading) {
+                
                 SegmentedControlComponent(
-                    selectedOption: $selectedOption,
-                    infos: ["Distribuído", "Não Distribuído"]                )
+                    selectedOption: $processTypeString, infos: ["Distribuído","Não Distribuído"])
                 .frame(width: 150)
             }
-            .padding()
             
-            Text("Nº do processo")
-                .bold()
-            TextField("Nº do processo", text: $textInput)
-                .textFieldStyle(.roundedBorder)
-            
-            
-            Text("Vara")
-                .bold()
-            TextField("Vara", text: $textInput)
-                .textFieldStyle(.roundedBorder)
-            
-            
-            
-            HStack {
-                VStack(alignment: .leading){
-                    EditProcessAuthorComponent()
-                    Text("Área")
-                        .bold()
-                }
-                
-                Spacer()
-                
-                VStack(alignment: .leading){
-                    HStack {
-                        Text("Réu ")
-                            .bold()
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                            Text("Atribuir Cliente")
-                        })
-                        .buttonStyle(.borderless)
-                        .foregroundStyle(.blue)
-                    }
-                    
-                    TextField("Réu", text: $textInput)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 200)
-                    
-                    Text("Data de distribuição ")
-                        .bold()
-                    DatePicker(selection: $birthDate, in: ...Date.now, displayedComponents: .date) { }
-                        .datePickerStyle(.field)
-                }
-                
+            if processType == .distributed {
+                ProcessDistributedView(processMock: processMock, clientMock: clientMock)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if processType == .notDistributed {
+                ProcessNotDistributedView(clientMock: clientMock, processMock: processMock)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            HStack {
-                
-                Spacer()
-                
-                Button {
-                } label: {
-                    Text("Cancelar")
-                }
-                Button {
-                    
-                } label: {
-                    Text("Próximo")
-                }
-                .buttonStyle(.borderedProminent)
-                
+        }
+        .frame(width: 400, height: 300)
+        .padding()
+        .onAppear {
+            processTypeString = processType.rawValue
+        }
+        .onChange(of: processTypeString, perform: { newValue in
+            if newValue == "Distribuído" {
+                processType = .distributed
+            } else {
+                processType = .notDistributed
             }
-            
-        }        .padding(100)
+        })
         
     }
+        
+
 }
 
 #Preview {
-    NewProcessView()
+    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
+    @State var processMock = ProcessMock(processNumber: "928383", court: "jshdhd", defendant: "shaduhe")
+    return NewProcessView(clientMock: clientMock, processMock: processMock)
 }

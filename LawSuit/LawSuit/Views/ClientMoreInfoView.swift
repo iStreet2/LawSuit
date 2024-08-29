@@ -29,49 +29,60 @@ struct BoxView<Content: View>: View {
 
 struct ClientMoreInfoView: View {
 	
-	let client: ClientMock
+	@ObservedObject var client: Client
+    @Environment(\.dismiss) var dismiss
 	
 	let formatter = DateFormatter()
 	
-	var body: some View {
-		NavigationStack {
-			VStack(alignment: .leading, spacing: 17) {
-				HStack(alignment: .top, spacing: 20) {
-					BoxView {
-//						Image(systemName: "person.fill")
-//							.resizable()
-//							.scaledToFit()
-//							.frame(minWidth: 50, maxWidth: 100)
-						info
-					}
-					.frame(maxHeight: .infinity)
-					BoxView {
-						contact
-					}
-					.frame(maxHeight: .infinity)
-				}
-				.fixedSize(horizontal: false, vertical: true)
-				.frame(minHeight: 160)
-				
-				BoxView {
-					address
-				}
-				.frame(minHeight: 222)
-			}
-//			.padding(.top)
-		}
-		.frame(maxWidth: .infinity, minHeight: 450, maxHeight: .infinity)  // MARK: Frame da View inteira
-		.onAppear {
-			formatter.dateFormat = "dd/MM/yyy"
-		}
-		.padding()
-	}
+    var body: some View {
+        
+        VStack(alignment: .leading, spacing: 17) {
+            HStack(alignment: .top, spacing: 20) {
+                BoxView {
+                    //						Image(systemName: "person.fill")
+                    //							.resizable()
+                    //							.scaledToFit()
+                    //							.frame(minWidth: 50, maxWidth: 100)
+                    info
+                }
+                .frame(maxHeight: .infinity)
+                BoxView {
+                    contact
+                }
+                .frame(maxHeight: .infinity)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(minHeight: 160)
+            
+            BoxView {
+                address
+            }
+            .frame(minHeight: 222)
+            Spacer()
+        }
+        //			.padding(.top)
+        .toolbar {
+            ToolbarItem(placement: .navigation) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+                
+            }
+        }
+        .frame(maxWidth: .infinity, minHeight: 450, maxHeight: .infinity)  // MARK: Frame da View inteira
+        .onAppear {
+            formatter.dateFormat = "dd/MM/yyy"
+        }
+        .padding()
+    }
 }
 
 
-#Preview {
-	ClientMoreInfoView(client: ClientMock(name: "Paulo Sonzzini Ribeiro", occupation: "Developer", rg: "50.276.115-1", cpf: "412.972.543-25", affiliation: "Afiliação Dele", maritalStatus: "Solteiro", nationality: "Brasileiro", birthDate: Date.now, cep: "04149-100", address: "Rua Francisco Maldonado", addressNumber: "467", neighborhood: "Cursino", complement: "Nenhum Complemento", state: "São Paulo", city: "São Paulo", email: "paulo.sonzzini@gmail.com", telephone: "(11)97970-1344", cellphone: "Como é?", age: 21))
-}
+//#Preview {
+//	ClientMoreInfoView(client: ClientMock(name: "Paulo Sonzzini Ribeiro", occupation: "Developer", rg: "50.276.115-1", cpf: "412.972.543-25", affiliation: "Afiliação Dele", maritalStatus: "Solteiro", nationality: "Brasileiro", birthDate: Date.now, cep: "04149-100", address: "Rua Francisco Maldonado", addressNumber: "467", neighborhood: "Cursino", complement: "Nenhum Complemento", state: "São Paulo", city: "São Paulo", email: "paulo.sonzzini@gmail.com", telephone: "(11)97970-1344", cellphone: "Como é?"))
+//}
 
 
 extension ClientMoreInfoView {
@@ -100,7 +111,8 @@ extension ClientMoreInfoView {
 				.padding(.bottom, 2)
 			
 			HStack {
-				Text("\(client.age)")
+                //Calma, arrumar com o coredata
+                Text("\(client.age)")
 					.font(.headline)
 					.bold()
 				Text(formatter.string(from: client.birthDate))

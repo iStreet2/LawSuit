@@ -8,17 +8,48 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+    
+    @EnvironmentObject var folderViewModel: FolderViewModel
+//    
+    //MARK: CoreData
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
+    
+    @State private var selectedView = SelectedView.clients
+    @State private var selectedClient: Client?
+    @State private var addClient = false
+    
+    var body: some View {   
+        HStack {
+            SideBarView(selectedView: $selectedView)
+            switch selectedView {
+            case .clients:
+                NavigationSplitView {
+                    SelectClientView(selectedClient: $selectedClient, addClient: $addClient)
+                } detail: {
+                    if let selectedClient = selectedClient {
+                        DocumentView(client: selectedClient)
+                    } else {
+                        Text("Selecione um cliente")
+                            .foregroundColor(.gray)
+                    }
+                }
+            case .lawsuits:
+                //MARK: Inserir View de Processos
+                Divider()
+                Spacer()
+                ProcessListView()
+                Spacer()
+            }
         }
-        .padding()
+        .sheet(isPresented: $addClient, content: {
+            AddClientView()
+        })
     }
 }
 
-#Preview {
-    ContentView()
+enum SelectedView: String {
+    case clients = "clients"
+    case lawsuits = "lawsuits"
 }

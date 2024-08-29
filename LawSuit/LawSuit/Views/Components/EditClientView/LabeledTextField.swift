@@ -12,18 +12,14 @@ struct LabeledTextField: View {
     let placeholder: String
     @Binding var textfieldText: String
     
-    init(label: String, placeholder: String, textfieldText: Binding<String>) {
-        self.label = label
-        self.placeholder = placeholder
-        self._textfieldText = textfieldText
-    }
+    
     
     var body: some View {
         
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .bold()
-                .font(.title3)
+                .font(.body)
                 .foregroundStyle(Color.black)
             TextField(placeholder, text: $textfieldText)
                 .textFieldStyle(.roundedBorder)
@@ -31,8 +27,8 @@ struct LabeledTextField: View {
     }
 }
 
-#Preview {
-    @State var text: String = ""
-    
-    return LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $text)
-}
+//#Preview {
+//    @State var text: String = ""
+//    
+//    return LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $text)
+//}

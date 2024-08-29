@@ -3,6 +3,7 @@
 //  LawSuit
 //
 //  Created by Paulo Sonzzini Ribeiro de Souza on 29/08/24.
+//  Created by Giovanna Micher on 28/08/24.
 //
 
 import Foundation

@@ -9,6 +9,11 @@ import SwiftUI
 
 struct SelectClientView: View {
     
+    //MARK: Variáveis de estado
+    @Binding var selectedClient: Client?
+    @Binding var addClient: Bool
+    
+    //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     
     //MARK: CoreData
@@ -16,27 +21,41 @@ struct SelectClientView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(clients) { client in
-                    NavigationLink {
-                        DocumentView(client: client)
-                            .padding()
-                    } label: {
-                        Text(client.name ?? "Sem nome")
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Clientes")
+                    .font(.title)
+                    .bold()
+                Button(action: {
+                    withAnimation(.bouncy) {
+                        addClient.toggle()
                     }
-                }
+                }, label: {
+                    Image(systemName: "plus")
+                })
             }
-            
-        } detail : {
-            Text("Nenhum cliente selecionado")
+            List(clients, id: \.id) { client in
+                Button(action: {
+                    selectedClient = client
+                    folderViewModel.resetFolderStack()
+                    folderViewModel.openFolder(folder: client.rootFolder)
+                    
+                }, label: {
+                    Text(client.name ?? "Cliente Sem Nome")
+                })
+            }
         }
+        .padding()
+        .background(.white)
         .onAppear {
             //MARK: APENAS PARA TESTES, RETIRAR DEPOIS
-            if clients.isEmpty {
-                coreDataViewModel.clientManager.testClient()
-            }
+//            if clients.isEmpty {
+//                coreDataViewModel.clientManager.testClient()
+//            }
         }
     }
+        
 }
+
