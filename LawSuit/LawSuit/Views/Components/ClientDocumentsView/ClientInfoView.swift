@@ -12,6 +12,7 @@ struct ClientInfoView: View {
     
     //MARK: Variáveis de estado:
     @ObservedObject var client: Client
+    @State var editClient = false
     @State var imageData: Data?
 
     //MARK: ViewModels
@@ -57,12 +58,13 @@ struct ClientInfoView: View {
             }
             VStack(alignment: .leading) {
                 HStack {
-                    Text(client.name ?? "Cliente sem nome")
+                    Text(client.name)
                         .font(.title)
                         .bold()
                     Text("\(client.age) anos")
                     Button {
                         // Ação para editar o cliente
+                        editClient.toggle()
                     } label: {
                         Image(systemName: "square.and.pencil")
                             .font(.system(size: 18))
@@ -71,7 +73,8 @@ struct ClientInfoView: View {
                 }
                 NavigationLink {
                     // Tela temporária
-                    TelaTemporariaDoPaulo()
+                    ClientMoreInfoView(client: client)
+//                    TelaTemporariaDoPaulo()
                 } label: {
                     Text("Mais informações")
                         .font(.subheadline)
@@ -82,6 +85,9 @@ struct ClientInfoView: View {
             }
             Spacer()
         }
+        .sheet(isPresented: $editClient, content: {
+            EditClientView(client: client)
+        })
         .padding()
     }
 }

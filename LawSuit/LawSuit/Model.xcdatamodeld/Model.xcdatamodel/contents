@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Client" representedClassName="Client" syncable="YES">
-        <attribute name="address" optional="YES" attributeType="String"/>
-        <attribute name="addressNumber" optional="YES" attributeType="String"/>
-        <attribute name="affiliation" optional="YES" attributeType="String"/>
+        <attribute name="address" attributeType="String"/>
+        <attribute name="addressNumber" attributeType="String"/>
+        <attribute name="affiliation" attributeType="String"/>
         <attribute name="age" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="birthDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="cellphone" optional="YES" attributeType="String"/>
-        <attribute name="cep" optional="YES" attributeType="String"/>
-        <attribute name="city" optional="YES" attributeType="String"/>
-        <attribute name="complement" optional="YES" attributeType="String"/>
-        <attribute name="cpf" optional="YES" attributeType="String"/>
-        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="birthDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="cellphone" attributeType="String"/>
+        <attribute name="cep" attributeType="String"/>
+        <attribute name="city" attributeType="String"/>
+        <attribute name="complement" attributeType="String"/>
+        <attribute name="cpf" attributeType="String"/>
+        <attribute name="email" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
-        <attribute name="maritalStatus" optional="YES" attributeType="String"/>
+        <attribute name="maritalStatus" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <attribute name="nationality" optional="YES" attributeType="String"/>
-        <attribute name="neighborhood" optional="YES" attributeType="String"/>
-        <attribute name="occupation" optional="YES" attributeType="String"/>
+        <attribute name="nationality" attributeType="String"/>
+        <attribute name="neighborhood" attributeType="String"/>
+        <attribute name="occupation" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
-        <attribute name="rg" optional="YES" attributeType="String"/>
-        <attribute name="state" optional="YES" attributeType="String"/>
-        <attribute name="telephone" optional="YES" attributeType="String"/>
+        <attribute name="rg" attributeType="String"/>
+        <attribute name="state" attributeType="String"/>
+        <attribute name="telephone" attributeType="String"/>
         <relationship name="lawsuits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="parentAutor" inverseEntity="Lawsuit"/>
         <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentClient" inverseEntity="Folder"/>
