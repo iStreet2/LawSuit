@@ -316,7 +316,6 @@
 		3BD40B362C6D453A004048FA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				08E6572E2C7929FA00313FCB /* EditClientView */,
 				3BD40B3C2C6D4DE8004048FA /* Components */,
 				3BD40B372C6D454B004048FA /* DocumentView.swift */,
 				6ABD796E2C6E97AD00A98BA3 /* CheckboxView.swift */,
@@ -344,6 +343,7 @@
 		3BD40B3C2C6D4DE8004048FA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				08E6572E2C7929FA00313FCB /* EditClientView */,
 				3BD40B3D2C6D4EFF004048FA /* FolderIconView.swift */,
 				E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
