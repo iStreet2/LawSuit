@@ -319,6 +319,7 @@
 				3BD40B3C2C6D4DE8004048FA /* Components */,
 				3BD40B372C6D454B004048FA /* DocumentView.swift */,
 				6ABD796E2C6E97AD00A98BA3 /* CheckboxView.swift */,
+				6ABD79742C78FB2100A98BA3 /* NewProcessView.swift */,
 				3BD40B6E2C6E76EC004048FA /* SelectClientView.swift */,
 				DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */,
 				DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */,
@@ -340,7 +341,9 @@
 			isa = PBXGroup;
 			children = (
 				08E6572E2C7929FA00313FCB /* EditClientView */,
-				6AC0BB042C7E5CC700FAF3E6 /* NewProcessView */,
+				6AC0BB052C7E5D7C00FAF3E6 /* ProcessDistributedView.swift */,
+				6AC0BB072C7E5DF000FAF3E6 /* ProcessNotDistributedView.swift */,
+				6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */,
 				3BD40B3D2C6D4EFF004048FA /* FolderIconView.swift */,
 				E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
@@ -357,6 +360,7 @@
 				6ABD79702C6E990F00A98BA3 /* ClientCheckboxIconComponent.swift */,
 				DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */,
 				E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */,
+				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -372,18 +376,6 @@
 				3B24D4AA2C73781F00CCA763 /* Lawyer.swift */,
 			);
 			path = CoreDataModel;
-			sourceTree = "<group>";
-		};
-		6AC0BB042C7E5CC700FAF3E6 /* NewProcessView */ = {
-			isa = PBXGroup;
-			children = (
-				6ABD79742C78FB2100A98BA3 /* NewProcessView.swift */,
-				6AC0BB052C7E5D7C00FAF3E6 /* ProcessDistributedView.swift */,
-				6AC0BB072C7E5DF000FAF3E6 /* ProcessNotDistributedView.swift */,
-				6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */,
-				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
-			);
-			path = NewProcessView;
 			sourceTree = "<group>";
 		};
 		6AC0BB0B2C7FB53600FAF3E6 /* Enums */ = {
