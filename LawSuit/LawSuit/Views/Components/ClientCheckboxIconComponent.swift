@@ -13,22 +13,33 @@ struct ClientCheckboxIconComponent: View {
     @State var searchQuery = ""
     @Binding var choosedClient: String
     @State var isEditing = false
-
+    @State var showingDetail = false
+    var screen: SizeEnumerator
+    
     
     var body: some View {
+        
         VStack{
-            SearchBarCheckboxComponent(searchText: $searchQuery)
+            HStack{
+                SearchBarCheckboxComponent(searchText: $searchQuery)
+                Button(action: {
+                    showingDetail = false
+                }, label: {
+                    Image(systemName: "xmark.circle")
+                })
+            }
             List {
                 ForEach(filteredClients, id: \.self) { client in
                     Text(client)
                         .onTapGesture {
                             choosedClient = client
                         }
-                        .background(isEditing ? Color.blue : Color(.white))        
+                        .background(isEditing ? Color.blue : Color(.white))
                 }
                 .padding(2)
             }
         }
+        .frame(width: CGFloat(screen.size.width), height: CGFloat(screen.size.height))
         .padding(10)
         .background(.white)
         .cornerRadius(10) /// make the background rounded
@@ -37,6 +48,7 @@ struct ClientCheckboxIconComponent: View {
                 .stroke(.secondary, lineWidth: 0.3)
         )
     }
+    
     
     var filteredClients : [String] {
         if searchQuery.isEmpty {

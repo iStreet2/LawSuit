@@ -7,12 +7,17 @@
 
 import SwiftUI
 
+enum ProcessType: String {
+    case distributed = "Distribuído"
+    case notDistributed = "Não Distribuído"
+}
+
 struct NewProcessView: View {
     
-    @State var textInput = ""
-    @State private var birthDate = Date.now
-    @State private var selectedOption: String = "Distribuído"
-    
+    @State var processType: ProcessType = .distributed
+    @State var processTypeString: String = ""
+
+    @State var clientMock: ClientMock
     
     var body: some View {
         VStack(alignment: .leading){
@@ -21,79 +26,35 @@ struct NewProcessView: View {
                 .font(.title)
             
             VStack(alignment: .leading) {
+                
                 SegmentedControlComponent(
-                    selectedOption: $selectedOption,
-                    infos: ["Distribuído", "Não Distribuído"]                )
+                    selectedOption: $processTypeString, infos: ["Distribuído","Não Distribuído"])
                 .frame(width: 150)
             }
-            .padding()
             
-            Text("Nº do processo")
-                .bold()
-            TextField("Nº do processo", text: $textInput)
-                .textFieldStyle(.roundedBorder)
-            
-            
-            Text("Vara")
-                .bold()
-            TextField("Vara", text: $textInput)
-                .textFieldStyle(.roundedBorder)
-            
-            
-            
-            HStack {
-                VStack(alignment: .leading){
-                    EditProcessAuthorComponent()
-                    Text("Área")
-                        .bold()
-                }
-                
-                Spacer()
-                
-                VStack(alignment: .leading){
-                    HStack {
-                        Text("Réu ")
-                            .bold()
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                            Text("Atribuir Cliente")
-                        })
-                        .buttonStyle(.borderless)
-                        .foregroundStyle(.blue)
-                    }
-                    
-                    TextField("Réu", text: $textInput)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 200)
-                    
-                    Text("Data de distribuição ")
-                        .bold()
-                    DatePicker(selection: $birthDate, in: ...Date.now, displayedComponents: .date) { }
-                        .datePickerStyle(.field)
-                }
-                
+            if processType == .distributed {
+                ProcessDistributedView(clientMock: clientMock)
+            } else if processType == .notDistributed {
+                ProcessNotDistributedView(clientMock: clientMock)
             }
-            HStack {
-                
-                Spacer()
-                
-                Button {
-                } label: {
-                    Text("Cancelar")
-                }
-                Button {
-                    
-                } label: {
-                    Text("Próximo")
-                }
-                .buttonStyle(.borderedProminent)
-                
+        }
+        .onAppear {
+            processTypeString = processType.rawValue
+        }
+        .onChange(of: processTypeString, perform: { newValue in
+            if newValue == "Distribuído" {
+                processType = .distributed
+            } else {
+                processType = .notDistributed
             }
-            
-        }        .padding(100)
-        
+        })
+        .frame(width: 500)
     }
+        
+
 }
 
 #Preview {
-    NewProcessView()
+    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
+    return NewProcessView(clientMock: clientMock)
 }

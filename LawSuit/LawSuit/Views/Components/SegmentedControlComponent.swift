@@ -22,6 +22,13 @@ struct SegmentedControlComponent: View {
     }
 }
 
+//#Preview {
+//    NewProcessView()
+//}
+
+
+//#Preview {
+//    SegmentedControlComponent(selectedOption: <#T##Binding<String>#>, options: <#T##[String]#>, title: <#T##String#>)}
 #Preview {
     NewProcessView()
 }

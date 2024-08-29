@@ -66,6 +66,11 @@
 		6ABD79752C78FB2100A98BA3 /* NewProcessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79742C78FB2100A98BA3 /* NewProcessView.swift */; };
 		6ABD79792C7918B600A98BA3 /* EditProcessAuthorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79782C7918B600A98BA3 /* EditProcessAuthorComponent.swift */; };
 		6ABD797B2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */; };
+		6AC0BB062C7E5D7C00FAF3E6 /* ProcessDistributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB052C7E5D7C00FAF3E6 /* ProcessDistributedView.swift */; };
+		6AC0BB082C7E5DF000FAF3E6 /* ProcessNotDistributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB072C7E5DF000FAF3E6 /* ProcessNotDistributedView.swift */; };
+		6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */; };
+		6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */; };
+		6AC0BB0F2C80A66700FAF3E6 /* ProcessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB0E2C80A66700FAF3E6 /* ProcessMock.swift */; };
 		DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */; };
 		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
 		DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */; };
@@ -163,6 +168,11 @@
 		6ABD79742C78FB2100A98BA3 /* NewProcessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProcessView.swift; sourceTree = "<group>"; };
 		6ABD79782C7918B600A98BA3 /* EditProcessAuthorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProcessAuthorComponent.swift; sourceTree = "<group>"; };
 		6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlComponent.swift; sourceTree = "<group>"; };
+		6AC0BB052C7E5D7C00FAF3E6 /* ProcessDistributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessDistributedView.swift; sourceTree = "<group>"; };
+		6AC0BB072C7E5DF000FAF3E6 /* ProcessNotDistributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessNotDistributedView.swift; sourceTree = "<group>"; };
+		6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorProcessButton.swift; sourceTree = "<group>"; };
+		6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeEnumerator.swift; sourceTree = "<group>"; };
+		6AC0BB0E2C80A66700FAF3E6 /* ProcessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMock.swift; sourceTree = "<group>"; };
 		DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentStyleView.swift; sourceTree = "<group>"; };
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
 		DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentStyle.swift; sourceTree = "<group>"; };
@@ -261,6 +271,7 @@
 				3BD40B6D2C6E7681004048FA /* CoreDataModel */,
 				3BD40B412C6E5E16004048FA /* FolderStack.swift */,
 				E93BCFA82C77D6B5007CF206 /* File.swift */,
+				6AC0BB0B2C7FB53600FAF3E6 /* Enums */,
 				3B6168012C7E45CE00260585 /* Sections.swift */,
 			);
 			path = Model;
@@ -378,9 +389,16 @@
 			children = (
 				3B04F11B2C7FB99300991746 /* ClientDocumentsView */,
 				08E6572E2C7929FA00313FCB /* EditClientView */,
+				6AC0BB052C7E5D7C00FAF3E6 /* ProcessDistributedView.swift */,
+				6AC0BB072C7E5DF000FAF3E6 /* ProcessNotDistributedView.swift */,
+				6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */,
+				3BD40B3D2C6D4EFF004048FA /* FolderIconView.swift */,
 				E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */,
 				6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */,
 				6ABD79722C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift */,
+				3BD40B432C6E6005004048FA /* DocumentGridView.swift */,
+				3BAF94C72C73D37E001FCA45 /* FolderGridView.swift */,
+				3BAF94C92C73D4C1001FCA45 /* FilePDFGridView.swift */,
 				6ABD79782C7918B600A98BA3 /* EditProcessAuthorComponent.swift */,
 				DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */,
 				DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */,
@@ -405,6 +423,14 @@
 				3B24D4AA2C73781F00CCA763 /* Lawyer.swift */,
 			);
 			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
+		6AC0BB0B2C7FB53600FAF3E6 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -537,6 +563,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */,
 				3BD40B6F2C6E76EC004048FA /* SelectClientView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
@@ -546,9 +573,11 @@
 				089BDBEC2C7F9F7C00A914C9 /* ProcessMock.swift in Sources */,
 				3B04F11F2C7FC58800991746 /* TelaTemporariaDoPaulo.swift in Sources */,
 				3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */,
+				6AC0BB062C7E5D7C00FAF3E6 /* ProcessDistributedView.swift in Sources */,
 				3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */,
 				3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */,
 				E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */,
+				6AC0BB082C7E5DF000FAF3E6 /* ProcessNotDistributedView.swift in Sources */,
 				6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */,
 				3B0EE5F72C6A90F100CFC91A /* CoreDataViewModel.swift in Sources */,
 				DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */,
@@ -581,6 +610,8 @@
 				E9A949BA2C7CFB310006BC99 /* RecordObjectManager.swift in Sources */,
 				3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */,
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
+				3BAF94CA2C73D4C1001FCA45 /* FilePDFGridView.swift in Sources */,
+				6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */,
 				3B6168022C7E45CE00260585 /* Sections.swift in Sources */,
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
 				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
@@ -595,6 +626,7 @@
 				089BDBEA2C7F9B6600A914C9 /* ProcessListView.swift in Sources */,
 				3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */,
 				E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */,
+				6AC0BB0F2C80A66700FAF3E6 /* ProcessMock.swift in Sources */,
 				3BD40B382C6D454B004048FA /* DocumentView.swift in Sources */,
 				08E657392C7D205D00313FCB /* ClientMock.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
