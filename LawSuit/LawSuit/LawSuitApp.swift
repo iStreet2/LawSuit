@@ -19,8 +19,9 @@ struct LawSuitApp: App {
     var body: some Scene {
         WindowGroup {
             
-            AddClientView(clientMock: ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: ""))
-//            ContentView()
+//            AddClientView()
+            ContentView()
+//            Teste()
 //            DocumentView()
 //            SelectClientView()
 //                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
@@ -34,13 +35,11 @@ struct LawSuitApp: App {
             //EditProcessAuthorComponent()
 
 //            SelectClientView()
-            
-//                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
-//                .environmentObject(folderViewModel)
-//                .environmentObject(coreDataViewModel)
-//                .environmentObject(dragAndDropViewModel)
-//                .environmentObject(networkMonitor)
-//                 CheckboxView()
+                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
+                .environmentObject(folderViewModel)
+                .environmentObject(coreDataViewModel)
+                .environmentObject(dragAndDropViewModel)
+                .environmentObject(networkMonitor)
                 .preferredColorScheme(.light)
         }
     }
