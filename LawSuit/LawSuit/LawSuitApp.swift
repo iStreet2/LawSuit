@@ -19,8 +19,8 @@ struct LawSuitApp: App {
     var body: some Scene {
         WindowGroup {
             
-            AddClientView(clientMock: ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: ""))
-//            ContentView()
+//            AddClientView(clientMock: ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: ""))
+            ContentView()
 //            DocumentView()
 //            SelectClientView()
 //                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)

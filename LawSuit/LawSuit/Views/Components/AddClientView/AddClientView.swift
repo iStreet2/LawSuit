@@ -11,6 +11,7 @@ struct AddClientView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    
     @State var stage: Int = 1
     @State var clientMock = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
     @State var missingInformation = false
@@ -79,6 +80,7 @@ struct AddClientView: View {
         }
         .padding()
         .frame(width: 500)
+        
     }
     
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage

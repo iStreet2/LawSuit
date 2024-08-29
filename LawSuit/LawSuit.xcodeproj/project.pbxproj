@@ -310,7 +310,6 @@
 				DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */,
 				DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */,
 				E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */,
-				DCC1BD2F2C77B23900000195 /* AddClientView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -326,6 +325,7 @@
 		3BD40B3C2C6D4DE8004048FA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				DCDB96412C7FC63A00817814 /* AddClientView */,
 				08E6572E2C7929FA00313FCB /* EditClientView */,
 				3BD40B3D2C6D4EFF004048FA /* FolderIconView.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
@@ -341,8 +341,6 @@
 				DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */,
 				DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */,
 				6ABD79702C6E990F00A98BA3 /* ClientCheckboxIconComponent.swift */,
-				DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */,
-				DCDB963F2C7E61C400817814 /* AddClientForm.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -358,6 +356,16 @@
 				3B24D4AA2C73781F00CCA763 /* Lawyer.swift */,
 			);
 			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
+		DCDB96412C7FC63A00817814 /* AddClientView */ = {
+			isa = PBXGroup;
+			children = (
+				DCDB963F2C7E61C400817814 /* AddClientForm.swift */,
+				DCC1BD2F2C77B23900000195 /* AddClientView.swift */,
+				DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */,
+			);
+			path = AddClientView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
