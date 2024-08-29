@@ -111,6 +111,7 @@ struct AddClientView: View {
         }
         .padding()
         .frame(width: 500)
+        
     }
     
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage

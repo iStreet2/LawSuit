@@ -17,24 +17,8 @@ struct LawSuitApp: App {
     @StateObject var networkMonitor = NetworkMonitor()
     
     var body: some Scene {
-        WindowGroup {
-            
-//            AddClientView()
+        WindowGroup {   
             ContentView()
-//            Teste()
-//            DocumentView()
-//            SelectClientView()
-//                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
-//                .environmentObject(folderViewModel)
-//                .environmentObject(coreDataViewModel)
-//                .environmentObject(dragAndDropViewModel)
-//            CheckboxView()
-//                .preferredColorScheme(.light)
-//			  CloudTestingView()
-
-            //EditProcessAuthorComponent()
-
-//            SelectClientView()
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)
