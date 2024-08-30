@@ -17,8 +17,8 @@ struct NewProcessView: View {
     @State var processType: ProcessType = .distributed
     @State var processTypeString: String = ""
 
-    @State var clientMock: ClientMock
-    @State var processMock: ProcessMock
+    @State var clientMock: ClientMock = ClientMock()
+    @State var lawsuit: ProcessMock = ProcessMock()
 
     
     var body: some View {
@@ -33,13 +33,14 @@ struct NewProcessView: View {
                 SegmentedControlComponent(
                     selectedOption: $processTypeString, infos: ["Distribuído","Não Distribuído"])
                 .frame(width: 150)
+                .padding(.leading)
             }
             
             if processType == .distributed {
-                ProcessDistributedView(processMock: processMock, clientMock: clientMock)
+                ProcessDistributedView(lawsuit: $lawsuit, clientMock: clientMock)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if processType == .notDistributed {
-                ProcessNotDistributedView(clientMock: clientMock, processMock: processMock)
+                ProcessNotDistributedView(clientMock: clientMock, lawsuit: $lawsuit)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
@@ -61,8 +62,8 @@ struct NewProcessView: View {
 
 }
 
-#Preview {
-    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
-    @State var processMock = ProcessMock(processNumber: "928383", court: "jshdhd", defendant: "shaduhe")
-    return NewProcessView(clientMock: clientMock, processMock: processMock)
-}
+//#Preview {
+//    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
+//    @State var processMock = ProcessMock(processNumber: "928383", court: "jshdhd", defendant: "shaduhe")
+//    return NewProcessView(clientMock: clientMock, processMock: processMock)
+//}

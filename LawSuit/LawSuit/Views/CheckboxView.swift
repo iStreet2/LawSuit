@@ -13,6 +13,8 @@ struct CheckboxView: View {
     @State var files = ["RG", "CPF"]
     var cliente: ClientCheckboxIconComponent
     var screen: SizeEnumerator
+    @Binding var lawsuit: ProcessMock
+    @State var seiLa: String = ""
 
     
     var body: some View {
@@ -27,7 +29,7 @@ struct CheckboxView: View {
                 .font(.title3)
                 .bold()
             
-            ClientCheckboxIconComponent(choosedClient: $choosedClient, screen: .big)
+            ClientCheckboxIconComponent(lawsuit: $lawsuit, choosedClient: $choosedClient, screen: .big, defendantOrClient: $seiLa)
             
             Text("Documentos:")
                 .font(.title3)
@@ -64,10 +66,4 @@ struct CheckboxView: View {
 
     }
 }
-
-#Preview {
-    CheckboxView(cliente: ClientCheckboxIconComponent(choosedClient: .constant("kajkjsk"), screen: .big), screen: .big
-    )
-}
-
 

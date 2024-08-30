@@ -35,12 +35,11 @@ struct FolderIconView: View {
             
             if isEditing {
                 TextField("", text: $folderName, onEditingChanged: { _ in
-                    
                 }, onCommit: {
                     saveChanges()
                 })
                 .onExitCommand(perform: cancelChanges)
-                .lineLimit(1)
+                .lineLimit(2)
                 .frame(height: 12)
             }
             else {

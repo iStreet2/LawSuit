@@ -36,6 +36,7 @@ struct SelectClientView: View {
                     Image(systemName: "plus")
                 })
             }
+            .padding()
             List(clients, id: \.id) { client in
                 Button(action: {
                     selectedClient = client
@@ -43,11 +44,12 @@ struct SelectClientView: View {
                     folderViewModel.openFolder(folder: client.rootFolder)
                     
                 }, label: {
-                    Text(client.name ?? "Cliente Sem Nome")
+                    Text(client.name)
                 })
+                .buttonStyle(PlainButtonStyle())
+                .padding(.top)
             }
         }
-        .padding()
         .background(.white)
         .onAppear {
             //MARK: APENAS PARA TESTES, RETIRAR DEPOIS

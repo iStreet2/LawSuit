@@ -10,10 +10,20 @@ import SwiftUI
 
 struct ProcessView: View {
 	
-	let lawsuit: LawsuitMock
+    @EnvironmentObject var folderViewModel: FolderViewModel
+    @State var editLawSuit = false
+    
+    @Binding var lawsuit: ProcessMock
 	@State var lawsuitCategory: TagType? = nil
 	
-	let dateFormatter = DateFormatter()
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
+        return formatter
+    }
+
+    
+    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
 	
 	var body: some View {
 		VStack {
@@ -51,57 +61,25 @@ struct ProcessView: View {
 				}
 				
 				// MARK: - View/Grid de Pastas
+                DocumentGridView()
 			}
 			Spacer()
 		}
+        .sheet(isPresented: $editLawSuit, content: {
+            EditLawSuitView(lawsuit: $lawsuit)
+        })
 		.padding()
 		.onAppear {
-			lawsuitCategory = TagType(s: lawsuit.category ?? "")
+            //Selecionar uma pasta aberta do primeiro cliente do CoreData
+            folderViewModel.openFolder(folder: clients[0].rootFolder)
+            
+            lawsuitCategory = .trabalhista
+            //TagType(s: lawsuit.tagType ?? .trabalhista)
 			dateFormatter.dateFormat = "dd/MM/yyyy"
 		}
 		
 		
 	}
-}
-
-
-#Preview {
-	ProcessView(lawsuit:
-		LawsuitMock(actionDate: Date.now,
-						category: "civel",
-						defendant: "Abigail da Silva",
-						id: "sID",
-						name: "Nome do processo",
-						number: "0001234-56.2024.5.00.0000",
-						parentAutor: ClientMock(name: "Abigail da Silva",
-											occupation: "Desenvolvedora de Software",
-											rg: "123.456.789-0",
-											cpf: "123.456.789-00",
-											affiliation: "Afiliação",
-											maritalStatus: "Casada",
-											nationality: "Brasileira",
-											birthDate: Date.now,
-											cep: "04141900",
-											address: "Rua Da Sorte Lobinho",
-											addressNumber: "123",
-											neighborhood: "Lobo mau",
-											complement: "",
-											state: "São Jorge",
-											city: "Cidade Nacional do Brasil",
-											email: "abigail.silva@outlook.com.ru",
-											telephone: "(20)9345678123",
-											cellphone: "(20)0987654323",
-											age: 45),
-						parentLawyer: LawyerMock(id: "ID",
-											 name: "André Miguel da Silva",
-											 oab: "12O34A56B",
-											 photo: nil,
-											 clients: [],
-											 Lawsuit: [],
-											 recordName: ""),
-						rootFolder: FolderMock(),
-						recordName: "", 
-						vara: "1 Vara do Trabalho de São Paulo"))
 }
 
 extension ProcessView {
@@ -111,6 +89,7 @@ extension ProcessView {
 			Spacer()
 			Button {
 				// editar
+                editLawSuit.toggle()
 			} label: {
 				Image(systemName: "square.and.pencil")
 					.resizable()
@@ -124,7 +103,7 @@ extension ProcessView {
 	
 	private var mainBlockNumber: some View {
 		HStack {
-			Text(lawsuit.number!)
+            Text(lawsuit.number)
 				.font(.title3)
 				.bold()
 			Button {
@@ -147,13 +126,14 @@ extension ProcessView {
 				
 				mainBlockNumber
 				
-				Text(lawsuit.vara)
+				Text(lawsuit.court)
 				
 				Text("Distribuição da ação")
 					.font(.subheadline)
 					.foregroundStyle(.secondary)
 					.bold()
-				Text(dateFormatter.string(from: lawsuit.actionDate!))
+//                Text(dateFormatter.string(from: lawsuit.actionDate))
+                Text("\(lawsuit.actionDate, formatter: dateFormatter)")
 //					.padding(.bottom, 60)
 				
 				Spacer()
@@ -164,7 +144,7 @@ extension ProcessView {
 							.font(.subheadline)
 							.foregroundStyle(.secondary)
 							.bold()
-						Text(lawsuit.parentAutor!.name)
+                        Text(lawsuit.client.name)
 							.font(.subheadline)
 							.bold()
 					}
@@ -174,7 +154,7 @@ extension ProcessView {
 							.font(.subheadline)
 							.foregroundStyle(.secondary)
 							.bold()
-						Text(lawsuit.defendant!)
+                        Text(lawsuit.defendant)
 							.font(.subheadline)
 							.bold()
 					}
@@ -261,3 +241,44 @@ extension ProcessView {
 		}
 	}
 }
+
+
+
+//#Preview {
+//    ProcessView(lawsuit:
+//        LawsuitMock(actionDate: Date.now,
+//                        category: "civel",
+//                        defendant: "Abigail da Silva",
+//                        id: "sID",
+//                        name: "Nome do processo",
+//                        number: "0001234-56.2024.5.00.0000",
+//                        parentAutor: ClientMock(name: "Abigail da Silva",
+//                                            occupation: "Desenvolvedora de Software",
+//                                            rg: "123.456.789-0",
+//                                            cpf: "123.456.789-00",
+//                                            affiliation: "Afiliação",
+//                                            maritalStatus: "Casada",
+//                                            nationality: "Brasileira",
+//                                            birthDate: Date.now,
+//                                            cep: "04141900",
+//                                            address: "Rua Da Sorte Lobinho",
+//                                            addressNumber: "123",
+//                                            neighborhood: "Lobo mau",
+//                                            complement: "",
+//                                            state: "São Jorge",
+//                                            city: "Cidade Nacional do Brasil",
+//                                            email: "abigail.silva@outlook.com.ru",
+//                                            telephone: "(20)9345678123",
+//                                            cellphone: "(20)0987654323",
+//                                            age: 45),
+//                        parentLawyer: LawyerMock(id: "ID",
+//                                             name: "André Miguel da Silva",
+//                                             oab: "12O34A56B",
+//                                             photo: nil,
+//                                             clients: [],
+//                                             Lawsuit: [],
+//                                             recordName: ""),
+//                        rootFolder: FolderMock(),
+//                        recordName: "",
+//                        vara: "1 Vara do Trabalho de São Paulo"))
+//}

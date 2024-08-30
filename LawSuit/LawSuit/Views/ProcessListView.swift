@@ -8,21 +8,30 @@
 import SwiftUI
 
 struct ProcessListView: View {
-    var processList: [ProcessMock] = [ProcessMock(id: "1", title: "Abigail da Silva x Optimi S.A", client: ClientMock(name: "Abigail da Silva", occupation: "lala", rg: "lala", cpf: "lala", affiliation: "lala", maritalStatus: "lala", nationality: "lala", birthDate: Date(), cep: "lala", address: "lala", addressNumber: "lala", neighborhood: "lala", complement: "lala", state: "lala", city: "lala", email: "lala", telephone: "lala", cellphone: "lala"), tagType: .trabalhista, lastMovement: "22/06/2024 - 9:27", lawyer: LawyerMock(name: "Paulo Sonzzini"), number: "0001234-56.2024.5.00.0000"), ProcessMock(id: "1", title: "Abigail da Silva x Sinale", client: ClientMock(name: "Abigail da Silva", occupation: "lala", rg: "lala", cpf: "lala", affiliation: "lala", maritalStatus: "lala", nationality: "lala", birthDate: Date(), cep: "lala", address: "lala", addressNumber: "lala", neighborhood: "lala", complement: "lala", state: "lala", city: "lala", email: "lala", telephone: "lala", cellphone: "lala"), tagType: .tributario, lastMovement: "22/06/2024 - 9:27", lawyer: LawyerMock(name: "Paulo Sonzzini"), number: "0001234-56.2024.5.00.0000")]
     
-        var body: some View {
+    @State var createProcess = false
+    @EnvironmentObject var mockViewModel: MockViewModel
     
+    var body: some View {
+        NavigationStack {
+            
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     Text("Processos")
                         .font(.title)
                         .bold()
-                    Image(systemName: "plus")
-                        .font(.title2)
-                        .foregroundStyle(Color(.gray))
+                    Button(action: {
+                        createProcess.toggle()
+                    }, label: {
+                        Image(systemName: "plus")
+                            .font(.title2)
+                            .foregroundStyle(Color(.gray))
+                    })
+                    .buttonStyle(PlainButtonStyle())
+                    
                 }
                 .padding(10)
-    
+                
                 HStack {
                     Text("Nome e Número")
                         .font(.footnote)
@@ -41,30 +50,39 @@ struct ProcessListView: View {
                 }
                 .padding(.horizontal, 10)
                 .foregroundStyle(Color(.gray))
-    
-    
+                
+                
                 Divider()
                     .padding(.top, 5)
                     .padding(.trailing, 10)
-    
+                
                 ScrollView {
                     VStack {
-                        ForEach(Array(processList.enumerated()), id: \.offset) { index, process in
-                            ProcessCell(client: process.client, lawyer: process.lawyer, process: process)
-                                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                        ForEach(Array(mockViewModel.processList.enumerated()), id: \.offset) { index, process in
+                            NavigationLink {
+                                ProcessView(lawsuit: $mockViewModel.processList[index])
+                            } label: {
+                                ProcessCell(client: process.client, lawyer: process.lawyer, process: process)
+                                    .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
             }
+            .sheet(isPresented: $createProcess, content: {
+                NewProcessView()
+            })
             .toolbar {
                 ToolbarItem {
                     Text("")
                 }
             }
         }
+    }
 }
 
 
-#Preview {
-    ProcessListView()
-}
+//#Preview {
+//    ProcessListView()
+//}

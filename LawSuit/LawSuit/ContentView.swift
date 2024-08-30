@@ -27,6 +27,7 @@ struct ContentView: View {
             case .clients:
                 NavigationSplitView {
                     SelectClientView(selectedClient: $selectedClient, addClient: $addClient)
+                        .frame(minWidth: 170)
                 } detail: {
                     if let selectedClient = selectedClient {
                         DocumentView(client: selectedClient)

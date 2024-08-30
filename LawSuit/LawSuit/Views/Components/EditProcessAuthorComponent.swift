@@ -14,35 +14,29 @@ struct EditProcessAuthorComponent: View {
     @State var button: String
     @State var label: String
     var screen: SizeEnumerator
+    @Binding var lawsuit: ProcessMock
+    @State var defendantOrClient: String
     
     var body: some View {
         VStack(alignment: .leading){
             HStack{
                 Text(label)
                     .bold()
-                
                 Button(action: {
                     self.showingDetail.toggle()
-                    
                 }, label: {
                     Text(button)
-                    
                 })
                 .buttonStyle(.borderless)
                 .foregroundStyle(.blue)
                 .sheet(isPresented: $showingDetail) {
-                    ClientCheckboxIconComponent(choosedClient: $choosedClient, screen: .small)
+                    ClientCheckboxIconComponent(lawsuit: $lawsuit, choosedClient: $choosedClient, screen: .small, defendantOrClient: $defendantOrClient)
                 }
             }
-
-            Text(choosedClient)
         }
-//        .padding(200)
-        
     }
-    
 }
-
-#Preview {
-    EditProcessAuthorComponent(button: "Alterar cliente", label: "Autor", screen: .small)
-}
+//
+//#Preview {
+//    EditProcessAuthorComponent(button: "Alterar cliente", label: "Autor", screen: .small)
+//}

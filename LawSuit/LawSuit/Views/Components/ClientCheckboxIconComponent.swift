@@ -9,13 +9,15 @@ import SwiftUI
 
 struct ClientCheckboxIconComponent: View {
     
-    @State var clients = ["Abigail da Silva", "Abigail Lima", "Andre Miguel"]
+    @Binding var lawsuit: ProcessMock
+    @State var clients = ["Carlos Gomes Barbosa", "Micher Autopeças"]
     @State var searchQuery = ""
     @Binding var choosedClient: String
     @State var isEditing = false
     @State var showingDetail = false
     var screen: SizeEnumerator
     @Environment(\.dismiss) var dismiss
+    @Binding var defendantOrClient: String
     
     var body: some View {
         VStack{
@@ -32,6 +34,12 @@ struct ClientCheckboxIconComponent: View {
                     Text(client)
                         .onTapGesture {
                             choosedClient = client
+                            if defendantOrClient == "client" {
+                                lawsuit.client.name = client
+                            } else {
+                                lawsuit.defendant = client
+                            }
+                            dismiss()
                         }
                         .background(isEditing ? Color.blue : Color(.white))
                 }

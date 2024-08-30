@@ -8,12 +8,16 @@
 
 import Foundation
 
-struct LawyerMock {
+struct LawyerMock2 {
 	var id: String?
 	var name: String?
 	var oab: String?
 	var photo: Data?
 	var clients: [ClientMock]?
-	var Lawsuit: [LawsuitMock]?
+	var Lawsuit: [ProcessMock]?
 	var recordName: String?
+}
+
+struct LawyerMock {
+    var name: String
 }
