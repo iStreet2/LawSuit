@@ -12,7 +12,7 @@ enum ProcessType: String {
     case notDistributed = "Não Distribuído"
 }
 
-struct NewProcessView: View {
+struct AddLawsuitView: View {
     
     @State var processType: ProcessType = .distributed
     @State var processTypeString: String = ""
@@ -37,10 +37,10 @@ struct NewProcessView: View {
             }
             
             if processType == .distributed {
-                ProcessDistributedView(lawsuit: $lawsuit, clientMock: clientMock)
+                LawsuitDistributedView(lawsuit: $lawsuit, clientMock: clientMock)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if processType == .notDistributed {
-                ProcessNotDistributedView(clientMock: clientMock, lawsuit: $lawsuit)
+                LawsuitNotDistributedView(clientMock: clientMock, lawsuit: $lawsuit)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }

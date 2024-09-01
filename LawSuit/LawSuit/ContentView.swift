@@ -26,7 +26,7 @@ struct ContentView: View {
             switch selectedView {
             case .clients:
                 NavigationSplitView {
-                    SelectClientView(selectedClient: $selectedClient, addClient: $addClient)
+                    ClientListView(selectedClient: $selectedClient, addClient: $addClient)
                         .frame(minWidth: 170)
                 } detail: {
                     if let selectedClient = selectedClient {
@@ -40,7 +40,7 @@ struct ContentView: View {
                 //MARK: Inserir View de Processos
                 Divider()
                 Spacer()
-                ProcessListView()
+                LawsuitListView()
                 Spacer()
             }
         }

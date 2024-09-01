@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProcessListView: View {
+struct LawsuitListView: View {
     
     @State var createProcess = false
     @EnvironmentObject var mockViewModel: MockViewModel
@@ -60,9 +60,9 @@ struct ProcessListView: View {
                     VStack {
                         ForEach(Array(mockViewModel.processList.enumerated()), id: \.offset) { index, process in
                             NavigationLink {
-                                ProcessView(lawsuit: $mockViewModel.processList[index])
+                                DetailedLawSuitView(lawsuit: $mockViewModel.processList[index])
                             } label: {
-                                ProcessCell(client: process.client, lawyer: process.lawyer, process: process)
+                                LawsuitCellComponent(client: process.client, lawyer: process.lawyer, process: process)
                                     .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
                             }
                             .buttonStyle(PlainButtonStyle())
@@ -71,7 +71,7 @@ struct ProcessListView: View {
                 }
             }
             .sheet(isPresented: $createProcess, content: {
-                NewProcessView()
+                AddLawsuitView()
             })
             .toolbar {
                 ToolbarItem {

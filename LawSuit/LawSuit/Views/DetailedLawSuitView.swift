@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ProcessView: View {
+struct DetailedLawSuitView: View {
 	
     @EnvironmentObject var folderViewModel: FolderViewModel
     @State var editLawSuit = false
@@ -82,7 +82,7 @@ struct ProcessView: View {
 	}
 }
 
-extension ProcessView {
+extension DetailedLawSuitView {
 	private var mainBlockHeader: some View {
 		HStack {
 			TagViewComponent(tagType: lawsuitCategory ?? .trabalhista)

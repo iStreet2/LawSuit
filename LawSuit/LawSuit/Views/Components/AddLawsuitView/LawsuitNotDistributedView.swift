@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProcessNotDistributedView: View {
+struct LawsuitNotDistributedView: View {
     
     @State var clientMock: ClientMock
     @Binding var lawsuit: ProcessMock
@@ -17,7 +17,7 @@ struct ProcessNotDistributedView: View {
                 Text("Área")
                     .bold()
                 HStack{
-                    EditProcessAuthorComponent(button: "Atribuir cliente", label: "Autor", screen: .small, lawsuit: $lawsuit, defendantOrClient: "client")
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", screen: .small, lawsuit: $lawsuit, defendantOrClient: "client")
                     
                     LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuit.defendant)
                 }

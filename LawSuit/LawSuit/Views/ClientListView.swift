@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SelectClientView: View {
+struct ClientListView: View {
     
     //MARK: Variáveis de estado
     @Binding var selectedClient: Client?

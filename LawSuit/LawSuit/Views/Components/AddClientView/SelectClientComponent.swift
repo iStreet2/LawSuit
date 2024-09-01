@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ClientCheckboxIconComponent: View {
+struct SelectClientComponent: View {
     
     @Binding var lawsuit: ProcessMock
     @State var clients = ["Carlos Gomes Barbosa", "Micher Autopeças"]

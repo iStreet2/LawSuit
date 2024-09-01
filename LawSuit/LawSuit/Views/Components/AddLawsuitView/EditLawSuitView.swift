@@ -26,12 +26,12 @@ struct EditLawSuitView: View {
             LabeledTextField(label: "Vara", placeholder: "sei la", textfieldText: $lawsuitTemp.court)
             HStack(alignment: .top, spacing: 70) {
                 VStack {
-                    EditProcessAuthorComponent(button: "Alterar Cliente", label: "Autor", screen: .small, lawsuit: $lawsuitTemp, defendantOrClient: "client")
+                    EditLawsuitAuthorComponent(button: "Alterar Cliente", label: "Autor", screen: .small, lawsuit: $lawsuitTemp, defendantOrClient: "client")
                     TextField("", text: $lawsuitTemp.client.name)
                 }
                 Spacer()
                 VStack(alignment: .leading) {
-                    EditProcessAuthorComponent(button: "Atribuir Cliente", label: "Réu", screen: .small, lawsuit: $lawsuitTemp, defendantOrClient: "defendant")
+                    EditLawsuitAuthorComponent(button: "Atribuir Cliente", label: "Réu", screen: .small, lawsuit: $lawsuitTemp, defendantOrClient: "defendant")
                     TextField("", text: $lawsuitTemp.defendant)
                     LabeledDateField(selectedDate: $lawsuit.actionDate, label: "Data da distribuição")
                     HStack {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProcessDistributedView: View {
+struct LawsuitDistributedView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var mockViewModel: MockViewModel
@@ -28,7 +28,7 @@ struct ProcessDistributedView: View {
         }
         HStack(alignment: .top){
             VStack(alignment: .leading){
-                EditProcessAuthorComponent(button: "Alterar cliente", label: "Autor", screen: .small, lawsuit: $lawsuit, defendantOrClient: "client")
+                EditLawsuitAuthorComponent(button: "Alterar cliente", label: "Autor", screen: .small, lawsuit: $lawsuit, defendantOrClient: "client")
                 TextField("", text: $lawsuit.client.name)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 200)
@@ -41,7 +41,7 @@ struct ProcessDistributedView: View {
             
             VStack(alignment: .leading){
                 VStack(alignment: .leading){
-                    EditProcessAuthorComponent(button: "Atribuir cliente", label: "Réu", screen: .small, lawsuit: $lawsuit, defendantOrClient: "defendant")
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", screen: .small, lawsuit: $lawsuit, defendantOrClient: "defendant")
                     TextField("", text: $lawsuit.defendant)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)

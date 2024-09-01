@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditProcessAuthorComponent: View {
+struct EditLawsuitAuthorComponent: View {
     
     @State var choosedClient: String = ""
     @State var showingDetail = false
@@ -30,7 +30,7 @@ struct EditProcessAuthorComponent: View {
                 .buttonStyle(.borderless)
                 .foregroundStyle(.blue)
                 .sheet(isPresented: $showingDetail) {
-                    ClientCheckboxIconComponent(lawsuit: $lawsuit, choosedClient: $choosedClient, screen: .small, defendantOrClient: $defendantOrClient)
+                    SelectClientComponent(lawsuit: $lawsuit, choosedClient: $choosedClient, screen: .small, defendantOrClient: $defendantOrClient)
                 }
             }
         }

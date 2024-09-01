@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProcessCell: View {
+struct LawsuitCellComponent: View {
     var client: ClientMock
     var lawyer: LawyerMock
     var process: ProcessMock
