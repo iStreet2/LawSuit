@@ -11,13 +11,22 @@ import CoreData
 import PDFKit
 
 class RecordObjectManager {
-	let context: NSManagedObjectContext
 	let container = CKContainer(identifier: "iCloud.com.TFS.LawSuit")
 	let publicDatabase: CKDatabase
 	
-	init(context: NSManagedObjectContext) {
-		self.context = context
-		publicDatabase = container.publicCloudDatabase
+	let coreDataContainer = NSPersistentContainer(name: "Model")
+	var coreDataContext: NSManagedObjectContext
+	
+	init() {
+		self.coreDataContainer.loadPersistentStores { descricao, error in
+			if let error = error {
+				print("There was an error loading the data from the model: \(error)")
+			}
+		}
+		self.coreDataContext = self.coreDataContainer.viewContext
+		self.coreDataContext.automaticallyMergesChangesFromParent = true
+		
+		self.publicDatabase = container.publicCloudDatabase
 	}
 	
 	
@@ -28,7 +37,7 @@ class RecordObjectManager {
 		for record in records {
 			switch record.recordType {
 			case "FilePDF":
-				let fileObject = FilePDF(context: context)
+				let fileObject = FilePDF(context: coreDataContext)
 				
 				if let name = record["name"] as? String {
 					fileObject.name = name
@@ -46,14 +55,14 @@ class RecordObjectManager {
 						print("Could not get pdf Data as BIN: \(error)")
 					}
 				}
-				if let recordName = record["recordName"] as? String {
+				if let recordName = record.recordID.recordName as? String {
 					fileObject.recordName = recordName
 				}
 				
 				objects.append(fileObject)
 			
 			case "Folder":
-				let folderObject = Folder(context: context)
+				let folderObject = Folder(context: coreDataContext)
 				
 				if let name = record["name"] as? String {
 					folderObject.name = name
@@ -84,13 +93,20 @@ class RecordObjectManager {
 								folderObject.addToFiles(relatedObject.first!)
 							}
 						} catch {
-							print("Error in relation objectRecord to reference: \(error)")
+							print("Error in relating objectRecord to reference: \(error)")
 						}
 					}
 				}
 				
 				objects.append(folderObject)
+			
+			case "Client":
+				let clientObject = Client(context: coreDataContext)
 				
+				let recordName = record.recordID.recordName
+				clientObject.recordName = recordName
+				
+				objects.append(clientObject)
 			default:
 				return nil
 			}

@@ -20,7 +20,7 @@ class CoreDataViewModel: ObservableObject {
 	var lawyerManager: LawyerManager
 	var processManager: ProcessManager
 	var clientManager: ClientManager
-	var recordObjectManager: RecordObjectManager
+//	var recordObjectManager: RecordObjectManager
 	
 	init() {
 		self.container.loadPersistentStores { descricao, error in
@@ -35,7 +35,7 @@ class CoreDataViewModel: ObservableObject {
 		self.lawyerManager = LawyerManager(context: context)
 		self.processManager = ProcessManager(context: context)
 		self.clientManager = ClientManager(context: context)
-		self.recordObjectManager = RecordObjectManager(context: context)
+//		self.recordObjectManager = RecordObjectManager(context: context)
 	}
 	
 	func deleteAllData() {
