@@ -8,9 +8,28 @@
 import Foundation
 import SwiftUI
 
+enum TagTypeString {
+    static func string(from tagType: TagType) -> String {
+        switch tagType {
+        case .trabalhista:
+            return "trabalhista"
+        case .penal:
+            return "penal"
+        case .tributario:
+            return "tributario"
+        case .ambiental:
+            return "ambiental"
+        case .civel:
+            return "civel"
+        case .falencia:
+            return "falencia"
+        }
+    }
+}
+
 enum TagType: CaseIterable, Identifiable {
-	init?(s: String) {
-		switch s.lowercased() {
+    init?(s: String) {
+        switch s.lowercased() {
 		case "trabalhista":
 			self = .trabalhista
 		case "tributário":

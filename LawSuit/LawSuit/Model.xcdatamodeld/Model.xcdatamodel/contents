@@ -23,7 +23,7 @@
         <attribute name="rg" attributeType="String"/>
         <attribute name="state" attributeType="String"/>
         <attribute name="telephone" attributeType="String"/>
-        <relationship name="lawsuits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="parentAutor" inverseEntity="Lawsuit"/>
+        <relationship name="lawsuits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="parentAuthor" inverseEntity="Lawsuit"/>
         <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentClient" inverseEntity="Folder"/>
     </entity>
@@ -47,12 +47,13 @@
     <entity name="Lawsuit" representedClassName="Lawsuit" syncable="YES">
         <attribute name="actionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="court" optional="YES" attributeType="String"/>
         <attribute name="defendant" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="number" optional="YES" attributeType="String"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
-        <relationship name="parentAutor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="lawsuits" inverseEntity="Client"/>
+        <relationship name="parentAuthor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="lawsuits" inverseEntity="Client"/>
         <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="lawsuits" inverseEntity="Lawyer"/>
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentLawsuit" inverseEntity="Folder"/>
     </entity>

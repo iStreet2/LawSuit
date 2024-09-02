@@ -6,64 +6,65 @@
 //
 
 import SwiftUI
+import CoreData
 
-enum ProcessType: String {
+enum LawsuitType: String {
     case distributed = "Distribuído"
     case notDistributed = "Não Distribuído"
 }
 
 struct AddLawsuitView: View {
     
-    @State var processType: ProcessType = .distributed
-    @State var processTypeString: String = ""
-
+    //MARK: Variáveis de estado
+    @State var lawsuitType: LawsuitType = .distributed
+    @State var lawsuitTypeString: String = ""
     @State var clientMock: ClientMock = ClientMock()
     @State var lawsuit: ProcessMock = ProcessMock()
+    
+    //MARK: Variáveis de estado
+    @State var lawsuitNumber = ""
+    @State var lawsuitCourt = ""
+    @State var lawsuitParentAuthorName = ""
+    @State var lawsuitDefandent = ""
+    @State var lawsuitActionDate = Date()
+    
+    //MARK: ViewModels
+    
+    //MARK: CoreData
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
 
     
     var body: some View {
-        
         VStack(alignment: .leading){
             Text("Novo Processo")
                 .bold()
                 .font(.title)
-            
             VStack(alignment: .leading) {
-                
                 SegmentedControlComponent(
-                    selectedOption: $processTypeString, infos: ["Distribuído","Não Distribuído"])
+                    selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
                 .frame(width: 150)
                 .padding(.leading)
             }
-            
-            if processType == .distributed {
-                LawsuitDistributedView(lawsuit: $lawsuit, clientMock: clientMock)
+            if lawsuitType == .distributed {
+                LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefandent: $lawsuitDefandent, lawsuitActionDate: $lawsuitActionDate)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if processType == .notDistributed {
-                LawsuitNotDistributedView(clientMock: clientMock, lawsuit: $lawsuit)
+            } else if lawsuitType == .notDistributed {
+                LawsuitNotDistributedView(clientMock: clientMock, lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .frame(width: 400, height: 300)
         .padding()
         .onAppear {
-            processTypeString = processType.rawValue
+            lawsuitTypeString = lawsuitType.rawValue
         }
-        .onChange(of: processTypeString, perform: { newValue in
+        .onChange(of: lawsuitTypeString, perform: { newValue in
             if newValue == "Distribuído" {
-                processType = .distributed
+                lawsuitType = .distributed
             } else {
-                processType = .notDistributed
+                lawsuitType = .notDistributed
             }
         })
-        
     }
-        
-
 }
-
-//#Preview {
-//    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
-//    @State var processMock = ProcessMock(processNumber: "928383", court: "jshdhd", defendant: "shaduhe")
-//    return NewProcessView(clientMock: clientMock, processMock: processMock)
-//}

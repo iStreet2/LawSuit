@@ -9,17 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var folderViewModel: FolderViewModel
-//    
-    //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
-    @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
-    
+    //MARK: Variáveis de estado
     @State private var selectedView = SelectedView.clients
     @State private var selectedClient: Client?
     @State private var addClient = false
     
+    //MARK: ViewModels
+    @EnvironmentObject var folderViewModel: FolderViewModel
+    
+    //MARK: CoreData
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
+     
     var body: some View {   
         HStack {
             SideBarView(selectedView: $selectedView)
@@ -37,7 +39,6 @@ struct ContentView: View {
                     }
                 }
             case .lawsuits:
-                //MARK: Inserir View de Processos
                 Divider()
                 Spacer()
                 LawsuitListView()

@@ -10,16 +10,16 @@ import SwiftUI
 struct LawsuitNotDistributedView: View {
     
     @State var clientMock: ClientMock
-    @Binding var lawsuit: ProcessMock
+    @Binding var lawsuitParentAuthorName: String
+    @Binding var lawsuitDefendant: String
 
     var body: some View {
             VStack(alignment: .leading){
                 Text("Área")
                     .bold()
                 HStack{
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", screen: .small, lawsuit: $lawsuit, defendantOrClient: "client")
-                    
-                    LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuit.defendant)
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client")
+                    LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendant)
                 }
             }
         Spacer()

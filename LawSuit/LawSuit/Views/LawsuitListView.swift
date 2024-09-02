@@ -10,11 +10,12 @@ import SwiftUI
 struct LawsuitListView: View {
     
     @State var createProcess = false
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
+    
     @EnvironmentObject var mockViewModel: MockViewModel
     
     var body: some View {
         NavigationStack {
-            
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     Text("Processos")
@@ -28,10 +29,8 @@ struct LawsuitListView: View {
                             .foregroundStyle(Color(.gray))
                     })
                     .buttonStyle(PlainButtonStyle())
-                    
                 }
                 .padding(10)
-                
                 HStack {
                     Text("Nome e Número")
                         .font(.footnote)
@@ -50,19 +49,16 @@ struct LawsuitListView: View {
                 }
                 .padding(.horizontal, 10)
                 .foregroundStyle(Color(.gray))
-                
-                
                 Divider()
                     .padding(.top, 5)
                     .padding(.trailing, 10)
-                
                 ScrollView {
                     VStack {
-                        ForEach(Array(mockViewModel.processList.enumerated()), id: \.offset) { index, process in
+                        ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
                             NavigationLink {
-                                DetailedLawSuitView(lawsuit: $mockViewModel.processList[index])
+                                DetailedLawSuitView(lawsuit: lawsuit)
                             } label: {
-                                LawsuitCellComponent(client: process.client, lawyer: process.lawyer, process: process)
+                                LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
                                     .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
                             }
                             .buttonStyle(PlainButtonStyle())

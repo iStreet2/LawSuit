@@ -6,44 +6,54 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct LawsuitCellComponent: View {
-    var client: ClientMock
-    var lawyer: LawyerMock
-    var process: ProcessMock
+    var client: Client
+    var lawyer: Lawyer
+    var lawsuit: Lawsuit
+    
+    //MARK: CoreData
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
     
     var body: some View {
-        
         HStack {
             VStack(alignment: .leading) {
-                Text(process.title!)
+                Text(lawsuit.name ?? "Sem nome")
                     .font(.callout)
                     .bold()
-                Text(process.number)
+                Text(lawsuit.number ?? "Sem número")
                     .font(.callout)
                     .foregroundStyle(Color(.gray))
             }
             .padding(.trailing)
-//            .frame(width: 195)
-//            Spacer()
-            TagViewComponent(tagType: process.tagType!)
-//            Spacer()
-
+            //            .frame(width: 195)
+            //            Spacer()
+            TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista")!)
+            //            Spacer()
+            
             Group {
-                Text(process.lastMovement!)
+                if let latestUpdateDate = coreDataViewModel.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
+                    Text(formatDate(latestUpdateDate))
+                } else {
+                    Text("Sem atualizações")
+                }
                 Spacer()
                 Text(client.name)
                 Spacer()
-                Text(lawyer.name)
+                Text(lawyer.name ?? "Sem nome")
             }
             .font(.callout)
             .bold()
-        } 
+        }
         .padding(10)
         .frame(width: 777)
     }
+    
+    func formatDate(_ date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy HH:mm"
+            return formatter.string(from: date)
+    }
 }
-//
-//#Preview {
-//    ProcessCell(client: ClientMock(name: "Abigail da Silva", occupation: "lala", rg: "lala", cpf: "lala", affiliation: "lala", maritalStatus: "lala", nationality: "lala", birthDate: Date(), cep: "lala", address: "lala", addressNumber: "lala", neighborhood: "lala", complement: "lala", state: "lala", city: "lala", email: "lala", telephone: "lala", cellphone: "lala"), lawyer: LawyerMock(name: "Paulo Sonzzini"), process: ProcessMock(id: "1", title: "Abigail da Silva x Optimi S.A", client: ClientMock(name: "Abigail da Silva", occupation: "lala", rg: "lala", cpf: "lala", affiliation: "lala", maritalStatus: "lala", nationality: "lala", birthDate: Date(), cep: "lala", address: "lala", addressNumber: "lala", neighborhood: "lala", complement: "lala", state: "lala", city: "lala", email: "lala", telephone: "lala", cellphone: "lala"), tagType: .trabalhista, lastMovement: "22/06/2024 - 9:27", lawyer: LawyerMock(name: "Paulo Sonzzini"), number: "0001234-56.2024.5.00.0000"), court: "2", defendant: "lalalal", actionDate: Date(), rootFolder: FolderMock(), recordName: "bla")
-//}

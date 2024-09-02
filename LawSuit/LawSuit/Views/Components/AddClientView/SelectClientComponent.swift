@@ -9,15 +9,21 @@ import SwiftUI
 
 struct SelectClientComponent: View {
     
-    @Binding var lawsuit: ProcessMock
-    @State var clients = ["Carlos Gomes Barbosa", "Micher Autopeças"]
+    //MARK: Variáveis de estado
+    @Binding var lawsuitParentAuthorName: String
+    @Binding var lawsuitDefendant: String
     @State var searchQuery = ""
-    @Binding var choosedClient: String
     @State var isEditing = false
-    @State var showingDetail = false
-    var screen: SizeEnumerator
-    @Environment(\.dismiss) var dismiss
     @Binding var defendantOrClient: String
+    var screen: SizeEnumerator
+    
+    //MARK: Variáveis ambiente
+    @Environment(\.dismiss) var dismiss
+    
+    //MARK: CoreData
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
         VStack{
@@ -31,13 +37,12 @@ struct SelectClientComponent: View {
             }
             List {
                 ForEach(filteredClients, id: \.self) { client in
-                    Text(client)
+                    Text(client.name)
                         .onTapGesture {
-                            choosedClient = client
                             if defendantOrClient == "client" {
-                                lawsuit.client.name = client
+                                lawsuitParentAuthorName = client.name
                             } else {
-                                lawsuit.defendant = client
+                                lawsuitDefendant = client.name
                             }
                             dismiss()
                         }
@@ -49,18 +54,18 @@ struct SelectClientComponent: View {
         .frame(width: CGFloat(screen.size.width), height: CGFloat(screen.size.height))
         .padding(10)
         .background(.white)
-        .cornerRadius(10) /// make the background rounded
-        .overlay( /// apply a rounded border
+        .cornerRadius(10)
+        .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .stroke(.secondary, lineWidth: 0.3)
         )
     }
     
-    var filteredClients : [String] {
+    var filteredClients: [Client] {
         if searchQuery.isEmpty {
-            return clients
+            return Array(clients)
         } else {
-            return clients.filter({ $0.localizedCaseInsensitiveContains(searchQuery)})
+            return clients.filter { $0.name.localizedCaseInsensitiveContains(searchQuery) == true }
         }
     }
 }

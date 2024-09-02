@@ -12,8 +12,7 @@ struct DetailedLawSuitView: View {
 	
     @EnvironmentObject var folderViewModel: FolderViewModel
     @State var editLawSuit = false
-    
-    @Binding var lawsuit: ProcessMock
+    @Binding var lawsuit: Lawsuit
 	@State var lawsuitCategory: TagType? = nil
 	
     private var dateFormatter: DateFormatter {
@@ -66,7 +65,8 @@ struct DetailedLawSuitView: View {
 			Spacer()
 		}
         .sheet(isPresented: $editLawSuit, content: {
-            EditLawSuitView(lawsuit: $lawsuit)
+            //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
+//            EditLawSuitView(lawsuit: $lawsuit)
         })
 		.padding()
 		.onAppear {
@@ -103,7 +103,7 @@ extension DetailedLawSuitView {
 	
 	private var mainBlockNumber: some View {
 		HStack {
-            Text(lawsuit.number)
+            Text(lawsuit.number ?? "Sem numero")
 				.font(.title3)
 				.bold()
 			Button {
@@ -126,14 +126,14 @@ extension DetailedLawSuitView {
 				
 				mainBlockNumber
 				
-				Text(lawsuit.court)
+				Text(lawsuit.court ?? "Sem curt")
 				
 				Text("Distribuição da ação")
 					.font(.subheadline)
 					.foregroundStyle(.secondary)
 					.bold()
 //                Text(dateFormatter.string(from: lawsuit.actionDate))
-                Text("\(lawsuit.actionDate, formatter: dateFormatter)")
+                Text("\(lawsuit.actionDate ?? Date(), formatter: dateFormatter)")
 //					.padding(.bottom, 60)
 				
 				Spacer()
@@ -144,7 +144,7 @@ extension DetailedLawSuitView {
 							.font(.subheadline)
 							.foregroundStyle(.secondary)
 							.bold()
-                        Text(lawsuit.client.name)
+                        Text(lawsuit.parentAuthor!.name)
 							.font(.subheadline)
 							.bold()
 					}
@@ -154,7 +154,7 @@ extension DetailedLawSuitView {
 							.font(.subheadline)
 							.foregroundStyle(.secondary)
 							.bold()
-                        Text(lawsuit.defendant)
+                        Text(lawsuit.defendant ?? "Sem defendant")
 							.font(.subheadline)
 							.bold()
 					}

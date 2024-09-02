@@ -9,12 +9,12 @@ import SwiftUI
 
 struct EditLawsuitAuthorComponent: View {
     
-    @State var choosedClient: String = ""
+    //MARK: Variáveis de estado
     @State var showingDetail = false
     @State var button: String
     @State var label: String
-    var screen: SizeEnumerator
-    @Binding var lawsuit: ProcessMock
+    @Binding var lawsuitParentAuthorName: String
+    @Binding var lawsuitDefendant: String
     @State var defendantOrClient: String
     
     var body: some View {
@@ -30,13 +30,9 @@ struct EditLawsuitAuthorComponent: View {
                 .buttonStyle(.borderless)
                 .foregroundStyle(.blue)
                 .sheet(isPresented: $showingDetail) {
-                    SelectClientComponent(lawsuit: $lawsuit, choosedClient: $choosedClient, screen: .small, defendantOrClient: $defendantOrClient)
+                    SelectClientComponent(lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: $defendantOrClient, screen: .small)
                 }
             }
         }
     }
 }
-//
-//#Preview {
-//    EditProcessAuthorComponent(button: "Alterar cliente", label: "Autor", screen: .small)
-//}

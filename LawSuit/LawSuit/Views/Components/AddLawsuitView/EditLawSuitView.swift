@@ -10,53 +10,101 @@ import SwiftUI
 struct EditLawSuitView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Binding var lawsuit: ProcessMock
-    @State var date = "10/12/24"
-    @State private var lawsuitTemp: ProcessMock
-    //    @ObservedObject var client: Client
+    @Binding var lawsuit: Lawsuit
+    @State var selectTag = false
+    @State var tagType: TagType = .trabalhista
     
-    init(lawsuit: Binding<ProcessMock>) {
-        self._lawsuit = lawsuit
-        self._lawsuitTemp = State(initialValue: lawsuit.wrappedValue)
-    }
+    //MARK: Variáveis de estado
+    @State var lawsuitNumber = ""
+    @State var lawsuitCourt = ""
+    @State var lawsuitParentAuthorName = ""
+    @State var lawsuitDefandent = ""
+    @State var lawsuitActionDate = Date()
+    
+    //MARK: CoreData
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
     
     var body: some View {
         VStack {
-            LabeledTextField(label: "Nº do Processo", placeholder: "sei la", textfieldText: $lawsuitTemp.number)
-            LabeledTextField(label: "Vara", placeholder: "sei la", textfieldText: $lawsuitTemp.court)
+            LabeledTextField(label: "Nº do Processo", placeholder: "sei la", textfieldText: $lawsuitNumber)
+            LabeledTextField(label: "Vara", placeholder: "sei la", textfieldText: $lawsuitCourt)
             HStack(alignment: .top, spacing: 70) {
                 VStack {
-                    EditLawsuitAuthorComponent(button: "Alterar Cliente", label: "Autor", screen: .small, lawsuit: $lawsuitTemp, defendantOrClient: "client")
-                    TextField("", text: $lawsuitTemp.client.name)
+                    EditLawsuitAuthorComponent(button: "Alterar Cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent, defendantOrClient: "client")
+                    TextField("", text: $lawsuitParentAuthorName)
+                    Text("Área")
+                        .bold()
+                    TagViewComponent(tagType: tagType)
+                        .onTapGesture {
+                            selectTag.toggle()
+                        }
                 }
-                Spacer()
-                VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Atribuir Cliente", label: "Réu", screen: .small, lawsuit: $lawsuitTemp, defendantOrClient: "defendant")
-                    TextField("", text: $lawsuitTemp.defendant)
-                    LabeledDateField(selectedDate: $lawsuit.actionDate, label: "Data da distribuição")
-                    HStack {
+                .sheet(isPresented: $selectTag, content: {
+                    VStack {
                         Spacer()
-                        Button(action: {
-                            //resetar os valores
-                            dismiss()
-                        }, label: {
-                            Text("Cancelar")
-                        })
-                        Button(action: {
-                            lawsuit.number = lawsuitTemp.number
-                            lawsuit.court = lawsuitTemp.court
-                            lawsuit.client = lawsuitTemp.client
-                            lawsuit.defendant = lawsuitTemp.defendant
-                            dismiss()
-                        }, label: {
-                            Text("Salvar")
-                        })
-                        .buttonStyle(.borderedProminent)
+                        TagViewPickerComponentV1(currentTag: $tagType)
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                selectTag.toggle()
+                            }, label: {
+                                Text("Salvar")
+                            })
+                            .buttonStyle(.borderedProminent)
+                            .padding()
+                        }
                     }
-                    .padding(.top)
-                }
+                    .frame(minWidth: 200, minHeight: 250)
+                })
             }
+            Spacer()
+            VStack(alignment: .leading) {
+                EditLawsuitAuthorComponent(button: "Atribuir Cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent, defendantOrClient: "defendant")
+                TextField("", text: $lawsuitDefandent)
+                LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        //resetar os valores
+                        dismiss()
+                    }, label: {
+                        Text("Cancelar")
+                    })
+                    Button(action: {
+                        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+                        fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitParentAuthorName)
+                        do {
+                            let fetchedClients = try context.fetch(fetchRequest)
+                            if let client = fetchedClients.first {
+                                let category = TagTypeString.string(from: tagType)
+                                coreDataViewModel.lawsuitManager.editLawSuit(lawsuit: lawsuit, number: lawsuitNumber, category: category, defendant: lawsuitDefandent, author: client, actionDate: lawsuitActionDate)
+                                dismiss()
+                            } else {
+                                print("Cliente não encontrado")
+                            }
+                        } catch {
+                            print("Erro ao buscar cliente: \(error.localizedDescription)")
+                        }
+                    }, label: {
+                        Text("Salvar")
+                    })
+                    .buttonStyle(.borderedProminent)
+                }
+                .padding(.top)
+            }
+        }
+        .onAppear {
+            lawsuitNumber = lawsuit.number ?? "Sem número"
+            lawsuitCourt = lawsuit.court ?? ""
+            lawsuitParentAuthorName = lawsuit.parentAuthor?.name ?? ""
+            lawsuitDefandent = lawsuit.defendant ?? ""
+            lawsuitActionDate = lawsuit.actionDate ?? Date()
+            tagType = TagType(s: lawsuit.category ?? "sei la")!
         }
         .padding()
     }
+    
 }
+
