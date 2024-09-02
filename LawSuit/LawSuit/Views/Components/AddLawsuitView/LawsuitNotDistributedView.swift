@@ -14,7 +14,7 @@ struct LawsuitNotDistributedView: View {
     
     //MARK: Variáveis de estado
     @State var selectTag = false
-    @State var tagType: TagType = .trabalhista
+    @State var tagType: TagType = .civel
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
     @Binding var lawsuitParentAuthorName: String

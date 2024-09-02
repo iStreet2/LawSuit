@@ -9,6 +9,9 @@ import SwiftUI
 
 struct SideBarView: View {
     
+    @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    
     @Binding var selectedView: SelectedView
     
     var body: some View {
@@ -24,6 +27,10 @@ struct SideBarView: View {
                     .onTapGesture {
                         withAnimation(.bouncy) {
                             selectedView = .clients
+                            if let selectedClient = coreDataViewModel.clientManager.selectedClient {
+                                folderViewModel.resetFolderStack()
+                                folderViewModel.openFolder(folder: selectedClient.rootFolder)
+                            }
                             //Necessário ação para mudar tela
                         }
                     }

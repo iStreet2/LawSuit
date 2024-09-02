@@ -12,6 +12,7 @@ import CoreData
 class ClientManager {
     
     var context: NSManagedObjectContext
+    @Published var selectedClient: Client? = nil
     
     init(context: NSManagedObjectContext) {
         self.context = context
@@ -148,11 +149,29 @@ class ClientManager {
         saveContext()
     }
     
-    func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving context on client (\(error)")
+    func copyClientProperties(from sourceClient: Client, to targetClient: Client) {
+        // Primeiro, copiamos as propriedades simples usando Key-Value Coding (KVC)
+        let attributes = sourceClient.entity.attributesByName
+        for (attributeName, _) in attributes {
+            if let value = sourceClient.value(forKey: attributeName) {
+                targetClient.setValue(value, forKey: attributeName)
+            }
+        }
+        
+        // Em seguida, lidamos com as relações (to-one e to-many)
+        let relationships = sourceClient.entity.relationshipsByName
+        for (relationshipName, relationshipDescription) in relationships {
+            if relationshipDescription.isToMany {
+                // Relações to-many (NSSet)
+                if let value = sourceClient.value(forKey: relationshipName) as? NSSet {
+                    targetClient.setValue(value, forKey: relationshipName)
+                }
+            } else {
+                // Relações to-one (NSManagedObject)
+                if let value = sourceClient.value(forKey: relationshipName) as? NSManagedObject {
+                    targetClient.setValue(value, forKey: relationshipName)
+                }
+            }
         }
     }
     
@@ -163,4 +182,14 @@ class ClientManager {
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: currentDate)
         return ageComponents.year ?? 0
     }
+    
+    func saveContext() {
+        do {
+            try context.save()
+        } catch {
+            print("Error while saving context on client (\(error)")
+        }
+    }
+    
+    
 }

@@ -10,13 +10,19 @@ import AppKit
 
 struct ClientInfoView: View {
     
+    //MARK: Variáveis de ambiente
+    @Environment(\.dismiss) var dismiss
+    
     //MARK: Variáveis de estado:
     @ObservedObject var client: Client
     @State var editClient = false
     @State var imageData: Data?
+    @State var deleted = false
 
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    
+    //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     
@@ -85,8 +91,11 @@ struct ClientInfoView: View {
             }
             Spacer()
         }
+        .onChange(of: deleted) { change in
+            dismiss()
+        }
         .sheet(isPresented: $editClient, content: {
-            EditClientView(client: client)
+            EditClientView(client: client, deleted: $deleted)
         })
         .padding()
     }

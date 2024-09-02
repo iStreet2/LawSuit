@@ -10,7 +10,6 @@ import SwiftUI
 struct ClientListView: View {
     
     //MARK: Variáveis de estado
-    @Binding var selectedClient: Client?
     @Binding var addClient: Bool
     
     //MARK: ViewModels
@@ -29,9 +28,7 @@ struct ClientListView: View {
                     .font(.title)
                     .bold()
                 Button(action: {
-                    withAnimation(.bouncy) {
-                        addClient.toggle()
-                    }
+                    addClient.toggle()
                 }, label: {
                     Image(systemName: "plus")
                 })
@@ -39,24 +36,31 @@ struct ClientListView: View {
             .padding()
             List(clients, id: \.id) { client in
                 Button(action: {
-                    selectedClient = client
+                    coreDataViewModel.clientManager.selectedClient = client
                     folderViewModel.resetFolderStack()
                     folderViewModel.openFolder(folder: client.rootFolder)
-                    
                 }, label: {
-                    Text(client.name)
+                    HStack {
+                        if coreDataViewModel.clientManager.selectedClient == client {
+                            ZStack(alignment: .leading) {
+                                RoundedRectangle(cornerRadius: 5)
+                                    .foregroundStyle(.gray)
+                                    .opacity(0.4)
+                                Text(client.name)
+                                    .padding(.leading,10)
+                            }
+                        } else {
+                            Text(client.name)
+                                .padding(.leading,10)
+                        }
+                        Spacer()
+                    }
                 })
+                // Fundo cinza se selecionado
                 .buttonStyle(PlainButtonStyle())
-                .padding(.top)
             }
         }
         .background(.white)
-        .onAppear {
-            //MARK: APENAS PARA TESTES, RETIRAR DEPOIS
-//            if clients.isEmpty {
-//                coreDataViewModel.clientManager.testClient()
-//            }
-        }
     }
         
 }

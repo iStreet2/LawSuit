@@ -31,14 +31,32 @@ struct DocumentGridView: View {
                 let gridItems = Array(repeating: GridItem(.flexible(), spacing: spacing), count: max(columns, 1))
                 ScrollView {
                     HStack {
-                        Button {
-                            folderViewModel.closeFolder()
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .font(.title3)
+                        Group {
+                            Button {
+                                folderViewModel.closeFolder()
+                            } label: {
+                                Image(systemName: "chevron.left")
+                            }
+                            .disabled(folderViewModel.getPath().count() == 1)
+                            .onAppear {
+                                print(folderViewModel.getPath().count())
+                            }
+                            Spacer()
+                            Button {
+                                folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
+                            } label: {
+                                Image(systemName: "doc")
+                            }
+
+                            Button {
+                                coreDataViewModel.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
+                            } label: {
+                                Image(systemName: "plus")
+                            }
                         }
-                        .disabled(folderViewModel.getPath().count() == 1)
                         .buttonStyle(PlainButtonStyle())
+                        .font(.title2)
+                        .padding(.bottom)
                         Spacer()
                     }
                     VStack {

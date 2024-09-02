@@ -13,7 +13,7 @@ struct LawsuitDistributedView: View {
     @Environment(\.dismiss) var dismiss
     
     @State var textInput = ""
-    @State var tagType: TagType = .trabalhista
+    @State var tagType: TagType = .civel
     @State var selectTag = false
     
     //MARK: Variáveis de estado
@@ -111,4 +111,3 @@ struct LawsuitDistributedView: View {
         })
     }
 }
-

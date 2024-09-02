@@ -9,83 +9,81 @@ import Foundation
 import SwiftUI
 
 struct DetailedLawSuitView: View {
-	
+    
+    //MARK: Variáveis de ambiente
+    @Environment(\.dismiss) var dismiss
+    
+    //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
-    @State var editLawSuit = false
+    
+    //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
-	@State var lawsuitCategory: TagType? = nil
-	
+    @State var deleted = false
+    @State var editLawSuit = false
+    @State var lawsuitCategory: TagType? = nil
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
         return formatter
     }
-
     
+    //MARK: CoreData
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
-	
-	var body: some View {
-		VStack {
-			
-			HStack(alignment: .top, spacing: 22) {
-				mainBlock
-					.frame(maxHeight: .infinity)
-				
-				VStack(spacing: 10) {
-
-					movimentationBlock
-						.frame(maxHeight: .infinity)
-					
-					audienceBlock
-						.frame(maxHeight: .infinity)
-					
-				}
-				.frame(maxHeight: .infinity)
-				.fixedSize(horizontal: false, vertical: true)
-//				.frame(maxWidth: .infinity)
-				
-			}
-			.fixedSize(horizontal: false, vertical: true)
-			.frame(minHeight: 220, maxHeight: 280)
-			.frame(minWidth: 620)
-			
-						
-			VStack {
-				HStack {
-					Text("Arquivos do Processo")
-						.font(.title3)
-						.bold()
-					Spacer()
-					
-				}
-				
-				// MARK: - View/Grid de Pastas
+    
+    var body: some View {
+        VStack {
+            HStack(alignment: .top, spacing: 22) {
+                mainBlock
+                    .frame(maxHeight: .infinity)
+                
+                VStack(spacing: 10) {
+                    
+                    movimentationBlock
+                        .frame(maxHeight: .infinity)
+                    
+                    audienceBlock
+                        .frame(maxHeight: .infinity)
+                }
+                .frame(maxHeight: .infinity)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(minHeight: 220, maxHeight: 280)
+            .frame(minWidth: 620)
+            Divider()
+            VStack {
+                HStack {
+                    Text("Arquivos do Processo")
+                        .font(.title3)
+                        .bold()
+                    Spacer()
+                }
+                .padding(.vertical)
+                // MARK: - View/Grid de Pastas
                 DocumentGridView()
-			}
-			Spacer()
-		}
+            }
+            Spacer()
+        }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
-            EditLawSuitView(lawsuit: lawsuit)
+            EditLawSuitView(lawsuit: lawsuit, deleted: $deleted)
+                .frame(minWidth: 495)
         })
-		.padding()
-		.onAppear {
-            //Selecionar uma pasta aberta do primeiro cliente do CoreData
-            folderViewModel.openFolder(folder: clients[0].rootFolder)
-            
-            lawsuitCategory = .trabalhista
-            //TagType(s: lawsuit.tagType ?? .trabalhista)
-			dateFormatter.dateFormat = "dd/MM/yyyy"
-		}
-		
-		
-	}
+        .padding()
+        .onAppear {
+            folderViewModel.resetFolderStack()
+            folderViewModel.openFolder(folder: lawsuit.rootFolder)
+        }
+        .onChange(of: deleted) { change in
+            dismiss()
+        }
+    }
 }
 
 extension DetailedLawSuitView {
 	private var mainBlockHeader: some View {
 		HStack {
-			TagViewComponent(tagType: lawsuitCategory ?? .trabalhista)
+            TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista") ?? .trabalhista)
 			Spacer()
 			Button {
 				// editar
@@ -144,7 +142,7 @@ extension DetailedLawSuitView {
 							.font(.subheadline)
 							.foregroundStyle(.secondary)
 							.bold()
-                        Text(lawsuit.parentAuthor!.name)
+                        Text(lawsuit.parentAuthor?.name ?? "Sem nome")
 							.font(.subheadline)
 							.bold()
 					}

@@ -389,6 +389,7 @@
 				089BDBEF2C7FA3C900A914C9 /* LawsuitCellComponent.swift */,
 				0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */,
 				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
+				6ABD79702C6E990F00A98BA3 /* SelectClientComponent.swift */,
 			);
 			path = AddLawsuitView;
 			sourceTree = "<group>";
@@ -398,7 +399,6 @@
 			children = (
 				DCDB963F2C7E61C400817814 /* AddClientForm.swift */,
 				DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */,
-				6ABD79702C6E990F00A98BA3 /* SelectClientComponent.swift */,
 			);
 			path = AddClientView;
 			sourceTree = "<group>";

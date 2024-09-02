@@ -8,29 +8,47 @@
 import SwiftUI
 
 struct EditClientView: View {
-    @State var userInfoType = 0
-    @ObservedObject var client: Client
-    @State var temporaryClient: ClientMock?
     
+    //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
+    
+    //MARK: Variáveis de estado
+    @State var userInfoType = 0
+    @State var clientName: String = ""
+    @State var clientOccupation: String = ""
+    @State var clientRg: String = ""
+    @State var clientCpf: String = ""
+    @State var clientAffiliation: String = ""
+    @State var clientMaritalStatus: String = ""
+    @State var clientNationality: String = ""
+    @State var clientBirthDate: Date = Date()
+    @State var clientCep: String = ""
+    @State var clientAddress: String = ""
+    @State var clientAddressNumber: String = ""
+    @State var clientNeighborhood: String = ""
+    @State var clientComplement: String = ""
+    @State var clientState: String = ""
+    @State var clientCity: String = ""
+    @State var clientEmail: String = ""
+    @State var clientTelephone: String = ""
+    @State var clientCellphone: String = ""
+    
+    @ObservedObject var client: Client
+    @Binding var deleted: Bool
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
 
-    var onDelete: (() -> Void)?
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                //                Image(.foto)
-                //                    .resizable()
-                //                    .frame(width: 100, height: 100)
                 VStack(alignment: .leading) {
-                    LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $client.name)
+                    LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $clientName)
                     HStack {
-                        LabeledDateField(selectedDate: $client.birthDate, label: "Data de nascimento")
-                        LabeledTextField(label: "Profissão", placeholder: "Profissão", textfieldText: $client.occupation)
+                        LabeledDateField(selectedDate: $clientBirthDate, label: "Data de nascimento")
+                        LabeledTextField(label: "Profissão", placeholder: "Profissão", textfieldText: $clientOccupation)
                             .frame(maxWidth: .infinity)
                             .padding(.leading, 30)
                     }
@@ -48,62 +66,35 @@ struct EditClientView: View {
             .pickerStyle(.segmented)
             .labelsHidden()
             
-            if userInfoType == 0 {
-                EditClientViewFormsFields(formType: .personalInfo, client: client)
-                    .padding(.vertical, 5)
+            if userInfoType == 0 { 
+                EditClientViewFormsFields(formType: .personalInfo, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             } else if userInfoType == 1 {
-                EditClientViewFormsFields(formType: .address, client: client)
-                    .padding(.vertical, 5)
+                EditClientViewFormsFields(formType: .address, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             } else if userInfoType == 2 {
-                EditClientViewFormsFields(formType: .contact, client: client)
-                    .padding(.vertical, 5)
-            } else {
-                EditClientViewFormsFields(formType: .others, client: client)
-                    .padding(.top, 10)
+                EditClientViewFormsFields(formType: .contact, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             }
             Spacer()
             
             HStack {
-//                Button {
-//                    dismiss()
-//                    coreDataViewModel.clientManager.deleteClient(client: client)
-//                    onDelete?()
-//                } label: {
-//                    Text("Apagar Cliente")
-//                }
-//                .buttonStyle(.borderedProminent)
-//                .tint(.red)
+                Button {
+                    coreDataViewModel.clientManager.deleteClient(client: client)
+                    deleted.toggle()
+                    coreDataViewModel.clientManager.selectedClient = nil
+                    dismiss()
+                } label: {
+                    Text("Apagar Cliente")
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.red)
                 
                 Spacer()
                 Button {
-                    if let temporaryClient = temporaryClient {
-                        client.name = temporaryClient.name
-                        client.occupation = temporaryClient.occupation
-                        client.rg = temporaryClient.rg
-                        client.cpf = temporaryClient.cpf
-                        client.affiliation = temporaryClient.affiliation
-                        client.maritalStatus = temporaryClient.maritalStatus
-                        client.nationality = temporaryClient.nationality
-                        client.birthDate = temporaryClient.birthDate
-                        client.cep = temporaryClient.cep
-                        client.address = temporaryClient.address
-                        client.addressNumber = temporaryClient.addressNumber
-                        client.neighborhood = temporaryClient.neighborhood
-                        client.complement = temporaryClient.complement
-                        client.state = temporaryClient.state
-                        client.city = temporaryClient.city
-                        client.email = temporaryClient.email
-                        client.telephone = temporaryClient.telephone
-                        client.cellphone = temporaryClient.cellphone
-                    }
                     dismiss()
                 } label: {
                     Text("Cancelar")
                 }
-                
                 Button {
-                    //
-                    coreDataViewModel.clientManager.saveContext()
+                    coreDataViewModel.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                     dismiss()
                 } label: {
                     Text("Salvar")
@@ -114,30 +105,25 @@ struct EditClientView: View {
         .frame(minHeight: 250)
         .padding()
         .onAppear {
-            temporaryClient = ClientMock()
-            temporaryClient!.name = client.name
-            temporaryClient!.occupation = client.occupation
-            temporaryClient!.rg = client.rg
-            temporaryClient!.cpf = client.cpf
-            temporaryClient!.affiliation = client.affiliation
-            temporaryClient!.maritalStatus = client.maritalStatus
-            temporaryClient!.nationality = client.nationality
-            temporaryClient!.birthDate = client.birthDate
-            temporaryClient!.cep = client.cep
-            temporaryClient!.address = client.address
-            temporaryClient!.addressNumber = client.addressNumber
-            temporaryClient!.neighborhood = client.neighborhood
-            temporaryClient!.complement = client.complement
-            temporaryClient!.state = client.state
-            temporaryClient!.city = client.city
-            temporaryClient!.email = client.email
-            temporaryClient!.telephone = client.telephone
-            temporaryClient!.cellphone = client.cellphone
+            clientName = client.name
+            clientOccupation = client.occupation
+            clientRg = client.rg
+            clientCpf = client.cpf
+            clientAffiliation = client.affiliation
+            clientMaritalStatus = client.maritalStatus
+            clientNationality = client.nationality
+            clientBirthDate = client.birthDate
+            clientCep = client.cep
+            clientAddress = client.address
+            clientAddressNumber = client.addressNumber
+            clientNeighborhood = client.neighborhood
+            clientComplement = client.complement
+            clientState = client.state
+            clientCity = client.city
+            clientEmail = client.email
+            clientTelephone = client.telephone
+            clientCellphone = client.cellphone
         }
+
     }
 }
-
-//#Preview {
-//    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
-//    return EditClientView(clientMock: clientMock)
-//}

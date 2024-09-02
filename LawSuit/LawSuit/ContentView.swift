@@ -28,10 +28,10 @@ struct ContentView: View {
             switch selectedView {
             case .clients:
                 NavigationSplitView {
-                    ClientListView(selectedClient: $selectedClient, addClient: $addClient)
+                    ClientListView(addClient: $addClient)
                         .frame(minWidth: 170)
                 } detail: {
-                    if let selectedClient = selectedClient {
+                    if let selectedClient = coreDataViewModel.clientManager.selectedClient {
                         DocumentView(client: selectedClient)
                     } else {
                         Text("Selecione um cliente")

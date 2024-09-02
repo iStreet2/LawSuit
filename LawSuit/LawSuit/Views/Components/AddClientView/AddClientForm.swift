@@ -15,8 +15,6 @@ struct AddClientForm: View {
     
     @Binding var stage: Int
     @Binding var clientMock: ClientMock
-    //    @State var clientType: ClientType
-    //Cria um binding chamado stage
     @State var states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
     @State var cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
     
@@ -37,9 +35,7 @@ struct AddClientForm: View {
                     LabeledDateField(selectedDate: $clientMock.birthDate, label: "Data de nascimento")
                 }
             }
-//            Spacer()
-                .padding(.vertical, 5)
-            //else if stage == 2
+            .padding(.vertical, 5)
         } else if stage == 2 {
             VStack(alignment: .leading ,spacing: 15) {
                 LabeledTextField(label: "CEP", placeholder: "Insira seu CEP", textfieldText: $clientMock.cep)
@@ -58,10 +54,8 @@ struct AddClientForm: View {
                 }
                 .frame(width: 250)
             }
-//            Spacer()
             .padding(.vertical, 5)
         }
-        
         else if stage == 3 {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 15) {
@@ -73,12 +67,7 @@ struct AddClientForm: View {
                 }
             }
             Spacer()
-                .padding(.vertical, -5)
+            .padding(.vertical, -5)
         }
     }
-}
-
-#Preview {
-    @State var clientMock = ClientMock(name: "", occupation: "", rg: "", cpf: "", affiliation: "", maritalStatus: "", nationality: "", birthDate: Date(), cep: "", address: "", addressNumber: "", neighborhood: "", complement: "", state: "", city: "", email: "", telephone: "", cellphone: "")
-    return AddClientForm(stage: .constant(3), clientMock: $clientMock)
 }
