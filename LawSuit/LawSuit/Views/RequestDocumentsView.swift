@@ -24,6 +24,7 @@ struct RequestDocumentsView: View {
             Text("Ciente: \(choosedClient)")
                 .font(.title3)
                 .bold()
+            //MARK: Componente não funcionando para essa view!!! ass: Bonito
             //SelectClientComponent(lawsuit: $lawsuit, choosedClient: $choosedClient, screen: .big, defendantOrClient: $seiLa)
             Text("Documentos:")
                 .font(.title3)

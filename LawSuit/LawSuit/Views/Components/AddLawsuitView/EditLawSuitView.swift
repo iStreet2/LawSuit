@@ -10,7 +10,7 @@ import SwiftUI
 struct EditLawSuitView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Binding var lawsuit: Lawsuit
+    @ObservedObject var lawsuit: Lawsuit
     @State var selectTag = false
     @State var tagType: TagType = .trabalhista
     

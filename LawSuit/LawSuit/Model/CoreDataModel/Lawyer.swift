@@ -43,19 +43,19 @@ extension Lawyer {
 
 }
 
-// MARK: Generated accessors for lawsuit
+// MARK: Generated accessors for lawsuits
 extension Lawyer {
 
-    @objc(addLawsuitObject:)
-    @NSManaged public func addToLawsuit(_ value: Lawsuit)
+    @objc(addLawsuitsObject:)
+    @NSManaged public func addToLawsuits(_ value: Lawsuit)
 
-    @objc(removeLawsuitObject:)
-    @NSManaged public func removeFromLawsuit(_ value: Lawsuit)
+    @objc(removeLawsuitsObject:)
+    @NSManaged public func removeFromLawsuits(_ value: Lawsuit)
 
-    @objc(addLawsuit:)
-    @NSManaged public func addToLawsuit(_ values: NSSet)
+    @objc(addLawsuits:)
+    @NSManaged public func addToLawsuits(_ values: NSSet)
 
-    @objc(removeLawsuit:)
-    @NSManaged public func removeFromLawsuit(_ values: NSSet)
+    @objc(removeLawsuits:)
+    @NSManaged public func removeFromLawsuits(_ values: NSSet)
 
 }

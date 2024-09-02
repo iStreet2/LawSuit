@@ -20,7 +20,7 @@ struct LawsuitDistributedView: View {
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
     @Binding var lawsuitParentAuthorName: String
-    @Binding var lawsuitDefandent: String
+    @Binding var lawsuitDefendant: String
     @Binding var lawsuitActionDate: Date
     
     //MARK: CoreData
@@ -36,7 +36,7 @@ struct LawsuitDistributedView: View {
         }
         HStack(alignment: .top){
             VStack(alignment: .leading){
-                EditLawsuitAuthorComponent(button: "Alterar cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent, defendantOrClient: "client")
+                EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client")
                 TextField("", text: $lawsuitParentAuthorName)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 200)
@@ -47,29 +47,11 @@ struct LawsuitDistributedView: View {
                         selectTag.toggle()
                     }
             }
-            .sheet(isPresented: $selectTag, content: {
-                VStack {
-                    Spacer()
-                    TagViewPickerComponentV1(currentTag: $tagType)
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            selectTag.toggle()
-                        }, label: {
-                            Text("Salvar")
-                        })
-                        .buttonStyle(.borderedProminent)
-                        .padding()
-                    }
-                }
-                .frame(minWidth: 200, minHeight: 250)
-            })
             Spacer()
             VStack(alignment: .leading){
                 VStack(alignment: .leading){
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent, defendantOrClient: "defendant")
-                    TextField("", text: $lawsuitDefandent)
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant")
+                    TextField("", text: $lawsuitDefendant)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)
                 }
@@ -96,7 +78,7 @@ struct LawsuitDistributedView: View {
                         //MARK: Advogado temporário
                         let lawyer = Lawyer(context: context)
                         lawyer.name = "Você"
-                        coreDataViewModel.lawsuitManager.createLawsuit(name: "\(lawsuitParentAuthorName) X \(lawsuitDefandent)", number: lawsuitNumber, category: category, lawyer: lawyer, defendant: lawsuitDefandent, author: client, actionDate: lawsuitActionDate)
+                        coreDataViewModel.lawsuitManager.createLawsuit(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
                         dismiss()
                     } else {
                         print("Cliente não encontrado")
@@ -109,6 +91,24 @@ struct LawsuitDistributedView: View {
             }
             .buttonStyle(.borderedProminent)
         }
+        .sheet(isPresented: $selectTag, content: {
+            VStack {
+                Spacer()
+                TagViewPickerComponentV1(currentTag: $tagType)
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        selectTag.toggle()
+                    }, label: {
+                        Text("Salvar")
+                    })
+                    .buttonStyle(.borderedProminent)
+                    .padding()
+                }
+            }
+            .frame(minWidth: 200, minHeight: 250)
+        })
     }
 }
 

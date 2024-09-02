@@ -12,6 +12,9 @@ struct LawsuitListView: View {
     @State var createProcess = false
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
+    
     @EnvironmentObject var mockViewModel: MockViewModel
     
     var body: some View {

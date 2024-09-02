@@ -16,21 +16,43 @@ class LawsuitManager {
         self.context = context
     }
     
-    func createLawsuit(name: String, number: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) {
+    func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) {
         let lawsuit = Lawsuit(context: context)
         lawsuit.name = name
         lawsuit.category = category
         lawsuit.number = number
-        lawyer.addToLawsuit(lawsuit)
+        lawsuit.court = court
+        lawyer.addToLawsuits(lawsuit)
         lawsuit.defendant = defendant
         lawsuit.parentAuthor = author
         lawsuit.actionDate = actionDate
         lawsuit.id = UUID().uuidString
         
         // Criar pasta raiz para esse processo:
-        var rootFolder = Folder(context: context)
+        let rootFolder = Folder(context: context)
         rootFolder.parentLawsuit = lawsuit
         rootFolder.name = lawsuit.name
+        rootFolder.id = UUID().uuidString
+        
+        lawsuit.rootFolder = rootFolder
+        
+        saveContext()
+    }
+    
+    func createLawsuitNonDistribuited(name: String, number: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) {
+        let lawsuit = Lawsuit(context: context)
+        lawsuit.name = name
+        lawsuit.category = category
+        lawyer.addToLawsuits(lawsuit)
+        lawsuit.defendant = defendant
+        lawsuit.parentAuthor = author
+        lawsuit.id = UUID().uuidString
+        
+        // Criar pasta raiz para esse processo:
+        let rootFolder = Folder(context: context)
+        rootFolder.parentLawsuit = lawsuit
+        rootFolder.name = lawsuit.name
+        rootFolder.id = UUID().uuidString
         
         lawsuit.rootFolder = rootFolder
         
@@ -55,7 +77,7 @@ class LawsuitManager {
         do {
             try context.save()
         } catch {
-            print("Error while saving context on lawsuit")
+            print("Error while saving context on lawsuit \(error)")
         }
     }
     

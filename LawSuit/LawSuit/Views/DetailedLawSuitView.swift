@@ -12,7 +12,7 @@ struct DetailedLawSuitView: View {
 	
     @EnvironmentObject var folderViewModel: FolderViewModel
     @State var editLawSuit = false
-    @Binding var lawsuit: Lawsuit
+    @ObservedObject var lawsuit: Lawsuit
 	@State var lawsuitCategory: TagType? = nil
 	
     private var dateFormatter: DateFormatter {
@@ -66,7 +66,7 @@ struct DetailedLawSuitView: View {
 		}
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
-//            EditLawSuitView(lawsuit: $lawsuit)
+            EditLawSuitView(lawsuit: lawsuit)
         })
 		.padding()
 		.onAppear {

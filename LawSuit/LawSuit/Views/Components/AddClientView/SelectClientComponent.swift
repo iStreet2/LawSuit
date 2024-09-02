@@ -10,10 +10,10 @@ import SwiftUI
 struct SelectClientComponent: View {
     
     //MARK: Variáveis de estado
-    @Binding var lawsuitParentAuthorName: String
-    @Binding var lawsuitDefendant: String
     @State var searchQuery = ""
     @State var isEditing = false
+    @Binding var lawsuitParentAuthorName: String
+    @Binding var lawsuitDefendant: String
     @Binding var defendantOrClient: String
     var screen: SizeEnumerator
     
