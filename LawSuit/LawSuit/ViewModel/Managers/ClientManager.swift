@@ -73,24 +73,6 @@ class ClientManager {
         
         saveContext()
     }
-
-    
-    func testClient() {
-        let client = Client(context: context)
-        client.name = "Bonito"
-        client.id = UUID().uuidString
-        client.age = Int64(20)
-        
-        let rootFolder = Folder(context: context)
-        rootFolder.name = "\(client.name)"
-        rootFolder.id = "root\(client.name)"
-        rootFolder.parentClient = client
-        
-        client.rootFolder = rootFolder
-        
-        saveContext()
-//		 return client
-    }
     
     func deleteClient(client: Client/*, lawyer: Lawyer*/) {
         context.delete(client)
@@ -128,6 +110,7 @@ class ClientManager {
         client.maritalStatus = maritalStatus
         client.nationality = nationality
         client.birthDate = birthDate
+        client.age = Int64(calculateAge(from: birthDate))
         client.cep = cep
         client.address = address
         client.addressNumber = addressNumber
