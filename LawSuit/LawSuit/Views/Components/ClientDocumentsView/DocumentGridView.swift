@@ -12,7 +12,7 @@ struct DocumentGridView: View {
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
-
+    
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
@@ -38,16 +38,13 @@ struct DocumentGridView: View {
                                 Image(systemName: "chevron.left")
                             }
                             .disabled(folderViewModel.getPath().count() == 1)
-                            .onAppear {
-                                print(folderViewModel.getPath().count())
-                            }
                             Spacer()
                             Button {
                                 folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
                             } label: {
                                 Image(systemName: "doc")
                             }
-
+                            
                             Button {
                                 coreDataViewModel.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
                             } label: {
@@ -63,6 +60,10 @@ struct DocumentGridView: View {
                         LazyVGrid(columns: gridItems, spacing: spacing) {
                             FolderGridView(parentFolder: openFolder, geometry: geometry)
                             FilePDFGridView(parentFolder: openFolder, geometry: geometry)
+                        }
+                        if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
+                            Text("Sem pastas ou arquivos")
+                                .foregroundStyle(.gray)
                         }
                     }
                 }

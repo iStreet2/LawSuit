@@ -55,16 +55,27 @@ struct LawsuitListView: View {
                 Divider()
                     .padding(.top, 5)
                     .padding(.trailing, 10)
-                ScrollView {
-                    VStack {
-                        ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
-                            NavigationLink {
-                                DetailedLawSuitView(lawsuit: lawsuit)
-                            } label: {
-                                LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-                                    .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                if lawsuits.isEmpty {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Text("Sem processos")
+                            .foregroundStyle(.gray)
+                        Spacer()
+                    }
+                    Spacer()
+                } else {
+                    ScrollView {
+                        VStack {
+                            ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
+                                NavigationLink {
+                                    DetailedLawSuitView(lawsuit: lawsuit)
+                                } label: {
+                                    LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                        .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
-                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
