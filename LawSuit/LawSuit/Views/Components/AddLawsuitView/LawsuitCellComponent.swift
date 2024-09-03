@@ -28,10 +28,7 @@ struct LawsuitCellComponent: View {
                     .foregroundStyle(Color(.gray))
             }
             .padding(.trailing)
-            //            .frame(width: 195)
-            //            Spacer()
             TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista")!)
-            //            Spacer()
             
             Group {
                 if let latestUpdateDate = coreDataViewModel.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
@@ -48,7 +45,6 @@ struct LawsuitCellComponent: View {
             .bold()
         }
         .padding(10)
-//        .frame(width: 777)
     }
     
     func formatDate(_ date: Date) -> String {
