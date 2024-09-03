@@ -29,6 +29,7 @@ struct LawsuitDistributedView: View {
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
 
     var body: some View {
         VStack{
@@ -95,8 +96,7 @@ struct LawsuitDistributedView: View {
                     if let client = fetchedClients.first {
                         let category = TagTypeString.string(from: tagType)
                         //MARK: Advogado temporário
-                        let lawyer = Lawyer(context: context)
-                        lawyer.name = "Você"
+                        let lawyer = lawyers[0]
                         coreDataViewModel.lawsuitManager.createLawsuit(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
                         dismiss()
                     } else {

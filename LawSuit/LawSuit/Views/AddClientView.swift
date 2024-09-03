@@ -37,6 +37,7 @@ struct AddClientView: View {
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
     
     var body: some View {
@@ -82,9 +83,8 @@ struct AddClientView: View {
                                 stage += 1
                             }
                         } else {
-                            //Lógica para salvar o cliente
-                            let lawyer = Lawyer(context: context)
-                            lawyer.name = "Você"
+                            //MARK: Advogado temporário
+                            let lawyer = lawyers[0]
                             coreDataViewModel.clientManager.createClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
                             dismiss()
                         }
