@@ -16,6 +16,8 @@ struct SelectClientComponent: View {
     @Binding var lawsuitDefendant: String
     @Binding var defendantOrClient: String
     var screen: SizeEnumerator
+    @Binding var attributedClient: Bool
+    @Binding var attributedDefendant: Bool
     
     //MARK: Variáveis ambiente
     @Environment(\.dismiss) var dismiss
@@ -41,8 +43,10 @@ struct SelectClientComponent: View {
                         .onTapGesture {
                             if defendantOrClient == "client" {
                                 lawsuitParentAuthorName = client.name
+                                attributedClient = true
                             } else {
                                 lawsuitDefendant = client.name
+                                attributedDefendant = true
                             }
                             dismiss()
                         }

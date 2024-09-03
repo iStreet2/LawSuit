@@ -35,7 +35,7 @@ struct LawsuitNotDistributedView: View {
                 }
             HStack(spacing: 70) {
                 VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client")
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client", attributedClient: .constant(true), attributedDefendant: .constant(false))
                     Text(lawsuitParentAuthorName)
                 }
                 LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendant)

@@ -16,6 +16,8 @@ struct EditLawsuitAuthorComponent: View {
     @Binding var lawsuitParentAuthorName: String
     @Binding var lawsuitDefendant: String
     @State var defendantOrClient: String
+    @Binding var attributedClient: Bool
+    @Binding var attributedDefendant: Bool
     
     var body: some View {
         VStack(alignment: .leading){
@@ -28,9 +30,8 @@ struct EditLawsuitAuthorComponent: View {
                     Text(button)
                 })
                 .buttonStyle(.borderless)
-                .foregroundStyle(.blue)
                 .sheet(isPresented: $showingDetail) {
-                    SelectClientComponent(lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: $defendantOrClient, screen: .small)
+                    SelectClientComponent(lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: $defendantOrClient, screen: .small, attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
                 }
             }
         }

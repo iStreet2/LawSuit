@@ -23,6 +23,9 @@ struct LawsuitDistributedView: View {
     @Binding var lawsuitDefendant: String
     @Binding var lawsuitActionDate: Date
     
+    @State var attributedClient = false
+    @State var attributedDefendant = false
+    
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
@@ -36,10 +39,18 @@ struct LawsuitDistributedView: View {
         }
         HStack(alignment: .top){
             VStack(alignment: .leading){
-                EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client")
+                EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
+                    .disabled(attributedDefendant)
                 TextField("", text: $lawsuitParentAuthorName)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 200)
+                    .onChange(of: lawsuitParentAuthorName) { change in
+                        //Se o valor do textField mudar para vazio, a lógica de proibir a seleção em algum reseta
+                        if lawsuitParentAuthorName == "" {
+                            attributedClient = false
+                            attributedDefendant = false
+                        }
+                    }
                 Text("Área")
                     .bold()
                 TagViewComponent(tagType: tagType)
@@ -50,10 +61,18 @@ struct LawsuitDistributedView: View {
             Spacer()
             VStack(alignment: .leading){
                 VStack(alignment: .leading){
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant")
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
+                        .disabled(attributedClient)
                     TextField("", text: $lawsuitDefendant)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)
+                        .onChange(of: lawsuitDefendant) { change in
+                            //Se o valor do textField mudar para vazio, a logica de proibir a seleção em algum reseta
+                            if lawsuitDefendant == "" {
+                                attributedClient = false
+                                attributedDefendant = false
+                            }
+                        }
                 }
                 Text("Data de distribuição ")
                     .bold()
