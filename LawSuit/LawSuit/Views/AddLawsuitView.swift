@@ -18,8 +18,8 @@ struct AddLawsuitView: View {
     //MARK: Variáveis de estado
     @State var lawsuitType: LawsuitType = .distributed
     @State var lawsuitTypeString: String = ""
-    @State var clientMock: ClientMock = ClientMock()
-    @State var lawsuit: ProcessMock = ProcessMock()
+//    @State var clientMock: ClientMock = ClientMock()
+//    @State var lawsuit: ProcessMock = ProcessMock()
     
     //MARK: Variáveis de estado
     @State var lawsuitNumber = ""

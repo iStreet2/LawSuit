@@ -85,22 +85,11 @@ struct DocumentGridView: View {
                         Image(systemName: "doc")
                     }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .destructiveAction) {
-                        Button(action: {
-                            coreDataViewModel.deleteAllData()
-                        }, label: {
-                            Image(systemName: "trash")
-                        })
-                    }
-                }
                 //            .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
                 //                dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, context: context, coreDataViewModel: coreDataViewModel)
                 //                return true
                 //            }
             }
-            .navigationTitle(openFolder.name ?? "Sem nome")
         }
-        
     }
 }

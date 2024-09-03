@@ -13,7 +13,7 @@ struct RequestDocumentsView: View {
     @State var files = ["RG", "CPF"]
     var cliente: SelectClientComponent
     var screen: SizeEnumerator
-    @Binding var lawsuit: ProcessMock
+//    @Binding var lawsuit: ProcessMock
     @State var seiLa: String = ""
 
     var body: some View {

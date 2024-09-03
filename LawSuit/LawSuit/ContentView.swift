@@ -13,6 +13,7 @@ struct ContentView: View {
     @State private var selectedView = SelectedView.clients
     @State private var selectedClient: Client?
     @State private var addClient = false
+    @State var deleted = false
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -28,11 +29,11 @@ struct ContentView: View {
             switch selectedView {
             case .clients:
                 NavigationSplitView {
-                    ClientListView(addClient: $addClient)
+                    ClientListView(addClient: $addClient, deleted: $deleted)
                         .frame(minWidth: 170)
                 } detail: {
                     if let selectedClient = coreDataViewModel.clientManager.selectedClient {
-                        DocumentView(client: selectedClient)
+                        ClientView(client: selectedClient, deleted: $deleted)
                     } else {
                         Text("Selecione um cliente")
                             .foregroundColor(.gray)
