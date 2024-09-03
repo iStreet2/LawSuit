@@ -17,12 +17,24 @@ struct ClientView: View {
     @ObservedObject var client: Client
     @Binding var deleted: Bool
     @State var selectedOption = "Processos"
+    @State var createLawsuit = false
     var infos = ["Processos", "Documentos"]
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
+    
+    init(client: Client, deleted: Binding<Bool>) {
+        self.client = client
+        self._deleted = deleted
+        
+        _lawsuits =  FetchRequest<Lawsuit>(
+            sortDescriptors: []
+            ,predicate: NSPredicate(format: "parentAuthor == %@", client)
+        )
+    }
     
     var body: some View {
         VStack {
@@ -33,16 +45,88 @@ struct ClientView: View {
                 VStack(alignment: .leading) {
                     ClientInfoView(client: client, deleted: $deleted)
                     Divider()
-                    //Aqui ter um picker de processos e de documentos :D
-                    SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
-                        .padding(5)
-                        .padding(.trailing, 400)
-                    //                    .frame(width: 60)
+                    HStack {
+                        SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
+                            .padding(5)
+                            .padding(.trailing,600)
+                        
+                        if selectedOption == "Processos" {
+                            Button(action: {
+                                createLawsuit.toggle()
+                            }, label: {
+                                Image(systemName: "plus")
+                                    .font(.title)
+                                    .foregroundStyle(Color(.gray))
+                            })
+                            .padding(.trailing)
+                            .buttonStyle(PlainButtonStyle())
+                        }else{
+                            Button(action: {
+                                
+                            }, label: {
+                                Image(systemName: "plus")
+                                    .font(.title)
+                                    .foregroundStyle(Color(.white))
+                                    .opacity(0)
+                            })
+                            .padding(.trailing)
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
                     Divider()
                 }
                 VStack {
                     if selectedOption == "Processos" {
-                        Text("View da Micher")
+                        //meu deus
+                        HStack(spacing: 0) {
+                            Text("Nome e Número")
+                                .font(.footnote)
+                            Spacer()
+                            Text("Tipo")
+                                .font(.footnote)
+                            Spacer()
+                            Text("Última movimentação")
+                                .font(.footnote)
+                            
+                            Spacer()
+                            Text("Cliente")
+                                .font(.footnote)
+                            
+                            Spacer()
+                            Text("Advogado responsável")
+                                .font(.footnote)
+                        }
+                        .padding(.horizontal, 10)
+                        .foregroundStyle(Color(.gray))
+                        
+                        Divider()
+                            .padding(.top, 5)
+                            .padding(.trailing, 10)
+                        
+                        if lawsuits.isEmpty {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Text("Sem processos")
+                                    .foregroundStyle(.gray)
+                                Spacer()
+                            }
+                            Spacer()
+                        } else {
+                            ScrollView {
+                                VStack {
+                                    ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
+                                        NavigationLink {
+                                            DetailedLawSuitView(lawsuit: lawsuit)
+                                        } label: {
+                                            LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                            }
+                        }
                         Spacer()
                     } else {
                         DocumentGridView()
@@ -60,6 +144,9 @@ struct ClientView: View {
                 })
             }
         }
+        .sheet(isPresented: $createLawsuit, content: {
+            AddLawsuitView()
+        })
     }
 }
 
