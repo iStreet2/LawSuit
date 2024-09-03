@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct LawsuitNameCellComponent: View {
-    var process: ProcessMock
+//    var process: ProcessMock
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(process.title!)
-                .font(.callout)
-                .bold()
-            Text(process.number)
-                .font(.callout)
-                .foregroundStyle(Color(.gray))
+//            Text(process.title!)
+//                .font(.callout)
+//                .bold()
+//            Text(process.number)
+//                .font(.callout)
+//                .foregroundStyle(Color(.gray))
         }
     }
 }

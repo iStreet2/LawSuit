@@ -24,6 +24,7 @@ class ClientManager {
         occupation: String,
         rg: String,
         cpf: String,
+        lawyer: Lawyer,
         affiliation: String,
         maritalStatus: String,
         nationality: String,

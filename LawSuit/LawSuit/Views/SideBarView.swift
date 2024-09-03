@@ -24,18 +24,18 @@ struct SideBarView: View {
                 }
                 Image(systemName: "person.2")
                     .font(.system(size: 19))
-                    .onTapGesture {
-                        withAnimation(.bouncy) {
-                            selectedView = .clients
-                            if let selectedClient = coreDataViewModel.clientManager.selectedClient {
-                                folderViewModel.resetFolderStack()
-                                folderViewModel.openFolder(folder: selectedClient.rootFolder)
-                            }
-                            //Necessário ação para mudar tela
-                        }
-                    }
             }
             .frame(width: 55, height: 46)
+            .onTapGesture {
+                withAnimation(.bouncy) {
+                    selectedView = .clients
+                    if let selectedClient = coreDataViewModel.clientManager.selectedClient {
+                        folderViewModel.resetFolderStack()
+                        folderViewModel.openFolder(folder: selectedClient.rootFolder)
+                    }
+                    //Necessário ação para mudar tela
+                }
+            }
             ZStack {
                 if selectedView == .lawsuits {
                     Color.gray
@@ -44,14 +44,14 @@ struct SideBarView: View {
                 }
                 Image(systemName: "briefcase")
                     .font(.system(size: 19))
-                    .onTapGesture {
-                        withAnimation(.bouncy) {
-                            selectedView = .lawsuits
-                            //Necessário ação para mudar a tela
-                        }
-                    }
             }
             .frame(width: 55, height: 46)
+            .onTapGesture {
+                withAnimation(.bouncy) {
+                    selectedView = .lawsuits
+                    //Necessário ação para mudar a tela
+                }
+            }
             Spacer()
         }
         .padding()

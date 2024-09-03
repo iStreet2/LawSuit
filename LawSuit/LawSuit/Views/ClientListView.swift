@@ -11,6 +11,7 @@ struct ClientListView: View {
     
     //MARK: Variáveis de estado
     @Binding var addClient: Bool
+    @Binding var deleted: Bool
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -37,9 +38,9 @@ struct ClientListView: View {
             List(clients, id: \.id) { client in
                 Button(action: {
                     coreDataViewModel.clientManager.selectedClient = client
-                    coreDataViewModel.clientManager.isClientSelected = true
                     folderViewModel.resetFolderStack()
                     folderViewModel.openFolder(folder: client.rootFolder)
+                    deleted = false
                 }, label: {
                     HStack {
                         if coreDataViewModel.clientManager.selectedClient == client {

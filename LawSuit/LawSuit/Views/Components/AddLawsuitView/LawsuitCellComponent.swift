@@ -48,7 +48,7 @@ struct LawsuitCellComponent: View {
             .bold()
         }
         .padding(10)
-        .frame(width: 777)
+//        .frame(width: 777)
     }
     
     func formatDate(_ date: Date) -> String {

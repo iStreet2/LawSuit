@@ -21,14 +21,3 @@ struct SegmentedControlComponent: View {
         .pickerStyle(SegmentedPickerStyle()).foregroundColor(Color.orange)
     }
 }
-
-//#Preview {
-//    NewProcessView()
-//}
-
-
-//#Preview {
-//    SegmentedControlComponent(selectedOption: <#T##Binding<String>#>, options: <#T##[String]#>, title: <#T##String#>)}
-//#Preview {
-//    NewProcessView()
-//}
