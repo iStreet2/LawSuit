@@ -41,26 +41,26 @@ struct LawsuitListView: View {
                 HStack(spacing: 0) {
                     Text("Nome e Número")
                         .font(.footnote)
-                        .border(Color.black)
+                        //.border(Color.black)
                     
                     Spacer()
                     Text("Tipo")
                         .font(.footnote)
-                        .border(Color.black)
+                        //.border(Color.black)
                     Spacer()
                     Text("Última movimentação")
                         .font(.footnote)
-                        .border(Color.black)
+                        //.border(Color.black)
                     
                     Spacer()
                     Text("Cliente")
                         .font(.footnote)
-                        .border(Color.black)
+                        //.border(Color.black)
                     
                     Spacer()
                     Text("Advogado responsável")
                         .font(.footnote)
-                        .border(Color.black)
+                        //.border(Color.black)
                 }
                 .padding(.horizontal, 10)
                 .foregroundStyle(Color(.gray))

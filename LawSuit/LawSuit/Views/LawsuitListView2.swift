@@ -9,13 +9,15 @@ import SwiftUI
 
 struct LawsuitListView2: View {
     
-    @State var createProcess = false
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
-    @State private var multiplier: Double = 0.5
-    
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    
     @Environment(\.managedObjectContext) var context
+    
+    @State var createProcess = false
+    
+    @State private var multiplier: Double = 0.5
     
     @EnvironmentObject var mockViewModel: MockViewModel
     
@@ -23,7 +25,7 @@ struct LawsuitListView2: View {
         
         NavigationStack {
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Text("Processos")
                         .font(.title)
@@ -71,6 +73,11 @@ struct LawsuitListView2: View {
                         Divider()
                         ForEach(Array(lawsuits.enumerated()), id: \.offset) {
                             index, lawsuit in
+                            NavigationLink {
+                                
+                            } label: {
+                                
+                            }
                             TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista") ?? .trabalhista)
                                 .frame(width: 120, height: 47, alignment: .leading)
                                 .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
@@ -81,6 +88,11 @@ struct LawsuitListView2: View {
                     .border(Color.black)
                     
                     VStack(alignment: .leading, spacing: 0) {
+                        NavigationLink {
+                            
+                        } label: {
+                            
+                        }
                         Text("Ultima movimentacao")
                             .font(.footnote)
                             .bold()
