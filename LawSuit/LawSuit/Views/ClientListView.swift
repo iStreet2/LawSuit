@@ -37,6 +37,7 @@ struct ClientListView: View {
             List(clients, id: \.id) { client in
                 Button(action: {
                     coreDataViewModel.clientManager.selectedClient = client
+                    coreDataViewModel.clientManager.isClientSelected = true
                     folderViewModel.resetFolderStack()
                     folderViewModel.openFolder(folder: client.rootFolder)
                 }, label: {

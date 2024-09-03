@@ -21,8 +21,8 @@ struct ContentView: View {
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
-     
-    var body: some View {   
+    
+    var body: some View {
         HStack {
             SideBarView(selectedView: $selectedView)
             switch selectedView {

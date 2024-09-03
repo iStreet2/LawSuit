@@ -17,7 +17,7 @@ struct ClientInfoView: View {
     @ObservedObject var client: Client
     @State var editClient = false
     @State var imageData: Data?
-    @State var deleted = false
+    @Binding var deleted: Bool
 
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel

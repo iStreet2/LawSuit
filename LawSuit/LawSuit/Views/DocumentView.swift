@@ -18,12 +18,19 @@ struct DocumentView: View {
     
     @ObservedObject var client: Client
     
+    @State var deleted = false
+    
     var body: some View {
-        VStack {
-            ClientInfoView(client: client)
-            Divider()
-            DocumentGridView()
-                .padding()
+        if deleted {
+            Text("Selecione um cliente")
+                .foregroundColor(.gray)
+        } else {
+            VStack {
+                ClientInfoView(client: client, deleted: $deleted)
+                Divider()
+                DocumentGridView()
+                    .padding()
+            }
         }
     }
 }

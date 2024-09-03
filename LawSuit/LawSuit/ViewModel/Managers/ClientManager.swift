@@ -13,6 +13,7 @@ class ClientManager {
     
     var context: NSManagedObjectContext
     @Published var selectedClient: Client? = nil
+    @Published var isClientSelected: Bool = false
     
     init(context: NSManagedObjectContext) {
         self.context = context
