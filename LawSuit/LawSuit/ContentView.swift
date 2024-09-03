@@ -41,7 +41,7 @@ struct ContentView: View {
             case .lawsuits:
                 Divider()
                 Spacer()
-                LawsuitListView()
+                LawsuitListView2()
                 Spacer()
             }
         }

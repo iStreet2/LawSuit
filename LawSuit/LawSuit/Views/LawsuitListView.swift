@@ -12,12 +12,15 @@ struct LawsuitListView: View {
     @State var createProcess = false
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
+    @State private var multiplier: Double = 0.5
+    
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     
     @EnvironmentObject var mockViewModel: MockViewModel
     
     var body: some View {
+        
         NavigationStack {
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
@@ -34,27 +37,38 @@ struct LawsuitListView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
                 .padding(10)
-                HStack {
+                
+                HStack(spacing: 0) {
                     Text("Nome e Número")
                         .font(.footnote)
+                        .border(Color.black)
+                    
                     Spacer()
                     Text("Tipo")
                         .font(.footnote)
+                        .border(Color.black)
                     Spacer()
                     Text("Última movimentação")
                         .font(.footnote)
+                        .border(Color.black)
+                    
                     Spacer()
                     Text("Cliente")
                         .font(.footnote)
+                        .border(Color.black)
+                    
                     Spacer()
                     Text("Advogado responsável")
                         .font(.footnote)
+                        .border(Color.black)
                 }
                 .padding(.horizontal, 10)
                 .foregroundStyle(Color(.gray))
+                
                 Divider()
                     .padding(.top, 5)
                     .padding(.trailing, 10)
+                
                 if lawsuits.isEmpty {
                     Spacer()
                     HStack {
@@ -80,19 +94,18 @@ struct LawsuitListView: View {
                     }
                 }
             }
-            .sheet(isPresented: $createProcess, content: {
-                AddLawsuitView()
-            })
-            .toolbar {
-                ToolbarItem {
-                    Text("")
-                }
+        }
+        .sheet(isPresented: $createProcess, content: {
+            AddLawsuitView()
+        })
+        .toolbar {
+            ToolbarItem {
+                Text("")
             }
         }
     }
 }
 
-
-//#Preview {
-//    ProcessListView()
-//}
+#Preview {
+    LawsuitListView()
+}
