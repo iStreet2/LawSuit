@@ -51,14 +51,14 @@ class CloudViewModel: ObservableObject {
 	}
 	
 	private func updateArrays(query: QueryType, objects: [any Recordable] = []) {
-		switch query {
-		case .file:
-			self.currentFiles = objects
-		case .client:
-			self.currentClients = objects
-		case .folder:
-			self.currentFolders = objects
-		}
+		
+		let updateDict: [QueryType: (Array<any Recordable>) -> Void] = [
+			.file: { self.currentFiles = $0 },
+			.client: { self.currentClients = $0 },
+			.folder: { self.currentFolders = $0 }
+		]
+		
+		updateDict[query]?(objects)
 	}
 	
 	public func emptyAllArrays(areYouSure: Bool) {
