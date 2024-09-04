@@ -93,6 +93,12 @@
 		E9E323E22C7FB6F3000BA6FD /* ClientMoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E323E12C7FB6F3000BA6FD /* ClientMoreInfoView.swift */; };
 		E9E323E42C80EA12000BA6FD /* DetailedLawSuitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E323E32C80EA12000BA6FD /* DetailedLawSuitView.swift */; };
 		E9F3A4242C86325E00595150 /* CoreCloudTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */; };
+		E9F3A4262C87755800595150 /* QueryEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4252C87755800595150 /* QueryEnumerator.swift */; };
+		E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4272C8775CB00595150 /* TextRecognizer.swift */; };
+		E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4292C87795000595150 /* OCRTestingView.swift */; };
+		E9F3A42C2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E9F3A42B2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf */; };
+		E9F3A42E2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E9F3A42D2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf */; };
+		E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A42F2C87AF6000595150 /* ContactsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,7 +209,12 @@
 		E9E323E12C7FB6F3000BA6FD /* ClientMoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMoreInfoView.swift; sourceTree = "<group>"; };
 		E9E323E32C80EA12000BA6FD /* DetailedLawSuitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedLawSuitView.swift; sourceTree = "<group>"; };
 		E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCloudTestingView.swift; sourceTree = "<group>"; };
-
+		E9F3A4252C87755800595150 /* QueryEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEnumerator.swift; sourceTree = "<group>"; };
+		E9F3A4272C8775CB00595150 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
+		E9F3A4292C87795000595150 /* OCRTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTestingView.swift; sourceTree = "<group>"; };
+		E9F3A42B2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Atv1-Paulo_Sonzzini.pdf"; sourceTree = "<group>"; };
+		E9F3A42D2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Radiography Backend System - Paulo Sonzzini.pdf"; sourceTree = "<group>"; };
+		E9F3A42F2C87AF6000595150 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +413,8 @@
 				3BD40B322C6D41EC004048FA /* LawsuitManager.swift */,
 				3BD40B342C6D4384004048FA /* UpdateManager.swift */,
 				E981580E2C77A2680039C2FD /* CloudManager.swift */,
+				E9F3A4272C8775CB00595150 /* TextRecognizer.swift */,
+				E9F3A42F2C87AF6000595150 /* ContactsManager.swift */,
 				E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */,
 			);
 			path = Managers;
@@ -411,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */,
+				E9F3A4292C87795000595150 /* OCRTestingView.swift */,
 				3BD40B3C2C6D4DE8004048FA /* Components */,
 				3BD40B372C6D454B004048FA /* ClientView.swift */,
 				6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */,
@@ -475,6 +489,7 @@
 			isa = PBXGroup;
 			children = (
 				6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */,
+				E9F3A4252C87755800595150 /* QueryEnumerator.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -583,6 +598,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9F3A42E2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf in Resources */,
+				E9F3A42C2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf in Resources */,
 				3B98F1132C668B1100C45121 /* Preview Assets.xcassets in Resources */,
 				3B98F1102C668B1100C45121 /* Assets.xcassets in Resources */,
 			);
@@ -679,6 +696,10 @@
 				089BDBEA2C7F9B6600A914C9 /* LawsuitListView.swift in Sources */,
 				3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */,
 				E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */,
+				E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */,
+				E9F3A4262C87755800595150 /* QueryEnumerator.swift in Sources */,
+				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
+				E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */,
 				08E8D2002C87ACDA008F3859 /* LawsuitCellComponent2.swift in Sources */,
 				3BD40B382C6D454B004048FA /* ClientView.swift in Sources */,
 				3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */,

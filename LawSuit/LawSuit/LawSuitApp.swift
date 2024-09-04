@@ -19,7 +19,7 @@ struct LawSuitApp: App {
     
     var body: some Scene {
         WindowGroup {   
-            ContentView()
+			  PDFTextRecognitionView()
                 .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
                 .environmentObject(folderViewModel)
                 .environmentObject(coreDataViewModel)
