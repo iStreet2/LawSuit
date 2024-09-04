@@ -112,7 +112,6 @@
 /* Begin PBXFileReference section */
 		0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNameCellComponent.swift; sourceTree = "<group>"; };
 		089BDBE92C7F9B6600A914C9 /* LawsuitListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitListView.swift; sourceTree = "<group>"; };
-		089BDBED2C7F9FE700A914C9 /* LawyerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawyerMock.swift; sourceTree = "<group>"; };
 		089BDBEF2C7FA3C900A914C9 /* LawsuitCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitCellComponent.swift; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
@@ -182,7 +181,6 @@
 		6AC0BB072C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNotDistributedView.swift; sourceTree = "<group>"; };
 		6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorProcessButton.swift; sourceTree = "<group>"; };
 		6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeEnumerator.swift; sourceTree = "<group>"; };
-		6AC0BB0E2C80A66700FAF3E6 /* ProcessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMock.swift; sourceTree = "<group>"; };
 		DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentStyleView.swift; sourceTree = "<group>"; };
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
 		DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentStyle.swift; sourceTree = "<group>"; };
@@ -279,15 +277,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		3B423E812C80E5F1005B1B7F /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				6AC0BB0E2C80A66700FAF3E6 /* ProcessMock.swift */,
-				089BDBED2C7F9FE700A914C9 /* LawyerMock.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		3B98F0FF2C668B1000C45121 = {
 			isa = PBXGroup;
 			children = (
@@ -295,7 +284,6 @@
 				3B98F11C2C668B1100C45121 /* LawSuitTests */,
 				3B98F1262C668B1100C45121 /* LawSuitUITests */,
 				3B98F1092C668B1000C45121 /* Products */,
-				3B423E812C80E5F1005B1B7F /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};

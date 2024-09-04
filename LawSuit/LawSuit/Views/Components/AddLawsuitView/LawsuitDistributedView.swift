@@ -62,8 +62,15 @@ struct LawsuitDistributedView: View {
             Spacer()
             VStack(alignment: .leading){
                 VStack(alignment: .leading){
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
-                        .disabled(attributedClient)
+                    //Retirei e coloquei só réu isso apenas para os testes
+                    VStack(alignment: .leading){
+                        HStack{
+                            Text("Réu")
+                                .bold()
+                        }
+                    }
+//                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
+//                        .disabled(attributedClient)
                     TextField("", text: $lawsuitDefendant)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)
