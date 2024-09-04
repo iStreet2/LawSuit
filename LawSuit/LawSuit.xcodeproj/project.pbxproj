@@ -96,8 +96,6 @@
 		E9F3A4262C87755800595150 /* QueryEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4252C87755800595150 /* QueryEnumerator.swift */; };
 		E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4272C8775CB00595150 /* TextRecognizer.swift */; };
 		E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4292C87795000595150 /* OCRTestingView.swift */; };
-		E9F3A42C2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E9F3A42B2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf */; };
-		E9F3A42E2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E9F3A42D2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf */; };
 		E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A42F2C87AF6000595150 /* ContactsManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -149,15 +147,14 @@
 		3B6167FF2C7E43AC00260585 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
 		3B6168012C7E45CE00260585 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
 		3B88A41C2C82369400DA111E /* EditLawSuitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLawSuitView.swift; sourceTree = "<group>"; };
-		3B98F1082C668B1000C45121 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B98F10B2C668B1000C45121 /* LawSuitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitApp.swift; sourceTree = "<group>"; };
 		3B98F10D2C668B1000C45121 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3B98F10F2C668B1100C45121 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B98F1122C668B1100C45121 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3B98F1142C668B1100C45121 /* LawSuit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LawSuit.entitlements; sourceTree = "<group>"; };
-		3B98F1192C668B1100C45121 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B98F1192C668B1100C45121 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitTests.xctest; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app/Contents/PlugIns/LawSuitTests.xctest; sourceTree = "<absolute>"; };
 		3B98F11D2C668B1100C45121 /* LawSuitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitTests.swift; sourceTree = "<group>"; };
-		3B98F1232C668B1100C45121 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B98F1232C668B1100C45121 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitUITests.xctest; path = "/Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuitUITests-Runner.app/Contents/PlugIns/LawSuitUITests.xctest"; sourceTree = "<absolute>"; };
 		3B98F1272C668B1100C45121 /* LawSuitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitUITests.swift; sourceTree = "<group>"; };
 		3B98F1292C668B1100C45121 /* LawSuitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropViewModel.swift; sourceTree = "<group>"; };
@@ -171,6 +168,7 @@
 		3BB9A34F2C84F38000AD1E30 /* TagViewComponentV5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponentV5.swift; sourceTree = "<group>"; };
 		3BC731012C6A997E00923BB2 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		3BC731032C6A9A9200923BB2 /* FilePDFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFManager.swift; sourceTree = "<group>"; };
+		3BD313E22C88F714001CE5E7 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = LawSuit.app; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app; sourceTree = "<absolute>"; };
 		3BD40B2E2C6D3FB8004048FA /* ClientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientManager.swift; sourceTree = "<group>"; };
 		3BD40B302C6D40FE004048FA /* LawyerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawyerManager.swift; sourceTree = "<group>"; };
 		3BD40B322C6D41EC004048FA /* LawsuitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitManager.swift; sourceTree = "<group>"; };
@@ -212,8 +210,6 @@
 		E9F3A4252C87755800595150 /* QueryEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEnumerator.swift; sourceTree = "<group>"; };
 		E9F3A4272C8775CB00595150 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		E9F3A4292C87795000595150 /* OCRTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTestingView.swift; sourceTree = "<group>"; };
-		E9F3A42B2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Atv1-Paulo_Sonzzini.pdf"; sourceTree = "<group>"; };
-		E9F3A42D2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Radiography Backend System - Paulo Sonzzini.pdf"; sourceTree = "<group>"; };
 		E9F3A42F2C87AF6000595150 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -301,18 +297,7 @@
 				3B98F10A2C668B1000C45121 /* LawSuit */,
 				3B98F11C2C668B1100C45121 /* LawSuitTests */,
 				3B98F1262C668B1100C45121 /* LawSuitUITests */,
-				3B98F1092C668B1000C45121 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		3B98F1092C668B1000C45121 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3B98F1082C668B1000C45121 /* LawSuit.app */,
-				3B98F1192C668B1100C45121 /* LawSuitTests.xctest */,
-				3B98F1232C668B1100C45121 /* LawSuitUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
@@ -511,7 +496,7 @@
 			);
 			name = LawSuit;
 			productName = LawSuit;
-			productReference = 3B98F1082C668B1000C45121 /* LawSuit.app */;
+			productReference = 3BD313E22C88F714001CE5E7 /* LawSuit.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3B98F1182C668B1100C45121 /* LawSuitTests */ = {
@@ -582,7 +567,7 @@
 				Base,
 			);
 			mainGroup = 3B98F0FF2C668B1000C45121;
-			productRefGroup = 3B98F1092C668B1000C45121 /* Products */;
+			productRefGroup = 3B98F0FF2C668B1000C45121;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -598,8 +583,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9F3A42E2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf in Resources */,
-				E9F3A42C2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf in Resources */,
 				3B98F1132C668B1100C45121 /* Preview Assets.xcassets in Resources */,
 				3B98F1102C668B1100C45121 /* Assets.xcassets in Resources */,
 			);
@@ -875,7 +858,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 543L4H35A3;
+				DEVELOPMENT_TEAM = 6S6995TY46;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -887,7 +870,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit.Micher.Micher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -906,7 +889,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 543L4H35A3;
+				DEVELOPMENT_TEAM = 6S6995TY46;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -918,7 +901,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit.Micher.Micher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;

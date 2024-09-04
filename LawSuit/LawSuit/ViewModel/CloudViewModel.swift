@@ -71,6 +71,6 @@ class CloudViewModel: ObservableObject {
 	}
 	
 }
-}
+
 
 
