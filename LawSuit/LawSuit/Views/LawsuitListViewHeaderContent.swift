@@ -8,28 +8,36 @@
 import SwiftUI
 
 struct LawsuitListViewHeaderContent: View {
-//    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
-    
     var lawsuits: FetchedResults<Lawsuit>
-
+ 
+  
     var body: some View {
-        HStack {
-            Text("Nome e Número")
-                .frame(width: 210, alignment: .leading)
-                .padding(.leading, 20)
-            Text("Tipo")
-                .frame(width: 120, alignment: .leading)
-            Text("Última Movimentação")
-                .frame(width: 140, alignment: .leading)
-            Text("Cliente")
-                .frame(width: 140, alignment: .leading)
-            Text("Advogado Responsável")
-                .frame(width: 140, alignment: .leading)
+        
+        GeometryReader { geo in
+            HStack {
+                Text("Nome e Número")
+                    .frame(width: geo.size.width * 0.27, alignment: .leading)
+                
+                Text("Tipo")
+                    .frame(width: geo.size.width * 0.12, alignment: .leading)
+
+                Text("Última Movimentação")
+                    .frame(width: geo.size.width * 0.17, alignment: .leading)
+                   
+                Text("Cliente")
+                    .frame(width: geo.size.width * 0.17, alignment: .leading)
+                   
+                Text("Advogado Responsável")
+                
+            }
+            .padding(.horizontal, 20)
         }
+        .frame(minWidth: 777)
+        .frame(height: 13)
         .font(.footnote)
         .bold()
         .foregroundStyle(Color(.gray))
-
+        
         Divider()
         
         ScrollView {
@@ -44,7 +52,7 @@ struct LawsuitListViewHeaderContent: View {
                     .buttonStyle(PlainButtonStyle())
                 }
             }
-        } 
+        }
     }
 }
 
