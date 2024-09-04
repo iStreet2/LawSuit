@@ -7,32 +7,37 @@
 
 import SwiftUI
 
-struct ProcessListView: View {
+struct LawsuitListView: View {
     
-    @State var createProcess = false
-    @EnvironmentObject var mockViewModel: MockViewModel
+    @State var createLawsuit = false
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
+    
+    @State private var multiplier: Double = 0.5
+    
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @Environment(\.managedObjectContext) var context
+    
     
     var body: some View {
+        
         NavigationStack {
-            
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     Text("Processos")
                         .font(.title)
                         .bold()
                     Button(action: {
-                        createProcess.toggle()
+                        createLawsuit.toggle()
                     }, label: {
                         Image(systemName: "plus")
                             .font(.title2)
                             .foregroundStyle(Color(.gray))
                     })
                     .buttonStyle(PlainButtonStyle())
-                    
                 }
                 .padding(10)
                 
-                HStack {
+                HStack(spacing: 0) {
                     Text("Nome e Número")
                         .font(.footnote)
                     Spacer()
@@ -51,38 +56,47 @@ struct ProcessListView: View {
                 .padding(.horizontal, 10)
                 .foregroundStyle(Color(.gray))
                 
-                
                 Divider()
                     .padding(.top, 5)
                     .padding(.trailing, 10)
                 
-                ScrollView {
-                    VStack {
-                        ForEach(Array(mockViewModel.processList.enumerated()), id: \.offset) { index, process in
-                            NavigationLink {
-                                ProcessView(lawsuit: $mockViewModel.processList[index])
-                            } label: {
-                                ProcessCell(client: process.client, lawyer: process.lawyer, process: process)
-                                    .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                if lawsuits.isEmpty {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Text("Sem processos")
+                            .foregroundStyle(.gray)
+                        Spacer()
+                    }
+                    Spacer()
+                } else {
+                    ScrollView {
+                        VStack {
+                            ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
+                                NavigationLink {
+                                    DetailedLawSuitView(lawsuit: lawsuit)
+                                } label: {
+                                    LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                        .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
-                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                 }
             }
-            .sheet(isPresented: $createProcess, content: {
-                NewProcessView()
-            })
-            .toolbar {
-                ToolbarItem {
-                    Text("")
-                }
+        }
+        .sheet(isPresented: $createLawsuit, content: {
+            AddLawsuitView()
+        })
+        .toolbar {
+            ToolbarItem {
+                Text("")
             }
         }
     }
 }
 
-
-//#Preview {
-//    ProcessListView()
-//}
+#Preview {
+    LawsuitListView()
+}

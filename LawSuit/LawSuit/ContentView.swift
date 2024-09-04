@@ -9,38 +9,41 @@ import SwiftUI
 
 struct ContentView: View {
     
+    //MARK: Variáveis de estado
+    @State private var selectedView = SelectedView.clients
+    @State private var selectedClient: Client?
+    @State private var addClient = false
+    @State var deleted = false
+    
+    //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
-//    
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
+    
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
-    @State private var selectedView = SelectedView.clients
-    @State private var selectedClient: Client?
-    @State private var addClient = false
-    
-    var body: some View {   
+    var body: some View {
         HStack {
             SideBarView(selectedView: $selectedView)
             switch selectedView {
             case .clients:
                 NavigationSplitView {
-                    SelectClientView(selectedClient: $selectedClient, addClient: $addClient)
+                    ClientListView(addClient: $addClient, deleted: $deleted)
                         .frame(minWidth: 170)
                 } detail: {
-                    if let selectedClient = selectedClient {
-                        DocumentView(client: selectedClient)
+                    if let selectedClient = navigationViewModel.selectedClient {
+                        ClientView(client: selectedClient, deleted: $deleted)
                     } else {
                         Text("Selecione um cliente")
                             .foregroundColor(.gray)
                     }
                 }
             case .lawsuits:
-                //MARK: Inserir View de Processos
                 Divider()
                 Spacer()
-                ProcessListView()
+                LawsuitListView3()
                 Spacer()
             }
         }

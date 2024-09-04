@@ -9,17 +9,17 @@ import Foundation
 import SwiftUI
 import CloudKit
 
-struct CloudTestingView: View {
+//struct CloudTestingView: View {
 	
-	@StateObject var ckvm: CloudViewModel = CloudViewModel()
-	@EnvironmentObject var cdvm: CoreDataViewModel
-	
-	@Environment(\.managedObjectContext) var context
-	
-	var body: some View {
-		VStack {
-			Button {
-				Task {
+//	@StateObject var ckvm: CloudViewModel = CloudViewModel()
+//	@EnvironmentObject var cdvm: CoreDataViewModel
+//	
+//	@Environment(\.managedObjectContext) var context
+//	
+//	var body: some View {
+//		VStack {
+//			Button {
+//				Task {
 //					var client = Folder(context: context)
 //					client.name = "Carlao"
 //					client.id = "id daora"
@@ -37,9 +37,9 @@ struct CloudTestingView: View {
 					
 //					await ckvm.cloudManager.deleteObject(object: client)
 //					
-					var folder = Folder(context: context)
-					folder.name = "BonitoFolder"
-                    folder.id = "id"
+//					var folder = Folder(context: context)
+//					folder.name = "BonitoFolder"
+//                    folder.id = "id"
 //
 //					let subFolder = Folder(context: context)
 //					subFolder.name = "UBSOFLDER"
@@ -64,22 +64,22 @@ struct CloudTestingView: View {
 //					folder.addToFiles(file)
 //					print("Count:", folder.folders?.count)
 //					
-                    var client = Client(context: context)
-                    client.name = "Bonito"
-                    client.rootFolder = folder
-                    client.age = 20
-                    client.id = "idBonito"
-                    
-					
-                    await ckvm.cloudManager.saveObject(object: &client)
-                    await ckvm.cloudManager.saveObject(object: &folder)
-				}
-			} label: {
-				Text("Criar")
-					.onAppear {
+//                    var client = Client(context: context)
+//                    client.name = "Bonito"
+//                    client.rootFolder = folder
+//                    client.age = 20
+//                    client.id = "idBonito"
+//                    
+//					
+//                    await ckvm.cloudManager.saveObject(object: &client)
+//                    await ckvm.cloudManager.saveObject(object: &folder)
+//				}
+//			} label: {
+//				Text("Criar")
+//					.onAppear {
 //						let query = CKQuery(recordType: "Folder", predicate: NSPredicate(format: "TRUEPREDICATE"))
 						
-						Task {
+//						Task {
 //							if let records = await ckvm.cloudManager.fetchWithQuery(query) {
 //								if let objects = await cdvm.recordObjectManager.makeObjectsFromRecords(records: records) {
 //									print(objects)
@@ -87,9 +87,9 @@ struct CloudTestingView: View {
 //								}
 //							}
 							
-						}
-					}
-			}
-		}
-	}
-}
+//						}
+//					}
+//			}
+//		}
+//	}
+//}

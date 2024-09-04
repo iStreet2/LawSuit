@@ -7,14 +7,15 @@
 
 import SwiftUI
 
-struct SelectClientView: View {
+struct ClientListView: View {
     
     //MARK: Variáveis de estado
-    @Binding var selectedClient: Client?
     @Binding var addClient: Bool
+    @Binding var deleted: Bool
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
@@ -29,9 +30,7 @@ struct SelectClientView: View {
                     .font(.title)
                     .bold()
                 Button(action: {
-                    withAnimation(.bouncy) {
-                        addClient.toggle()
-                    }
+                    addClient.toggle()
                 }, label: {
                     Image(systemName: "plus")
                 })
@@ -39,24 +38,33 @@ struct SelectClientView: View {
             .padding()
             List(clients, id: \.id) { client in
                 Button(action: {
-                    selectedClient = client
+                    navigationViewModel.selectedClient = client
                     folderViewModel.resetFolderStack()
                     folderViewModel.openFolder(folder: client.rootFolder)
-                    
+                    navigationViewModel.dismissLawsuitView.toggle()
+                    deleted = false
                 }, label: {
-                    Text(client.name)
+                    HStack {
+                        if navigationViewModel.selectedClient == client {
+                            ZStack(alignment: .leading) {
+                                RoundedRectangle(cornerRadius: 5)
+                                    .foregroundStyle(.gray)
+                                    .opacity(0.4)
+                                Text(client.name)
+                                    .padding(.leading,10)
+                            }
+                        } else {
+                            Text(client.name)
+                                .padding(.leading,10)
+                        }
+                        Spacer()
+                    }
                 })
+                // Fundo cinza se selecionado
                 .buttonStyle(PlainButtonStyle())
-                .padding(.top)
             }
         }
         .background(.white)
-        .onAppear {
-            //MARK: APENAS PARA TESTES, RETIRAR DEPOIS
-//            if clients.isEmpty {
-//                coreDataViewModel.clientManager.testClient()
-//            }
-        }
     }
         
 }

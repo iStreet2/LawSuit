@@ -22,6 +22,7 @@ class ClientManager {
         occupation: String,
         rg: String,
         cpf: String,
+        lawyer: Lawyer,
         affiliation: String,
         maritalStatus: String,
         nationality: String,
@@ -71,24 +72,6 @@ class ClientManager {
         
         saveContext()
     }
-
-    
-    func testClient() {
-        let client = Client(context: context)
-        client.name = "Bonito"
-        client.id = UUID().uuidString
-        client.age = Int64(20)
-        
-        let rootFolder = Folder(context: context)
-        rootFolder.name = "\(client.name)"
-        rootFolder.id = "root\(client.name)"
-        rootFolder.parentClient = client
-        
-        client.rootFolder = rootFolder
-        
-        saveContext()
-//		 return client
-    }
     
     func deleteClient(client: Client/*, lawyer: Lawyer*/) {
         context.delete(client)
@@ -126,6 +109,7 @@ class ClientManager {
         client.maritalStatus = maritalStatus
         client.nationality = nationality
         client.birthDate = birthDate
+        client.age = Int64(calculateAge(from: birthDate))
         client.cep = cep
         client.address = address
         client.addressNumber = addressNumber
@@ -148,11 +132,29 @@ class ClientManager {
         saveContext()
     }
     
-    func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving context on client (\(error)")
+    func copyClientProperties(from sourceClient: Client, to targetClient: Client) {
+        // Primeiro, copiamos as propriedades simples usando Key-Value Coding (KVC)
+        let attributes = sourceClient.entity.attributesByName
+        for (attributeName, _) in attributes {
+            if let value = sourceClient.value(forKey: attributeName) {
+                targetClient.setValue(value, forKey: attributeName)
+            }
+        }
+        
+        // Em seguida, lidamos com as relações (to-one e to-many)
+        let relationships = sourceClient.entity.relationshipsByName
+        for (relationshipName, relationshipDescription) in relationships {
+            if relationshipDescription.isToMany {
+                // Relações to-many (NSSet)
+                if let value = sourceClient.value(forKey: relationshipName) as? NSSet {
+                    targetClient.setValue(value, forKey: relationshipName)
+                }
+            } else {
+                // Relações to-one (NSManagedObject)
+                if let value = sourceClient.value(forKey: relationshipName) as? NSManagedObject {
+                    targetClient.setValue(value, forKey: relationshipName)
+                }
+            }
         }
     }
     
@@ -163,4 +165,14 @@ class ClientManager {
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: currentDate)
         return ageComponents.year ?? 0
     }
+    
+    func saveContext() {
+        do {
+            try context.save()
+        } catch {
+            print("Error while saving context on client (\(error)")
+        }
+    }
+    
+    
 }

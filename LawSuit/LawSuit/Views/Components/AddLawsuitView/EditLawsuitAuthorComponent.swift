@@ -7,15 +7,17 @@
 
 import SwiftUI
 
-struct EditProcessAuthorComponent: View {
+struct EditLawsuitAuthorComponent: View {
     
-    @State var choosedClient: String = ""
+    //MARK: Variáveis de estado
     @State var showingDetail = false
     @State var button: String
     @State var label: String
-    var screen: SizeEnumerator
-    @Binding var lawsuit: ProcessMock
+    @Binding var lawsuitParentAuthorName: String
+    @Binding var lawsuitDefendant: String
     @State var defendantOrClient: String
+    @Binding var attributedClient: Bool
+    @Binding var attributedDefendant: Bool
     
     var body: some View {
         VStack(alignment: .leading){
@@ -27,16 +29,12 @@ struct EditProcessAuthorComponent: View {
                 }, label: {
                     Text(button)
                 })
-                .buttonStyle(.borderless)
                 .foregroundStyle(.blue)
+                .buttonStyle(.borderless)
                 .sheet(isPresented: $showingDetail) {
-                    ClientCheckboxIconComponent(lawsuit: $lawsuit, choosedClient: $choosedClient, screen: .small, defendantOrClient: $defendantOrClient)
+                    SelectClientComponent(lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: $defendantOrClient, screen: .small, attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
                 }
             }
         }
     }
 }
-//
-//#Preview {
-//    EditProcessAuthorComponent(button: "Alterar cliente", label: "Autor", screen: .small)
-//}
