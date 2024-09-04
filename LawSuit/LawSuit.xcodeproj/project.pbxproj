@@ -19,7 +19,9 @@
 		08E657392C7D205D00313FCB /* ClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E657382C7D205D00313FCB /* ClientMock.swift */; };
 		08E6573B2C7E60F900313FCB /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */; };
 		08E8D1FA2C878DE7008F3859 /* LawsuitListView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8D1F92C878DE7008F3859 /* LawsuitListView2.swift */; };
-		08E8D1FC2C87A8C6008F3859 /* LawsuitListComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8D1FB2C87A8C6008F3859 /* LawsuitListComponent.swift */; };
+		08E8D2002C87ACDA008F3859 /* LawsuitCellComponent2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8D1FF2C87ACDA008F3859 /* LawsuitCellComponent2.swift */; };
+		08E8D2022C87AF11008F3859 /* LawsuitListView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8D2012C87AF11008F3859 /* LawsuitListView3.swift */; };
+		08E8D2042C88981F008F3859 /* LawsuitListViewHeaderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8D2032C88981F008F3859 /* LawsuitListViewHeaderContent.swift */; };
 		3B04F11D2C7FB9B600991746 /* ClientInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */; };
 		3B0A7AD12C7D16AA005A5946 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A7AD02C7D16AA005A5946 /* NetworkMonitor.swift */; };
 		3B0EE5F72C6A90F100CFC91A /* CoreDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0EE5F62C6A90F100CFC91A /* CoreDataViewModel.swift */; };
@@ -128,7 +130,9 @@
 		08E657382C7D205D00313FCB /* ClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMock.swift; sourceTree = "<group>"; };
 		08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		08E8D1F92C878DE7008F3859 /* LawsuitListView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitListView2.swift; sourceTree = "<group>"; };
-		08E8D1FB2C87A8C6008F3859 /* LawsuitListComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitListComponent.swift; sourceTree = "<group>"; };
+		08E8D1FF2C87ACDA008F3859 /* LawsuitCellComponent2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitCellComponent2.swift; sourceTree = "<group>"; };
+		08E8D2012C87AF11008F3859 /* LawsuitListView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitListView3.swift; sourceTree = "<group>"; };
+		08E8D2032C88981F008F3859 /* LawsuitListViewHeaderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitListViewHeaderContent.swift; sourceTree = "<group>"; };
 		3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientInfoView.swift; sourceTree = "<group>"; };
 		3B0A7AD02C7D16AA005A5946 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		3B0EE5F62C6A90F100CFC91A /* CoreDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataViewModel.swift; sourceTree = "<group>"; };
@@ -448,9 +452,11 @@
 				E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */,
 				E9E323E12C7FB6F3000BA6FD /* ClientMoreInfoView.swift */,
 				E9E323E32C80EA12000BA6FD /* DetailedLawSuitView.swift */,
+				08E8D1FF2C87ACDA008F3859 /* LawsuitCellComponent2.swift */,
 				089BDBE92C7F9B6600A914C9 /* LawsuitListView.swift */,
+				08E8D2012C87AF11008F3859 /* LawsuitListView3.swift */,
+				08E8D2032C88981F008F3859 /* LawsuitListViewHeaderContent.swift */,
 				08E8D1F92C878DE7008F3859 /* LawsuitListView2.swift */,
-				08E8D1FB2C87A8C6008F3859 /* LawsuitListComponent.swift */,
 				3B6167FF2C7E43AC00260585 /* SideBarView.swift */,
 				DCC1BD2F2C77B23900000195 /* AddClientView.swift */,
 			);
@@ -670,6 +676,7 @@
 				08E8D1FA2C878DE7008F3859 /* LawsuitListView2.swift in Sources */,
 				3B88A41B2C81159A00DA111E /* MockViewModel.swift in Sources */,
 				6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */,
+				08E8D2042C88981F008F3859 /* LawsuitListViewHeaderContent.swift in Sources */,
 				DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */,
 				3B423E7E2C80E2D8005B1B7F /* FolderGridView.swift in Sources */,
 				6ABD797B2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift in Sources */,
@@ -709,14 +716,15 @@
 				E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */,
 				3BD40B382C6D454B004048FA /* DocumentView.swift in Sources */,
 				08E657392C7D205D00313FCB /* ClientMock.swift in Sources */,
+				08E8D2002C87ACDA008F3859 /* LawsuitCellComponent2.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				6ABD796F2C6E97AD00A98BA3 /* RequestDocumentsView.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
 				089BDBF02C7FA3C900A914C9 /* LawsuitCellComponent.swift in Sources */,
+				08E8D2022C87AF11008F3859 /* LawsuitListView3.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
 				3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */,
 				3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */,
-				08E8D1FC2C87A8C6008F3859 /* LawsuitListComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
