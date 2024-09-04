@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct LawsuitListViewHeaderContent: View {
-    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
-    
+    var lawsuits: FetchedResults<Lawsuit>
+ 
+  
     var body: some View {
         
         GeometryReader { geo in
@@ -46,7 +47,7 @@ struct LawsuitListViewHeaderContent: View {
                         DetailedLawSuitView(lawsuit: lawsuit)
                     } label: {
                         LawsuitCellComponent2(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-                            .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                            .background(Color(index % 2 == 0 ? .white : .gray).opacity(0.1))
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
@@ -55,6 +56,6 @@ struct LawsuitListViewHeaderContent: View {
     }
 }
 
-#Preview {
-    LawsuitListViewHeaderContent()
-}
+//#Preview {
+//    LawsuitListViewHeaderContent()
+//}

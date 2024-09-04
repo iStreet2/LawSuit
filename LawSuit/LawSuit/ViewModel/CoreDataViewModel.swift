@@ -20,7 +20,7 @@ class CoreDataViewModel: ObservableObject {
 	var lawyerManager: LawyerManager
 	var lawsuitManager: LawsuitManager
 	var clientManager: ClientManager
-    var updateManager: UpdateManager
+  var updateManager: UpdateManager
 //	var recordObjectManager: RecordObjectManager
 	
 	init() {
@@ -36,7 +36,7 @@ class CoreDataViewModel: ObservableObject {
 		self.lawyerManager = LawyerManager(context: context)
 		self.lawsuitManager = LawsuitManager(context: context)
 		self.clientManager = ClientManager(context: context)
-        self.updateManager = UpdateManager(context: context)
+    self.updateManager = UpdateManager(context: context)
 //		self.recordObjectManager = RecordObjectManager(context: context)
 	}
 	

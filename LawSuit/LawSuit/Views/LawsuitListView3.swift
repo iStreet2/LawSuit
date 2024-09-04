@@ -11,6 +11,8 @@ struct LawsuitListView3: View {
 
     @State var createProcess = false
     
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
+    
     var body: some View {
         
         NavigationStack {
@@ -31,7 +33,7 @@ struct LawsuitListView3: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 
-                LawsuitListViewHeaderContent()
+                LawsuitListViewHeaderContent(lawsuits: lawsuits)
             }
         }
         .sheet(isPresented: $createProcess, content: {

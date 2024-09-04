@@ -29,6 +29,7 @@ struct EditLawsuitAuthorComponent: View {
                 }, label: {
                     Text(button)
                 })
+                .foregroundStyle(.blue)
                 .buttonStyle(.borderless)
                 .sheet(isPresented: $showingDetail) {
                     SelectClientComponent(lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: $defendantOrClient, screen: .small, attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)

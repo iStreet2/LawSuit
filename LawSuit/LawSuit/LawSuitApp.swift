@@ -27,6 +27,7 @@ struct LawSuitApp: App {
                 .environmentObject(networkMonitor)
                 .environmentObject(navigationViewModel)
                 .preferredColorScheme(.light)
+                .frame(minHeight: 530)
         }
     }
 }

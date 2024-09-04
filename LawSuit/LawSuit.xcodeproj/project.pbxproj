@@ -92,6 +92,7 @@
 		E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */; };
 		E9E323E22C7FB6F3000BA6FD /* ClientMoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E323E12C7FB6F3000BA6FD /* ClientMoreInfoView.swift */; };
 		E9E323E42C80EA12000BA6FD /* DetailedLawSuitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E323E32C80EA12000BA6FD /* DetailedLawSuitView.swift */; };
+		E9F3A4242C86325E00595150 /* CoreCloudTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +202,8 @@
 		E9A949BD2C7E46640006BC99 /* TagViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponent.swift; sourceTree = "<group>"; };
 		E9E323E12C7FB6F3000BA6FD /* ClientMoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientMoreInfoView.swift; sourceTree = "<group>"; };
 		E9E323E32C80EA12000BA6FD /* DetailedLawSuitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedLawSuitView.swift; sourceTree = "<group>"; };
+		E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCloudTestingView.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -407,6 +410,7 @@
 		3BD40B362C6D453A004048FA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */,
 				3BD40B3C2C6D4DE8004048FA /* Components */,
 				3BD40B372C6D454B004048FA /* ClientView.swift */,
 				6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */,
@@ -623,6 +627,7 @@
 				E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */,
 				6AC0BB082C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift in Sources */,
 				6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */,
+				E9F3A4242C86325E00595150 /* CoreCloudTestingView.swift in Sources */,
 				3B0EE5F72C6A90F100CFC91A /* CoreDataViewModel.swift in Sources */,
 				DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */,
 				6ABD79752C78FB2100A98BA3 /* AddLawsuitView.swift in Sources */,
