@@ -18,9 +18,7 @@ struct LawsuitListView2: View {
     @State var createProcess = false
     
     @State private var multiplier: Double = 0.5
-    
-    @EnvironmentObject var mockViewModel: MockViewModel
-    
+        
     var body: some View {
         
         NavigationStack {

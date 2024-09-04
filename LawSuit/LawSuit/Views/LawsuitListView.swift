@@ -17,7 +17,6 @@ struct LawsuitListView: View {
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     
-    @EnvironmentObject var mockViewModel: MockViewModel
     
     var body: some View {
         
