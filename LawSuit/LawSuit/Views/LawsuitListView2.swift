@@ -72,25 +72,19 @@ struct LawsuitListView2: View {
                         ForEach(Array(lawsuits.enumerated()), id: \.offset) {
                             index, lawsuit in
                             NavigationLink {
-                                
+                                DetailedLawSuitView(lawsuit: lawsuit)
                             } label: {
-                                
+                                TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista") ?? .trabalhista)
+                                    .frame(width: 120, height: 47, alignment: .leading)
+                                    .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
                             }
-                            TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista") ?? .trabalhista)
-                                .frame(width: 120, height: 47, alignment: .leading)
-                                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
-
+        
                         }
                     }
                     .frame(width: 120, alignment: .leading)
                     .border(Color.black)
                     
                     VStack(alignment: .leading, spacing: 0) {
-                        NavigationLink {
-                            
-                        } label: {
-                            
-                        }
                         Text("Ultima movimentacao")
                             .font(.footnote)
                             .bold()
