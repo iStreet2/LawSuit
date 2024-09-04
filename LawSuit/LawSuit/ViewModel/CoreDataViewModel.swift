@@ -18,8 +18,9 @@ class CoreDataViewModel: ObservableObject {
 	var folderManager: FolderManager
 	var filePDFManager: FilePDFManager
 	var lawyerManager: LawyerManager
-	var processManager: ProcessManager
+	var lawsuitManager: LawsuitManager
 	var clientManager: ClientManager
+  var updateManager: UpdateManager
 //	var recordObjectManager: RecordObjectManager
 	
 	init() {
@@ -33,8 +34,9 @@ class CoreDataViewModel: ObservableObject {
 		self.folderManager = FolderManager(context: context)
 		self.filePDFManager = FilePDFManager(context: context)
 		self.lawyerManager = LawyerManager(context: context)
-		self.processManager = ProcessManager(context: context)
+		self.lawsuitManager = LawsuitManager(context: context)
 		self.clientManager = ClientManager(context: context)
+    self.updateManager = UpdateManager(context: context)
 //		self.recordObjectManager = RecordObjectManager(context: context)
 	}
 	

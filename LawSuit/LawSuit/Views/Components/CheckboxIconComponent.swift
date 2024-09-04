@@ -14,8 +14,8 @@ struct CheckboxIconComponent: View {
     
     var body: some View {
         HStack{
-                Toggle(isOn: $isPresented) {
-                    Text(files)
+            Toggle(isOn: $isPresented) {
+                Text(files)
             }
         }
         .padding(30)

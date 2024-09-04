@@ -21,6 +21,7 @@ struct FolderGridView: View {
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest var folders: FetchedResults<Folder>
+    @FetchRequest var filesPDF: FetchedResults<FilePDF>
     
     init(parentFolder: Folder, geometry: GeometryProxy) {
         self.parentFolder = parentFolder
@@ -29,6 +30,10 @@ struct FolderGridView: View {
         _folders = FetchRequest<Folder>(
             sortDescriptors: []
             ,predicate: NSPredicate(format: "parentFolder == %@", parentFolder)
+        )
+        _filesPDF = FetchRequest<FilePDF>(
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "parentFolder == %@", parentFolder)
         )
     }
 

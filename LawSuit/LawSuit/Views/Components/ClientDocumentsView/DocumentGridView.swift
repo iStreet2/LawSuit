@@ -12,7 +12,7 @@ struct DocumentGridView: View {
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
-
+    
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
@@ -35,16 +35,40 @@ struct DocumentGridView: View {
                             folderViewModel.closeFolder()
                         } label: {
                             Image(systemName: "chevron.left")
-                                .font(.title3)
                         }
                         .disabled(folderViewModel.getPath().count() == 1)
                         .buttonStyle(PlainButtonStyle())
+                        .font(.title2)
+                        .padding(.bottom)
                         Spacer()
+                        Menu(content: {
+                            Button {
+                                coreDataViewModel.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
+                            } label: {
+                                Text("Nova Pasta")
+                                Image(systemName: "folder")
+                            }
+                            Button {
+                                folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
+                            } label: {
+                                Text("Importar PDF")
+                                Image(systemName: "doc")
+                            }
+                        }, label: {
+                            Image(systemName: "plus")
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                        .font(.title2)
+                        .padding(.bottom)
                     }
                     VStack {
                         LazyVGrid(columns: gridItems, spacing: spacing) {
                             FolderGridView(parentFolder: openFolder, geometry: geometry)
                             FilePDFGridView(parentFolder: openFolder, geometry: geometry)
+                        }
+                        if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
+                            Text("Sem pastas ou arquivos")
+                                .foregroundStyle(.gray)
                         }
                     }
                 }
@@ -66,22 +90,11 @@ struct DocumentGridView: View {
                         Image(systemName: "doc")
                     }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .destructiveAction) {
-                        Button(action: {
-                            coreDataViewModel.deleteAllData()
-                        }, label: {
-                            Image(systemName: "trash")
-                        })
-                    }
-                }
                 //            .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
                 //                dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, context: context, coreDataViewModel: coreDataViewModel)
                 //                return true
                 //            }
             }
-            .navigationTitle(openFolder.name ?? "Sem nome")
         }
-        
     }
 }

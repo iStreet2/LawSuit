@@ -9,6 +9,12 @@ import SwiftUI
 
 struct SideBarView: View {
     
+    //MARK: ViewModels:
+    @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
+    
+    //MARK: Variáveis de estado
     @Binding var selectedView: SelectedView
     
     var body: some View {
@@ -21,14 +27,18 @@ struct SideBarView: View {
                 }
                 Image(systemName: "person.2")
                     .font(.system(size: 19))
-                    .onTapGesture {
-                        withAnimation(.bouncy) {
-                            selectedView = .clients
-                            //Necessário ação para mudar tela
-                        }
-                    }
             }
             .frame(width: 55, height: 46)
+            .onTapGesture {
+                withAnimation(.bouncy) {
+                    selectedView = .clients
+                    if let selectedClient = navigationViewModel.selectedClient {
+                        folderViewModel.resetFolderStack()
+                        folderViewModel.openFolder(folder: selectedClient.rootFolder)
+                    }
+                    //Necessário ação para mudar tela
+                }
+            }
             ZStack {
                 if selectedView == .lawsuits {
                     Color.gray
@@ -37,14 +47,14 @@ struct SideBarView: View {
                 }
                 Image(systemName: "briefcase")
                     .font(.system(size: 19))
-                    .onTapGesture {
-                        withAnimation(.bouncy) {
-                            selectedView = .lawsuits
-                            //Necessário ação para mudar a tela
-                        }
-                    }
             }
             .frame(width: 55, height: 46)
+            .onTapGesture {
+                withAnimation(.bouncy) {
+                    selectedView = .lawsuits
+                    //Necessário ação para mudar a tela
+                }
+            }
             Spacer()
         }
         .padding()
