@@ -79,16 +79,14 @@ struct ClientInfoView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
                 NavigationLink {
-                    // Tela temporária
                     ClientMoreInfoView(client: client)
-//                    TelaTemporariaDoPaulo()
+
                 } label: {
                     Text("Mais informações")
                         .font(.subheadline)
                         .foregroundColor(.blue)
                 }
                 .buttonStyle(PlainButtonStyle())
-
             }
             Spacer()
         }
