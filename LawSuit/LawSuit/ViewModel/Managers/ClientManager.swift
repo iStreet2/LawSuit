@@ -12,8 +12,6 @@ import CoreData
 class ClientManager {
     
     var context: NSManagedObjectContext
-    @Published var selectedClient: Client? = nil
-    @Published var isClientSelected: Bool = false
     
     init(context: NSManagedObjectContext) {
         self.context = context
@@ -24,6 +22,7 @@ class ClientManager {
         occupation: String,
         rg: String,
         cpf: String,
+        lawyer: Lawyer,
         affiliation: String,
         maritalStatus: String,
         nationality: String,

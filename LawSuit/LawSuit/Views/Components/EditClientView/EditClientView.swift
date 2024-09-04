@@ -9,6 +9,9 @@ import SwiftUI
 
 struct EditClientView: View {
     
+    //MARK: ViewModels
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
+    
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
@@ -33,6 +36,7 @@ struct EditClientView: View {
     @State var clientTelephone: String = ""
     @State var clientCellphone: String = ""
     
+    @State var deleteAlert = false
     @ObservedObject var client: Client
     @Binding var deleted: Bool
     
@@ -77,10 +81,7 @@ struct EditClientView: View {
             
             HStack {
                 Button {
-                    coreDataViewModel.clientManager.deleteClient(client: client)
-                    deleted.toggle()
-                    coreDataViewModel.clientManager.selectedClient = nil
-                    dismiss()
+                    deleteAlert.toggle()
                 } label: {
                     Text("Apagar Cliente")
                 }
@@ -102,6 +103,26 @@ struct EditClientView: View {
                 .buttonStyle(.borderedProminent)
             }
         }
+        .alert(isPresented: $deleteAlert, content: {
+            Alert(title: Text("Cuidado"), message: Text("Excluir seu clinte irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "parentAuthor == %@", client)
+                do {
+                    let lawsuits = try coreDataViewModel.container.viewContext.fetch(fetchRequest)
+                    for lawsuit in lawsuits {
+                        coreDataViewModel.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                    }
+                } catch {
+                    print("Erro ao buscar processos relacionados ao cliente: \(error)")
+                }
+                coreDataViewModel.clientManager.deleteClient(client: client)
+                navigationViewModel.selectedClient = nil
+                deleted.toggle()
+                dismiss()
+            }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
+                dismiss()
+            }))
+        })
         .frame(minHeight: 250)
         .padding()
         .onAppear {

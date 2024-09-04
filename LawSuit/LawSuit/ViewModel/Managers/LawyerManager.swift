@@ -14,6 +14,17 @@ class LawyerManager {
     
     init(context: NSManagedObjectContext) {
         self.context = context
+        initLawyer()
+    }
+    
+    func initLawyer() {
+        let amountCoreDataItems = try? context.count(for: Lawyer.fetchRequest())
+        guard amountCoreDataItems == 0 else{
+            return
+        }
+        let lawyer = Lawyer(context: context)
+        lawyer.name = "Você"
+        saveContext()
     }
     
     func createLawyer(name: String, photo: Data, oab: String) {

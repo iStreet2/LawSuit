@@ -15,6 +15,7 @@ struct DetailedLawSuitView: View {
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
@@ -77,6 +78,11 @@ struct DetailedLawSuitView: View {
         .onChange(of: deleted) { change in
             dismiss()
         }
+        .onChange(of: navigationViewModel.dismissLawsuitView) { change in
+            navigationViewModel.dismissLawsuitView.toggle()
+            dismiss()
+        }
+        
     }
 }
 

@@ -11,9 +11,11 @@ struct ClientListView: View {
     
     //MARK: Variáveis de estado
     @Binding var addClient: Bool
+    @Binding var deleted: Bool
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
@@ -36,13 +38,14 @@ struct ClientListView: View {
             .padding()
             List(clients, id: \.id) { client in
                 Button(action: {
-                    coreDataViewModel.clientManager.selectedClient = client
-                    coreDataViewModel.clientManager.isClientSelected = true
+                    navigationViewModel.selectedClient = client
                     folderViewModel.resetFolderStack()
                     folderViewModel.openFolder(folder: client.rootFolder)
+                    navigationViewModel.dismissLawsuitView.toggle()
+                    deleted = false
                 }, label: {
                     HStack {
-                        if coreDataViewModel.clientManager.selectedClient == client {
+                        if navigationViewModel.selectedClient == client {
                             ZStack(alignment: .leading) {
                                 RoundedRectangle(cornerRadius: 5)
                                     .foregroundStyle(.gray)

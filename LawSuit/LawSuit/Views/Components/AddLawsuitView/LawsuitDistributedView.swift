@@ -29,6 +29,7 @@ struct LawsuitDistributedView: View {
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
 
     var body: some View {
         VStack{
@@ -61,8 +62,15 @@ struct LawsuitDistributedView: View {
             Spacer()
             VStack(alignment: .leading){
                 VStack(alignment: .leading){
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
-                        .disabled(attributedClient)
+                    //Retirei e coloquei só réu isso apenas para os testes
+                    VStack(alignment: .leading){
+                        HStack{
+                            Text("Réu")
+                                .bold()
+                        }
+                    }
+//                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
+//                        .disabled(attributedClient)
                     TextField("", text: $lawsuitDefendant)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)
@@ -95,8 +103,7 @@ struct LawsuitDistributedView: View {
                     if let client = fetchedClients.first {
                         let category = TagTypeString.string(from: tagType)
                         //MARK: Advogado temporário
-                        let lawyer = Lawyer(context: context)
-                        lawyer.name = "Você"
+                        let lawyer = lawyers[0]
                         coreDataViewModel.lawsuitManager.createLawsuit(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
                         dismiss()
                     } else {

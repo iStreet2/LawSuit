@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LawsuitListView: View {
     
-    @State var createProcess = false
+    @State var createLawsuit = false
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
     @State private var multiplier: Double = 0.5
@@ -17,7 +17,6 @@ struct LawsuitListView: View {
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
     
-    @EnvironmentObject var mockViewModel: MockViewModel
     
     var body: some View {
         
@@ -28,7 +27,7 @@ struct LawsuitListView: View {
                         .font(.title)
                         .bold()
                     Button(action: {
-                        createProcess.toggle()
+                        createLawsuit.toggle()
                     }, label: {
                         Image(systemName: "plus")
                             .font(.title2)
@@ -41,26 +40,18 @@ struct LawsuitListView: View {
                 HStack(spacing: 0) {
                     Text("Nome e Número")
                         .font(.footnote)
-                        //.border(Color.black)
-                    
                     Spacer()
                     Text("Tipo")
                         .font(.footnote)
-                        //.border(Color.black)
                     Spacer()
                     Text("Última movimentação")
                         .font(.footnote)
-                        //.border(Color.black)
-                    
                     Spacer()
                     Text("Cliente")
                         .font(.footnote)
-                        //.border(Color.black)
-                    
                     Spacer()
                     Text("Advogado responsável")
                         .font(.footnote)
-                        //.border(Color.black)
                 }
                 .padding(.horizontal, 10)
                 .foregroundStyle(Color(.gray))
@@ -95,7 +86,7 @@ struct LawsuitListView: View {
                 }
             }
         }
-        .sheet(isPresented: $createProcess, content: {
+        .sheet(isPresented: $createLawsuit, content: {
             AddLawsuitView()
         })
         .toolbar {

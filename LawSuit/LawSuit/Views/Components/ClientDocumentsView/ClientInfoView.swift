@@ -28,40 +28,41 @@ struct ClientInfoView: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            if let photoData = client.photo,
-               let nsImage = NSImage(data: photoData) {
-                Image(nsImage: nsImage)
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .onTapGesture(count: 2) {
-                        withAnimation() {
-                            folderViewModel.importPhoto { data in
-                                if let data = data {
-                                    imageData = data
-                                    coreDataViewModel.clientManager.addPhotoOnClient(client: client, photo: data)
-                                    client.photo = data
-                                }
-                            }
-                        }
-                    }
-            } else {
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.gray)
-                        .frame(width: 80, height: 80)
-                    Image(systemName: "square.and.arrow.down")
-                }
-                .onTapGesture(count: 2) {
-                    withAnimation {
-                        folderViewModel.importPhoto { data in
-                            if let data = data {
-                                imageData = data
-                                coreDataViewModel.clientManager.addPhotoOnClient(client: client, photo: data)
-                            }
-                        }
-                    }
-                }
-            }
+            //Foto do cliente
+//            if let photoData = client.photo,
+//               let nsImage = NSImage(data: photoData) {
+//                Image(nsImage: nsImage)
+//                    .resizable()
+//                    .frame(width: 80, height: 80)
+//                    .onTapGesture(count: 2) {
+//                        withAnimation() {
+//                            folderViewModel.importPhoto { data in
+//                                if let data = data {
+//                                    imageData = data
+//                                    coreDataViewModel.clientManager.addPhotoOnClient(client: client, photo: data)
+//                                    client.photo = data
+//                                }
+//                            }
+//                        }
+//                    }
+//            } else {
+//                ZStack {
+//                    Rectangle()
+//                        .foregroundColor(.gray)
+//                        .frame(width: 80, height: 80)
+//                    Image(systemName: "square.and.arrow.down")
+//                }
+//                .onTapGesture(count: 2) {
+//                    withAnimation {
+//                        folderViewModel.importPhoto { data in
+//                            if let data = data {
+//                                imageData = data
+//                                coreDataViewModel.clientManager.addPhotoOnClient(client: client, photo: data)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
             VStack(alignment: .leading) {
                 HStack {
                     Text(client.name)
