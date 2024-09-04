@@ -78,7 +78,7 @@ struct ClientView: View {
                 VStack {
                     if selectedOption == "Processos" {
                         NavigationStack {
-                            LawsuitListViewHeaderContent()
+                            LawsuitListViewHeaderContent(lawsuits: lawsuits)
                         }
                     } else {
                         DocumentGridView()
