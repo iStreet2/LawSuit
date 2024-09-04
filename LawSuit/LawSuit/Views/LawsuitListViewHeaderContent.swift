@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct LawsuitListViewHeaderContent: View {
-    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
+//    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
+    
+    var lawsuits: FetchedResults<Lawsuit>
 
     var body: some View {
         HStack {
@@ -46,6 +48,6 @@ struct LawsuitListViewHeaderContent: View {
     }
 }
 
-#Preview {
-    LawsuitListViewHeaderContent()
-}
+//#Preview {
+//    LawsuitListViewHeaderContent()
+//}
