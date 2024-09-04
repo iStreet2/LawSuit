@@ -91,6 +91,12 @@
 		E9E323E82C80EAD5000BA6FD /* LawyerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E323E72C80EAD5000BA6FD /* LawyerMock.swift */; };
 		E9E323EA2C80EAEA000BA6FD /* FolderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E323E92C80EAEA000BA6FD /* FolderMock.swift */; };
 		E9F3A4242C86325E00595150 /* CoreCloudTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */; };
+		E9F3A4262C87755800595150 /* QueryEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4252C87755800595150 /* QueryEnumerator.swift */; };
+		E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4272C8775CB00595150 /* TextRecognizer.swift */; };
+		E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4292C87795000595150 /* OCRTestingView.swift */; };
+		E9F3A42C2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E9F3A42B2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf */; };
+		E9F3A42E2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E9F3A42D2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf */; };
+		E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A42F2C87AF6000595150 /* ContactsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +207,12 @@
 		E9E323E72C80EAD5000BA6FD /* LawyerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawyerMock.swift; sourceTree = "<group>"; };
 		E9E323E92C80EAEA000BA6FD /* FolderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderMock.swift; sourceTree = "<group>"; };
 		E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCloudTestingView.swift; sourceTree = "<group>"; };
+		E9F3A4252C87755800595150 /* QueryEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryEnumerator.swift; sourceTree = "<group>"; };
+		E9F3A4272C8775CB00595150 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
+		E9F3A4292C87795000595150 /* OCRTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTestingView.swift; sourceTree = "<group>"; };
+		E9F3A42B2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Atv1-Paulo_Sonzzini.pdf"; sourceTree = "<group>"; };
+		E9F3A42D2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Radiography Backend System - Paulo Sonzzini.pdf"; sourceTree = "<group>"; };
+		E9F3A42F2C87AF6000595150 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,8 +309,10 @@
 		3B423E812C80E5F1005B1B7F /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
+				E9F3A42B2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf */,
 				6AC0BB0E2C80A66700FAF3E6 /* ProcessMock.swift */,
 				089BDBED2C7F9FE700A914C9 /* LawyerMock.swift */,
+				E9F3A42D2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -377,6 +391,8 @@
 				3BD40B322C6D41EC004048FA /* ProcessManager.swift */,
 				3BD40B342C6D4384004048FA /* UpdateManager.swift */,
 				E981580E2C77A2680039C2FD /* CloudManager.swift */,
+				E9F3A4272C8775CB00595150 /* TextRecognizer.swift */,
+				E9F3A42F2C87AF6000595150 /* ContactsManager.swift */,
 				E9A949B92C7CFB310006BC99 /* RecordObjectManager.swift */,
 			);
 			path = Managers;
@@ -386,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				E9F3A4232C86325E00595150 /* CoreCloudTestingView.swift */,
+				E9F3A4292C87795000595150 /* OCRTestingView.swift */,
 				3BD40B3C2C6D4DE8004048FA /* Components */,
 				3BD40B372C6D454B004048FA /* DocumentView.swift */,
 				6ABD796E2C6E97AD00A98BA3 /* CheckboxView.swift */,
@@ -456,6 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */,
+				E9F3A4252C87755800595150 /* QueryEnumerator.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -564,6 +582,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9F3A42E2C877F8800595150 /* Radiography Backend System - Paulo Sonzzini.pdf in Resources */,
+				E9F3A42C2C877EAE00595150 /* Atv1-Paulo_Sonzzini.pdf in Resources */,
 				3B98F1132C668B1100C45121 /* Preview Assets.xcassets in Resources */,
 				3B98F1102C668B1100C45121 /* Assets.xcassets in Resources */,
 			);
@@ -660,8 +680,12 @@
 				089BDBEA2C7F9B6600A914C9 /* ProcessListView.swift in Sources */,
 				3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */,
 				E93BCFA72C77D3DE007CF206 /* CloudViewModel.swift in Sources */,
+				E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */,
 				3BD40B382C6D454B004048FA /* DocumentView.swift in Sources */,
 				08E657392C7D205D00313FCB /* ClientMock.swift in Sources */,
+				E9F3A4262C87755800595150 /* QueryEnumerator.swift in Sources */,
+				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
+				E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				6ABD796F2C6E97AD00A98BA3 /* CheckboxView.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
@@ -833,7 +857,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = YHC26T5B2D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -845,7 +869,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -864,7 +888,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = YHC26T5B2D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -876,7 +900,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
