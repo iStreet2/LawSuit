@@ -31,30 +31,35 @@ struct DocumentGridView: View {
                 let gridItems = Array(repeating: GridItem(.flexible(), spacing: spacing), count: max(columns, 1))
                 ScrollView {
                     HStack {
-                        Group {
-                            Button {
-                                folderViewModel.closeFolder()
-                            } label: {
-                                Image(systemName: "chevron.left")
-                            }
-                            .disabled(folderViewModel.getPath().count() == 1)
-                            Spacer()
-                            Button {
-                                folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
-                            } label: {
-                                Image(systemName: "doc")
-                            }
-                            
-                            Button {
-                                coreDataViewModel.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
-                            } label: {
-                                Image(systemName: "plus")
-                            }
+                        Button {
+                            folderViewModel.closeFolder()
+                        } label: {
+                            Image(systemName: "chevron.left")
                         }
+                        .disabled(folderViewModel.getPath().count() == 1)
                         .buttonStyle(PlainButtonStyle())
                         .font(.title2)
                         .padding(.bottom)
                         Spacer()
+                        Menu(content: {
+                            Button {
+                                coreDataViewModel.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
+                            } label: {
+                                Text("Nova Pasta")
+                                Image(systemName: "folder")
+                            }
+                            Button {
+                                folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
+                            } label: {
+                                Text("Importar PDF")
+                                Image(systemName: "doc")
+                            }
+                        }, label: {
+                            Image(systemName: "plus")
+                        })
+                        .buttonStyle(PlainButtonStyle())
+                        .font(.title2)
+                        .padding(.bottom)
                     }
                     VStack {
                         LazyVGrid(columns: gridItems, spacing: spacing) {

@@ -9,9 +9,12 @@ import SwiftUI
 
 struct SideBarView: View {
     
+    //MARK: ViewModels:
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
+    //MARK: Variáveis de estado
     @Binding var selectedView: SelectedView
     
     var body: some View {
@@ -29,7 +32,7 @@ struct SideBarView: View {
             .onTapGesture {
                 withAnimation(.bouncy) {
                     selectedView = .clients
-                    if let selectedClient = coreDataViewModel.clientManager.selectedClient {
+                    if let selectedClient = navigationViewModel.selectedClient {
                         folderViewModel.resetFolderStack()
                         folderViewModel.openFolder(folder: selectedClient.rootFolder)
                     }

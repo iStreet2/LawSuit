@@ -17,6 +17,7 @@ struct ContentView: View {
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
@@ -32,7 +33,7 @@ struct ContentView: View {
                     ClientListView(addClient: $addClient, deleted: $deleted)
                         .frame(minWidth: 170)
                 } detail: {
-                    if let selectedClient = coreDataViewModel.clientManager.selectedClient {
+                    if let selectedClient = navigationViewModel.selectedClient {
                         ClientView(client: selectedClient, deleted: $deleted)
                     } else {
                         Text("Selecione um cliente")

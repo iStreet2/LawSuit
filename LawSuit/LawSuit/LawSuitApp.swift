@@ -14,8 +14,9 @@ struct LawSuitApp: App {
     @StateObject var folderViewModel = FolderViewModel()
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
     @StateObject var cloudViewModel = CloudViewModel()
-    @StateObject var networkMonitor = NetworkMonitor()
+    @StateObject var networkMonitor = NetworkMonitorViewModel()
     @StateObject var mockViewModel = MockViewModel()
+    @StateObject var navigationViewModel = NavigationViewModel()
     
     var body: some Scene {
         WindowGroup {   
@@ -26,6 +27,7 @@ struct LawSuitApp: App {
                 .environmentObject(dragAndDropViewModel)
                 .environmentObject(networkMonitor)
                 .environmentObject(mockViewModel)
+                .environmentObject(navigationViewModel)
                 .preferredColorScheme(.light)
         }
     }

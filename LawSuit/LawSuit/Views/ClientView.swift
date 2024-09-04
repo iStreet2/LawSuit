@@ -11,6 +11,9 @@ import CoreData
 struct ClientView: View {
     
     //MARK: Variáveis de ambiente
+    @Environment(\.dismiss) var dismiss
+    
+    //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     
     //MARK: Variáveis de estado
@@ -48,14 +51,14 @@ struct ClientView: View {
                     HStack {
                         SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
                             .padding(5)
-                            .padding(.trailing,600)
-                        
+                            .frame(width: 190, alignment: .leading)
+                        Spacer()
                         if selectedOption == "Processos" {
                             Button(action: {
                                 createLawsuit.toggle()
                             }, label: {
                                 Image(systemName: "plus")
-                                    .font(.title)
+                                    .font(.title2)
                                     .foregroundStyle(Color(.gray))
                             })
                             .padding(.trailing)
@@ -65,19 +68,15 @@ struct ClientView: View {
                                 
                             }, label: {
                                 Image(systemName: "plus")
-                                    .font(.title)
-                                    .foregroundStyle(Color(.white))
                                     .opacity(0)
                             })
                             .padding(.trailing)
                             .buttonStyle(PlainButtonStyle())
                         }
                     }
-                    Divider()
                 }
                 VStack {
                     if selectedOption == "Processos" {
-                        //meu deus
                         HStack(spacing: 0) {
                             Text("Nome e Número")
                                 .font(.footnote)
@@ -96,6 +95,7 @@ struct ClientView: View {
                             Text("Advogado responsável")
                                 .font(.footnote)
                         }
+                        .padding(.top)
                         .padding(.horizontal, 10)
                         .foregroundStyle(Color(.gray))
                         
@@ -113,16 +113,18 @@ struct ClientView: View {
                             }
                             Spacer()
                         } else {
-                            ScrollView {
-                                VStack {
-                                    ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
-                                        NavigationLink {
-                                            DetailedLawSuitView(lawsuit: lawsuit)
-                                        } label: {
-                                            LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-                                                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                            NavigationStack {
+                                ScrollView {
+                                    VStack {
+                                        ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
+                                            NavigationLink {
+                                                DetailedLawSuitView(lawsuit: lawsuit)
+                                            } label: {
+                                                LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                                    .background(Color(index % 2 == 0 ? .white : .gray).opacity(0.1))
+                                            }
+                                            .buttonStyle(PlainButtonStyle())
                                         }
-                                        .buttonStyle(PlainButtonStyle())
                                     }
                                 }
                             }

@@ -9,6 +9,9 @@ import SwiftUI
 
 struct EditClientView: View {
     
+    //MARK: ViewModels
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
+    
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
@@ -113,7 +116,7 @@ struct EditClientView: View {
                     print("Erro ao buscar processos relacionados ao cliente: \(error)")
                 }
                 coreDataViewModel.clientManager.deleteClient(client: client)
-                coreDataViewModel.clientManager.selectedClient = nil
+                navigationViewModel.selectedClient = nil
                 deleted.toggle()
                 dismiss()
             }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
