@@ -77,64 +77,14 @@ struct ClientView: View {
                 }
                 VStack {
                     if selectedOption == "Processos" {
-//                        HStack(spacing: 0) {
-//                            Text("Nome e Número")
-//                                .font(.footnote)
-//                            Spacer()
-//                            Text("Tipo")
-//                                .font(.footnote)
-//                            Spacer()
-//                            Text("Última movimentação")
-//                                .font(.footnote)
-//                            
-//                            Spacer()
-//                            Text("Cliente")
-//                                .font(.footnote)
-//                            
-//                            Spacer()
-//                            Text("Advogado responsável")
-//                                .font(.footnote)
-//                        }
-//                        .padding(.top)
-//                        .padding(.horizontal, 10)
-//                        .foregroundStyle(Color(.gray))
-//                        
-//                        Divider()
-//                            .padding(.top, 5)
-//                            .padding(.trailing, 10)
-//                        
-//                        if lawsuits.isEmpty {
-//                            Spacer()
-//                            HStack {
-//                                Spacer()
-//                                Text("Sem processos")
-//                                    .foregroundStyle(.gray)
-//                                Spacer()
-//                            }
-//                            Spacer()
-//                        } else {
-//                            NavigationStack {
-//                                ScrollView {
-//                                    VStack {
-//                                        ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
-//                                            NavigationLink {
-//                                                DetailedLawSuitView(lawsuit: lawsuit)
-//                                            } label: {
-//                                                LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-//                                                    .background(Color(index % 2 == 0 ? .white : .gray).opacity(0.1))
-//                                            }
-//                                            .buttonStyle(PlainButtonStyle())
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        Spacer()
                         NavigationStack {
                             LawsuitListViewHeaderContent()
                         }
                     } else {
                         DocumentGridView()
+                            .onAppear {
+                                folderViewModel.openFolder(folder: client.rootFolder)
+                            }
                             .padding()
                     }
                 }
