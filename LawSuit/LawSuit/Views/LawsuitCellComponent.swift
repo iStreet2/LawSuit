@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct LawsuitCellComponent2: View {
+struct LawsuitCellComponent: View {
     @ObservedObject var client: Client
     @ObservedObject var lawyer: Lawyer
     @ObservedObject var lawsuit: Lawsuit
