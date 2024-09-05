@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct LawsuitListViewHeaderContent: View {
-    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
+struct LawsuitListViewHeaderContent: View {    
+    var lawsuits: FetchedResults<Lawsuit>
     
     var body: some View {
         
@@ -46,15 +46,11 @@ struct LawsuitListViewHeaderContent: View {
                         DetailedLawSuitView(lawsuit: lawsuit)
                     } label: {
                         LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-                            .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                            .background(Color(index % 2 == 0 ? .white : .gray).opacity(0.1))
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
             }
         }
     }
-}
-
-#Preview {
-    LawsuitListViewHeaderContent()
 }

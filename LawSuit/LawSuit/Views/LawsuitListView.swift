@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LawsuitListView: View {
+    
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
 
     @State var createProcess = false
     
@@ -31,7 +33,7 @@ struct LawsuitListView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 
-                LawsuitListViewHeaderContent()
+                LawsuitListViewHeaderContent(lawsuits: lawsuits)
             }
         }
         .sheet(isPresented: $createProcess, content: {
