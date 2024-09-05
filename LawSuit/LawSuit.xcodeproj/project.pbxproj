@@ -66,6 +66,7 @@
 		3BD40B422C6E5E16004048FA /* FolderStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B412C6E5E16004048FA /* FolderStack.swift */; };
 		3BD40B6F2C6E76EC004048FA /* ClientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B6E2C6E76EC004048FA /* ClientListView.swift */; };
 		3BDEFFCD2C8A4A6A00990528 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCB2C8A4A6A00990528 /* Entity.swift */; };
+		3BDEFFD02C8A4C5500990528 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */; };
 		6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */; };
 		6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */; };
 		6ABD796F2C6E97AD00A98BA3 /* RequestDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */; };
@@ -181,6 +182,7 @@
 		3BDEFFC92C8A49E400990528 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitTests.xctest; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app/Contents/PlugIns/LawSuitTests.xctest; sourceTree = "<absolute>"; };
 		3BDEFFCA2C8A49E400990528 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitUITests.xctest; path = "/Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuitUITests-Runner.app/Contents/PlugIns/LawSuitUITests.xctest"; sourceTree = "<absolute>"; };
 		3BDEFFCB2C8A4A6A00990528 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		6A2C68FF2C6D4FA300E017EE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxIconComponent.swift; sourceTree = "<group>"; };
 		6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 				3B0EE5F62C6A90F100CFC91A /* CoreDataManager.swift */,
 				E93BCFA62C77D3DE007CF206 /* CloudManager.swift */,
 				E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */,
+				3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 				E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */,
 				3BD40B3B2C6D4624004048FA /* FolderExamples.swift in Sources */,
 				3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */,
+				3BDEFFD02C8A4C5500990528 /* EntityManager.swift in Sources */,
 				6AC0BB062C7E5D7C00FAF3E6 /* LawsuitDistributedView.swift in Sources */,
 				3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */,
 				3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */,
