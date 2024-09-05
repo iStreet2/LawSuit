@@ -15,11 +15,11 @@ class DataViewModel: ObservableObject {
     
     let coreDataContainer = NSPersistentContainer(name: "Model")
     let context: NSManagedObjectContext
-    let cloudContainer: CKContainer = CKContainer(identifier: "iCloud.com.TFS.LawSuit.CKContainer")
+//    let cloudContainer: CKContainer = CKContainer(identifier: "iCloud.com.TFS.LawSuit.CKContainer")
     
     var coreDataManager: CoreDataManager
-    var cloudManager: CloudManager
-    var cloudDataConverter: CloudDataConverter
+//    var cloudManager: CloudManager
+//    var cloudDataConverter: CloudDataConverter
     
     init() {
         self.coreDataContainer.loadPersistentStores { descricao, error in
@@ -29,8 +29,8 @@ class DataViewModel: ObservableObject {
         }
         self.context = coreDataContainer.viewContext
         self.coreDataManager = CoreDataManager(context: context)
-        self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
-        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter)
+//        self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
+//        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter)
     }
     
 }
