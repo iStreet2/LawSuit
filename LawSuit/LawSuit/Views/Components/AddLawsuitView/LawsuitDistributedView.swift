@@ -34,8 +34,6 @@ struct LawsuitDistributedView: View {
     var body: some View {
         VStack{
             LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
-        }
-        VStack{
             LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
         }
         HStack(alignment: .top){
@@ -44,7 +42,7 @@ struct LawsuitDistributedView: View {
                     .disabled(attributedDefendant)
                 TextField("", text: $lawsuitParentAuthorName)
                     .textFieldStyle(.roundedBorder)
-                    .frame(width: 200)
+//                    .frame(width: 200)
                     .onChange(of: lawsuitParentAuthorName) { change in
                         //Se o valor do textField mudar para vazio, a lógica de proibir a seleção em algum reseta
                         if lawsuitParentAuthorName == "" {
@@ -117,6 +115,7 @@ struct LawsuitDistributedView: View {
             }
             .buttonStyle(.borderedProminent)
         }
+        .border(.red)
         .sheet(isPresented: $selectTag, content: {
             VStack {
                 Spacer()
@@ -133,7 +132,6 @@ struct LawsuitDistributedView: View {
                     .padding()
                 }
             }
-            .frame(minWidth: 200, minHeight: 250)
         })
     }
 }

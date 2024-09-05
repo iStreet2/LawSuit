@@ -17,6 +17,7 @@ struct EditClientView: View {
     
     //MARK: Variáveis de estado
     @State var userInfoType = 0
+    @State var missingInformation = false
     @State var clientName: String = ""
     @State var clientOccupation: String = ""
     @State var clientRg: String = ""
@@ -43,7 +44,7 @@ struct EditClientView: View {
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
     @Environment(\.managedObjectContext) var context
-
+    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -70,7 +71,7 @@ struct EditClientView: View {
             .pickerStyle(.segmented)
             .labelsHidden()
             
-            if userInfoType == 0 { 
+            if userInfoType == 0 {
                 EditClientViewFormsFields(formType: .personalInfo, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             } else if userInfoType == 1 {
                 EditClientViewFormsFields(formType: .address, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
@@ -78,7 +79,6 @@ struct EditClientView: View {
                 EditClientViewFormsFields(formType: .contact, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             }
             Spacer()
-            
             HStack {
                 Button {
                     deleteAlert.toggle()
@@ -94,35 +94,43 @@ struct EditClientView: View {
                 } label: {
                     Text("Cancelar")
                 }
-                Button {
+                .alert(isPresented: $deleteAlert, content: {
+                    Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+                        fetchRequest.predicate = NSPredicate(format: "parentAuthor == %@", client)
+                        do {
+                            let lawsuits = try coreDataViewModel.container.viewContext.fetch(fetchRequest)
+                            for lawsuit in lawsuits {
+                                coreDataViewModel.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                            }
+                        } catch {
+                            print("Erro ao buscar processos relacionados ao cliente: \(error)")
+                        }
+                        coreDataViewModel.clientManager.deleteClient(client: client)
+                        navigationViewModel.selectedClient = nil
+                        deleted.toggle()
+                        dismiss()
+                    }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
+                    }))
+                })
+                Button(action: {
+                    if areFieldsFilled() {
                     coreDataViewModel.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                     dismiss()
-                } label: {
+                    } else {
+                        missingInformation = true
+                    }
+                }, label: {
                     Text("Salvar")
-                }
+                })
                 .buttonStyle(.borderedProminent)
+                .alert(isPresented: $missingInformation) {
+                    Alert(title: Text("Informações Faltando"),
+                          message: Text("Por favor, preencha todos os campos antes de salvar."),
+                          dismissButton: .default(Text("Ok")))
+                }
             }
         }
-        .alert(isPresented: $deleteAlert, content: {
-            Alert(title: Text("Cuidado"), message: Text("Excluir seu clinte irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
-                let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "parentAuthor == %@", client)
-                do {
-                    let lawsuits = try coreDataViewModel.container.viewContext.fetch(fetchRequest)
-                    for lawsuit in lawsuits {
-                        coreDataViewModel.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
-                    }
-                } catch {
-                    print("Erro ao buscar processos relacionados ao cliente: \(error)")
-                }
-                coreDataViewModel.clientManager.deleteClient(client: client)
-                navigationViewModel.selectedClient = nil
-                deleted.toggle()
-                dismiss()
-            }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
-                dismiss()
-            }))
-        })
         .frame(minHeight: 250)
         .padding()
         .onAppear {
@@ -145,6 +153,28 @@ struct EditClientView: View {
             clientTelephone = client.telephone
             clientCellphone = client.cellphone
         }
-
+    }
+    func areFieldsFilled() -> Bool {
+        if userInfoType >= 0 {
+            return !clientName.isEmpty &&
+            !clientOccupation.isEmpty &&
+            !clientBirthDate.description.isEmpty &&
+            !clientRg.isEmpty &&
+            !clientCpf.isEmpty &&
+            !clientAffiliation.isEmpty &&
+            !clientMaritalStatus.isEmpty &&
+            !clientNationality.isEmpty &&
+            !clientCep.isEmpty &&
+            !clientAddress.isEmpty &&
+            !clientAddressNumber.isEmpty &&
+            !clientNeighborhood.isEmpty &&
+            !clientComplement.isEmpty &&
+            !clientState.isEmpty &&
+            !clientCity.isEmpty
+            !clientEmail.isEmpty &&
+            !clientTelephone.isEmpty &&
+            !clientCellphone.isEmpty
+        }
+        return true
     }
 }
