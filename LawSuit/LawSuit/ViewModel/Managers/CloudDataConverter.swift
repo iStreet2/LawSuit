@@ -10,16 +10,17 @@ import CloudKit
 import CoreData
 import PDFKit
 
-class RecordObjectManager {
-	let container = CKContainer(identifier: "iCloud.com.TFS.LawSuit")
+class CloudDataConverter {
+    
+    var context: NSManagedObjectContext
+    
+    let container: CKContainer
 	let publicDatabase: CKDatabase
 	
-    var context: NSManagedObjectContext
-	
-    init(context: NSManagedObjectContext) {
+    init(context: NSManagedObjectContext, container: CKContainer) {
 		self.context = context
 		self.context.automaticallyMergesChangesFromParent = true
-		
+        self.container = container
 		self.publicDatabase = container.publicCloudDatabase
 	}
 	

@@ -9,11 +9,10 @@ import Foundation
 import CoreData
 
 
-class CoreDataViewModel: ObservableObject {
+class CoreDataManager: ObservableObject {
     
     @Published var objects: [Any] = []
     
-    let container = NSPersistentContainer(name: "Model")
     var context: NSManagedObjectContext
     var folderManager: FolderManager
     var filePDFManager: FilePDFManager
@@ -21,15 +20,9 @@ class CoreDataViewModel: ObservableObject {
     var lawsuitManager: LawsuitManager
     var clientManager: ClientManager
     var updateManager: UpdateManager
-    var recordObjectManager: RecordObjectManager
     
-    init() {
-        self.container.loadPersistentStores { descricao, error in
-            if let error = error {
-                print("There was an error loading the data from the model: \(error)")
-            }
-        }
-        self.context = self.container.viewContext
+    init(context: NSManagedObjectContext) {
+        self.context = context
         self.context.automaticallyMergesChangesFromParent = true
         self.folderManager = FolderManager(context: context)
         self.filePDFManager = FilePDFManager(context: context)
@@ -37,7 +30,6 @@ class CoreDataViewModel: ObservableObject {
         self.lawsuitManager = LawsuitManager(context: context)
         self.clientManager = ClientManager(context: context)
         self.updateManager = UpdateManager(context: context)
-        self.recordObjectManager = RecordObjectManager(context: context)
     }
     
     func deleteAllData() {

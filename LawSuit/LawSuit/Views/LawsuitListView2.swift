@@ -11,7 +11,7 @@ struct LawsuitListView2: View {
     
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     
     @Environment(\.managedObjectContext) var context
     
@@ -93,7 +93,7 @@ struct LawsuitListView2: View {
                         Divider()
                         ForEach(Array(lawsuits.enumerated()), id: \.offset) {
                             index, lawsuit in
-                            if let latestUpdateDate = coreDataViewModel.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
+                            if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
                                 Text(formatDate(latestUpdateDate))
                                     .font(.callout)
                                     .bold()

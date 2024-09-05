@@ -68,12 +68,8 @@ class FolderViewModel: ObservableObject {
             }
         }
     }
-
-
-
-
-    
-    func importPDF(parentFolder: Folder, coreDataViewModel: CoreDataViewModel) {
+   
+    func importPDF(parentFolder: Folder, dataViewModel: DataViewModel) {
         let openPanel = NSOpenPanel()
         openPanel.allowedContentTypes = [UTType.pdf]
         openPanel.allowsMultipleSelection = false
@@ -87,7 +83,7 @@ class FolderViewModel: ObservableObject {
                     //print(url)
                     
                     // Salvo no CoreData o PDF aberto!
-                    coreDataViewModel.filePDFManager.createFilePDF(parentFolder: parentFolder, name: name, content: data)
+                    dataViewModel.coreDataManager.filePDFManager.createFilePDF(parentFolder: parentFolder, name: name, content: data)
                 } catch {
                     print("Failed to load data from URL: \(error.localizedDescription)")
                 }

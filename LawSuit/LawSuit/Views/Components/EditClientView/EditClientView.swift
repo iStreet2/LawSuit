@@ -41,7 +41,7 @@ struct EditClientView: View {
     @Binding var deleted: Bool
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
 
     
@@ -95,7 +95,7 @@ struct EditClientView: View {
                     Text("Cancelar")
                 }
                 Button {
-                    coreDataViewModel.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                    dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                     dismiss()
                 } label: {
                     Text("Salvar")
@@ -108,14 +108,14 @@ struct EditClientView: View {
                 let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "parentAuthor == %@", client)
                 do {
-                    let lawsuits = try coreDataViewModel.container.viewContext.fetch(fetchRequest)
+                    let lawsuits = try dataViewModel.coreDataContainer.viewContext.fetch(fetchRequest)
                     for lawsuit in lawsuits {
-                        coreDataViewModel.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                        dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                     }
                 } catch {
                     print("Erro ao buscar processos relacionados ao cliente: \(error)")
                 }
-                coreDataViewModel.clientManager.deleteClient(client: client)
+                dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
                 navigationViewModel.selectedClient = nil
                 deleted.toggle()
                 dismiss()

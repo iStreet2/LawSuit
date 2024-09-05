@@ -14,7 +14,7 @@ struct LawsuitListView: View {
     
     @State private var multiplier: Double = 0.5
     
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     

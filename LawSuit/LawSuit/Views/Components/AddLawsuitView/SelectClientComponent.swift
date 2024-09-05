@@ -23,7 +23,7 @@ struct SelectClientComponent: View {
     @Environment(\.dismiss) var dismiss
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     

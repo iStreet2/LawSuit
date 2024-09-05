@@ -31,7 +31,7 @@ struct AddLawsuitView: View {
     //MARK: ViewModels
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
 
     

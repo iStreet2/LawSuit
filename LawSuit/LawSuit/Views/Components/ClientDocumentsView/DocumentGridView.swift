@@ -15,7 +15,7 @@ struct DocumentGridView: View {
     
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var folders: FetchedResults<Folder>
     @FetchRequest(sortDescriptors: []) var filesPDF: FetchedResults<FilePDF>
@@ -43,13 +43,13 @@ struct DocumentGridView: View {
                         Spacer()
                         Menu(content: {
                             Button {
-                                coreDataViewModel.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
+                                dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
                             } label: {
                                 Text("Nova Pasta")
                                 Image(systemName: "folder")
                             }
                             Button {
-                                folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
+                                folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
                             } label: {
                                 Text("Importar PDF")
                                 Image(systemName: "doc")
@@ -78,13 +78,13 @@ struct DocumentGridView: View {
                 }
                 .contextMenu {
                     Button(action: {
-                        coreDataViewModel.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
+                        dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
                     }, label: {
                         Text("Nova Pasta")
                         Image(systemName: "folder")
                     })
                     Button {
-                        folderViewModel.importPDF(parentFolder: openFolder, coreDataViewModel: coreDataViewModel)
+                        folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
                     } label: {
                         Text("Importar PDF")
                         Image(systemName: "doc")

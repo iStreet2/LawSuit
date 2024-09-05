@@ -22,7 +22,7 @@ struct LawsuitNotDistributedView: View {
     @Binding var lawsuitActionDate: Date
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
@@ -61,7 +61,7 @@ struct LawsuitNotDistributedView: View {
                             let category = TagTypeString.string(from: tagType)
                             //MARK: Advogado temporário
                             let lawyer = lawyers[0]
-                            coreDataViewModel.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
+                            dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
                             dismiss()
                         } else {
                             print("Cliente não encontrado")

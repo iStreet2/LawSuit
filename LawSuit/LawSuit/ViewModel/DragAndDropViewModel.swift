@@ -128,7 +128,7 @@ class DragAndDropViewModel: ObservableObject {
         }
     }
     
-    func handleDrop(providers: [NSItemProvider], parentFolder: Folder, context: NSManagedObjectContext, coreDataViewModel: CoreDataViewModel) {
+    func handleDrop(providers: [NSItemProvider], parentFolder: Folder, context: NSManagedObjectContext, dataViewModel: DataViewModel) {
         print("handleDrop: Iniciando o processamento do drop...")
         
         for provider in providers {
@@ -142,7 +142,7 @@ class DragAndDropViewModel: ObservableObject {
                     
                     if let url = url {
                         print("handleDrop: URL da pasta - \(url)")
-                        self.processFolder(at: url, parentFolder: parentFolder, context: context, coreDataViewModel: coreDataViewModel)
+                        self.processFolder(at: url, parentFolder: parentFolder, context: context, dataViewModel: dataViewModel)
                     } else {
                         print("handleDrop: Falha ao obter URL usando loadFileRepresentation.")
                     }
@@ -157,7 +157,7 @@ class DragAndDropViewModel: ObservableObject {
                     
                     if let data = urlData as? Data, let url = URL(dataRepresentation: data, relativeTo: nil) {
                         print("handleDrop: URL do arquivo - \(url)")
-                        self.processFile(at: url, parentFolder: parentFolder, context: context, coreDataViewModel: coreDataViewModel)
+                        self.processFile(at: url, parentFolder: parentFolder, context: context, dataViewModel: dataViewModel)
                         
                     } else {
                         print("handleDrop: Falha ao converter urlData para URL.")
@@ -169,7 +169,7 @@ class DragAndDropViewModel: ObservableObject {
         }
     }
     
-    private func processFile(at url: URL, parentFolder: Folder, context: NSManagedObjectContext, coreDataViewModel: CoreDataViewModel) {
+    private func processFile(at url: URL, parentFolder: Folder, context: NSManagedObjectContext, dataViewModel: DataViewModel) {
         if url.pathExtension == "pdf" {
             // Crie um ArquivoPDF e associe à pasta atual
             let filePDF = FilePDF(context: context)
@@ -180,13 +180,13 @@ class DragAndDropViewModel: ObservableObject {
 
             // Adiciona o novo arquivo ao conjunto de arquivos da pasta pai
             parentFolder.addToFiles(filePDF)
-            coreDataViewModel.filePDFManager.saveContext()
+            dataViewModel.coreDataManager.filePDFManager.saveContext()
         } else {
             print("Apenas arquivos PDF são suportados.")
         }
     }
     
-    private func processFolder(at url: URL, parentFolder: Folder, context: NSManagedObjectContext, coreDataViewModel: CoreDataViewModel) {
+    private func processFolder(at url: URL, parentFolder: Folder, context: NSManagedObjectContext, dataViewModel: DataViewModel) {
         print("processFolder: Iniciando o processamento da pasta - \(url.lastPathComponent)")
         
         let fileManager = FileManager.default
@@ -201,10 +201,10 @@ class DragAndDropViewModel: ObservableObject {
             for item in contents {
                 if item.pathExtension == "pdf" {
                     print("processFolder: Encontrou um PDF - \(item.lastPathComponent)")
-                    processFile(at: item, parentFolder: folder, context: context, coreDataViewModel: coreDataViewModel)
+                    processFile(at: item, parentFolder: folder, context: context, dataViewModel: dataViewModel)
                 } else if fileManager.fileExists(atPath: item.path, isDirectory: nil) {
                     print("processFolder: Encontrou uma subpasta - \(item.lastPathComponent)")
-                    processFolder(at: item, parentFolder: folder, context: context, coreDataViewModel: coreDataViewModel)
+                    processFolder(at: item, parentFolder: folder, context: context, dataViewModel: dataViewModel)
                 } else {
                     print("processFolder: Arquivo não suportado - \(item.lastPathComponent)")
                 }
@@ -215,7 +215,7 @@ class DragAndDropViewModel: ObservableObject {
         
         parentFolder.addToFolders(folder)
         
-        coreDataViewModel.folderManager.saveContext()
+        dataViewModel.coreDataManager.folderManager.saveContext()
         print("processFolder: Contexto salvo.")
     }
 }
