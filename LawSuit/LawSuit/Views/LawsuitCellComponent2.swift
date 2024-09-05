@@ -14,7 +14,7 @@ struct LawsuitCellComponent2: View {
     @ObservedObject var lawsuit: Lawsuit
         
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
@@ -39,7 +39,7 @@ struct LawsuitCellComponent2: View {
                 Spacer()
                 
                 Group {
-                    if let latestUpdateDate = coreDataViewModel.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
+                    if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
                         Text(formatDate(latestUpdateDate))
                             .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
                     } else {

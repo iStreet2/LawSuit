@@ -11,7 +11,7 @@ import CloudKit
 
 struct CoreCloudTestingView: View {
 	
-	@ObservedObject var CloudVM = CloudViewModel()
+	@ObservedObject var dataViewModel = DataViewModel()
 	
 	@State var rotationEffect: Double = 0
 	

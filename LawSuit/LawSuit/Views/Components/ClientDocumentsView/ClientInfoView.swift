@@ -23,7 +23,7 @@ struct ClientInfoView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
@@ -39,7 +39,7 @@ struct ClientInfoView: View {
 //                            folderViewModel.importPhoto { data in
 //                                if let data = data {
 //                                    imageData = data
-//                                    coreDataViewModel.clientManager.addPhotoOnClient(client: client, photo: data)
+//                                    dataViewModel.coreDataManager.clientManager.addPhotoOnClient(client: client, photo: data)
 //                                    client.photo = data
 //                                }
 //                            }
@@ -57,7 +57,7 @@ struct ClientInfoView: View {
 //                        folderViewModel.importPhoto { data in
 //                            if let data = data {
 //                                imageData = data
-//                                coreDataViewModel.clientManager.addPhotoOnClient(client: client, photo: data)
+//                                dataViewModel.coreDataManager.clientManager.addPhotoOnClient(client: client, photo: data)
 //                            }
 //                        }
 //                    }

@@ -10,19 +10,19 @@ import SwiftUI
 @main
 struct LawSuitApp: App {
     
-    @StateObject var coreDataViewModel = CoreDataViewModel()
+    
+    @StateObject var dataViewModel = DataViewModel()
     @StateObject var folderViewModel = FolderViewModel()
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
-//    @StateObject var cloudViewModel = CloudViewModel()
     @StateObject var networkMonitor = NetworkMonitorViewModel()
     @StateObject var navigationViewModel = NavigationViewModel()
     
     var body: some Scene {
         WindowGroup {   
-            ContentView()
-                .environment(\.managedObjectContext, coreDataViewModel.container.viewContext)
+			  ContentView()
+                .environment(\.managedObjectContext, dataViewModel.coreDataContainer.viewContext)
+                .environmentObject(dataViewModel)
                 .environmentObject(folderViewModel)
-                .environmentObject(coreDataViewModel)
                 .environmentObject(dragAndDropViewModel)
                 .environmentObject(networkMonitor)
                 .environmentObject(navigationViewModel)

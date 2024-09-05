@@ -24,7 +24,7 @@ struct ClientView: View {
     var infos = ["Processos", "Documentos"]
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
@@ -93,7 +93,7 @@ struct ClientView: View {
 //        .toolbar {
 //            ToolbarItem(placement: .destructiveAction) {
 //                Button(action: {
-//                    coreDataViewModel.deleteAllData()
+//                    dataViewModel.coreDataManager.deleteAllData()
 //                }, label: {
 //                    Image(systemName: "trash")
 //                })

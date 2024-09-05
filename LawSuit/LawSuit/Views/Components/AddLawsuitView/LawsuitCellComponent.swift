@@ -14,7 +14,7 @@ struct LawsuitCellComponent: View {
     var lawsuit: Lawsuit
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
@@ -31,7 +31,7 @@ struct LawsuitCellComponent: View {
             TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista")!)
             
             Group {
-                if let latestUpdateDate = coreDataViewModel.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
+                if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
                     Text(formatDate(latestUpdateDate))
                 } else {
                     Text("Sem atualizações")

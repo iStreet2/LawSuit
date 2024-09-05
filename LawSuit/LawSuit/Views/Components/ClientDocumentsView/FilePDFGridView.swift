@@ -20,7 +20,7 @@ struct FilePDFGridView: View {
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest var filesPDF: FetchedResults<FilePDF>
     
@@ -52,7 +52,7 @@ struct FilePDFGridView: View {
                         .onEnded { _ in
                             if let destinationFolder = dragAndDropViewModel.onDragEndedFilePDF(filePDF: file, context: context) {
                                 withAnimation(.easeIn) {
-                                    coreDataViewModel.filePDFManager.moveFilePDF(parentFolder: parentFolder, movingFilePDF: file, destinationFolder: destinationFolder)
+                                    dataViewModel.coreDataManager.filePDFManager.moveFilePDF(parentFolder: parentFolder, movingFilePDF: file, destinationFolder: destinationFolder)
                                     dragAndDropViewModel.filePDFOffsets[file.id!] = .zero
                                 }
                             } else {

@@ -16,7 +16,7 @@ struct FilePDFIconView: View {
     @State var fileName: String
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     init(filePDF: FilePDF, parentFolder: Folder) {
@@ -73,7 +73,7 @@ struct FilePDFIconView: View {
             Button(action: {
                 // Ação para excluir a pasta
                 withAnimation(.easeIn) {
-                    coreDataViewModel.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
+                    dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
                 }
             }) {
                 Text("Excluir")
@@ -99,7 +99,7 @@ struct FilePDFIconView: View {
     }
     
     private func saveChanges() {
-        coreDataViewModel.filePDFManager.editFilePDFName(filePDF: filePDF, name: fileName)
+        dataViewModel.coreDataManager.filePDFManager.editFilePDFName(filePDF: filePDF, name: fileName)
         isEditing = false
     }
 }

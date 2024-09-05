@@ -27,7 +27,7 @@ struct EditLawSuitView: View {
     @State var attributedDefendant = false
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
@@ -54,7 +54,7 @@ struct EditLawSuitView: View {
                         }
                     Spacer()
                     Button(action: {
-                        coreDataViewModel.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                        dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                         deleted.toggle()
                         dismiss()
                     }, label: {
@@ -91,7 +91,7 @@ struct EditLawSuitView: View {
                                 let fetchedClients = try context.fetch(fetchRequest)
                                 if let client = fetchedClients.first {
                                     let category = TagTypeString.string(from: tagType)
-                                    coreDataViewModel.lawsuitManager.editLawSuit(lawsuit: lawsuit, number: lawsuitNumber, category: category, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, number: lawsuitNumber, category: category, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
                                     dismiss()
                                 } else {
                                     print("Cliente não encontrado")
