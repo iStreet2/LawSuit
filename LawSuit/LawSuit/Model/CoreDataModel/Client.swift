@@ -21,11 +21,9 @@ public class Client: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var name: String
     @NSManaged public var photo: Data?
     @NSManaged public var recordName: String?
-    @NSManaged public var lawsuits: NSSet? //Reference
+//    @NSManaged public var lawsuits: NSSet? //Reference
     @NSManaged public var parentLawyer: Lawyer?
     @NSManaged public var rootFolder: Folder? //Reference
-    //A partir daqui informações novas que vieram
-
     @NSManaged public var occupation: String
     @NSManaged public var rg: String
     @NSManaged public var cpf: String
@@ -33,7 +31,6 @@ public class Client: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var maritalStatus: String
     @NSManaged public var nationality: String
     @NSManaged public var birthDate: Date
-    
     @NSManaged public var cep: String
     @NSManaged public var address: String
     @NSManaged public var addressNumber: String
@@ -41,7 +38,6 @@ public class Client: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var complement: String
     @NSManaged public var state: String
     @NSManaged public var city: String
-    
     @NSManaged public var email: String
     @NSManaged public var telephone: String
     @NSManaged public var cellphone: String
