@@ -18,6 +18,7 @@ struct ClientInfoView: View {
     @State var editClient = false
     @State var imageData: Data?
     @Binding var deleted: Bool
+    var mailManager: MailManager 
 
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -101,7 +102,7 @@ struct ClientInfoView: View {
                 .buttonStyle(PlainButtonStyle())
                 
                 Button {
-                    showMailComposer()
+                    mailManager.showMailComposer()
                 } label: {
                     Text("Enviar e-mail")
                 }
@@ -116,13 +117,6 @@ struct ClientInfoView: View {
             EditClientView(client: client, deleted: $deleted)
         })
         .padding()
-    }
-    
-    func showMailComposer() {
-        let service = NSSharingService(named: NSSharingService.Name.composeEmail)
-        service?.recipients = [client.email]
-        service?.subject = "Test Mail"
-        service?.perform(withItems: ["Test Mail body"])
     }
 }
 

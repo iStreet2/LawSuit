@@ -46,7 +46,7 @@ struct ClientView: View {
                     .foregroundColor(.gray)
             } else {
                 VStack(alignment: .leading) {
-                    ClientInfoView(client: client, deleted: $deleted)
+                    ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
                     Divider()
                     HStack {
                         SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
