@@ -23,6 +23,14 @@ class EntityManager {
         saveContext()
     }
     
+    func createAndReturnEntity(name: String) -> Entity {
+        var entity = Entity(context: context)
+        entity.id = UUID().uuidString
+        entity.name = name
+        saveContext()
+        return entity
+    }
+    
     func deleteEntity(entity: Entity) {
         context.delete(entity)
     }

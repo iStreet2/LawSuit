@@ -12,11 +12,11 @@ struct SelectClientComponent: View {
     //MARK: Variáveis de estado
     @State var searchQuery = ""
     @State var isEditing = false
-    @Binding var lawsuitParentAuthorName: String
-    @Binding var lawsuitDefendant: String
-    @Binding var defendantOrClient: String
+    @Binding var lawsuitAuthorName: String
+    @Binding var lawsuitDefendantName: String
+    @Binding var authorOrDefendant: String
     var screen: SizeEnumerator
-    @Binding var attributedClient: Bool
+    @Binding var attributedAuthor: Bool
     @Binding var attributedDefendant: Bool
     
     //MARK: Variáveis ambiente
@@ -28,8 +28,8 @@ struct SelectClientComponent: View {
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
-        VStack{
-            HStack{
+        VStack {
+            HStack {
                 SearchBarCheckboxComponent(searchText: $searchQuery)
                 Button(action: {
                     dismiss()
@@ -41,11 +41,11 @@ struct SelectClientComponent: View {
                 ForEach(filteredClients, id: \.self) { client in
                     Text(client.name)
                         .onTapGesture {
-                            if defendantOrClient == "client" {
-                                lawsuitParentAuthorName = client.name
-                                attributedClient = true
+                            if authorOrDefendant == "author" {
+                                lawsuitAuthorName = client.name
+                                attributedAuthor = true
                             } else {
-                                lawsuitDefendant = client.name
+                                lawsuitDefendantName = client.name
                                 attributedDefendant = true
                             }
                             dismiss()

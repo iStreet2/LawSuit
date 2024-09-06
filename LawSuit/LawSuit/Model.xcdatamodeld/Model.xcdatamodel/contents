@@ -27,7 +27,7 @@
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentClient" inverseEntity="Folder"/>
     </entity>
     <entity name="Entity" representedClassName="Entity" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
     </entity>
