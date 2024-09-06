@@ -73,9 +73,8 @@ struct LawsuitNotDistributedView: View {
                     .buttonStyle(.borderedProminent)
                 }
             }
-            .frame(height: 140)
             .border(.red)
-            Spacer()
+            .padding(.vertical, 5)
         }
         .sheet(isPresented: $selectTag, content: {
             VStack {
