@@ -16,14 +16,14 @@ public class Lawsuit: NSManagedObject, Identifiable, Recordable {
         return NSFetchRequest<Lawsuit>(entityName: "Lawsuit")
     }
 
-    @NSManaged public var court: String?
-    @NSManaged public var actionDate: Date?
-    @NSManaged public var category: String?
-    @NSManaged public var defendantID: String?
-    @NSManaged public var id: String?
-    @NSManaged public var name: String?
-    @NSManaged public var number: String?
-    @NSManaged public var authorID: String? //Ignorar para o CloudKit
+    @NSManaged public var court: String
+    @NSManaged public var actionDate: Date
+    @NSManaged public var category: String
+    @NSManaged public var defendantID: String
+    @NSManaged public var id: String
+    @NSManaged public var name: String
+    @NSManaged public var number: String
+    @NSManaged public var authorID: String //Ignorar para o CloudKit
     @NSManaged public var parentLawyer: Lawyer? //Ignorar para o CloudKit
     @NSManaged public var rootFolder: Folder? //Reference
     @NSManaged public var updates: NSSet? //Reference

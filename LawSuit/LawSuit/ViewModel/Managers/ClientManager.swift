@@ -25,7 +25,7 @@ class ClientManager {
         client.rootFolder = folder
         folder.parentClient = client
         client.name = name
-        client.id = UUID().uuidString
+        client.id = "client:\(UUID().uuidString)"
         client.occupation = occupation
         client.rg = rg
         client.cpf = cpf
@@ -79,6 +79,36 @@ class ClientManager {
     func addPhotoOnClient(client: Client, photo: Data) {
         client.photo = photo
         saveContext()
+    }
+    
+    func fetchFromName(name: String) -> Client? {
+        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        do {
+            let fetchedClients = try context.fetch(fetchRequest)
+            if let client = fetchedClients.first {
+                return client
+            }
+        } catch {
+            print("Error fetching clients: \(error.localizedDescription)")
+            return nil
+        }
+        return nil
+    }
+    
+    func fetchFromId(id: String) -> Client? {
+        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            let fetchedClients = try context.fetch(fetchRequest)
+            if let client = fetchedClients.first {
+                return client
+            }
+        } catch {
+            print("Error fetching clients: \(error.localizedDescription)")
+            return nil
+        }
+        return nil
     }
     
     func copyClientProperties(from sourceClient: Client, to targetClient: Client) {

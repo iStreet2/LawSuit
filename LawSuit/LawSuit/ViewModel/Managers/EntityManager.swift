@@ -31,6 +31,36 @@ class EntityManager {
         return entity
     }
     
+    func fetchFromName(name: String) -> Entity? {
+        let fetchRequest: NSFetchRequest<Entity> = Entity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        do {
+            let fetchedClients = try context.fetch(fetchRequest)
+            if let client = fetchedClients.first {
+                return client
+            }
+        } catch {
+            print("Error fetching entitys: \(error.localizedDescription)")
+            return nil
+        }
+        return nil
+    }
+    
+    func fetchFromID(id: String) -> Entity? {
+        let fetchRequest: NSFetchRequest<Entity> = Entity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            let fetchedClients = try context.fetch(fetchRequest)
+            if let client = fetchedClients.first {
+                return client
+            }
+        } catch {
+            print("Error fetching entitys: \(error.localizedDescription)")
+            return nil
+        }
+        return nil
+    }
+    
     func deleteEntity(entity: Entity) {
         context.delete(entity)
     }

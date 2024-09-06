@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct LawsuitListViewHeaderContent: View {
+    
+    //MARK: Variáveis de estado
+    @State var lawsuitClient: Client?
     var lawsuits: FetchedResults<Lawsuit>
- 
+    
+    //MARK: CoreData
+    @EnvironmentObject var dataViewModel: DataViewModel
+    @Environment(\.managedObjectContext) var context
   
     var body: some View {
         
@@ -46,8 +52,26 @@ struct LawsuitListViewHeaderContent: View {
                     NavigationLink {
                         DetailedLawSuitView(lawsuit: lawsuit)
                     } label: {
-                        LawsuitCellComponent2(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-                            .background(Color(index % 2 == 0 ? .white : .gray).opacity(0.1))
+                        if let lawsuitClient = self.lawsuitClient {
+                            LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                        }
+                        else {
+                            Text("Carregando")
+                                .onAppear {
+                                    //Se o cliente do processo estiver no autor
+                                    if lawsuit.authorID.hasPrefix("client:") {
+                                        if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID) {
+                                            self.lawsuitClient = author
+                                        }
+                                    //Se o cliente do processo estiver no reu
+                                    } else {
+                                        if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID){
+                                            self.lawsuitClient = defendant
+                                        }
+                                    }
+                                }
+                        }
                     }
                     .buttonStyle(PlainButtonStyle())
                 }

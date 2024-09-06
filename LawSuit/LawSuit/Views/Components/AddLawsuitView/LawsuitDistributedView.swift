@@ -111,10 +111,7 @@ struct LawsuitDistributedView: View {
                             .frame(width: 200)
                     }
                 }
-                Text("Data de distribuição ")
-                    .bold()
-                DatePicker(selection: $lawsuitActionDate, in: ...Date.now, displayedComponents: .date) { }
-                    .datePickerStyle(.field)
+                LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
             }
         }
         HStack {
@@ -128,41 +125,27 @@ struct LawsuitDistributedView: View {
                 
                 //MARK: Se o cliente foi atribuido ao autor
                 if attributedAuthor {
-                    let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                    fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
-                    do {
-                        let fetchedClients = try context.fetch(fetchRequest)
-                        if let author = fetchedClients.first {
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                            dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                            dismiss()
-                        } else {
-                            print("Cliente não encontrado")
-                        }
-                    } catch {
-                        print("Error fetching clients: \(error.localizedDescription)")
+                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                        let category = TagTypeString.string(from: tagType)
+                        let lawyer = lawyers[0]
+                        let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                        dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        dismiss()
+                    } else {
+                        print("Client not found")
                     }
                 }
                 
                 //MARK: Se o cliente foi atribuido ao réu
-                if attributedDefendant {
-                    let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                    fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitDefendantName)
-                    do {
-                        let fetchedClients = try context.fetch(fetchRequest)
-                        if let defendant = fetchedClients.first {
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                            dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                            dismiss()
-                        } else {
-                            print("Cliente não encontrado")
-                        }
-                    } catch {
-                        print("Error fetching clients: \(error.localizedDescription)")
+                else if attributedDefendant {
+                    if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                        let category = TagTypeString.string(from: tagType)
+                        let lawyer = lawyers[0]
+                        let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                        dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        dismiss()
+                    } else {
+                        print("Client not found")
                     }
                 }
             } label: {

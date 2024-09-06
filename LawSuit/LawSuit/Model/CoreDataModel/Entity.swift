@@ -16,7 +16,7 @@ public class Entity: NSManagedObject, Identifiable, Recordable {
         return NSFetchRequest<Entity>(entityName: "Entity")
     }
 
-    @NSManaged public var name: String?
+    @NSManaged public var name: String
     @NSManaged public var id: String
     @NSManaged public var recordName: String?
     
