@@ -68,7 +68,6 @@ struct ClientInfoView: View {
                     Text(client.name)
                         .font(.title)
                         .bold()
-                    Text("\(client.age) anos")
                     Button {
                         // Ação para editar o cliente
                         editClient.toggle()
@@ -78,6 +77,19 @@ struct ClientInfoView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
+                
+                HStack {
+                    Text("Celular")
+                        .bold()
+                        .foregroundStyle(Color(.gray))
+                    Text(client.cellphone)
+                    Text("E-mail")
+                        .bold()
+                        .foregroundStyle(Color(.gray))
+                    Text(client.email)
+                }
+                .font(.footnote)
+                
                 NavigationLink {
                     ClientMoreInfoView(client: client)
 
@@ -87,6 +99,13 @@ struct ClientInfoView: View {
                         .foregroundColor(.blue)
                 }
                 .buttonStyle(PlainButtonStyle())
+                
+                Button {
+                    showMailComposer()
+                } label: {
+                    Text("Enviar e-mail")
+                }
+                .buttonStyle(.borderedProminent)
             }
             Spacer()
         }
@@ -97,6 +116,13 @@ struct ClientInfoView: View {
             EditClientView(client: client, deleted: $deleted)
         })
         .padding()
+    }
+    
+    func showMailComposer() {
+        let service = NSSharingService(named: NSSharingService.Name.composeEmail)
+        service?.recipients = [client.email]
+        service?.subject = "Test Mail"
+        service?.perform(withItems: ["Test Mail body"])
     }
 }
 

@@ -101,7 +101,6 @@ extension ClientMoreInfoView {
                 .padding(.bottom, 2)
             
             HStack {
-                //Calma, arrumar com o coredata
                 Text("\(client.age) anos")
                     .font(.headline)
                     .bold()
