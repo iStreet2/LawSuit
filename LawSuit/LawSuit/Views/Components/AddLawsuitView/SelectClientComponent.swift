@@ -41,12 +41,14 @@ struct SelectClientComponent: View {
                 ForEach(filteredClients, id: \.self) { client in
                     Text(client.name)
                         .onTapGesture {
-                            if authorOrDefendant == "author" {
-                                lawsuitAuthorName = client.name
-                                attributedAuthor = true
-                            } else {
-                                lawsuitDefendantName = client.name
-                                attributedDefendant = true
+                            withAnimation {
+                                if authorOrDefendant == "author" {
+                                    lawsuitAuthorName = client.name
+                                    attributedAuthor = true
+                                } else {
+                                    lawsuitDefendantName = client.name
+                                    attributedDefendant = true
+                                }
                             }
                             dismiss()
                         }

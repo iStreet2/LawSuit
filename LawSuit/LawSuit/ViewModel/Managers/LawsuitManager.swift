@@ -72,6 +72,19 @@ class LawsuitManager {
         saveContext()
     }
     
+    func fetchFromClient(client: Client) -> [Lawsuit]? {
+        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "authorID == %@ OR defendantID == %@", client.id, client.id)
+        
+        do {
+            let lawsuits = try context.fetch(fetchRequest)
+        } catch {
+            print("Error fetching lawsuits related to Client: \(client) \(error)")
+        }
+        
+        return nil
+    }
+    
     func saveContext() {
         do {
             try context.save()

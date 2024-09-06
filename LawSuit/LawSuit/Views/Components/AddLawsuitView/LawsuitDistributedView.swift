@@ -40,24 +40,9 @@ struct LawsuitDistributedView: View {
         }
         HStack(alignment: .top){
             VStack(alignment: .leading){
-                
                 //MARK: Caso usuário não selecionou nada ainda
-                EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
-                    .disabled(attributedDefendant) //Se for atribuido um cliente para o reu, esse botao é desativado
-                HStack {
-                    Text("\(lawsuitAuthorName)")
-                        .frame(width: 200)
-                    //MARK: Caso o usuário tenha adicionado um cliente no autor
-                    if attributedAuthor {
-                        Button {
-                            //Retirar esse cliente e retirar o estado de autor selecionado
-                            attributedAuthor = false
-                            lawsuitAuthorName = ""
-                        } label: {
-                            Image(systemName: "minus")
-                        }
-                        .padding(.leading,2)
-                    }
+                if !attributedDefendant {
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                 }
                 //MARK: Caso usuário atribuir cliente para o réu
                 if attributedDefendant {
@@ -71,6 +56,24 @@ struct LawsuitDistributedView: View {
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)
                 }
+                HStack {
+                    //MARK: Caso o usuário tenha adicionado um cliente no autor
+                    if attributedAuthor {
+                        Text("\(lawsuitAuthorName)")
+                        Button {
+                            withAnimation {
+                                //Retirar esse cliente e retirar o estado de autor selecionado
+                                attributedAuthor = false
+                                lawsuitAuthorName = ""
+                            }
+                        } label: {
+                            Image(systemName: "minus")
+                        }
+                        .padding(.leading, 5)
+                    }
+                }
+                .frame(width: 200, alignment: .leading)
+                
                 Text("Área")
                     .bold()
                 TagViewComponent(tagType: tagType)
@@ -82,21 +85,8 @@ struct LawsuitDistributedView: View {
             VStack(alignment: .leading){
                 VStack(alignment: .leading){
                     //MARK: Se o usuário não selecionou nada
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
-                        .disabled(attributedAuthor) //Desativa se um cliente for atribuido ao autor
-                    HStack {
-                        Text(lawsuitDefendantName)
-                        //MARK: Caso o usuário tenha adicionado um cliente no réu
-                        if attributedDefendant {
-                            Button {
-                                //Retirar esse cliente e retirar o estado de autor selecionado
-                                attributedDefendant = false
-                                lawsuitDefendantName = ""
-                            } label: {
-                                Image(systemName: "minus")
-                            }
-                            .padding(.leading,2)
-                        }
+                    if !attributedAuthor {
+                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
@@ -110,6 +100,24 @@ struct LawsuitDistributedView: View {
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 200)
                     }
+                    HStack {
+                        //MARK: Caso o usuário tenha adicionado um cliente no réu
+                        if attributedDefendant {
+                            Text(lawsuitDefendantName)
+                            Button {
+                                withAnimation {
+                                    //Retirar esse cliente e retirar o estado de autor selecionado
+                                    attributedDefendant = false
+                                    lawsuitDefendantName = ""
+                                }
+                            } label: {
+                                Image(systemName: "minus")
+                            }
+                            .padding(.leading,2)
+                        }
+                    }
+                    .frame(width: 200, alignment: .leading)
+                    
                 }
                 LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
             }

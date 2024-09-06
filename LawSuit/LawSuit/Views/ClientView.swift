@@ -33,9 +33,9 @@ struct ClientView: View {
         self.client = client
         self._deleted = deleted
         
-        _lawsuits =  FetchRequest<Lawsuit>(
-            sortDescriptors: []
-            ,predicate: NSPredicate(format: "parentAuthor == %@", client)
+        _lawsuits = FetchRequest<Lawsuit>(
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "authorID == %@ OR defendantID == %@", client.id, client.id)
         )
     }
     
@@ -90,15 +90,6 @@ struct ClientView: View {
                 }
             }
         }
-//        .toolbar {
-//            ToolbarItem(placement: .destructiveAction) {
-//                Button(action: {
-//                    dataViewModel.coreDataManager.deleteAllData()
-//                }, label: {
-//                    Image(systemName: "trash")
-//                })
-//            }
-//        }
         .sheet(isPresented: $createLawsuit, content: {
             AddLawsuitView()
         })
