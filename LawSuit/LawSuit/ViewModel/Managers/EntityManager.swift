@@ -17,14 +17,14 @@ class EntityManager {
     }
     
     func createEntity(name: String) {
-        var entity = Entity(context: context)
+        let entity = Entity(context: context)
         entity.id = UUID().uuidString
         entity.name = name
         saveContext()
     }
     
     func createAndReturnEntity(name: String) -> Entity {
-        var entity = Entity(context: context)
+        let entity = Entity(context: context)
         entity.id = UUID().uuidString
         entity.name = name
         saveContext()

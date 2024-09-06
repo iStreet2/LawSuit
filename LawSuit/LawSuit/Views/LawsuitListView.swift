@@ -1,24 +1,17 @@
 //
-//  ProcessListView.swift
+//  LawsuitListView3.swift
 //  LawSuit
 //
-//  Created by Giovanna Micher on 28/08/24.
+//  Created by Giovanna Micher on 03/09/24.
 //
 
 import SwiftUI
 
 struct LawsuitListView: View {
-    
-    //MARK: Variáveis de estado
-    @State var createLawsuit = false
-    @State private var multiplier: Double = 0.5
-    @State var lawsuitClient: Client?
-    
-    //MARK: CoreData
-    @EnvironmentObject var dataViewModel: DataViewModel
-    @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
 
+    @State var createProcess = false
+    
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
     var body: some View {
         
@@ -29,7 +22,7 @@ struct LawsuitListView: View {
                         .font(.title)
                         .bold()
                     Button(action: {
-                        createLawsuit.toggle()
+                        createProcess.toggle()
                     }, label: {
                         Image(systemName: "plus")
                             .font(.title2)
@@ -37,76 +30,13 @@ struct LawsuitListView: View {
                     })
                     .buttonStyle(PlainButtonStyle())
                 }
-                .padding(10)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
                 
-                HStack(spacing: 0) {
-                    Text("Nome e Número")
-                        .font(.footnote)
-                    Spacer()
-                    Text("Tipo")
-                        .font(.footnote)
-                    Spacer()
-                    Text("Última movimentação")
-                        .font(.footnote)
-                    Spacer()
-                    Text("Cliente")
-                        .font(.footnote)
-                    Spacer()
-                    Text("Advogado responsável")
-                        .font(.footnote)
-                }
-                .padding(.horizontal, 10)
-                .foregroundStyle(Color(.gray))
-                
-                Divider()
-                    .padding(.top, 5)
-                    .padding(.trailing, 10)
-                
-                if lawsuits.isEmpty {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Text("Sem processos")
-                            .foregroundStyle(.gray)
-                        Spacer()
-                    }
-                    Spacer()
-                } else {
-                    ScrollView {
-                        VStack {
-                            ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
-                                NavigationLink {
-                                    DetailedLawSuitView(lawsuit: lawsuit)
-                                } label: {
-                                    if let lawsuitClient = self.lawsuitClient {
-                                        LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-                                            .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
-                                    }
-                                    else {
-                                        Text("Carregando")
-                                            .onAppear {
-                                                //Se o cliente do processo estiver no autor
-                                                if lawsuit.authorID.hasPrefix("client:") {
-                                                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID) {
-                                                        self.lawsuitClient = author
-                                                    }
-                                                //Se o cliente do processo estiver no reu
-                                                } else {
-                                                    if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID){
-                                                        self.lawsuitClient = defendant
-                                                    }
-                                                }
-                                            }
-                                    }                                        
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                        }
-                    }
-                }
+                LawsuitListViewHeaderContent(lawsuits: lawsuits)
             }
         }
-        .sheet(isPresented: $createLawsuit, content: {
+        .sheet(isPresented: $createProcess, content: {
             AddLawsuitView()
         })
         .toolbar {
@@ -115,8 +45,4 @@ struct LawsuitListView: View {
             }
         }
     }
-}
-
-#Preview {
-    LawsuitListView()
 }
