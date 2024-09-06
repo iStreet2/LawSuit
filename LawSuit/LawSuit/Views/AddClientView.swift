@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct AddClientView: View {
     
@@ -33,6 +34,8 @@ struct AddClientView: View {
     @State var email: String = ""
     @State var telephone: String = ""
     @State var cellphone: String = ""
+    
+    let textLimit = 10
     
     //MARK: CoreData
     @EnvironmentObject var coreDataViewModel: CoreDataViewModel
