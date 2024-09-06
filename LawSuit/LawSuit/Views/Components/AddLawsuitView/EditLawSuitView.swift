@@ -137,12 +137,18 @@ struct EditLawSuitView: View {
                                     let defendant = dataViewModel.coreDataManager.entityManager.fetchFromName(name: lawsuitDefendantName) {
                                     let category = TagTypeString.string(from: tagType)
                                     dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, number: lawsuitNumber, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                    dismiss()
+                                } else {
+                                    print("error achando ou author ou defendant")
                                 }
                             } else if attributedDefendant {
                                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName),
                                    let author = dataViewModel.coreDataManager.entityManager.fetchFromName(name: lawsuitAuthorName) {
                                     let category = TagTypeString.string(from: tagType)
                                     dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, number: lawsuitNumber, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                    dismiss()
+                                } else {
+                                    print("error achando ou author ou defendant")
                                 }
                             }
                         }, label: {
