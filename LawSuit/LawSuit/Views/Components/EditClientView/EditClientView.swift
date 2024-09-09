@@ -42,7 +42,7 @@ struct EditClientView: View {
     @Binding var deleted: Bool
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     
@@ -87,6 +87,26 @@ struct EditClientView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
+              .alert(isPresented: $deleteAlert, content: {
+            Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                
+                if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
+                    for lawsuit in lawsuits {
+                        dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                        // Após deletar os processos, deletar o cliente
+                        dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+                        navigationViewModel.selectedClient = nil
+                        deleted.toggle()
+                        dismiss()
+                    }
+                } else {
+                    print("Error fetching lawsuits of client: \(client.name)")
+                }
+
+            }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
+                dismiss()
+            }))
+        })
                 
                 Spacer()
                 Button {
@@ -94,28 +114,9 @@ struct EditClientView: View {
                 } label: {
                     Text("Cancelar")
                 }
-                .alert(isPresented: $deleteAlert, content: {
-                    Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
-                        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
-                        fetchRequest.predicate = NSPredicate(format: "parentAuthor == %@", client)
-                        do {
-                            let lawsuits = try coreDataViewModel.container.viewContext.fetch(fetchRequest)
-                            for lawsuit in lawsuits {
-                                coreDataViewModel.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
-                            }
-                        } catch {
-                            print("Erro ao buscar processos relacionados ao cliente: \(error)")
-                        }
-                        coreDataViewModel.clientManager.deleteClient(client: client)
-                        navigationViewModel.selectedClient = nil
-                        deleted.toggle()
-                        dismiss()
-                    }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
-                    }))
-                })
                 Button(action: {
                     if areFieldsFilled() {
-                    coreDataViewModel.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                    dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                     dismiss()
                     } else {
                         missingInformation = true

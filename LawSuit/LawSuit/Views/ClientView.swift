@@ -15,6 +15,7 @@ struct ClientView: View {
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: Variáveis de estado
     @ObservedObject var client: Client
@@ -24,7 +25,7 @@ struct ClientView: View {
     var infos = ["Processos", "Documentos"]
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
@@ -33,9 +34,9 @@ struct ClientView: View {
         self.client = client
         self._deleted = deleted
         
-        _lawsuits =  FetchRequest<Lawsuit>(
-            sortDescriptors: []
-            ,predicate: NSPredicate(format: "parentAuthor == %@", client)
+        _lawsuits = FetchRequest<Lawsuit>(
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "authorID == %@ OR defendantID == %@", client.id, client.id)
         )
     }
     
@@ -83,22 +84,16 @@ struct ClientView: View {
                     } else {
                         DocumentGridView()
                             .onAppear {
+                                navigationViewModel.selectedClient = client
+                                folderViewModel.resetFolderStack()
                                 folderViewModel.openFolder(folder: client.rootFolder)
+                                navigationViewModel.dismissLawsuitView.toggle()
                             }
                             .padding()
                     }
                 }
             }
         }
-//        .toolbar {
-//            ToolbarItem(placement: .destructiveAction) {
-//                Button(action: {
-//                    coreDataViewModel.deleteAllData()
-//                }, label: {
-//                    Image(systemName: "trash")
-//                })
-//            }
-//        }
         .sheet(isPresented: $createLawsuit, content: {
             AddLawsuitView()
         })

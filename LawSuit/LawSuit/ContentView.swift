@@ -20,7 +20,7 @@ struct ContentView: View {
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
@@ -43,7 +43,7 @@ struct ContentView: View {
             case .lawsuits:
                 Divider()
                 Spacer()
-                LawsuitListView3()
+                LawsuitListView()
                 Spacer()
             }
         }

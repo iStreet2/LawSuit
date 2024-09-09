@@ -16,15 +16,15 @@ class LawsuitManager {
         self.context = context
     }
     
-    func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) {
+    func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date) {
         let lawsuit = Lawsuit(context: context)
         lawsuit.name = name
         lawsuit.category = category
         lawsuit.number = number
         lawsuit.court = court
         lawyer.addToLawsuits(lawsuit)
-        lawsuit.defendant = defendant
-        lawsuit.parentAuthor = author
+        lawsuit.defendantID = defendantID
+        lawsuit.authorID = authorID
         lawsuit.actionDate = actionDate
         lawsuit.id = UUID().uuidString
         
@@ -35,17 +35,16 @@ class LawsuitManager {
         rootFolder.id = UUID().uuidString
         
         lawsuit.rootFolder = rootFolder
-        
         saveContext()
     }
     
-    func createLawsuitNonDistribuited(name: String, number: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) {
+    func createLawsuitNonDistribuited(name: String, number: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date) {
         let lawsuit = Lawsuit(context: context)
         lawsuit.name = name
         lawsuit.category = category
         lawyer.addToLawsuits(lawsuit)
-        lawsuit.defendant = defendant
-        lawsuit.parentAuthor = author
+        lawsuit.defendantID = defendantID
+        lawsuit.authorID = authorID
         lawsuit.id = UUID().uuidString
         
         // Criar pasta raiz para esse processo:
@@ -59,11 +58,13 @@ class LawsuitManager {
         saveContext()
     }
     
-    func editLawSuit(lawsuit: Lawsuit, number: String, category: String, defendant: String, author: Client, actionDate: Date) {
+    func editLawSuit(lawsuit: Lawsuit, name: String, number: String, court: String, category: String, defendantID: String, authorID: String, actionDate: Date) {
+        lawsuit.name = name
         lawsuit.number = number
+        lawsuit.court = court
         lawsuit.category = category
-        lawsuit.defendant = defendant
-        lawsuit.parentAuthor = author
+        lawsuit.defendantID = defendantID
+        lawsuit.authorID = authorID
         lawsuit.actionDate = actionDate
         saveContext()
     }
@@ -71,6 +72,20 @@ class LawsuitManager {
     func deleteLawsuit(lawsuit: Lawsuit) {
         context.delete(lawsuit)
         saveContext()
+    }
+    
+    func fetchFromClient(client: Client) -> [Lawsuit]? {
+        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "authorID == %@ OR defendantID == %@", client.id, client.id)
+        
+        do {
+            let lawsuits = try context.fetch(fetchRequest)
+            return lawsuits
+        } catch {
+            print("Error fetching lawsuits related to Client: \(client) \(error)")
+        }
+        
+        return nil
     }
     
     func saveContext() {

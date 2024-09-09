@@ -20,7 +20,7 @@ struct FolderIconView: View {
     @State var folderName: String
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     init(folder: Folder, parentFolder: Folder) {
@@ -74,7 +74,7 @@ struct FolderIconView: View {
             Button(action: {
                 // Ação para excluir a pasta
                 withAnimation(.easeIn) {
-                    coreDataViewModel.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                    dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
                 }
             }) {
                 Text("Excluir")
@@ -100,7 +100,7 @@ struct FolderIconView: View {
     }
     
     private func saveChanges() {
-        coreDataViewModel.folderManager.editFolderName(folder: folder, name: folderName)
+        dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folderName)
         isEditing = false
     }
 }

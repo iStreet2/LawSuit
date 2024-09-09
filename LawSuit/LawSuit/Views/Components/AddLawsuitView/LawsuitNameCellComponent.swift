@@ -12,10 +12,10 @@ struct LawsuitNameCellComponent: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(lawsuit.name!)
+            Text(lawsuit.name)
                 .font(.callout)
                 .bold()
-            Text(lawsuit.number!)
+            Text(lawsuit.number)
                 .font(.callout)
                 .foregroundStyle(Color(.gray))
         }

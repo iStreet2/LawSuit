@@ -15,14 +15,15 @@ struct LawsuitNotDistributedView: View {
     //MARK: Variáveis de estado
     @State var selectTag = false
     @State var tagType: TagType = .civel
+    @State var attributedAuthor = false
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
-    @Binding var lawsuitParentAuthorName: String
-    @Binding var lawsuitDefendant: String
+    @Binding var lawsuitAuthorName: String
+    @Binding var lawsuitDefendantName: String
     @Binding var lawsuitActionDate: Date
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
@@ -36,36 +37,43 @@ struct LawsuitNotDistributedView: View {
                 }
             HStack(spacing: 70) {
                 VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client", attributedClient: .constant(true), attributedDefendant: .constant(false))
-                    Text(lawsuitParentAuthorName)
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
+                    HStack {
+                        Text(lawsuitAuthorName)
+                        if attributedAuthor {
+                            Button {
+                                //Retirar esse cliente e retirar o estado de autor selecionado
+                                attributedAuthor = false
+                                lawsuitAuthorName = ""
+                            } label: {
+                                Image(systemName: "minus")
+                            }
+                            .padding(.leading,2)
+                        }
+                    }
                 }
-                LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendant)
+                LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
             }
             VStack {
                 Spacer()
-                HStack {
-                    Spacer()
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Cancelar")
-                    }
-                    Button {
-                        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                        fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitParentAuthorName)
-                        do {
-                            let fetchedClients = try context.fetch(fetchRequest)
-                            if let client = fetchedClients.first {
-                                let category = TagTypeString.string(from: tagType)
-                                //MARK: Advogado temporário
-                                let lawyer = lawyers[0]
-                                coreDataViewModel.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
-                                dismiss()
-                            } else {
-                                print("Cliente não encontrado")
-                            }
-                        } catch {
-                            print("Erro ao buscar cliente: \(error.localizedDescription)")
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Cancelar")
+                }
+                Button {
+                    let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+                    fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
+                    do {
+                        let fetchedClients = try context.fetch(fetchRequest)
+                        if let author = fetchedClients.first {
+                            let category = TagTypeString.string(from: tagType)
+                            let lawyer = lawyers[0]
+                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                            dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                            dismiss()
+                        } else {
+                            print("Cliente não encontrado")
                         }
                     } label: {
                         Text("Criar")
@@ -95,5 +103,3 @@ struct LawsuitNotDistributedView: View {
         })
     }
 }
-
-

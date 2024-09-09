@@ -18,7 +18,7 @@ struct ClientListView: View {
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
@@ -34,6 +34,10 @@ struct ClientListView: View {
                 }, label: {
                     Image(systemName: "plus")
                 })
+                .bold()
+                .foregroundStyle(.secondary)
+                .font(.title2)
+                .buttonStyle(PlainButtonStyle())
             }
             .padding()
             List(clients, id: \.id) { client in

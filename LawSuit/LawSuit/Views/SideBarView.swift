@@ -11,7 +11,7 @@ struct SideBarView: View {
     
     //MARK: ViewModels:
     @EnvironmentObject var folderViewModel: FolderViewModel
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: Variáveis de estado
@@ -36,7 +36,6 @@ struct SideBarView: View {
                         folderViewModel.resetFolderStack()
                         folderViewModel.openFolder(folder: selectedClient.rootFolder)
                     }
-                    //Necessário ação para mudar tela
                 }
             }
             ZStack {
@@ -52,7 +51,6 @@ struct SideBarView: View {
             .onTapGesture {
                 withAnimation(.bouncy) {
                     selectedView = .lawsuits
-                    //Necessário ação para mudar a tela
                 }
             }
             Spacer()

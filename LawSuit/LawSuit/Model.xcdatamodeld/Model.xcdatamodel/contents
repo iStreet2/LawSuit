@@ -23,9 +23,13 @@
         <attribute name="rg" attributeType="String"/>
         <attribute name="state" attributeType="String"/>
         <attribute name="telephone" attributeType="String"/>
-        <relationship name="lawsuits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="parentAuthor" inverseEntity="Lawsuit"/>
         <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentClient" inverseEntity="Folder"/>
+    </entity>
+    <entity name="Entity" representedClassName="Entity" syncable="YES">
+        <attribute name="id" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="recordName" optional="YES" attributeType="String"/>
     </entity>
     <entity name="FilePDF" representedClassName="FilePDF" syncable="YES">
         <attribute name="content" optional="YES" attributeType="Binary"/>
@@ -46,15 +50,15 @@
         <relationship name="parentLawsuit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="rootFolder" inverseEntity="Lawsuit"/>
     </entity>
     <entity name="Lawsuit" representedClassName="Lawsuit" syncable="YES">
-        <attribute name="actionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="category" optional="YES" attributeType="String"/>
-        <attribute name="court" optional="YES" attributeType="String"/>
-        <attribute name="defendant" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="number" optional="YES" attributeType="String"/>
+        <attribute name="actionDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="authorID" attributeType="String"/>
+        <attribute name="category" attributeType="String"/>
+        <attribute name="court" attributeType="String"/>
+        <attribute name="defendantID" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="number" attributeType="String"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
-        <relationship name="parentAuthor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="lawsuits" inverseEntity="Client"/>
         <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="lawsuits" inverseEntity="Lawyer"/>
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentLawsuit" inverseEntity="Folder"/>
         <relationship name="updates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Update" inverseName="parentLawsuit" inverseEntity="Update"/>

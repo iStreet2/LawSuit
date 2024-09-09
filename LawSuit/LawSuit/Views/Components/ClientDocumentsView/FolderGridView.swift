@@ -18,7 +18,7 @@ struct FolderGridView: View {
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
     
     //MARK: CoreData
-    @EnvironmentObject var coreDataViewModel: CoreDataViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest var folders: FetchedResults<Folder>
     @FetchRequest var filesPDF: FetchedResults<FilePDF>
@@ -53,7 +53,7 @@ struct FolderGridView: View {
                         .onEnded { _ in
                             if let destinationFolder = dragAndDropViewModel.onDragEndedFolder(folder: folder, context: context) {
                                 withAnimation(.easeIn) {
-                                    coreDataViewModel.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
+                                    dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
                                     dragAndDropViewModel.folderOffsets[folder.id!] = .zero
                                 }
                             } else {

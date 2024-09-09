@@ -17,40 +17,15 @@ class ClientManager {
         self.context = context
     }
     
-    func createClient(
-        name: String,
-        occupation: String,
-        rg: String,
-        cpf: String,
-        lawyer: Lawyer,
-        affiliation: String,
-        maritalStatus: String,
-        nationality: String,
-        birthDate: Date,
-        cep: String,
-        address: String,
-        addressNumber: String,
-        neighborhood: String,
-        complement: String,
-        state: String,
-        city: String,
-        email: String,
-        telephone: String,
-        cellphone: String
-    ) {
+    func createClient(name: String, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
         let client = Client(context: context)
-        
-        // Criação da pasta raiz
         let folder = Folder(context: context)
         folder.name = "\(name)"
         folder.id = "root\(name)"
-        
         client.rootFolder = folder
         folder.parentClient = client
-        
-        // Atributos
         client.name = name
-        client.id = UUID().uuidString
+        client.id = "client:\(UUID().uuidString)"
         client.occupation = occupation
         client.rg = rg
         client.cpf = cpf
@@ -69,7 +44,6 @@ class ClientManager {
         client.email = email
         client.telephone = telephone
         client.cellphone = cellphone
-        
         saveContext()
     }
     
@@ -79,28 +53,7 @@ class ClientManager {
 //        lawyer.removeFromClients(client)
     }
     
-    func editClient(
-        client: Client,
-        name: String,
-        occupation: String,
-        rg: String,
-        cpf: String,
-        affiliation: String,
-        maritalStatus: String,
-        nationality: String,
-        birthDate: Date,
-        cep: String,
-        address: String,
-        addressNumber: String,
-        neighborhood: String,
-        complement: String,
-        state: String,
-        city: String,
-        email: String,
-        telephone: String,
-        cellphone: String
-    ) {
-        // Atualiza os atributos do cliente
+    func editClient(client: Client, name: String, occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
         client.name = name
         client.occupation = occupation
         client.rg = rg
@@ -120,16 +73,42 @@ class ClientManager {
         client.email = email
         client.telephone = telephone
         client.cellphone = cellphone
-        
-        // Salva o contexto para persistir as mudanças
         saveContext()
     }
-
-
     
     func addPhotoOnClient(client: Client, photo: Data) {
         client.photo = photo
         saveContext()
+    }
+    
+    func fetchFromName(name: String) -> Client? {
+        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        do {
+            let fetchedClients = try context.fetch(fetchRequest)
+            if let client = fetchedClients.first {
+                return client
+            }
+        } catch {
+            print("Error fetching clients: \(error.localizedDescription)")
+            return nil
+        }
+        return nil
+    }
+    
+    func fetchFromId(id: String) -> Client? {
+        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            let fetchedClients = try context.fetch(fetchRequest)
+            if let client = fetchedClients.first {
+                return client
+            }
+        } catch {
+            print("Error fetching clients: \(error.localizedDescription)")
+            return nil
+        }
+        return nil
     }
     
     func copyClientProperties(from sourceClient: Client, to targetClient: Client) {
