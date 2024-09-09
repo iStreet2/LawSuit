@@ -48,7 +48,7 @@ struct AddClientForm: View {
                     LabeledTextField(label: "Nome Completo", placeholder: "Insira o nome do Cliente", textfieldText: $name)
                         .onReceive(Just(name)) { _ in limitText(textLimit) }
                     LabeledTextField(label: "RG", placeholder: "Insira o RG do Cliente", textfieldText: $rg)
-                        .onReceive(Just(rg)) { _ in rg = filterNumbers(rg, limit: 9) }
+                        .onReceive(Just(rg)) { _ in rg = formatNumber(rg, limit: 9) }
                     LabeledTextField(label: "Filiação", placeholder: "Insira a Filiação do Cliente", textfieldText: $affiliation)
                         .onReceive(Just(affiliation)) { _ in limitText(textLimit) }
                     LabeledTextField(label: "Nacionalidade", placeholder: "Insira a Nacionalidade do Cliente", textfieldText: $nationality)
@@ -59,10 +59,10 @@ struct AddClientForm: View {
                         .onReceive(Just(occupation)) { _ in limitText(textLimit) }
                     LabeledTextField(label: "CPF", placeholder: "Insira o CPF do Cliente", textfieldText: $cpf)
                         .onReceive(Just(cpf)) { _ in cpf = formatCPF(cpf) }
-                        .foregroundStyle(cpf.isValidCPF ? .black : .red)
+                        .foregroundStyle(isValidCPF(cpf) ? .black : .red)
                     LabeledTextField(label: "Estado Civil", placeholder: "Insira o Estado Civil do Cliente", textfieldText: $maritalStatus)
                         .onReceive(Just(maritalStatus)) { _ in limitMaritalStatus(maritalStatusLimit) }
-                    LabeledDateField(selectedDate: $birthDate, label: "Insira a Data de nascimento do Cliente")
+                    LabeledDateField(selectedDate: $birthDate, label: "Data de Nascimento")
                     
                 }
             }
@@ -70,6 +70,7 @@ struct AddClientForm: View {
         } else if stage == 2 {
             VStack(alignment: .leading, spacing: 15) {
                 LabeledTextField(label: "CEP", placeholder: "Insira seu CEP", textfieldText: $cep)
+                    .onReceive(Just(cep)) { _ in cep = formatNumber(cep, limit: 8) }
                 LabeledTextField(label: "Endereço", placeholder: "Insira seu endereço", textfieldText: $address)
                 HStack(spacing: 10) {
                     LabeledTextField(label: "Número", placeholder: "Insira o número", textfieldText: $addressNumber)
@@ -119,7 +120,7 @@ struct AddClientForm: View {
             maritalStatus = String(maritalStatus.prefix(upper))
         }
     }
-    func filterNumbers(_ string: String, limit: Int) -> String {
+    func formatNumber(_ string: String, limit: Int) -> String {
         let filtered = string.filter { "0123456789".contains($0) }
         return String(filtered.prefix(limit))
     }
@@ -138,24 +139,19 @@ struct AddClientForm: View {
         }
         return formatCPF
     }
-}
-
-
-extension Collection where Element == Int {
-    var digitoCPF: Int {
-        var number = count + 2
-        let digit = 11 - reduce(into: 0) {
+    func isValidCPF(_ cpf: String) -> Bool {
+        let numbers = cpf.compactMap(\.wholeNumberValue)
+        guard numbers.count == 11 && Set(numbers).count != 1 else { return false }
+        return digitoCPF(numbers.prefix(9)) == numbers[9] &&
+        digitoCPF(numbers.prefix(10)) == numbers[10]
+    }
+    func digitoCPF(_ numbers: ArraySlice<Int>) -> Int {
+        var number = numbers.count + 2
+        let digit = 11 - numbers.reduce(into: 0) {
             number -= 1
             $0 += $1 * number
         } % 11
         return digit > 9 ? 0 : digit
     }
 }
-extension StringProtocol {
-    var isValidCPF: Bool {
-        let numbers = compactMap(\.wholeNumberValue)
-        guard numbers.count == 11 && Set(numbers).count != 1 else { return false }
-        return numbers.prefix(9).digitoCPF == numbers[9] &&
-               numbers.prefix(10).digitoCPF == numbers[10]
-    }
-}
+
