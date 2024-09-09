@@ -16,6 +16,7 @@ struct LawSuitApp: App {
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
     @StateObject var networkMonitor = NetworkMonitorViewModel()
     @StateObject var navigationViewModel = NavigationViewModel()
+    @StateObject var clientDataViewModel = ClientDataViewmodel()
     
     var body: some Scene {
         WindowGroup {   
@@ -26,6 +27,7 @@ struct LawSuitApp: App {
                 .environmentObject(dragAndDropViewModel)
                 .environmentObject(networkMonitor)
                 .environmentObject(navigationViewModel)
+                .environmentObject(clientDataViewModel)
                 .preferredColorScheme(.light)
                 .frame(minHeight: 530)
         }
