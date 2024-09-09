@@ -161,7 +161,6 @@ struct LawsuitDistributedView: View {
             }
             .buttonStyle(.borderedProminent)
         }
-        .border(.red)
         .sheet(isPresented: $selectTag, content: {
             VStack {
                 Spacer()

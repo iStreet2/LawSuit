@@ -75,13 +75,14 @@ struct LawsuitNotDistributedView: View {
                         } else {
                             print("Cliente não encontrado")
                         }
-                    } label: {
-                        Text("Criar")
-                    }
-                    .buttonStyle(.borderedProminent)
+                    } catch {
+                            print("aaa")
+                        }
+                } label: {
+                    Text("Criar")
                 }
+                .buttonStyle(.borderedProminent)
             }
-            .border(.red)
             .padding(.vertical, 5)
         }
         .sheet(isPresented: $selectTag, content: {
