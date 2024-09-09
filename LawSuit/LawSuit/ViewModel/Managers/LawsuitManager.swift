@@ -58,9 +58,10 @@ class LawsuitManager {
         saveContext()
     }
     
-    func editLawSuit(lawsuit: Lawsuit, name: String, number: String, category: String, defendantID: String, authorID: String, actionDate: Date) {
+    func editLawSuit(lawsuit: Lawsuit, name: String, number: String, court: String, category: String, defendantID: String, authorID: String, actionDate: Date) {
         lawsuit.name = name
         lawsuit.number = number
+        lawsuit.court = court
         lawsuit.category = category
         lawsuit.defendantID = defendantID
         lawsuit.authorID = authorID
