@@ -15,6 +15,7 @@ struct ClientView: View {
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: Variáveis de estado
     @ObservedObject var client: Client
@@ -83,7 +84,10 @@ struct ClientView: View {
                     } else {
                         DocumentGridView()
                             .onAppear {
+                                navigationViewModel.selectedClient = client
+                                folderViewModel.resetFolderStack()
                                 folderViewModel.openFolder(folder: client.rootFolder)
+                                navigationViewModel.dismissLawsuitView.toggle()
                             }
                             .padding()
                     }
