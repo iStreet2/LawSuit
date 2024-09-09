@@ -70,6 +70,7 @@ struct EditLawSuitView: View {
                     }
                     .frame(width: 200, alignment: .leading)
                     Text("Área")
+                        .padding(.top)
                         .bold()
                     TagViewComponent(tagType: tagType)
                         .onTapGesture {
@@ -121,8 +122,8 @@ struct EditLawSuitView: View {
                         }
                     }
                     .frame(width: 200, alignment: .leading)
-
                     LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
+                        .padding(.top)
                     HStack(spacing: 10) {
                         Spacer()
                         Button(action: {
@@ -133,22 +134,22 @@ struct EditLawSuitView: View {
                         })
                         Button(action: {
                             if attributedAuthor {
-                                if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName), 
-                                    let defendant = dataViewModel.coreDataManager.entityManager.fetchFromName(name: lawsuitDefendantName) {
+                                if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                                    let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
                                     let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, number: lawsuitNumber, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                                     dismiss()
                                 } else {
-                                    print("error achando ou author ou defendant")
+                                    print("error achando ou author")
                                 }
                             } else if attributedDefendant {
-                                if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName),
-                                   let author = dataViewModel.coreDataManager.entityManager.fetchFromName(name: lawsuitAuthorName) {
+                                if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                                    let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
                                     let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, number: lawsuitNumber, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                                     dismiss()
                                 } else {
-                                    print("error achando ou author ou defendant")
+                                    print("error achando defendant")
                                 }
                             }
                         }, label: {

@@ -58,7 +58,8 @@ class LawsuitManager {
         saveContext()
     }
     
-    func editLawSuit(lawsuit: Lawsuit, number: String, category: String, defendantID: String, authorID: String, actionDate: Date) {
+    func editLawSuit(lawsuit: Lawsuit, name: String, number: String, category: String, defendantID: String, authorID: String, actionDate: Date) {
+        lawsuit.name = name
         lawsuit.number = number
         lawsuit.category = category
         lawsuit.defendantID = defendantID
@@ -78,6 +79,7 @@ class LawsuitManager {
         
         do {
             let lawsuits = try context.fetch(fetchRequest)
+            return lawsuits
         } catch {
             print("Error fetching lawsuits related to Client: \(client) \(error)")
         }

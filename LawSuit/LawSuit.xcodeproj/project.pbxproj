@@ -160,9 +160,9 @@
 		3BB9A34B2C84F37300AD1E30 /* TagViewComponentV3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponentV3.swift; sourceTree = "<group>"; };
 		3BB9A34D2C84F37A00AD1E30 /* TagViewComponentV4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponentV4.swift; sourceTree = "<group>"; };
 		3BB9A34F2C84F38000AD1E30 /* TagViewComponentV5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponentV5.swift; sourceTree = "<group>"; };
-		3BC726202C8B9B3700D07C7E /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3BC726212C8B9B3700D07C7E /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3BC726222C8B9B3700D07C7E /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BC726202C8B9B3700D07C7E /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = LawSuit.app; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app; sourceTree = "<absolute>"; };
+		3BC726212C8B9B3700D07C7E /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitTests.xctest; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app/Contents/PlugIns/LawSuitTests.xctest; sourceTree = "<absolute>"; };
+		3BC726222C8B9B3700D07C7E /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitUITests.xctest; path = "/Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuitUITests-Runner.app/Contents/PlugIns/LawSuitUITests.xctest"; sourceTree = "<absolute>"; };
 		3BC731012C6A997E00923BB2 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		3BC731032C6A9A9200923BB2 /* FilePDFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFManager.swift; sourceTree = "<group>"; };
 		3BD313E32C88FD56001CE5E7 /* DataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewModel.swift; sourceTree = "<group>"; };
@@ -293,9 +293,6 @@
 				3B98F10A2C668B1000C45121 /* LawSuit */,
 				3B98F11C2C668B1100C45121 /* LawSuitTests */,
 				3B98F1262C668B1100C45121 /* LawSuitUITests */,
-				3BC726202C8B9B3700D07C7E /* LawSuit.app */,
-				3BC726212C8B9B3700D07C7E /* LawSuitTests.xctest */,
-				3BC726222C8B9B3700D07C7E /* LawSuitUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};

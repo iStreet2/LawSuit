@@ -78,31 +78,39 @@ struct DetailedLawSuitView: View {
         .onAppear {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
-            
-            //Se o cliente do processo estiver no autor
-            if lawsuit.authorID.hasPrefix("client:") {
-                if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
-                   let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                    lawsuitAuthorName = author.name
-                    lawsuitDefendantName = defendant.name
-                }
-            //Se o cliente do processo estiver no reu
-            } else {
-                if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
-                   let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                    lawsuitAuthorName = author.name
-                    lawsuitDefendantName = defendant.name
-                }
-            }
+            updateNames()
         }
-        .onChange(of: deleted) { change in
+        .onChange(of: lawsuit.authorID) { _ in
+            updateNames()
+        }
+        .onChange(of: lawsuit.defendantID) { _ in
+            updateNames()
+        }
+        .onChange(of: deleted) { _ in
             dismiss()
         }
-        .onChange(of: navigationViewModel.dismissLawsuitView) { change in
+        .onChange(of: navigationViewModel.dismissLawsuitView) { _ in
             navigationViewModel.dismissLawsuitView.toggle()
             dismiss()
         }
-        
+    }
+    
+    func updateNames() {
+        //Se o cliente do processo estiver no autor
+        if lawsuit.authorID.hasPrefix("client:") {
+            if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
+               let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                lawsuitAuthorName = author.name
+                lawsuitDefendantName = defendant.name
+            }
+        //Se o cliente do processo estiver no reu
+        } else {
+            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
+               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+                lawsuitAuthorName = author.name
+                lawsuitDefendantName = defendant.name
+            }
+        }
     }
 }
 

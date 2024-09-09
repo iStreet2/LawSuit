@@ -75,6 +75,7 @@ struct LawsuitDistributedView: View {
                 .frame(width: 200, alignment: .leading)
                 
                 Text("Área")
+                    .padding(.top)
                     .bold()
                 TagViewComponent(tagType: tagType)
                     .onTapGesture {
@@ -120,6 +121,7 @@ struct LawsuitDistributedView: View {
                     
                 }
                 LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
+                    .padding(.top)
             }
         }
         HStack {
