@@ -54,11 +54,7 @@ struct LawsuitNotDistributedView: View {
                 }
                 LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
             }
-        }
-        Spacer()
-        VStack {
-            Spacer()
-            HStack {
+            VStack {
                 Spacer()
                 Button {
                     dismiss()
@@ -80,13 +76,14 @@ struct LawsuitNotDistributedView: View {
                             print("Cliente não encontrado")
                         }
                     } catch {
-                        print("Erro ao buscar cliente: \(error.localizedDescription)")
-                    }
+                            print("aaa")
+                        }
                 } label: {
                     Text("Criar")
                 }
                 .buttonStyle(.borderedProminent)
             }
+            .padding(.vertical, 5)
         }
         .sheet(isPresented: $selectTag, content: {
             VStack {
@@ -104,8 +101,6 @@ struct LawsuitNotDistributedView: View {
                     .padding()
                 }
             }
-            .frame(minWidth: 200, minHeight: 250)
         })
     }
 }
-

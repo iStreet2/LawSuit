@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct AddClientView: View {
     
@@ -33,6 +34,8 @@ struct AddClientView: View {
     @State var email: String = ""
     @State var telephone: String = ""
     @State var cellphone: String = ""
+    
+    let textLimit = 10
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -104,15 +107,13 @@ struct AddClientView: View {
                 .alert(isPresented: $missingInformation) {
                     Alert(title: Text("Informações Faltando"),
                           message: Text("Por favor, preencha todos os campos antes de continuar."),
-                          dismissButton: .default(Text("OK")))
+                          dismissButton: .default(Text("Ok")))
                 }
             }
         }
         .padding()
         .frame(width: 500)
-        
     }
-    
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage
     func areFieldsFilled() -> Bool {
         if stage == 1 {
@@ -140,4 +141,5 @@ struct AddClientView: View {
         return true
     }
 }
+
 

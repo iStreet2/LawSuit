@@ -34,8 +34,6 @@ struct LawsuitDistributedView: View {
     var body: some View {
         VStack{
             LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
-        }
-        VStack{
             LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
         }
         HStack(alignment: .top){
@@ -179,7 +177,6 @@ struct LawsuitDistributedView: View {
                     .padding()
                 }
             }
-            .frame(minWidth: 200, minHeight: 250)
         })
     }
 }
