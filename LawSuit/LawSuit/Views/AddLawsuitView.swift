@@ -18,14 +18,10 @@ struct AddLawsuitView: View {
     //MARK: Variáveis de estado
     @State var lawsuitType: LawsuitType = .distributed
     @State var lawsuitTypeString: String = ""
-//    @State var clientMock: ClientMock = ClientMock()
-//    @State var lawsuit: ProcessMock = ProcessMock()
-    
-    //MARK: Variáveis de estado
     @State var lawsuitNumber = ""
     @State var lawsuitCourt = ""
-    @State var lawsuitParentAuthorName = ""
-    @State var lawsuitDefandent = ""
+    @State var lawsuitAuthorName = ""
+    @State var lawsuitDefandentName = ""
     @State var lawsuitActionDate = Date()
     
     //MARK: ViewModels
@@ -47,10 +43,10 @@ struct AddLawsuitView: View {
                 .padding(.leading)
             }
             if lawsuitType == .distributed {
-                LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent, lawsuitActionDate: $lawsuitActionDate)
+                LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if lawsuitType == .notDistributed {
-                LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent, lawsuitActionDate: $lawsuitActionDate)
+                LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }

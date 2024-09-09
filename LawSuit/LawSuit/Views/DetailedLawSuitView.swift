@@ -22,6 +22,8 @@ struct DetailedLawSuitView: View {
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
+    @State var lawsuitAuthorName = ""
+    @State var lawsuitDefendantName = ""
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
@@ -29,6 +31,8 @@ struct DetailedLawSuitView: View {
     }
     
     //MARK: CoreData
+    @EnvironmentObject var dataViewModel: DataViewModel
+    @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
@@ -74,22 +78,46 @@ struct DetailedLawSuitView: View {
         .onAppear {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
+            updateNames()
         }
-        .onChange(of: deleted) { change in
+        .onChange(of: lawsuit.authorID) { _ in
+            updateNames()
+        }
+        .onChange(of: lawsuit.defendantID) { _ in
+            updateNames()
+        }
+        .onChange(of: deleted) { _ in
             dismiss()
         }
-        .onChange(of: navigationViewModel.dismissLawsuitView) { change in
+        .onChange(of: navigationViewModel.dismissLawsuitView) { _ in
             navigationViewModel.dismissLawsuitView.toggle()
             dismiss()
         }
-        
+    }
+    
+    func updateNames() {
+        //Se o cliente do processo estiver no autor
+        if lawsuit.authorID.hasPrefix("client:") {
+            if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
+               let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                lawsuitAuthorName = author.name
+                lawsuitDefendantName = defendant.name
+            }
+        //Se o cliente do processo estiver no reu
+        } else {
+            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
+               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+                lawsuitAuthorName = author.name
+                lawsuitDefendantName = defendant.name
+            }
+        }
     }
 }
 
 extension DetailedLawSuitView {
 	private var mainBlockHeader: some View {
 		HStack {
-            TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista") ?? .trabalhista)
+            TagViewComponent(tagType: TagType(s: lawsuit.category) ?? .trabalhista)
 			Spacer()
 			Button {
 				// editar
@@ -107,7 +135,7 @@ extension DetailedLawSuitView {
 	
 	private var mainBlockNumber: some View {
 		HStack {
-            Text(lawsuit.number ?? "Sem numero")
+            Text(lawsuit.number)
 				.font(.title3)
 				.bold()
 			Button {
@@ -130,14 +158,14 @@ extension DetailedLawSuitView {
 				
 				mainBlockNumber
 				
-				Text(lawsuit.court ?? "Sem curt")
+				Text(lawsuit.court)
 				
 				Text("Distribuição da ação")
 					.font(.subheadline)
 					.foregroundStyle(.secondary)
 					.bold()
 //                Text(dateFormatter.string(from: lawsuit.actionDate))
-                Text("\(lawsuit.actionDate ?? Date(), formatter: dateFormatter)")
+                Text("\(lawsuit.actionDate, formatter: dateFormatter)")
 //					.padding(.bottom, 60)
 				
 				Spacer()
@@ -148,7 +176,8 @@ extension DetailedLawSuitView {
 							.font(.subheadline)
 							.foregroundStyle(.secondary)
 							.bold()
-                        Text(lawsuit.parentAuthor?.name ?? "Sem nome")
+                        //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
+                        Text(lawsuitAuthorName)
 							.font(.subheadline)
 							.bold()
 					}
@@ -158,7 +187,8 @@ extension DetailedLawSuitView {
 							.font(.subheadline)
 							.foregroundStyle(.secondary)
 							.bold()
-                        Text(lawsuit.defendant ?? "Sem defendant")
+                        //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
+                        Text(lawsuitDefendantName)
 							.font(.subheadline)
 							.bold()
 					}
@@ -245,44 +275,3 @@ extension DetailedLawSuitView {
 		}
 	}
 }
-
-
-
-//#Preview {
-//    ProcessView(lawsuit:
-//        LawsuitMock(actionDate: Date.now,
-//                        category: "civel",
-//                        defendant: "Abigail da Silva",
-//                        id: "sID",
-//                        name: "Nome do processo",
-//                        number: "0001234-56.2024.5.00.0000",
-//                        parentAutor: ClientMock(name: "Abigail da Silva",
-//                                            occupation: "Desenvolvedora de Software",
-//                                            rg: "123.456.789-0",
-//                                            cpf: "123.456.789-00",
-//                                            affiliation: "Afiliação",
-//                                            maritalStatus: "Casada",
-//                                            nationality: "Brasileira",
-//                                            birthDate: Date.now,
-//                                            cep: "04141900",
-//                                            address: "Rua Da Sorte Lobinho",
-//                                            addressNumber: "123",
-//                                            neighborhood: "Lobo mau",
-//                                            complement: "",
-//                                            state: "São Jorge",
-//                                            city: "Cidade Nacional do Brasil",
-//                                            email: "abigail.silva@outlook.com.ru",
-//                                            telephone: "(20)9345678123",
-//                                            cellphone: "(20)0987654323",
-//                                            age: 45),
-//                        parentLawyer: LawyerMock(id: "ID",
-//                                             name: "André Miguel da Silva",
-//                                             oab: "12O34A56B",
-//                                             photo: nil,
-//                                             clients: [],
-//                                             Lawsuit: [],
-//                                             recordName: ""),
-//                        rootFolder: FolderMock(),
-//                        recordName: "",
-//                        vara: "1 Vara do Trabalho de São Paulo"))
-//}

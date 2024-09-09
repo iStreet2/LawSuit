@@ -15,10 +15,11 @@ struct LawsuitNotDistributedView: View {
     //MARK: Variáveis de estado
     @State var selectTag = false
     @State var tagType: TagType = .civel
+    @State var attributedAuthor = false
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
-    @Binding var lawsuitParentAuthorName: String
-    @Binding var lawsuitDefendant: String
+    @Binding var lawsuitAuthorName: String
+    @Binding var lawsuitDefendantName: String
     @Binding var lawsuitActionDate: Date
     
     //MARK: CoreData
@@ -36,10 +37,22 @@ struct LawsuitNotDistributedView: View {
                 }
             HStack(spacing: 70) {
                 VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client", attributedClient: .constant(true), attributedDefendant: .constant(false))
-                    Text(lawsuitParentAuthorName)
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
+                    HStack {
+                        Text(lawsuitAuthorName)
+                        if attributedAuthor {
+                            Button {
+                                //Retirar esse cliente e retirar o estado de autor selecionado
+                                attributedAuthor = false
+                                lawsuitAuthorName = ""
+                            } label: {
+                                Image(systemName: "minus")
+                            }
+                            .padding(.leading,2)
+                        }
+                    }
                 }
-                LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendant)
+                LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
             }
         }
         Spacer()
@@ -54,14 +67,14 @@ struct LawsuitNotDistributedView: View {
                 }
                 Button {
                     let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                    fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitParentAuthorName)
+                    fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
                     do {
                         let fetchedClients = try context.fetch(fetchRequest)
-                        if let client = fetchedClients.first {
+                        if let author = fetchedClients.first {
                             let category = TagTypeString.string(from: tagType)
-                            //MARK: Advogado temporário
                             let lawyer = lawyers[0]
-                            dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
+                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                            dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                             dismiss()
                         } else {
                             print("Cliente não encontrado")
@@ -96,8 +109,3 @@ struct LawsuitNotDistributedView: View {
     }
 }
 
-//#Preview {
-//    @State var clientMock = ClientMock(name: "lala", occupation: "sjkcn", rg: "sjkcn", cpf: "sjkcn", affiliation: "sjkcn", maritalStatus: "sjkcn", nationality: "sjkcn", birthDate: Date(), cep: "sjkcn", address: "sjkcn", addressNumber: "sjkcn", neighborhood: "sjkcn", complement: "sjkcn", state: "sjkcn", city: "sjkcn", email: "sjkcn", telephone: "sjkcn", cellphone: "sjkcn")
-//    @State var processMock = ProcessMock(processNumber: "", court: "", defendant: "")
-//    return ProcessNotDistributedView(clientMock: clientMock, processMock: processMock)
-//}

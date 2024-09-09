@@ -19,18 +19,18 @@ struct LawsuitDistributedView: View {
     //MARK: Variáveis de estado
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
-    @Binding var lawsuitParentAuthorName: String
-    @Binding var lawsuitDefendant: String
+    @Binding var lawsuitAuthorName: String
+    @Binding var lawsuitDefendantName: String
     @Binding var lawsuitActionDate: Date
     
-    @State var attributedClient = false
+    @State var attributedAuthor = false
     @State var attributedDefendant = false
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
-
+    
     var body: some View {
         VStack{
             LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
@@ -40,19 +40,42 @@ struct LawsuitDistributedView: View {
         }
         HStack(alignment: .top){
             VStack(alignment: .leading){
-                EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
-                    .disabled(attributedDefendant)
-                TextField("", text: $lawsuitParentAuthorName)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 200)
-                    .onChange(of: lawsuitParentAuthorName) { change in
-                        //Se o valor do textField mudar para vazio, a lógica de proibir a seleção em algum reseta
-                        if lawsuitParentAuthorName == "" {
-                            attributedClient = false
-                            attributedDefendant = false
+                //MARK: Caso usuário não selecionou nada ainda
+                if !attributedDefendant {
+                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                }
+                //MARK: Caso usuário atribuir cliente para o réu
+                if attributedDefendant {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Autor")
+                                .bold()
                         }
                     }
+                    TextField("", text: $lawsuitAuthorName)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 200)
+                }
+                HStack {
+                    //MARK: Caso o usuário tenha adicionado um cliente no autor
+                    if attributedAuthor {
+                        Text("\(lawsuitAuthorName)")
+                        Button {
+                            withAnimation {
+                                //Retirar esse cliente e retirar o estado de autor selecionado
+                                attributedAuthor = false
+                                lawsuitAuthorName = ""
+                            }
+                        } label: {
+                            Image(systemName: "minus")
+                        }
+                        .padding(.leading, 5)
+                    }
+                }
+                .frame(width: 200, alignment: .leading)
+                
                 Text("Área")
+                    .padding(.top)
                     .bold()
                 TagViewComponent(tagType: tagType)
                     .onTapGesture {
@@ -62,30 +85,43 @@ struct LawsuitDistributedView: View {
             Spacer()
             VStack(alignment: .leading){
                 VStack(alignment: .leading){
-                    //Retirei e coloquei só réu isso apenas para os testes
-                    VStack(alignment: .leading){
-                        HStack{
-                            Text("Réu")
-                                .bold()
-                        }
+                    //MARK: Se o usuário não selecionou nada
+                    if !attributedAuthor {
+                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                     }
-//                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
-//                        .disabled(attributedClient)
-                    TextField("", text: $lawsuitDefendant)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 200)
-                        .onChange(of: lawsuitDefendant) { change in
-                            //Se o valor do textField mudar para vazio, a logica de proibir a seleção em algum reseta
-                            if lawsuitDefendant == "" {
-                                attributedClient = false
-                                attributedDefendant = false
+                    //MARK: Caso o usuário tenha adicionado um cliente no autor
+                    if attributedAuthor {
+                        VStack(alignment: .leading){
+                            HStack{
+                                Text("Réu")
+                                    .bold()
                             }
                         }
+                        TextField("", text: $lawsuitDefendantName)
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 200)
+                    }
+                    HStack {
+                        //MARK: Caso o usuário tenha adicionado um cliente no réu
+                        if attributedDefendant {
+                            Text(lawsuitDefendantName)
+                            Button {
+                                withAnimation {
+                                    //Retirar esse cliente e retirar o estado de autor selecionado
+                                    attributedDefendant = false
+                                    lawsuitDefendantName = ""
+                                }
+                            } label: {
+                                Image(systemName: "minus")
+                            }
+                            .padding(.leading,2)
+                        }
+                    }
+                    .frame(width: 200, alignment: .leading)
+                    
                 }
-                Text("Data de distribuição ")
-                    .bold()
-                DatePicker(selection: $lawsuitActionDate, in: ...Date.now, displayedComponents: .date) { }
-                    .datePickerStyle(.field)
+                LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
+                    .padding(.top)
             }
         }
         HStack {
@@ -96,21 +132,31 @@ struct LawsuitDistributedView: View {
                 Text("Cancelar")
             }
             Button {
-                let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitParentAuthorName)
-                do {
-                    let fetchedClients = try context.fetch(fetchRequest)
-                    if let client = fetchedClients.first {
+                
+                //MARK: Se o cliente foi atribuido ao autor
+                if attributedAuthor {
+                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                         let category = TagTypeString.string(from: tagType)
-                        //MARK: Advogado temporário
                         let lawyer = lawyers[0]
-                        dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
+                        let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                        dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                         dismiss()
                     } else {
-                        print("Cliente não encontrado")
+                        print("Client not found")
                     }
-                } catch {
-                    print("Erro ao buscar cliente: \(error.localizedDescription)")
+                }
+                
+                //MARK: Se o cliente foi atribuido ao réu
+                else if attributedDefendant {
+                    if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                        let category = TagTypeString.string(from: tagType)
+                        let lawyer = lawyers[0]
+                        let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                        dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        dismiss()
+                    } else {
+                        print("Client not found")
+                    }
                 }
             } label: {
                 Text("Criar")

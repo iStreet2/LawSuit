@@ -104,21 +104,21 @@ struct EditClientView: View {
             }
         }
         .alert(isPresented: $deleteAlert, content: {
-            Alert(title: Text("Cuidado"), message: Text("Excluir seu clinte irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
-                let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "parentAuthor == %@", client)
-                do {
-                    let lawsuits = try dataViewModel.coreDataContainer.viewContext.fetch(fetchRequest)
+            Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                
+                if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
                     for lawsuit in lawsuits {
                         dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                        // Após deletar os processos, deletar o cliente
+                        dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+                        navigationViewModel.selectedClient = nil
+                        deleted.toggle()
+                        dismiss()
                     }
-                } catch {
-                    print("Erro ao buscar processos relacionados ao cliente: \(error)")
+                } else {
+                    print("Error fetching lawsuits of client: \(client.name)")
                 }
-                dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
-                navigationViewModel.selectedClient = nil
-                deleted.toggle()
-                dismiss()
+
             }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
                 dismiss()
             }))
