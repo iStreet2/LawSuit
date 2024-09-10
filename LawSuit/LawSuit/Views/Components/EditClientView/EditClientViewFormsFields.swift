@@ -20,6 +20,8 @@ struct EditClientViewFormsFields: View {
     
     let formType: FormType
     
+    @ObservedObject var addressViewModel: AddressViewModel
+    
     @Binding var rg: String
     @Binding var affiliation: String
     @Binding var nationality: String
@@ -36,8 +38,6 @@ struct EditClientViewFormsFields: View {
     @Binding var telephone: String
     @Binding var cellphone: String
     
-    let states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
-    let cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
     
     var body: some View {
         
@@ -58,6 +58,19 @@ struct EditClientViewFormsFields: View {
             VStack(spacing: 10) {
                 HStack(alignment: .top) {
                     LabeledTextField(label: "CEP", placeholder: "CEP", textfieldText: $cep)
+                        .onChange(of: cep, perform: { _ in
+                            Task{
+                                if cep.count >= 8{
+                                    if let addressApi = await addressViewModel.fetch(for: cep) {
+                                        cep = addressApi.cep
+                                        address = addressApi.logradouro
+                                        neighborhood = addressApi.bairro
+                                        state = addressApi.estado
+                                        city = addressApi.localidade
+                                    }
+                                }
+                            }
+                        })
                     LabeledTextField(label: "Endereço", placeholder: "Endereço", textfieldText: $address)
                 }
                 HStack(alignment: .top) {
@@ -66,8 +79,8 @@ struct EditClientViewFormsFields: View {
                     LabeledTextField(label: "Complemento", placeholder: "Complemento", textfieldText: $complement)
                 }
                 HStack(alignment: .top) {
-                    LabeledPickerField(selectedOption: $state, arrayInfo: states, label: "Estado")
-                    LabeledPickerField(selectedOption: $city, arrayInfo: cities, label: "Cidade")
+                    LabeledTextField(label: "Estado", placeholder: "Insira seu estado", textfieldText: $state)
+                    LabeledTextField(label: "Cidade", placeholder: "Insira sua cidade", textfieldText: $city)
                 }
             }
             

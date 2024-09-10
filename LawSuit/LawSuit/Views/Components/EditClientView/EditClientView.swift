@@ -11,7 +11,8 @@ struct EditClientView: View {
     
     //MARK: ViewModels
     @EnvironmentObject var navigationViewModel: NavigationViewModel
-    
+    @EnvironmentObject var addressViewModel: AddressViewModel
+
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
@@ -72,11 +73,11 @@ struct EditClientView: View {
             .labelsHidden()
             
             if userInfoType == 0 {
-                EditClientViewFormsFields(formType: .personalInfo, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
+                EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             } else if userInfoType == 1 {
-                EditClientViewFormsFields(formType: .address, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
+                EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             } else if userInfoType == 2 {
-                EditClientViewFormsFields(formType: .contact, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
+                EditClientViewFormsFields(formType: .contact, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             }
             Spacer()
             HStack {
@@ -89,16 +90,15 @@ struct EditClientView: View {
                 .tint(.red)
                 .alert(isPresented: $deleteAlert, content: {
                     Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
-                        
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
                             for lawsuit in lawsuits {
                                 dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
-                                // Após deletar os processos, deletar o cliente
-                                dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
-                                navigationViewModel.selectedClient = nil
-                                deleted.toggle()
-                                dismiss()
                             }
+                            // Após deletar os processos, deletar o cliente
+                            dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+                            navigationViewModel.selectedClient = nil
+                            deleted.toggle()
+                            dismiss()
                         } else {
                             print("Error fetching lawsuits of client: \(client.name)")
                         }
