@@ -90,7 +90,6 @@ struct EditClientView: View {
                 .tint(.red)
                 .alert(isPresented: $deleteAlert, content: {
                     Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
-                        print("oi")
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
                             for lawsuit in lawsuits {
                                 dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
@@ -108,7 +107,6 @@ struct EditClientView: View {
                         dismiss()
                     }))
                 })
-                
                 Spacer()
                 Button {
                     dismiss()

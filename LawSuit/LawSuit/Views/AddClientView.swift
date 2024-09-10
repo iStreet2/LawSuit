@@ -35,7 +35,6 @@ struct AddClientView: View {
     @State var telephone: String = ""
     @State var cellphone: String = ""
     
-    let textLimit = 10
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel

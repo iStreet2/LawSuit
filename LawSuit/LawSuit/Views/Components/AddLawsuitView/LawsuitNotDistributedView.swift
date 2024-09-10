@@ -13,6 +13,7 @@ struct LawsuitNotDistributedView: View {
     @Environment(\.dismiss) var dismiss
     
     //MARK: Variáveis de estado
+    @State var missingInformation = false
     @State var selectTag = false
     @State var tagType: TagType = .civel
     @State var attributedAuthor = false
@@ -62,26 +63,35 @@ struct LawsuitNotDistributedView: View {
                     Text("Cancelar")
                 }
                 Button {
-                    let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                    fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
-                    do {
-                        let fetchedClients = try context.fetch(fetchRequest)
-                        if let author = fetchedClients.first {
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                            dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                            dismiss()
-                        } else {
-                            print("Cliente não encontrado")
-                        }
-                    } catch {
+                    if areFieldsFilled() {
+                        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+                        fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
+                        do {
+                            let fetchedClients = try context.fetch(fetchRequest)
+                            if let author = fetchedClients.first {
+                                let category = TagTypeString.string(from: tagType)
+                                let lawyer = lawyers[0]
+                                let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                                dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                dismiss()
+                            } else {
+                                print("Cliente não encontrado")
+                            }
+                        } catch {
                             print("aaa")
                         }
+                    } else {
+                        missingInformation = true
+                    }
                 } label: {
                     Text("Criar")
                 }
                 .buttonStyle(.borderedProminent)
+                .alert(isPresented: $missingInformation) {
+                    Alert(title: Text("Informações Faltando"),
+                          message: Text("Por favor, preencha todos os campos antes de criar um novo processo."),
+                          dismissButton: .default(Text("Ok")))
+                }
             }
             .padding(.vertical, 5)
         }
@@ -102,5 +112,9 @@ struct LawsuitNotDistributedView: View {
                 }
             }
         })
+    }
+    func areFieldsFilled() -> Bool {
+        return !lawsuitAuthorName.isEmpty &&
+        !lawsuitDefendantName.isEmpty
     }
 }
