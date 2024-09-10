@@ -7,24 +7,31 @@
 
 import Foundation
 
-enum TribunalSuperior {
-    case trabalho
-    case eleitoral
-    case justica
-    case militar
-    
-    var path: String {
-        switch self {
-        case .trabalho:
-            return "api_publica_tst/_search"
-        case .eleitoral:
-            return "api_publica_tse/_search"
-        case .justica:
-            return "api_publica_stj/_search"
-        case .militar:
-            return "api_publica_stm/_search"
-        }
-    }
+//enum TribunalSuperior {
+//    case trabalho
+//    case eleitoral
+//    case justica
+//    case militar
+//    
+//    var path: String {
+//        switch self {
+//        case .trabalho:
+//            return "api_publica_tst/_search"
+//        case .eleitoral:
+//            return "api_publica_tse/_search"
+//        case .justica:
+//            return "api_publica_stj/_search"
+//        case .militar:
+//            return "api_publica_stm/_search"
+//        }
+//    }
+//}
+
+enum TribunalSuperior: String {
+    case trabalho = "api_publica_tst/_search"
+    case eleitoral = "api_publica_tse/_search"
+    case justica = "api_publica_stj/_search"
+    case militar = "api_publica_stm/_search"
 }
 
 enum JusticaFederal {
@@ -53,13 +60,13 @@ enum JusticaFederal {
     }
 }
 
-enum JusticaEstadual {
-    case tribunalSaoPaulo
+enum JusticaEstadual: String {
+    case tribunalSaoPaulo = "26"
     //MARK: - Terminar de mapear
     //    case tribunalAcre
     //    case tribunalAlagoas
     
-    var path: String {
+    var endpoint: String {
         switch self {
         case .tribunalSaoPaulo:
             return "api_publica_tjsp/_search"

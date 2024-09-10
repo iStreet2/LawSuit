@@ -22,7 +22,8 @@ struct LawsuitListView: View {
                         .font(.title)
                         .bold()
                     Button(action: {
-                        print(seg)
+                        let (justica, tribunal) = obterJusticaETribunalDoProcesso(lawsuitNumber: "1053565-57.2024.8.26.0053") ?? ("lala","oiioi")
+                        obterEndpointDoProcesso(digitoJusticaResponsavel: justica, digitoTribunal: tribunal)
                         createProcess.toggle()
                     }, label: {
                         Image(systemName: "plus")

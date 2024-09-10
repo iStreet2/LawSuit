@@ -1,5 +1,5 @@
 //
-//  higherCourtsEndpoint.swift
+//  SegmentosDoJudiciario.swift
 //  LawSuit
 //
 //  Created by Giovanna Micher on 09/09/24.
@@ -8,46 +8,60 @@
 import Foundation
 
 enum JusticaResponsavel: Int {
-    case tribunalSuperior = 1
-    case justicaFederal = 2
-    case justicaEstadual = 3
+    //case tribunalSuperior = 1
+    //case justicaFederal = 3
+    case justicaEstadual = 8
 }
 
-let justicaResponsavel = "1"
-let tribunal = "01"
-let lawsuitNumber = "NNNNNNN-DD.AAAA.\(justicaResponsavel).\(tribunal).OOOO"
-
-
-struct Processo {
-    let numero: String
-    let ano: String
-    let responsavel: JusticaResponsavel
-    let vara: String
-    let numeroDaVara: String
+func obterJusticaETribunalDoProcesso(lawsuitNumber: String) -> (justicaRes: String, tribu: String)? {
+    let splittedLawsuitNumber = lawsuitNumber.split(separator: ".")
     
-    init?(codigo: String) {
-        let splited = codigo.split(separator: ".")
-        
-        guard splited.count != 5 else {
-            return nil
-        }
-        
-        numero = String(splited[0])
-        
+    guard splittedLawsuitNumber.count == 5 else {
+        print("retornou erado")
         return nil
     }
+    
+    let justicaResponsavel = String(splittedLawsuitNumber[2])
+    let tribunal = String(splittedLawsuitNumber[3])
+    
+    return (justicaResponsavel, tribunal)
+}
+
+
+
+func obterEndpointDoProcesso(digitoJusticaResponsavel: String, digitoTribunal: String) -> String? {
+    if let justicaResponsavel = SegmentosDoJudiciario.from(codigoJustica: digitoJusticaResponsavel, codigoTribunal: digitoTribunal) {
+        print("endpoint: \(justicaResponsavel.endpoint)")
+        return justicaResponsavel.endpoint
+    }
+    return nil
 }
 
 enum SegmentosDoJudiciario {
     
-    case tribunalSuperior(TribunalSuperior)
-    case justicaFederal(JusticaFederal)
+    //case tribunalSuperior(TribunalSuperior)
+    //case justicaFederal(JusticaFederal)
     case justicaEstadual(JusticaEstadual)
     
     //MARK: - Terminar de mapear
     //    case justicaDoTrabalho
     //    case justicaEleitoral
     //    case justicaMilitar
+    
+    var endpoint: String {
+        switch self {
+        case .justicaEstadual(let tribunal):
+            return tribunal.endpoint
+        }
+    }
+    
+    static func from(codigoJustica: String, codigoTribunal: String) -> SegmentosDoJudiciario? {
+        switch codigoJustica {
+        case "8":
+            return .justicaEstadual(JusticaEstadual.tribunalSaoPaulo)
+        default:
+            return nil
+        }
+    }
+   
 }
-
-//var seg: SegmentosDoJudiciario = .justicaEstadual(.tribunalSaoPaulo)
