@@ -78,6 +78,15 @@ struct EditLawSuitView: View {
                         }
                     Spacer()
                     Button(action: {
+                        if lawsuit.authorID.hasPrefix("client:") {
+                            if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                                dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                            }
+                        } else {
+                            if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+                                dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                            }
+                        }
                         dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                         deleted.toggle()
                         dismiss()
