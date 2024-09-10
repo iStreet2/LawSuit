@@ -14,9 +14,9 @@ enum ClientType {
 
 struct AddClientForm: View {
     
+    @EnvironmentObject var addressViewModel: AddressViewModel
+    
     @Binding var stage: Int
-    @State var states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
-    @State var cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
     
     @Binding var name: String
     @Binding var occupation: String
@@ -36,6 +36,8 @@ struct AddClientForm: View {
     @Binding var email: String
     @Binding var telephone: String
     @Binding var cellphone: String
+    
+    @State var addressApi = AddressAPI()
     
     let textLimit = 50
     let maritalStatusLimit = 10
@@ -70,6 +72,19 @@ struct AddClientForm: View {
         } else if stage == 2 {
             VStack(alignment: .leading, spacing: 15) {
                 LabeledTextField(label: "CEP", placeholder: "Insira seu CEP", textfieldText: $cep)
+                    .onChange(of: cep, perform: { _ in
+                        Task{
+                            if cep.count >= 8{
+                                if let addressApi = await addressViewModel.fetch(for: cep) {
+                                    cep = addressApi.cep
+                                    address = addressApi.logradouro
+                                    neighborhood = addressApi.bairro
+                                    state = addressApi.estado
+                                    city = addressApi.localidade
+                                }
+                            }
+                        }
+                    })
                     .onReceive(Just(cep)) { _ in cep = formatNumber(cep, limit: 8) }
                 LabeledTextField(label: "Endereço", placeholder: "Insira seu endereço", textfieldText: $address)
                 HStack(spacing: 10) {
@@ -79,12 +94,10 @@ struct AddClientForm: View {
                     LabeledTextField(label: "Complemento", placeholder: "Insira o complemento", textfieldText: $complement)
                         .frame(width: 170)
                 }
-                HStack(spacing: 20) {
-                    LabeledPickerField(selectedOption: $state, arrayInfo: states, label: "Estado")
-                    Spacer()
-                    LabeledPickerField(selectedOption: $city, arrayInfo: cities, label: "Cidade")
+                HStack(spacing: 10) {
+                    LabeledTextField(label: "Estado", placeholder: "Insira seu estado", textfieldText: $state)
+                    LabeledTextField(label: "Cidade", placeholder: "Insira sua cidade", textfieldText: $city)
                 }
-                .frame(width: 250)
             }
             .padding(.vertical, 5)
         } else if stage == 3 {

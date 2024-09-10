@@ -130,7 +130,6 @@ struct AddClientView: View {
                    !address.isEmpty &&
                    !addressNumber.isEmpty &&
                    !neighborhood.isEmpty &&
-                   !complement.isEmpty &&
                    !city.isEmpty &&
                    !state.isEmpty
         } else if stage == 3 {
