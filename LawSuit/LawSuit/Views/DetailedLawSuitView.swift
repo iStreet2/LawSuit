@@ -36,38 +36,41 @@ struct DetailedLawSuitView: View {
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
+        
         VStack {
-            HStack(alignment: .top, spacing: 22) {
-                mainBlock
+            if !deleted {
+                HStack(alignment: .top, spacing: 22) {
+                    mainBlock
+                        .frame(maxHeight: .infinity)
+                    
+                    VStack(spacing: 10) {
+                        
+                        movimentationBlock
+                            .frame(maxHeight: .infinity)
+                        
+                        audienceBlock
+                            .frame(maxHeight: .infinity)
+                    }
                     .frame(maxHeight: .infinity)
-                
-                VStack(spacing: 10) {
-                    
-                    movimentationBlock
-                        .frame(maxHeight: .infinity)
-                    
-                    audienceBlock
-                        .frame(maxHeight: .infinity)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(maxHeight: .infinity)
                 .fixedSize(horizontal: false, vertical: true)
-            }
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(minHeight: 220, maxHeight: 280)
-            .frame(minWidth: 620)
-            Divider()
-            VStack {
-                HStack {
-                    Text("Arquivos do Processo")
-                        .font(.title3)
-                        .bold()
-                    Spacer()
+                .frame(minHeight: 220, maxHeight: 280)
+                .frame(minWidth: 620)
+                Divider()
+                VStack {
+                    HStack {
+                        Text("Arquivos do Processo")
+                            .font(.title3)
+                            .bold()
+                        Spacer()
+                    }
+                    .padding(.vertical)
+                    // MARK: - View/Grid de Pastas
+                    DocumentGridView()
                 }
-                .padding(.vertical)
-                // MARK: - View/Grid de Pastas
-                DocumentGridView()
+                Spacer()
             }
-            Spacer()
         }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
