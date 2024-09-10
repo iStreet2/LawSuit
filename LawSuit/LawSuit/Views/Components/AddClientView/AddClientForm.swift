@@ -15,7 +15,7 @@ enum ClientType {
 struct AddClientForm: View {
     
     //MARK: ViewModels
-    @EnvironmentObject var clientDataViewModel: TextFieldDataViewModel
+    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     
     //MARK: Variáveis de Estado
     @Binding var stage: Int
@@ -50,22 +50,22 @@ struct AddClientForm: View {
             HStack {
                 VStack(spacing: 15) {
                     LabeledTextField(label: "Nome Completo", placeholder: "Insira o nome do Cliente", textfieldText: $name)
-                        .onReceive(Just(name)) { _ in clientDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
+                        .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
                     LabeledTextField(label: "RG", placeholder: "Insira o RG do Cliente", textfieldText: $rg)
-                        .onReceive(Just(rg)) { _ in rg = clientDataViewModel.formatNumber(rg, limit: 9) }
+                        .onReceive(Just(rg)) { _ in rg = textFieldDataViewModel.formatNumber(rg, limit: 9) }
                     LabeledTextField(label: "Filiação", placeholder: "Insira a Filiação do Cliente", textfieldText: $affiliation)
-                        .onReceive(Just(affiliation)) { _ in clientDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
+                        .onReceive(Just(affiliation)) { _ in textFieldDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
                     LabeledTextField(label: "Nacionalidade", placeholder: "Insira a Nacionalidade do Cliente", textfieldText: $nationality)
-                        .onReceive(Just(nationality)) { _ in clientDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
+                        .onReceive(Just(nationality)) { _ in textFieldDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
                 }
                 VStack(alignment: .leading, spacing: 15) {
                     LabeledTextField(label: "Profissão", placeholder: "Insira a Profissão do Cliente", textfieldText: $occupation)
-                        .onReceive(Just(occupation)) { _ in clientDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
+                        .onReceive(Just(occupation)) { _ in textFieldDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
                     LabeledTextField(label: "CPF", placeholder: "Insira o CPF do Cliente", textfieldText: $cpf)
-                        .onReceive(Just(cpf)) { _ in cpf = clientDataViewModel.formatCPF(cpf) }
-                        .foregroundStyle(clientDataViewModel.isValidCPF(cpf) ? .black : .red)
+                        .onReceive(Just(cpf)) { _ in cpf = textFieldDataViewModel.formatCPF(cpf) }
+                        .foregroundStyle(textFieldDataViewModel.isValidCPF(cpf) ? .black : .red)
                     LabeledTextField(label: "Estado Civil", placeholder: "Insira o Estado Civil do Cliente", textfieldText: $maritalStatus)
-                        .onReceive(Just(maritalStatus)) { _ in clientDataViewModel.limitMaritalStatus(maritalStatus: &maritalStatus, upper: maritalStatusLimit) }
+                        .onReceive(Just(maritalStatus)) { _ in textFieldDataViewModel.limitMaritalStatus(maritalStatus: &maritalStatus, upper: maritalStatusLimit) }
                     LabeledDateField(selectedDate: $birthDate, label: "Data de Nascimento")
                     
                 }
@@ -74,12 +74,12 @@ struct AddClientForm: View {
         } else if stage == 2 {
             VStack(alignment: .leading, spacing: 15) {
                 LabeledTextField(label: "CEP", placeholder: "Insira seu CEP", textfieldText: $cep)
-                    .onReceive(Just(cep)) { _ in cep = clientDataViewModel.formatNumber(cep, limit: 8) }
+                    .onReceive(Just(cep)) { _ in cep = textFieldDataViewModel.formatNumber(cep, limit: 8) }
                 LabeledTextField(label: "Endereço", placeholder: "Insira seu endereço", textfieldText: $address)
                 HStack(spacing: 10) {
                     LabeledTextField(label: "Número", placeholder: "Insira o número", textfieldText: $addressNumber)
                         .frame(width: 120)
-                        .onReceive(Just(addressNumber)) { _ in addressNumber = clientDataViewModel.formatNumber(addressNumber, limit: 7)}
+                        .onReceive(Just(addressNumber)) { _ in addressNumber = textFieldDataViewModel.formatNumber(addressNumber, limit: 7)}
                     LabeledTextField(label: "Bairro", placeholder: "Insira seu bairro", textfieldText: $neighborhood)
                     LabeledTextField(label: "Complemento", placeholder: "Insira o complemento", textfieldText: $complement)
                         .frame(width: 170)
@@ -98,9 +98,9 @@ struct AddClientForm: View {
                     LabeledTextField(label: "E-mail", placeholder: "Insira seu e-mail", textfieldText: $email)
                     HStack(spacing: 60) {
                         LabeledTextField(label: "Telefone", placeholder: "Insira seu telefone", textfieldText: $telephone)
-                            .onReceive(Just(telephone)) { _ in telephone = clientDataViewModel.formatPhoneNumber(telephone, cellphone: false) }
+                            .onReceive(Just(telephone)) { _ in telephone = textFieldDataViewModel.formatPhoneNumber(telephone, cellphone: false) }
                         LabeledTextField(label: "Celular", placeholder: "Insira seu celular", textfieldText: $cellphone)
-                            .onReceive(Just(cellphone)) { _ in cellphone = clientDataViewModel.formatPhoneNumber(cellphone, cellphone: true) }
+                            .onReceive(Just(cellphone)) { _ in cellphone = textFieldDataViewModel.formatPhoneNumber(cellphone, cellphone: true) }
                     }
                 }
             }
