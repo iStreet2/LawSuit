@@ -16,7 +16,7 @@ struct LawSuitApp: App {
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
     @StateObject var networkMonitor = NetworkMonitorViewModel()
     @StateObject var navigationViewModel = NavigationViewModel()
-    @StateObject var clientDataViewModel = ClientDataViewmodel()
+    @StateObject var clientDataViewModel = TextFieldDataViewModel()
     
     var body: some Scene {
         WindowGroup {   

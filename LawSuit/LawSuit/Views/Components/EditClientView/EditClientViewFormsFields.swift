@@ -12,6 +12,12 @@ enum FormType {
 }
 
 struct EditClientViewFormsFields: View {
+    
+    //MARK: ViewModels
+    @EnvironmentObject var clientDataViewModel: TextFieldDataViewModel
+    
+    //MARK: Variáveis de Estado
+    
     let formType: FormType
     
     @Binding var rg: String

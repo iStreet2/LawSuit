@@ -87,27 +87,26 @@ struct EditClientView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
-              .alert(isPresented: $deleteAlert, content: {
-            Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
-                
-                if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
-                    for lawsuit in lawsuits {
-                        dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
-                        // Após deletar os processos, deletar o cliente
-                        dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
-                        navigationViewModel.selectedClient = nil
-                        deleted.toggle()
+                .alert(isPresented: $deleteAlert, content: {
+                    Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                        
+                        if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
+                            for lawsuit in lawsuits {
+                                dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                                // Após deletar os processos, deletar o cliente
+                                dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+                                navigationViewModel.selectedClient = nil
+                                deleted.toggle()
+                                dismiss()
+                            }
+                        } else {
+                            print("Error fetching lawsuits of client: \(client.name)")
+                        }
+                        
+                    }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
                         dismiss()
-                    }
-                } else {
-                    print("Error fetching lawsuits of client: \(client.name)")
-                }
-
-            }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
-                dismiss()
-            }))
-        })
-                
+                    }))
+                })
                 Spacer()
                 Button {
                     dismiss()
@@ -116,8 +115,8 @@ struct EditClientView: View {
                 }
                 Button(action: {
                     if areFieldsFilled() {
-                    dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
-                    dismiss()
+                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        dismiss()
                     } else {
                         missingInformation = true
                     }

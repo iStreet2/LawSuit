@@ -14,6 +14,7 @@ struct EditLawSuitView: View {
     
     
     //MARK: Variáveis de estado
+    @State var missingInformation = false
     @State var lawsuitNumber = ""
     @State var lawsuitCourt = ""
     @State var lawsuitAuthorName = ""
@@ -133,29 +134,38 @@ struct EditLawSuitView: View {
                             Text("Cancelar")
                         })
                         Button(action: {
-                            if attributedAuthor {
-                                if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                                    let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                                    let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                    dismiss()
-                                } else {
-                                    print("error achando ou author")
+                            if areFieldsFilled() {
+                                if attributedAuthor {
+                                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                                        let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                                        let category = TagTypeString.string(from: tagType)
+                                        dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                        dismiss()
+                                    } else {
+                                        print("error achando ou author")
+                                    }
+                                } else if attributedDefendant {
+                                    if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                                        let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                                        let category = TagTypeString.string(from: tagType)
+                                        dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                        dismiss()
+                                    } else {
+                                        print("error achando defendant")
+                                    }
                                 }
-                            } else if attributedDefendant {
-                                if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
-                                    let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                                    let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                    dismiss()
-                                } else {
-                                    print("error achando defendant")
-                                }
+                            } else {
+                                missingInformation = true
                             }
                         }, label: {
                             Text("Salvar")
                         })
                         .buttonStyle(.borderedProminent)
+                        .alert(isPresented: $missingInformation) {
+                            Alert(title: Text("Informações Faltando"),
+                                  message: Text("Por favor, preencha todos os campos antes de editar um processo."),
+                                  dismissButton: .default(Text("Ok")))
+                        }
                     }
                     .padding(.top)
                 }
@@ -204,6 +214,12 @@ struct EditLawSuitView: View {
         }
         .padding()
     }
-    
+    func areFieldsFilled() -> Bool {
+        return !lawsuitAuthorName.isEmpty &&
+        !lawsuitCourt.isEmpty &&
+        !lawsuitNumber.isEmpty &&
+        !lawsuitActionDate.description.isEmpty &&
+        !lawsuitDefendantName.isEmpty
+    }
 }
 

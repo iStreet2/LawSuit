@@ -17,6 +17,7 @@ struct LawsuitDistributedView: View {
     @State var selectTag = false
     
     //MARK: Variáveis de estado
+    @State var missingInformation = false
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
@@ -116,7 +117,6 @@ struct LawsuitDistributedView: View {
                         }
                     }
                     .frame(width: 200, alignment: .leading)
-                    
                 }
                 LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
                     .padding(.top)
@@ -130,53 +130,69 @@ struct LawsuitDistributedView: View {
                 Text("Cancelar")
             }
             Button {
-                
-                //MARK: Se o cliente foi atribuido ao autor
-                if attributedAuthor {
-                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                        let category = TagTypeString.string(from: tagType)
-                        let lawyer = lawyers[0]
-                        let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                        dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                        dismiss()
-                    } else {
-                        print("Client not found")
+                if areFieldsFilled() {
+                    //MARK: Se o cliente foi atribuido ao autor
+                    if attributedAuthor {
+                        if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                            let category = TagTypeString.string(from: tagType)
+                            let lawyer = lawyers[0]
+                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                            dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                            dismiss()
+                        } else {
+                            print("Client not found")
+                        }
                     }
-                }
-                
-                //MARK: Se o cliente foi atribuido ao réu
-                else if attributedDefendant {
-                    if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
-                        let category = TagTypeString.string(from: tagType)
-                        let lawyer = lawyers[0]
-                        let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                        dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                        dismiss()
-                    } else {
-                        print("Client not found")
+                    //MARK: Se o cliente foi atribuido ao réu
+                    else if attributedDefendant {
+                        if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                            let category = TagTypeString.string(from: tagType)
+                            let lawyer = lawyers[0]
+                            let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                            dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                            dismiss()
+                        } else {
+                            print("Client not found")
+                        }
                     }
+                } else {
+                    missingInformation = true
                 }
             } label: {
                 Text("Criar")
             }
             .buttonStyle(.borderedProminent)
-        }
-        .sheet(isPresented: $selectTag, content: {
-            VStack {
-                Spacer()
-                TagViewPickerComponentV1(currentTag: $tagType)
-                Spacer()
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        selectTag.toggle()
-                    }, label: {
-                        Text("Salvar")
-                    })
-                    .buttonStyle(.borderedProminent)
-                    .padding()
-                }
+            .alert(isPresented: $missingInformation) {
+                Alert(title: Text("Informações Faltando"),
+                      message: Text("Por favor, preencha todos os campos antes de criar um novo processo."),
+                      dismissButton: .default(Text("Ok")))
             }
-        })
+            .sheet(isPresented: $selectTag, content: {
+                VStack {
+                    Spacer()
+                    TagViewPickerComponentV1(currentTag: $tagType)
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            selectTag.toggle()
+                        }, label: {
+                            Text("Salvar")
+                        })
+                        .buttonStyle(.borderedProminent)
+                        .padding()
+                    }
+                }
+            })
+        }
+    }
+    func areFieldsFilled() -> Bool {
+        return !lawsuitNumber.isEmpty &&
+        !lawsuitCourt.isEmpty &&
+        !lawsuitActionDate.description.isEmpty &&
+        !lawsuitAuthorName.isEmpty &&
+        !lawsuitDefendantName.isEmpty
+        
     }
 }
+

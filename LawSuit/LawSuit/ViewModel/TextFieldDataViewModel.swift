@@ -9,10 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class ClientDataViewmodel: ObservableObject {
-    
-    
-    
+class TextFieldDataViewModel: ObservableObject {
     func limitText(name: inout String, affiliation: inout String, nationality: inout String, occupation: inout String, upper: Int) {
         if name.count > upper {
             name = String(name.prefix(upper))
@@ -76,9 +73,7 @@ class ClientDataViewmodel: ObservableObject {
             if cellphone {
                 if index == 2 {
                     format.append(") ")
-                    
                 }
-                
                 if index == 7 {
                     format.append("-")
                 }
@@ -86,17 +81,12 @@ class ClientDataViewmodel: ObservableObject {
                 if index == 2 {
                     format.append(") ")
                 }
-                
                 if index == 6 {
                     format.append("-")
                 }
             }
-            
-            
-            
             format.append(character)
         }
-        
         return format
     }
 }

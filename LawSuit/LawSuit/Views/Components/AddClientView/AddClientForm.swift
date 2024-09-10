@@ -15,7 +15,7 @@ enum ClientType {
 struct AddClientForm: View {
     
     //MARK: ViewModels
-    @EnvironmentObject var clientDataViewModel: ClientDataViewmodel
+    @EnvironmentObject var clientDataViewModel: TextFieldDataViewModel
     
     //MARK: Variáveis de Estado
     @Binding var stage: Int
