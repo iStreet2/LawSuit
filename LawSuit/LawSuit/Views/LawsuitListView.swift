@@ -22,6 +22,7 @@ struct LawsuitListView: View {
                         .font(.title)
                         .bold()
                     Button(action: {
+                        print(seg)
                         createProcess.toggle()
                     }, label: {
                         Image(systemName: "plus")
