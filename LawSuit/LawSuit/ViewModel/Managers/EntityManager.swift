@@ -61,6 +61,14 @@ class EntityManager {
         return nil
     }
     
+    func authorIsEntity(lawsuit: Lawsuit) -> Bool {
+        if lawsuit.authorID.hasPrefix("client:") {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func deleteEntity(entity: Entity) {
         context.delete(entity)
     }

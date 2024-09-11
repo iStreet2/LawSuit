@@ -21,8 +21,7 @@ public class Client: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var name: String
     @NSManaged public var photo: Data?
     @NSManaged public var recordName: String?
-//    @NSManaged public var lawsuits: NSSet? //Reference
-    @NSManaged public var parentLawyer: Lawyer?
+    @NSManaged public var parentLawyer: Lawyer? //Ignorar para o CloudKit
     @NSManaged public var rootFolder: Folder? //Reference
     @NSManaged public var occupation: String
     @NSManaged public var rg: String

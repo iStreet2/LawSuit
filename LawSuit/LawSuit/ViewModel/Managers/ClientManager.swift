@@ -17,7 +17,7 @@ class ClientManager {
         self.context = context
     }
     
-    func createClient(name: String, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
+    func createAndReturnClient(name: String, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) -> Client {
         let client = Client(context: context)
         let folder = Folder(context: context)
         folder.name = "\(name)"
@@ -45,6 +45,22 @@ class ClientManager {
         client.telephone = telephone
         client.cellphone = cellphone
         saveContext()
+        return client
+    }
+    
+    func fetchClientWithID(id: String) -> Client? {
+        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        do {
+            let fetchedClients = try context.fetch(fetchRequest)
+            if let client = fetchedClients.first {
+                return client
+            }
+        } catch {
+            print("Error fetching entitys: \(error.localizedDescription)")
+            return nil
+        }
+        return nil
     }
     
     func deleteClient(client: Client/*, lawyer: Lawyer*/) {

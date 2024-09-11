@@ -20,7 +20,7 @@ public class Update: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var desc: String?
     @NSManaged public var name: String?
     @NSManaged public var file: FilePDF? //Reference
-    @NSManaged public var parentLawsuit: Lawsuit?
+    @NSManaged public var parentLawsuit: Lawsuit? //Ignorar para o CloudKit
     @NSManaged public var recordName: String?
     
 }

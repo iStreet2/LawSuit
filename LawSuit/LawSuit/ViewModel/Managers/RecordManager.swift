@@ -18,10 +18,12 @@ class RecordManager {
 	
     let container: CKContainer
     let publicDatabase: CKDatabase
+    let context: NSManagedObjectContext
     
-    init(container: CKContainer) {
+    init(container: CKContainer, context: NSManagedObjectContext) {
         self.container = container
         publicDatabase = container.publicCloudDatabase
+        self.context = context
     }
     
     deinit {
@@ -60,6 +62,7 @@ class RecordManager {
         do {
             let savedRecord = try await publicDatabase.save(record)
             object.recordName = savedRecord.recordID.recordName
+            saveContext()
             
             // Save related objects and update the relationships
             await saveRelatedObjects(for: object)
@@ -219,5 +222,92 @@ class RecordManager {
         return record
     }
     
+    func saveContext() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context on RecordManager: \(error)")
+        }
+    }
+    
 	
+    
+    
+    //MARK: Novas funções para teste!
+    
+    //MARK: - Create: Nessa função basta passar o objeto e um vetor com strings escrito o nome dos relationShips que você quer salvar
+    func saveObject<T: Recordable>(object: inout T, relationshipsToSave: Set<String>) async throws {
+        let className = String(describing: type(of: object))
+        let record = CKRecord(recordType: className)
+        
+        if let managedObject = object as? NSManagedObject {
+            let attributes = managedObject.entity.attributesByName
+            let relationships = managedObject.entity.relationshipsByName
+            
+            // Save attributes
+            for (attributeName, _) in attributes {
+                if let value = managedObject.value(forKey: attributeName) {
+                    if attributeName == "content" {
+                        if let data = value as? Data {
+                            // Handle PDF data saving logic
+                            let pdfData = PDFDocument(data: data)
+                            if let pdfURL = pdfData?.documentURL {
+                                let asset = CKAsset(fileURL: pdfURL)
+                                record.setValue(asset, forKey: attributeName)
+                            }
+                        }
+                    } else {
+                        record.setValue(value, forKey: attributeName)
+                    }
+                }
+            }
+            
+            // Save specified relationships (//Reference)
+            for (relationshipName, _) in relationships {
+                if relationshipsToSave.contains(relationshipName), let relatedObject = managedObject.value(forKey: relationshipName) as? NSManagedObject {
+                    if let recordName = relatedObject.value(forKey: "recordName") as? String {
+                        let relatedRecordID = CKRecord.ID(recordName: recordName)
+                        let reference = CKRecord.Reference(recordID: relatedRecordID, action: .none)
+                        record.setValue(reference, forKey: relationshipName)
+                    }
+                }
+            }
+        }
+        
+        record.setValue(Date(), forKey: "createdAt")
+        
+        do {
+            let savedRecord = try await publicDatabase.save(record)
+            object.recordName = savedRecord.recordID.recordName
+        } catch {
+            throw error
+        }
+    }
+    
+    func addReference<T: NSManagedObject>(from firstObject: T, to secondObject: T, referenceKey: String) async throws {
+        guard let firstRecordName = firstObject.value(forKey: "recordName") as? String else {
+            throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "First object not found in CloudKit"])
+        }
+
+        guard let secondRecordName = secondObject.value(forKey: "recordName") as? String else {
+            throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Second object not found in CloudKit"])
+        }
+        let secondRecordID = CKRecord.ID(recordName: secondRecordName)
+        let secondReference = CKRecord.Reference(recordID: secondRecordID, action: .none)
+
+        let firstRecordID = CKRecord.ID(recordName: firstRecordName)
+        let firstRecord = try await publicDatabase.record(for: firstRecordID)
+
+        let relationships = firstObject.entity.relationshipsByName
+
+        if let _ = relationships[referenceKey] {
+            var references = firstRecord[referenceKey] as? [CKRecord.Reference] ?? []
+            references.append(secondReference)
+            firstRecord[referenceKey] = references as CKRecordValue
+        } else {
+            throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Relationship \(referenceKey) not found"])
+        }
+
+        try await publicDatabase.save(firstRecord)
+    }
 }

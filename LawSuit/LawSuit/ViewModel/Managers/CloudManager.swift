@@ -7,12 +7,14 @@
 
 import Foundation
 import CloudKit
+import CoreData
 
 class CloudManager: ObservableObject {
 	let container: CKContainer
 	let publicDatabase: CKDatabase
 	let recordManager: RecordManager
 	let cloudDataConverter: CloudDataConverter
+    let context: NSManagedObjectContext
 	
 	// MARK: - Na implementação de mais modelos, será necessário fazer um array de "current{model}", atualizar a func `updateArrays` e o enum `QueryType`
 	// MARK: Além de atualizar a função `makeObjectsFromRecords` do recordObjectManager para lidar com outros tipos de objeto.
@@ -22,11 +24,12 @@ class CloudManager: ObservableObject {
 	
 	@Published var loading = false
 	
-    init(container: CKContainer, cloudDataConverter: CloudDataConverter) {
+    init(container: CKContainer, cloudDataConverter: CloudDataConverter, context: NSManagedObjectContext) {
         self.container = container
 		self.publicDatabase = container.publicCloudDatabase
-		self.recordManager = RecordManager(container: container)
+        self.recordManager = RecordManager(container: container, context: context)
         self.cloudDataConverter = cloudDataConverter
+        self.context = context
 	}
 	
 	public func getObjectsWith(query: QueryType) async -> [Recordable] {

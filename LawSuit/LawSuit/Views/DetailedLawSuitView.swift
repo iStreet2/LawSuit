@@ -122,17 +122,18 @@ extension DetailedLawSuitView {
 		HStack {
             TagViewComponent(tagType: TagType(s: lawsuit.category) ?? .trabalhista)
 			Spacer()
-			Button {
-				// editar
-                editLawSuit.toggle()
-			} label: {
-				Image(systemName: "square.and.pencil")
-					.resizable()
-					.scaledToFit()
-					.frame(height: 21)
-					.foregroundStyle(.secondary)
-			}
-			.buttonStyle(PlainButtonStyle())
+            HStack {
+                Button {
+                    editLawSuit.toggle()
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 21)
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
 		}
 	}
 	

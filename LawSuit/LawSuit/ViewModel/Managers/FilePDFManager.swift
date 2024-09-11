@@ -16,7 +16,7 @@ class FilePDFManager {
         self.context = context
     }
     
-    func createFilePDF(parentFolder: Folder, name: String, content: Data) {
+    func createAndReturnFilePDF(parentFolder: Folder, name: String, content: Data) -> FilePDF {
         let newFilePDF = FilePDF(context: context)
         newFilePDF.id = UUID().uuidString
         newFilePDF.name = name
@@ -24,6 +24,7 @@ class FilePDFManager {
         newFilePDF.parentFolder = parentFolder
         parentFolder.addToFiles(newFilePDF)
         saveContext()
+        return newFilePDF
     }
     
     func deleteFilePDF(parentFolder: Folder, filePDF: FilePDF) {

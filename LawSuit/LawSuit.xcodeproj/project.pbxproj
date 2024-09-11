@@ -135,9 +135,9 @@
 		3B24D4A62C73781F00CCA763 /* FilePDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDF.swift; sourceTree = "<group>"; };
 		3B24D4A82C73781F00CCA763 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		3B24D4AA2C73781F00CCA763 /* Lawyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lawyer.swift; sourceTree = "<group>"; };
-		3B357C2F2C90B22700F60251 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = LawSuit.app; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app; sourceTree = "<absolute>"; };
-		3B357C302C90B22700F60251 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitTests.xctest; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app/Contents/PlugIns/LawSuitTests.xctest; sourceTree = "<absolute>"; };
-		3B357C312C90B22700F60251 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitUITests.xctest; path = "/Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuitUITests-Runner.app/Contents/PlugIns/LawSuitUITests.xctest"; sourceTree = "<absolute>"; };
+		3B357C352C90B96D00F60251 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = LawSuit.app; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app; sourceTree = "<absolute>"; };
+		3B357C362C90B96D00F60251 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitTests.xctest; path = /Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuit.app/Contents/PlugIns/LawSuitTests.xctest; sourceTree = "<absolute>"; };
+		3B357C372C90B96D00F60251 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = LawSuitUITests.xctest; path = "/Users/gabrielvicentinnegro/git/Academy/LawSuit/LawSuit/build/Debug/LawSuitUITests-Runner.app/Contents/PlugIns/LawSuitUITests.xctest"; sourceTree = "<absolute>"; };
 		3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentGridView.swift; sourceTree = "<group>"; };
 		3B423E7D2C80E2D8005B1B7F /* FolderGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderGridView.swift; sourceTree = "<group>"; };
@@ -392,11 +392,11 @@
 				3BD40B302C6D40FE004048FA /* LawyerManager.swift */,
 				3BD40B322C6D41EC004048FA /* LawsuitManager.swift */,
 				3BD40B342C6D4384004048FA /* UpdateManager.swift */,
-				E981580E2C77A2680039C2FD /* RecordManager.swift */,
 				E9F3A4272C8775CB00595150 /* TextRecognizer.swift */,
 				E9F3A42F2C87AF6000595150 /* ContactsManager.swift */,
 				3B0EE5F62C6A90F100CFC91A /* CoreDataManager.swift */,
 				E93BCFA62C77D3DE007CF206 /* CloudManager.swift */,
+				E981580E2C77A2680039C2FD /* RecordManager.swift */,
 				E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */,
 				3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */,
 			);
@@ -493,7 +493,7 @@
 			);
 			name = LawSuit;
 			productName = LawSuit;
-			productReference = 3B357C2F2C90B22700F60251 /* LawSuit.app */;
+			productReference = 3B357C352C90B96D00F60251 /* LawSuit.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3B98F1182C668B1100C45121 /* LawSuitTests */ = {
@@ -511,7 +511,7 @@
 			);
 			name = LawSuitTests;
 			productName = LawSuitTests;
-			productReference = 3B357C302C90B22700F60251 /* LawSuitTests.xctest */;
+			productReference = 3B357C362C90B96D00F60251 /* LawSuitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		3B98F1222C668B1100C45121 /* LawSuitUITests */ = {
@@ -529,7 +529,7 @@
 			);
 			name = LawSuitUITests;
 			productName = LawSuitUITests;
-			productReference = 3B357C312C90B22700F60251 /* LawSuitUITests.xctest */;
+			productReference = 3B357C372C90B96D00F60251 /* LawSuitUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
