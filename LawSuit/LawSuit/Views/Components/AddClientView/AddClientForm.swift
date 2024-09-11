@@ -49,17 +49,17 @@ struct AddClientForm: View {
             HStack {
                 VStack(spacing: 15) {
                     LabeledTextField(label: "Nome Completo", placeholder: "Insira o nome do Cliente", textfieldText: $name)
-                        .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
+                        .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
                     LabeledTextField(label: "RG", placeholder: "Insira o RG do Cliente", textfieldText: $rg)
                         .onReceive(Just(rg)) { _ in rg = textFieldDataViewModel.formatNumber(rg, limit: 9) }
                     LabeledTextField(label: "Filiação", placeholder: "Insira a Filiação do Cliente", textfieldText: $affiliation)
-                        .onReceive(Just(affiliation)) { _ in textFieldDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
+                        .onReceive(Just(affiliation)) { _ in textFieldDataViewModel.limitText(text: &affiliation, upper: textLimit) }
                     LabeledTextField(label: "Nacionalidade", placeholder: "Insira a Nacionalidade do Cliente", textfieldText: $nationality)
-                        .onReceive(Just(nationality)) { _ in textFieldDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
+                        .onReceive(Just(nationality)) { _ in textFieldDataViewModel.limitText(text: &nationality, upper: textLimit) }
                 }
                 VStack(alignment: .leading, spacing: 15) {
                     LabeledTextField(label: "Profissão", placeholder: "Insira a Profissão do Cliente", textfieldText: $occupation)
-                        .onReceive(Just(occupation)) { _ in textFieldDataViewModel.limitText(name: &name, affiliation: &affiliation, nationality: &nationality, occupation: &occupation, upper: textLimit) }
+                        .onReceive(Just(nationality)) { _ in textFieldDataViewModel.limitText(text: &occupation, upper: textLimit) }
                     LabeledTextField(label: "CPF", placeholder: "Insira o CPF do Cliente", textfieldText: $cpf)
                         .onReceive(Just(cpf)) { _ in cpf = textFieldDataViewModel.formatCPF(cpf) }
                         .foregroundStyle(textFieldDataViewModel.isValidCPF(cpf) ? .black : .red)

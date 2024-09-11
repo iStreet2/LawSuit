@@ -10,29 +10,27 @@ import SwiftUI
 import Combine
 
 class TextFieldDataViewModel: ObservableObject {
-    func limitText(name: inout String, affiliation: inout String, nationality: inout String, occupation: inout String, upper: Int) {
-        if name.count > upper {
-            name = String(name.prefix(upper))
-        }
-        if affiliation.count > upper {
-            affiliation = String(affiliation.prefix(upper))
-        }
-        if nationality.count > upper {
-            nationality = String(nationality.prefix(upper))
-        }
-        if occupation.count > upper {
-            occupation = String(occupation.prefix(upper))
+    func limitText(text: inout String, upper: Int) {
+        
+        text = text.filter { $0.isLetter || $0 == " " }
+        if text.count > upper {
+            text = String(text.prefix(upper))
         }
     }
+    
     func limitMaritalStatus(maritalStatus: inout String, upper: Int) {
+        
+        maritalStatus = maritalStatus.filter { $0.isLetter || $0 == " " }
         if maritalStatus.count > upper {
             maritalStatus = String(maritalStatus.prefix(upper))
         }
     }
+    
     func formatNumber(_ string: String, limit: Int) -> String {
         let filtered = string.filter { "0123456789".contains($0) }
         return String(filtered.prefix(limit))
     }
+    
     func formatCPF(_ cpf: String) -> String {
         let numbers = cpf.filter { "0123456789".contains($0)}
         var formatCPF = ""
@@ -48,12 +46,14 @@ class TextFieldDataViewModel: ObservableObject {
         }
         return formatCPF
     }
+    
     func isValidCPF(_ cpf: String) -> Bool {
         let numbers = cpf.compactMap(\.wholeNumberValue)
         guard numbers.count == 11 && Set(numbers).count != 1 else { return false }
         return digitoCPF(numbers.prefix(9)) == numbers[9] &&
         digitoCPF(numbers.prefix(10)) == numbers[10]
     }
+    
     func digitoCPF(_ numbers: ArraySlice<Int>) -> Int {
         var number = numbers.count + 2
         let digit = 11 - numbers.reduce(into: 0) {
@@ -62,6 +62,7 @@ class TextFieldDataViewModel: ObservableObject {
         } % 11
         return digit > 9 ? 0 : digit
     }
+    
     func formatPhoneNumber(_ phoneNumber: String, cellphone: Bool) -> String {
         let numbers = phoneNumber.filter { "0123456789".contains($0)}
         var format = ""
