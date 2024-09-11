@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0897CB392C8BA21D00B488A9 /* MailManager.swift */; };
 		0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */; };
-		08A2B0C32C8F747700719571 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C22C8F747700719571 /* Endpoint.swift */; };
 		08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */; };
 		08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */; };
 		08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */; };
+		08A2B0D02C920FC500719571 /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CF2C920FC500719571 /* RequestMethod.swift */; };
+		08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D42C92142E00719571 /* LawsuitErrors.swift */; };
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
 		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
@@ -124,10 +125,11 @@
 		084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0897CB392C8BA21D00B488A9 /* MailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailManager.swift; sourceTree = "<group>"; };
 		0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNameCellComponent.swift; sourceTree = "<group>"; };
-		08A2B0C22C8F747700719571 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingService.swift; sourceTree = "<group>"; };
 		08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosDoJudiciario.swift; sourceTree = "<group>"; };
 		08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosEnums.swift; sourceTree = "<group>"; };
+		08A2B0CF2C920FC500719571 /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
+		08A2B0D42C92142E00719571 /* LawsuitErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitErrors.swift; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
@@ -245,9 +247,10 @@
 		08A2B0C02C8F730500719571 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				08A2B0C22C8F747700719571 /* Endpoint.swift */,
-				08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */,
+				08A2B0D12C92103200719571 /* NetworkingServices */,
+				08A2B0CE2C920FBC00719571 /* Base */,
 				08A2B0C12C8F743E00719571 /* Endpoints */,
+				08A2B0D42C92142E00719571 /* LawsuitErrors.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -259,6 +262,22 @@
 				08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */,
 			);
 			path = Endpoints;
+			sourceTree = "<group>";
+		};
+		08A2B0CE2C920FBC00719571 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				08A2B0CF2C920FC500719571 /* RequestMethod.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		08A2B0D12C92103200719571 /* NetworkingServices */ = {
+			isa = PBXGroup;
+			children = (
+				08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */,
+			);
+			path = NetworkingServices;
 			sourceTree = "<group>";
 		};
 		08E6572E2C7929FA00313FCB /* EditClientView */ = {
@@ -650,6 +669,7 @@
 				3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */,
 				3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */,
 				3BB9A34E2C84F37A00AD1E30 /* TagViewComponentV4.swift in Sources */,
+				08A2B0D02C920FC500719571 /* RequestMethod.swift in Sources */,
 				E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */,
 				6AC0BB082C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift in Sources */,
 				6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */,
@@ -693,6 +713,7 @@
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
 				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
+				08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */,
 				3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */,
 				3B0A7AD12C7D16AA005A5946 /* NetworkMonitorViewModel.swift in Sources */,
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,
@@ -707,7 +728,6 @@
 				E93BCFA72C77D3DE007CF206 /* CloudManager.swift in Sources */,
 				3BD313E42C88FD56001CE5E7 /* DataViewModel.swift in Sources */,
 				E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */,
-				08A2B0C32C8F747700719571 /* Endpoint.swift in Sources */,
 				E9F3A4262C87755800595150 /* QueryEnumerator.swift in Sources */,
 				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
 				E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */,

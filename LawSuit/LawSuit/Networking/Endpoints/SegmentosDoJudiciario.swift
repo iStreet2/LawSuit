@@ -13,28 +13,31 @@ enum JusticaResponsavel: Int {
     case justicaEstadual = 8
 }
 
-func obterJusticaETribunalDoProcesso(lawsuitNumber: String) -> (justicaRes: String, tribu: String)? {
-    let splittedLawsuitNumber = lawsuitNumber.split(separator: ".")
+func obterJusticaETribunalDoProcesso(lawsuitNumber: String) throws -> (justicaRes: String, tribu: String)  {
+//    let splittedLawsuitNumber = lawsuitNumber.split(separator: ".")
+//    
+//    guard splittedLawsuitNumber.count == 5 else {
+//        throw LawsuitNumberError.invalidLawsuitNumber
+//    }
+//    
+    let inicio = lawsuitNumber.index(lawsuitNumber.startIndex, offsetBy: 14)
+    let fim = lawsuitNumber.index(lawsuitNumber.startIndex, offsetBy: 16)
     
-    guard splittedLawsuitNumber.count == 5 else {
-        print("retornou erado")
-        return nil
-    }
+    let justicaResponsavel = String(lawsuitNumber[lawsuitNumber.index(lawsuitNumber.startIndex, offsetBy: 13)])
     
-    let justicaResponsavel = String(splittedLawsuitNumber[2])
-    let tribunal = String(splittedLawsuitNumber[3])
+    let tribunal = String(lawsuitNumber[inicio..<fim])
     
+    print("justicaRepsonsavel: \(justicaResponsavel), tribunal: \(tribunal)")
     return (justicaResponsavel, tribunal)
 }
 
-
-
-func obterEndpointDoProcesso(digitoJusticaResponsavel: String, digitoTribunal: String) -> String? {
-    if let justicaResponsavel = SegmentosDoJudiciario.from(codigoJustica: digitoJusticaResponsavel, codigoTribunal: digitoTribunal) {
-        print("endpoint: \(justicaResponsavel.endpoint)")
-        return justicaResponsavel.endpoint
+func obterEndpointDoProcesso(digitoJusticaResponsavel: String, digitoTribunal: String) throws -> String {
+    
+    guard let segmentoResponsavel = SegmentosDoJudiciario.from(codigoJustica: digitoJusticaResponsavel, codigoTribunal: digitoTribunal) else {
+        throw LawsuitNumberError.couldNotGetEndpointFromEnum
     }
-    return nil
+    print(segmentoResponsavel.endpoint)
+    return segmentoResponsavel.endpoint
 }
 
 enum SegmentosDoJudiciario {
@@ -58,10 +61,13 @@ enum SegmentosDoJudiciario {
     static func from(codigoJustica: String, codigoTribunal: String) -> SegmentosDoJudiciario? {
         switch codigoJustica {
         case "8":
-            return .justicaEstadual(JusticaEstadual.tribunalSaoPaulo)
+            if let tribunal = JusticaEstadual(rawValue: codigoTribunal) {
+                return .justicaEstadual(tribunal)
+            }
         default:
             return nil
         }
+        
+        return nil
     }
-   
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct LawsuitListView: View {
     
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
-
+    var lawsuitService = LawsuitNetworkingService()
     @State var createProcess = false
     
     var body: some View {
@@ -22,8 +22,13 @@ struct LawsuitListView: View {
                         .font(.title)
                         .bold()
                     Button(action: {
-                        let (justica, tribunal) = obterJusticaETribunalDoProcesso(lawsuitNumber: "1053565-57.2024.8.26.0053") ?? ("lala","oiioi")
-                        obterEndpointDoProcesso(digitoJusticaResponsavel: justica, digitoTribunal: tribunal)
+                        Task {
+                            do {
+                                var oi = try await lawsuitService.fetchLawsuitData(fromProcessNumber: "10535655720248260053")
+                            } catch {
+                                
+                            }
+                        }
                         createProcess.toggle()
                     }, label: {
                         Image(systemName: "plus")
@@ -37,6 +42,7 @@ struct LawsuitListView: View {
                 
                 LawsuitListViewHeaderContent(lawsuits: lawsuits)
             }
+
         }
         .sheet(isPresented: $createProcess, content: {
             AddLawsuitView()
