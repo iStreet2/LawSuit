@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Combine
 
 struct EditClientView: View {
     
     //MARK: ViewModels
+    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var addressViewModel: AddressViewModel
 
@@ -38,6 +40,9 @@ struct EditClientView: View {
     @State var clientTelephone: String = ""
     @State var clientCellphone: String = ""
     
+    let textLimit = 50
+    let maritalStatusLimit = 10
+    
     @State var deleteAlert = false
     @ObservedObject var client: Client
     @Binding var deleted: Bool
@@ -52,9 +57,11 @@ struct EditClientView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $clientName)
+                        .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
                     HStack {
                         LabeledDateField(selectedDate: $clientBirthDate, label: "Data de nascimento")
                         LabeledTextField(label: "Profissão", placeholder: "Profissão", textfieldText: $clientOccupation)
+                            .onReceive(Just(clientOccupation)) { _ in textFieldDataViewModel.limitText(text: &clientOccupation, upper: textLimit) }
                             .frame(maxWidth: .infinity)
                             .padding(.leading, 30)
                     }
