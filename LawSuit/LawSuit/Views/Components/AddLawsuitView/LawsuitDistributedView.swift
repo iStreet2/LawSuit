@@ -136,12 +136,13 @@ struct LawsuitDistributedView: View {
                         //MARK: Criar no CoreData
                         let category = TagTypeString.string(from: tagType)
                         let lawyer = lawyers[0]
-                        let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                        var defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
                         var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                         
                         //MARK: Criar no CloudKit
                         Task {
                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["folders","files"])
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &defendant, relationshipsToSave: [])
                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit, relationshipsToSave: ["rootFolder"])
                         }
                         dismiss()
@@ -155,12 +156,13 @@ struct LawsuitDistributedView: View {
                         //MARK: Criar no CoreData
                         let category = TagTypeString.string(from: tagType)
                         let lawyer = lawyers[0]
-                        let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                        var author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
                         var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                         
                         //MARK: Criar no CloudKit
                         Task {
                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["folders","files"])
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &author, relationshipsToSave: [])
                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit, relationshipsToSave: ["rootFolder"])
                         }
                         dismiss()
