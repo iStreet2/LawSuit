@@ -10,6 +10,7 @@ import SwiftUI
 import Combine
 
 class TextFieldDataViewModel: ObservableObject {
+    
     func limitText(text: inout String, upper: Int) {
         
         text = text.filter { $0.isLetter || $0 == " " }
@@ -89,5 +90,22 @@ class TextFieldDataViewModel: ObservableObject {
             format.append(character)
         }
         return format
+    }
+    
+    func lawSuitNumberValidation(_ lawsuit: String) -> String {
+        let numbers = lawsuit.filter {"0987654321".contains($0)}
+        var formatLawsuit = ""
+        
+        for (index, character) in numbers.prefix(20).enumerated() {
+            if index == 9 || index == 13 || index == 14 || index == 16 {
+                formatLawsuit.append(".")
+            }
+            if index == 7 {
+                formatLawsuit.append("-")
+            }
+            formatLawsuit.append(character)
+        }
+        return formatLawsuit
+        
     }
 }

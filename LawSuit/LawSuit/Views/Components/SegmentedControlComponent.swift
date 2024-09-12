@@ -11,6 +11,7 @@ struct SegmentedControlComponent: View {
     @Binding var selectedOption: String
     var infos: [String]
     
+    
     var body: some View {
         Picker("", selection: $selectedOption) {
             ForEach(infos, id: \.self) { info in
@@ -20,4 +21,8 @@ struct SegmentedControlComponent: View {
         .pickerStyle(.segmented).foregroundStyle(Color(.segmentedControl))
         .pickerStyle(SegmentedPickerStyle()).foregroundColor(Color.orange)
     }
+}
+
+#Preview {
+    SegmentedControlComponent(selectedOption: .constant("a"), infos: [ "c", "d"])
 }
