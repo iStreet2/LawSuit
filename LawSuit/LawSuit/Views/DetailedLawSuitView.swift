@@ -16,7 +16,6 @@ struct DetailedLawSuitView: View {
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
-    @EnvironmentObject var dataViewModel: DataViewModel
     
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
@@ -83,16 +82,6 @@ struct DetailedLawSuitView: View {
             navigationViewModel.dismissLawsuitView.toggle()
             dismiss()
         }
-        .onAppear {
-            Task {
-                do {
-                    var oi = try await dataViewModel.lawsuitNetworkService.fetchLawsuitData(fromProcessNumber: lawsuit.number!)
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
     }
 }
 

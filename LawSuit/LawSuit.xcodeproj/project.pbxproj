@@ -12,9 +12,9 @@
 		08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */; };
 		08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */; };
 		08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */; };
-		08A2B0D02C920FC500719571 /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CF2C920FC500719571 /* RequestMethod.swift */; };
 		08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D42C92142E00719571 /* LawsuitErrors.swift */; };
 		08A2B0DA2C935AE200719571 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D92C935AE200719571 /* String+.swift */; };
+		08A2B0DC2C9380AD00719571 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */; };
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
 		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
@@ -129,9 +129,9 @@
 		08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingService.swift; sourceTree = "<group>"; };
 		08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosDoJudiciario.swift; sourceTree = "<group>"; };
 		08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosEnums.swift; sourceTree = "<group>"; };
-		08A2B0CF2C920FC500719571 /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		08A2B0D42C92142E00719571 /* LawsuitErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitErrors.swift; sourceTree = "<group>"; };
 		08A2B0D92C935AE200719571 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
@@ -250,9 +250,9 @@
 			isa = PBXGroup;
 			children = (
 				08A2B0D12C92103200719571 /* NetworkingServices */,
-				08A2B0CE2C920FBC00719571 /* Base */,
 				08A2B0C12C8F743E00719571 /* Endpoints */,
 				08A2B0D42C92142E00719571 /* LawsuitErrors.swift */,
+				08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -264,14 +264,6 @@
 				08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */,
 			);
 			path = Endpoints;
-			sourceTree = "<group>";
-		};
-		08A2B0CE2C920FBC00719571 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				08A2B0CF2C920FC500719571 /* RequestMethod.swift */,
-			);
-			path = Base;
 			sourceTree = "<group>";
 		};
 		08A2B0D12C92103200719571 /* NetworkingServices */ = {
@@ -680,7 +672,6 @@
 				3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */,
 				3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */,
 				3BB9A34E2C84F37A00AD1E30 /* TagViewComponentV4.swift in Sources */,
-				08A2B0D02C920FC500719571 /* RequestMethod.swift in Sources */,
 				E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */,
 				6AC0BB082C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift in Sources */,
 				6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */,
@@ -722,6 +713,7 @@
 				6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */,
 				3B6168022C7E45CE00260585 /* Sections.swift in Sources */,
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
+				08A2B0DC2C9380AD00719571 /* NetworkingManager.swift in Sources */,
 				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
 				08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */,

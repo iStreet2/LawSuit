@@ -22,7 +22,9 @@ struct LawsuitNetworkingService {
     
     //Armazenar dados do processo da API no coredata
     
-    func fetchLawsuitData(fromProcessNumber numeroProcesso: String) async throws -> Result<Lawsuit, Error> {
+    func fetchLawsuitUpdatesData(fromProcessNumber numeroProcesso: String) async throws -> Result<Lawsuit, Error> {
+        let updateManager = UpdateManager(context: context)
+        
         guard let url = montarURL(numeroProcesso: numeroProcesso).url else {
             throw LawsuitRequestError.couldNotCreateURL
         }
@@ -69,7 +71,7 @@ struct LawsuitNetworkingService {
             //Verifico se um processo com esse nro existe no coreData
             if let lawsuit = CheckIfLawsuitExistsInCoreData(numeroProcesso: numeroProcesso) {
                 
-                // Parse e salva os movimentos (updates)
+                //Salvo os movimentos (updates)
                 if let movimentos = source["movimentos"] as? [[String: Any]] {
                     for movimento in movimentos {
                         guard let nomeMovimento = movimento["nome"] as? String,
@@ -80,13 +82,7 @@ struct LawsuitNetworkingService {
                         let dataHora = dataHoraString.convertToDate()
                         
                         //Cria uma nova movimentação para cada movimento na API
-                        let update = Update(context: context)
-                        update.date = dataHora
-                        update.name = nomeMovimento
-                        update.parentLawsuit = lawsuit
-                        
-                        //Adiciona o movimento ao lawsuit
-                        lawsuit.addToUpdates(update)
+                        updateManager.createUpdate(name: nomeMovimento, date: dataHora, lawsuit: lawsuit)
                     }
                 }
                 
@@ -124,32 +120,30 @@ struct LawsuitNetworkingService {
         }
         return nil
     }
-}
-
-
-extension Lawsuit {
-
-    // Propriedade computada para obter a última movimentação
-    var lastUpdateDate: Date? {
-        let updatesArray = updates?.allObjects as? [Update] ?? []
-        let sortedUpdates = updatesArray.sorted(by: { $0.date ?? Date.distantPast > $1.date ?? Date.distantPast })
-        return sortedUpdates.first?.date
-    }
-}
-
-func montarURL(numeroProcesso: String) -> URLComponents {
-    var urlComponents = URLComponents()
     
-    do {
-        let (justica, tribunal) = obterJusticaETribunalDoProcesso(lawsuitNumber: numeroProcesso)
-        let endpoint = try obterEndpointDoProcesso(digitoJusticaResponsavel: justica, digitoTribunal: tribunal)
+    private func montarURL(numeroProcesso: String) -> URLComponents {
+        var urlComponents = URLComponents()
         
-        urlComponents.scheme = "https"
-        urlComponents.host = "api-publica.datajud.cnj.jus.br"
-        urlComponents.path = endpoint
-    } catch {
-        print("Erro na hora de montar a url")
+        do {
+            let (justica, tribunal) = try NetworkingManager.shared.obterJusticaETribunalDoProcesso(lawsuitNumber: numeroProcesso)
+            let endpoint = try NetworkingManager.shared.obterEndpointDoProcesso(digitoJusticaResponsavel: justica, digitoTribunal: tribunal)
+            
+            urlComponents.scheme = "https"
+            urlComponents.host = "api-publica.datajud.cnj.jus.br"
+            urlComponents.path = endpoint
+        } catch {
+            print("Erro na hora de montar a url")
+        }
+        
+        return urlComponents
     }
-    
-    return urlComponents
+}
+
+
+enum RequestMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case patch = "PATCH"
+    case put = "PUT"
+    case delete = "DELETE"
 }

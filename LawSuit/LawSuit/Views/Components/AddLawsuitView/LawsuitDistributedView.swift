@@ -22,12 +22,13 @@ struct LawsuitDistributedView: View {
     @Binding var lawsuitParentAuthorName: String
     @Binding var lawsuitDefendant: String
     @Binding var lawsuitActionDate: Date
+    @EnvironmentObject var dataViewModel: DataViewModel
+
     
     @State var attributedClient = false
     @State var attributedDefendant = false
     
     //MARK: CoreData
-    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
 
@@ -69,8 +70,6 @@ struct LawsuitDistributedView: View {
                                 .bold()
                         }
                     }
-//                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
-//                        .disabled(attributedClient)
                     TextField("", text: $lawsuitDefendant)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)

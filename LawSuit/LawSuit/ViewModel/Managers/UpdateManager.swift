@@ -16,12 +16,12 @@ class UpdateManager {
         self.context = context
     }
     
-    func createUpdate(name: String, date: Date, desc: String?, lawsuit: Lawsuit) {
+    func createUpdate(name: String, date: Date, lawsuit: Lawsuit) {
         let update = Update(context: context)
         update.name = name
         update.date = date
-        update.desc = desc
         update.parentLawsuit = lawsuit
+        lawsuit.addToUpdates(update)
         saveContext()
     }
     
@@ -33,11 +33,15 @@ class UpdateManager {
     }
     
     func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving context on update")
+        DispatchQueue.main.async {
+            do {
+                try self.context.save()
+                
+            } catch {
+                print("Error while saving context on update")
+            }
         }
+
     }
     
 }

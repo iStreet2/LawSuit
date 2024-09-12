@@ -66,7 +66,7 @@ struct LawsuitCellComponent: View {
 
     func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy HH:mm"
+        formatter.dateFormat = "dd/MM/yyyy - HH:mm"
         return formatter.string(from: date)
     }
 }

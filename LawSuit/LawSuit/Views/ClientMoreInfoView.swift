@@ -69,12 +69,6 @@ struct ClientMoreInfoView: View {
     }
 }
 
-
-//#Preview {
-//	ClientMoreInfoView(client: ClientMock(name: "Paulo Sonzzini Ribeiro", occupation: "Developer", rg: "50.276.115-1", cpf: "412.972.543-25", affiliation: "Afiliação Dele", maritalStatus: "Solteiro", nationality: "Brasileiro", birthDate: Date.now, cep: "04149-100", address: "Rua Francisco Maldonado", addressNumber: "467", neighborhood: "Cursino", complement: "Nenhum Complemento", state: "São Paulo", city: "São Paulo", email: "paulo.sonzzini@gmail.com", telephone: "(11)97970-1344", cellphone: "Como é?"))
-//}
-
-
 extension ClientMoreInfoView {
     private var info: some View {
         VStack(alignment: .leading) {

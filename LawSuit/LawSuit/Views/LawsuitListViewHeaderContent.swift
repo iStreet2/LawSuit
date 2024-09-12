@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LawsuitListViewHeaderContent: View {    
     var lawsuits: FetchedResults<Lawsuit>
+    @EnvironmentObject var dataViewModel: DataViewModel
     
     var body: some View {
         
@@ -49,6 +50,17 @@ struct LawsuitListViewHeaderContent: View {
                             .background(Color(index % 2 == 0 ? .white : .gray).opacity(0.1))
                     }
                     .buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
+        .onAppear {
+            Task {
+                do {
+                    for lawsuit in lawsuits {
+                        try await dataViewModel.lawsuitNetworkService.fetchLawsuitUpdatesData(fromProcessNumber: lawsuit.number!)
+                    }
+                } catch {
+                    print(error.localizedDescription)
                 }
             }
         }
