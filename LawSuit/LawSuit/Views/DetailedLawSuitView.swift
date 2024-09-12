@@ -67,7 +67,7 @@ struct DetailedLawSuitView: View {
                     }
                     .padding(.vertical)
                     // MARK: - View/Grid de Pastas
-                    DocumentGridView()
+                    DocumentView()
                 }
                 Spacer()
             }

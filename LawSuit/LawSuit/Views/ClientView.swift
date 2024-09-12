@@ -65,6 +65,7 @@ struct ClientView: View {
                             .padding(.trailing)
                             .buttonStyle(PlainButtonStyle())
                         }else{
+
                             Button(action: {
                                 
                             }, label: {
@@ -82,7 +83,7 @@ struct ClientView: View {
                             LawsuitListViewHeaderContent(lawsuits: lawsuits)
                         }
                     } else {
-                        DocumentGridView()
+                        DocumentView()
                             .onAppear {
                                 navigationViewModel.selectedClient = client
                                 folderViewModel.resetFolderStack()
@@ -94,7 +95,6 @@ struct ClientView: View {
                 }
             }
         }
-        DocumentView()
         .sheet(isPresented: $createLawsuit, content: {
             AddLawsuitView()
         })
