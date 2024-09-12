@@ -17,7 +17,7 @@ class TextFieldDataViewModel: ObservableObject {
             text = String(text.prefix(upper))
         }
     }
-    
+
     func limitMaritalStatus(maritalStatus: inout String, upper: Int) {
         
         maritalStatus = maritalStatus.filter { $0.isLetter || $0 == " " }
@@ -48,11 +48,15 @@ class TextFieldDataViewModel: ObservableObject {
     }
     
     func isValidCPF(_ cpf: String) -> Bool {
-        let numbers = cpf.compactMap(\.wholeNumberValue)
-        guard numbers.count == 11 && Set(numbers).count != 1 else { return false }
-        return digitoCPF(numbers.prefix(9)) == numbers[9] &&
-        digitoCPF(numbers.prefix(10)) == numbers[10]
-    }
+            let numbers = cpf.compactMap(\.wholeNumberValue)
+            
+            // Verifica se o CPF tem 11 dígitos antes de validar
+            guard numbers.count == 11 else { return false }
+        
+            guard Set(numbers).count != 1 else { return false }
+            return digitoCPF(numbers.prefix(9)) == numbers[9] &&
+                   digitoCPF(numbers.prefix(10)) == numbers[10]
+        }
     
     func digitoCPF(_ numbers: ArraySlice<Int>) -> Int {
         var number = numbers.count + 2
@@ -89,5 +93,10 @@ class TextFieldDataViewModel: ObservableObject {
             format.append(character)
         }
         return format
+    }
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
     }
 }

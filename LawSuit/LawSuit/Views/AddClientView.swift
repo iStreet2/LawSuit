@@ -11,11 +11,12 @@ import Combine
 struct AddClientView: View {
     
     //MARK: Environments
+    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     @Environment(\.dismiss) var dismiss
     
     //MARK: Variáveis de estado
     @State var stage: Int = 1
-    @State var missingInformation = false
+    @State var invalidInformation: InvalidInformation?
     @State var name: String = ""
     @State var occupation: String = ""
     @State var rg: String = ""
@@ -79,19 +80,23 @@ struct AddClientView: View {
                     }
                 })
                 Button(action: {
-                    if areFieldsFilled() {
-                        if stage < 3 {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                stage += 1
-                            }
-                        } else {
-                            //MARK: Advogado temporário
-                            let lawyer = lawyers[0]
-                            dataViewModel.coreDataManager.clientManager.createClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
-                            dismiss()
+                    if !areFieldsFilled(){
+                        invalidInformation = .missingInformation
+                        return
+                    }
+                    if cpf.count < 14 || !textFieldDataViewModel.isValidCPF(cpf) {
+                        invalidInformation = .invalidCPF
+                        return
+                    }
+                    if stage < 3 {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            stage += 1
                         }
                     } else {
-                        missingInformation = true
+                        //MARK: Advogado temporário
+                        let lawyer = lawyers[0]
+                        dataViewModel.coreDataManager.clientManager.createClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                        dismiss()
                     }
                     
                 }, label: {
@@ -103,41 +108,48 @@ struct AddClientView: View {
                     }
                 })
                 .buttonStyle(.borderedProminent)
-                .alert(isPresented: $missingInformation) {
-                    Alert(title: Text("Informações Faltando"),
-                          message: Text("Por favor, preencha todos os campos antes de continuar."),
-                          dismissButton: .default(Text("Ok")))
+                .alert(item: $invalidInformation) { error in
+                    switch error {
+                    case .missingInformation:
+                        return Alert(title: Text("Informações Faltando"),
+                                     message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidCPF:
+                        return Alert(title: Text("CPF inválido"),
+                                     message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                     dismissButton: .default(Text("Ok")))
+                        
+                    }
                 }
             }
         }
         .padding()
         .frame(width: 500)
     }
+    
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage
     func areFieldsFilled() -> Bool {
         if stage == 1 {
             return !name.isEmpty &&
-                   !rg.isEmpty &&
-                   !affiliation.isEmpty &&
-                   !nationality.isEmpty &&
-                   !occupation.isEmpty &&
-                   !cpf.isEmpty &&
-                   !maritalStatus.isEmpty &&
-                   !birthDate.description.isEmpty
+            !rg.isEmpty &&
+            !affiliation.isEmpty &&
+            !nationality.isEmpty &&
+            !occupation.isEmpty &&
+            !maritalStatus.isEmpty &&
+            !birthDate.description.isEmpty
         } else if stage == 2 {
             return !cep.isEmpty &&
-                   !address.isEmpty &&
-                   !addressNumber.isEmpty &&
-                   !neighborhood.isEmpty &&
-                   !city.isEmpty &&
-                   !state.isEmpty
+            !address.isEmpty &&
+            !addressNumber.isEmpty &&
+            !neighborhood.isEmpty &&
+            !city.isEmpty &&
+            !state.isEmpty
         } else if stage == 3 {
             return !email.isEmpty &&
-                   !telephone.isEmpty &&
-                   !cellphone.isEmpty
+            !telephone.isEmpty &&
+            !cellphone.isEmpty
         }
         return true
     }
 }
-
 
