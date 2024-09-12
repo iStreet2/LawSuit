@@ -170,7 +170,7 @@ class RecordManager {
     }
     
     // MARK: - Update
-    func updateRecordWithID<T: Any>(object: T, key: String, newValue: Any) async {
+    func updateRecordWithID<T: Recordable>(object: T, key: String, newValue: Any) async {
         
         let record = getRecord(object: object)
         
@@ -309,5 +309,38 @@ class RecordManager {
         }
 
         try await publicDatabase.save(firstRecord)
+    }
+    
+    //MARK: - Update de um objeto passando várias propriedades
+    func updateObjectInCloudKit<T: NSManagedObject>(object: T, propertyNames: [String], propertyValues: [Any]) async throws {
+        guard propertyNames.count == propertyValues.count else {
+            print("Error: The count of property names and property values does not match.")
+            return
+        }
+        
+        var updatedFields = [String: Any]()
+        
+        // Cria o dicionário de campos modificados
+        for (index, propertyName) in propertyNames.enumerated() {
+            let newValue = propertyValues[index]
+            updatedFields[propertyName] = newValue
+        }
+        
+        // Atualizar no CloudKit
+        guard let recordName = object.value(forKey: "recordName") as? String else {
+            print("Error: recordName is missing from the object.")
+            return
+        }
+        
+        let recordID = CKRecord.ID(recordName: recordName)
+        let record = try await self.publicDatabase.record(for: recordID)
+        
+        // Atualiza os campos no CKRecord
+        for (key, value) in updatedFields {
+            record.setValue(value, forKey: key)
+        }
+        
+        // Salva as mudanças no CloudKit
+        try await self.publicDatabase.save(record)
     }
 }

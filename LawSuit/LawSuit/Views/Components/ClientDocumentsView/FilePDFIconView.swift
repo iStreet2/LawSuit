@@ -99,7 +99,15 @@ struct FilePDFIconView: View {
     }
     
     private func saveChanges() {
+        //MARK: CoreData
         dataViewModel.coreDataManager.filePDFManager.editFilePDFName(filePDF: filePDF, name: fileName)
+        
+        //MARK: CloudKit
+        let propertyNames = ["name"]
+        let propertyValues: [Any] = [fileName]
+        Task {
+            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: filePDF, propertyNames: propertyNames, propertyValues: propertyValues)
+        }
         isEditing = false
     }
 }

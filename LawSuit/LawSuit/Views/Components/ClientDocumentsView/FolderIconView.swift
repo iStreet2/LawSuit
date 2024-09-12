@@ -100,7 +100,16 @@ struct FolderIconView: View {
     }
     
     private func saveChanges() {
+        //MARK: CoreData
         dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folderName)
+        
+        //MARK: CloudKit
+        let propertyNames = ["name"]
+        let propertyValues: [Any] = [folderName]
+        Task {
+            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: folder, propertyNames: propertyNames, propertyValues: propertyValues)
+        }
+        
         isEditing = false
     }
 }

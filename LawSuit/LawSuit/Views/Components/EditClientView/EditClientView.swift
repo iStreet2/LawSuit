@@ -116,7 +116,15 @@ struct EditClientView: View {
                 }
                 Button(action: {
                     if areFieldsFilled() {
+                        //MARK: Editar no CoreData
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        
+                        //MARK: Editar no CloudKit
+                        let propertyNames = ["name", "occupation", "rg", "cpf", "affiliation", "maritalStatus", "nationality", "birthDate", "cep", "address", "addressNumber", "neighborhood", "complement", "state", "city", "email", "telephone", "cellphone"]
+                        let propertyValues: [Any] = [clientName, clientOccupation, clientRg, clientCpf, clientAffiliation, clientMaritalStatus, clientNationality, clientBirthDate, clientCep, clientAddress, clientAddressNumber, clientNeighborhood, clientComplement, clientState, clientCity, clientEmail, clientTelephone, clientCellphone]
+                        Task {
+                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: client, propertyNames: propertyNames, propertyValues: propertyValues)
+                        }
                         dismiss()
                     } else {
                         missingInformation = true
