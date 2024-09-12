@@ -19,11 +19,11 @@ struct DetailedLawSuitView: View {
     
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
+    @ObservedObject var client: Client
+    @ObservedObject var entity: Entity
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
-    @State var lawsuitAuthorName = ""
-    @State var lawsuitDefendantName = ""
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
@@ -81,13 +81,6 @@ struct DetailedLawSuitView: View {
         .onAppear {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
-            updateNames()
-        }
-        .onChange(of: lawsuit.authorID) { _ in
-            updateNames()
-        }
-        .onChange(of: lawsuit.defendantID) { _ in
-            updateNames()
         }
         .onChange(of: deleted) { _ in
             dismiss()
@@ -95,24 +88,6 @@ struct DetailedLawSuitView: View {
         .onChange(of: navigationViewModel.dismissLawsuitView) { _ in
             navigationViewModel.dismissLawsuitView.toggle()
             dismiss()
-        }
-    }
-    
-    func updateNames() {
-        //Se o cliente do processo estiver no autor
-        if lawsuit.authorID.hasPrefix("client:") {
-            if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
-               let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                lawsuitAuthorName = author.name
-                lawsuitDefendantName = defendant.name
-            }
-        //Se o cliente do processo estiver no reu
-        } else {
-            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
-               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                lawsuitAuthorName = author.name
-                lawsuitDefendantName = defendant.name
-            }
         }
     }
 }
@@ -180,8 +155,7 @@ extension DetailedLawSuitView {
 							.font(.subheadline)
 							.foregroundStyle(.secondary)
 							.bold()
-                        //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Text(lawsuitAuthorName)
+                        Text(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.name)
 							.font(.subheadline)
 							.bold()
 					}
@@ -192,7 +166,7 @@ extension DetailedLawSuitView {
 							.foregroundStyle(.secondary)
 							.bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Text(lawsuitDefendantName)
+                        Text(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? client.name : entity.name)
 							.font(.subheadline)
 							.bold()
 					}

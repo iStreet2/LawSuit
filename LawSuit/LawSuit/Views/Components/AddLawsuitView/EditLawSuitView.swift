@@ -25,6 +25,7 @@ struct EditLawSuitView: View {
     @Binding var deleted: Bool
     @State var attributedAuthor = false
     @State var attributedDefendant = false
+    @State var entityID = ""
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -144,19 +145,25 @@ struct EditLawSuitView: View {
                         Button(action: {
                             if attributedAuthor {
                                 if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                                    let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                                    let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                    dismiss()
+                                    if let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
+                                        dataViewModel.coreDataManager.entityManager.editEntity(entity: defendant, name: lawsuitDefendantName)
+                                        let category = TagTypeString.string(from: tagType)
+                                        dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                        dismiss()
+                                    }
+                                    
                                 } else {
                                     print("error achando ou author")
                                 }
                             } else if attributedDefendant {
                                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
-                                    let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                                    let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                    dismiss()
+                                    if let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
+                                        dataViewModel.coreDataManager.entityManager.editEntity(entity: author, name: lawsuitAuthorName)
+                                        let category = TagTypeString.string(from: tagType)
+                                        dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                        dismiss()
+                                    }
+                                    
                                 } else {
                                     print("error achando defendant")
                                 }
@@ -196,6 +203,7 @@ struct EditLawSuitView: View {
                    let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
                     lawsuitAuthorName = author.name
                     lawsuitDefendantName = defendant.name
+                    self.entityID = defendant.id
                 }
             //Se o cliente do processo estiver no reu
             } else {
@@ -204,6 +212,7 @@ struct EditLawSuitView: View {
                    let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
                     lawsuitAuthorName = author.name
                     lawsuitDefendantName = defendant.name
+                    self.entityID = author.id
                 }
             }
             lawsuitNumber = lawsuit.number

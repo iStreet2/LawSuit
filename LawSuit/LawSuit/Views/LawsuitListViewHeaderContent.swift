@@ -11,6 +11,7 @@ struct LawsuitListViewHeaderContent: View {
     
     //MARK: Variáveis de estado
     @State var lawsuitClient: Client?
+    @State var lawsuitEntity: Entity?
     var lawsuits: FetchedResults<Lawsuit>
     
     //MARK: CoreData
@@ -50,7 +51,9 @@ struct LawsuitListViewHeaderContent: View {
             VStack(spacing: 0) {
                 ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
                     NavigationLink {
-                        DetailedLawSuitView(lawsuit: lawsuit)
+                        if let lawsuitClient = self.lawsuitClient, let lawsuitEntity = self.lawsuitEntity {
+                            DetailedLawSuitView(lawsuit: lawsuit, client: lawsuitClient, entity: lawsuitEntity)
+                        }
                     } label: {
                         if let lawsuitClient = self.lawsuitClient {
                             LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
@@ -62,12 +65,18 @@ struct LawsuitListViewHeaderContent: View {
                                     //Se o cliente do processo estiver no autor
                                     if lawsuit.authorID.hasPrefix("client:") {
                                         if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID) {
-                                            self.lawsuitClient = author
+                                            if let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                                                self.lawsuitClient = author
+                                                self.lawsuitEntity = defendant
+                                            }
                                         }
                                     //Se o cliente do processo estiver no reu
                                     } else {
                                         if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID){
-                                            self.lawsuitClient = defendant
+                                            if let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+                                                self.lawsuitClient = defendant
+                                                self.lawsuitEntity = author
+                                            }
                                         }
                                     }
                                 }
