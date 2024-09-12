@@ -96,6 +96,7 @@ struct AddClientForm: View {
                     LabeledTextField(label: "Bairro", placeholder: "Insira seu bairro", textfieldText: $neighborhood)
                     LabeledTextField(label: "Complemento", placeholder: "Insira o complemento", textfieldText: $complement)
                         .frame(width: 170)
+                        .onReceive(Just(complement)) { _ in textFieldDataViewModel.limitText(text: &complement, upper: textLimit) }
                 }
                 HStack(spacing: 10) {
                     LabeledTextField(label: "Estado", placeholder: "Insira seu estado", textfieldText: $state)

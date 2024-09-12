@@ -14,8 +14,11 @@ enum InvalidInformation: Error, Identifiable {
             return "missingInformation"
         case .invalidCPF:
             return "invalidCPF"
+        case .invalidRG:
+            return "invalidRG"
         }
     }
     case missingInformation
     case invalidCPF
+    case invalidRG
 }

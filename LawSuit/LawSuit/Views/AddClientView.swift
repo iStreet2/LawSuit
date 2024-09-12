@@ -88,6 +88,10 @@ struct AddClientView: View {
                         invalidInformation = .invalidCPF
                         return
                     }
+                    if rg.count < 9 {
+                        invalidInformation = .invalidRG
+                        return
+                    }
                     if stage < 3 {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             stage += 1
@@ -108,6 +112,7 @@ struct AddClientView: View {
                     }
                 })
                 .buttonStyle(.borderedProminent)
+                .foregroundStyle(.green)
                 .alert(item: $invalidInformation) { error in
                     switch error {
                     case .missingInformation:
@@ -119,6 +124,10 @@ struct AddClientView: View {
                                      message: Text("Por favor, insira um CPF válido antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
                         
+                    case .invalidRG:
+                        return Alert(title: Text("RG inválido"),
+                                     message: Text("Por favor, insira um RG válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
                     }
                 }
             }
