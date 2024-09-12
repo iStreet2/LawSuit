@@ -20,4 +20,8 @@ enum LawsuitRequestError: Error {
     case couldNotCreateRequestBody
     case jsonNavigationError
     case errorRequest(error: String)
+    case coreDataSaveError(error: String)
+    case couldNotGetMovementInfo
+    case unknown
 }
+

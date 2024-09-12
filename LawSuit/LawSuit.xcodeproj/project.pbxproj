@@ -14,6 +14,7 @@
 		08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */; };
 		08A2B0D02C920FC500719571 /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CF2C920FC500719571 /* RequestMethod.swift */; };
 		08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D42C92142E00719571 /* LawsuitErrors.swift */; };
+		08A2B0DA2C935AE200719571 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D92C935AE200719571 /* String+.swift */; };
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
 		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
@@ -130,6 +131,7 @@
 		08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosEnums.swift; sourceTree = "<group>"; };
 		08A2B0CF2C920FC500719571 /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		08A2B0D42C92142E00719571 /* LawsuitErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitErrors.swift; sourceTree = "<group>"; };
+		08A2B0D92C935AE200719571 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
@@ -280,6 +282,14 @@
 			path = NetworkingServices;
 			sourceTree = "<group>";
 		};
+		08A2B0D82C935ADA00719571 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				08A2B0D92C935AE200719571 /* String+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		08E6572E2C7929FA00313FCB /* EditClientView */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,6 +356,7 @@
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
+				08A2B0D82C935ADA00719571 /* Extensions */,
 				08A2B0C02C8F730500719571 /* Networking */,
 				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
 				3BD40B392C6D4613004048FA /* Examples */,
@@ -732,6 +743,7 @@
 				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
 				E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */,
 				08E8D2002C87ACDA008F3859 /* LawsuitCellComponent.swift in Sources */,
+				08A2B0DA2C935AE200719571 /* String+.swift in Sources */,
 				3BD40B382C6D454B004048FA /* ClientView.swift in Sources */,
 				3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,

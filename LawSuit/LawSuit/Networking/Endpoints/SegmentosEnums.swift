@@ -15,6 +15,7 @@ enum TribunalSuperior: String {
     case militar = "/api_publica_stm/_search"
 }
 
+
 enum JusticaFederal {
     case primeiraRegiao
     case segundaRegiao
@@ -24,7 +25,7 @@ enum JusticaFederal {
     case sextaRegiao
 }
 
-enum JusticaEstadual: String {
+enum TribunalDaJusticaEstadual: String {
     case tribunalSaoPaulo = "26"
     //MARK: - Terminar de mapear
     //    case tribunalAcre

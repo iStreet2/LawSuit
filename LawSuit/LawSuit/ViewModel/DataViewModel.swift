@@ -21,6 +21,9 @@ class DataViewModel: ObservableObject {
 //    var cloudManager: CloudManager
 //    var cloudDataConverter: CloudDataConverter
     
+    
+    var lawsuitNetworkService: LawsuitNetworkingService
+    
     init() {
         self.coreDataContainer.loadPersistentStores { descricao, error in
             if let error = error {
@@ -31,6 +34,7 @@ class DataViewModel: ObservableObject {
         self.coreDataManager = CoreDataManager(context: context)
 //        self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
 //        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter)
+        self.lawsuitNetworkService = LawsuitNetworkingService(context: context)
     }
     
 }

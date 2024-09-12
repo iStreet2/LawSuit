@@ -9,13 +9,14 @@ import Foundation
 import SwiftUI
 
 struct DetailedLawSuitView: View {
-    
+        
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
@@ -81,6 +82,15 @@ struct DetailedLawSuitView: View {
         .onChange(of: navigationViewModel.dismissLawsuitView) { change in
             navigationViewModel.dismissLawsuitView.toggle()
             dismiss()
+        }
+        .onAppear {
+            Task {
+                do {
+                    var oi = try await dataViewModel.lawsuitNetworkService.fetchLawsuitData(fromProcessNumber: lawsuit.number!)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
         }
         
     }

@@ -7,19 +7,14 @@
 
 import Foundation
 
-enum JusticaResponsavel: Int {
-    //case tribunalSuperior = 1
-    //case justicaFederal = 3
-    case justicaEstadual = 8
-}
 
-func obterJusticaETribunalDoProcesso(lawsuitNumber: String) throws -> (justicaRes: String, tribu: String)  {
+func obterJusticaETribunalDoProcesso(lawsuitNumber: String) -> (justicaRes: String, tribu: String)  {
 //    let splittedLawsuitNumber = lawsuitNumber.split(separator: ".")
 //    
 //    guard splittedLawsuitNumber.count == 5 else {
 //        throw LawsuitNumberError.invalidLawsuitNumber
 //    }
-//    
+    
     let inicio = lawsuitNumber.index(lawsuitNumber.startIndex, offsetBy: 14)
     let fim = lawsuitNumber.index(lawsuitNumber.startIndex, offsetBy: 16)
     
@@ -27,7 +22,7 @@ func obterJusticaETribunalDoProcesso(lawsuitNumber: String) throws -> (justicaRe
     
     let tribunal = String(lawsuitNumber[inicio..<fim])
     
-    print("justicaRepsonsavel: \(justicaResponsavel), tribunal: \(tribunal)")
+    print("justicaResponsavel: \(justicaResponsavel), tribunal: \(tribunal)")
     return (justicaResponsavel, tribunal)
 }
 
@@ -44,7 +39,7 @@ enum SegmentosDoJudiciario {
     
     //case tribunalSuperior(TribunalSuperior)
     //case justicaFederal(JusticaFederal)
-    case justicaEstadual(JusticaEstadual)
+    case justicaEstadual(TribunalDaJusticaEstadual)
     
     //MARK: - Terminar de mapear
     //    case justicaDoTrabalho
@@ -61,7 +56,7 @@ enum SegmentosDoJudiciario {
     static func from(codigoJustica: String, codigoTribunal: String) -> SegmentosDoJudiciario? {
         switch codigoJustica {
         case "8":
-            if let tribunal = JusticaEstadual(rawValue: codigoTribunal) {
+            if let tribunal = TribunalDaJusticaEstadual(rawValue: codigoTribunal) {
                 return .justicaEstadual(tribunal)
             }
         default:
