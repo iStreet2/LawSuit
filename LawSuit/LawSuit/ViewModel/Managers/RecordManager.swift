@@ -62,7 +62,6 @@ class RecordManager {
         do {
             let savedRecord = try await publicDatabase.save(record)
             object.recordName = savedRecord.recordID.recordName
-            saveContext()
             
             // Save related objects and update the relationships
             await saveRelatedObjects(for: object)
@@ -279,6 +278,7 @@ class RecordManager {
         do {
             let savedRecord = try await publicDatabase.save(record)
             object.recordName = savedRecord.recordID.recordName
+            saveContext()
         } catch {
             throw error
         }

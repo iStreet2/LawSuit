@@ -161,6 +161,14 @@ class ClientManager {
         return ageComponents.year ?? 0
     }
     
+    func authorIsClient(lawsuit: Lawsuit) -> Bool {
+        if lawsuit.id.hasPrefix("client:") {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func saveContext() {
         do {
             try context.save()

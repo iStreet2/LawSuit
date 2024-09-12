@@ -146,9 +146,18 @@ struct EditLawSuitView: View {
                             if attributedAuthor {
                                 if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                                     if let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
+                                        //MARK: CoreData
                                         dataViewModel.coreDataManager.entityManager.editEntity(entity: defendant, name: lawsuitDefendantName)
                                         let category = TagTypeString.string(from: tagType)
                                         dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                        
+                                        //MARK: CloudKit
+                                        let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
+                                        let propertyValues: [Any] = ["\(lawsuitAuthorName) X \(lawsuitDefendantName)", lawsuitNumber, lawsuitCourt, category, defendant.id, author.id, lawsuitActionDate]
+                                        Task {
+                                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: defendant, propertyNames: ["name"], propertyValues: [lawsuitDefendantName])
+                                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: lawsuit, propertyNames: propertyNames, propertyValues: propertyValues)
+                                        }
                                         dismiss()
                                     }
                                     
@@ -158,9 +167,18 @@ struct EditLawSuitView: View {
                             } else if attributedDefendant {
                                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
                                     if let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
+                                        //MARK: CoreData
                                         dataViewModel.coreDataManager.entityManager.editEntity(entity: author, name: lawsuitAuthorName)
                                         let category = TagTypeString.string(from: tagType)
                                         dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                        
+                                        //MARK: CloudKit
+                                        let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
+                                        let propertyValues: [Any] = ["\(lawsuitAuthorName) X \(lawsuitDefendantName)", lawsuitNumber, lawsuitCourt, category, defendant.id, author.id, lawsuitActionDate]
+                                        Task {
+                                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: author, propertyNames: ["name"], propertyValues: [lawsuitAuthorName])
+                                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: lawsuit, propertyNames: propertyNames, propertyValues: propertyValues)
+                                        }
                                         dismiss()
                                     }
                                     
