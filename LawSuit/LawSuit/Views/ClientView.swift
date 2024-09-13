@@ -94,6 +94,7 @@ struct ClientView: View {
                 }
             }
         }
+        DocumentView()
         .sheet(isPresented: $createLawsuit, content: {
             AddLawsuitView()
         })

@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LawsuitDistributedView: View {
     
     //MARK: Variáveis de Ambiente
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var textfieldDataViewModel: TextFieldDataViewModel
     
     @State var textInput = ""
     @State var tagType: TagType = .civel
@@ -35,6 +37,9 @@ struct LawsuitDistributedView: View {
     var body: some View {
         VStack{
             LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
+                .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textfieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
+
+                }
             LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
         }
         HStack(alignment: .top){
