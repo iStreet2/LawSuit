@@ -91,11 +91,23 @@ struct EditClientView: View {
                     Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
                         print("oi")
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
+                            //MARK: CloudKit
+                            for lawsuit in lawsuits {
+                                Task {
+                                    try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: lawsuit)
+                                }
+                            }
+                            Task {
+                                await dataViewModel.cloudManager.recordManager.deleteObject(object: client)
+                            }
+                            
+                            //MARK: CoreData
                             for lawsuit in lawsuits {
                                 dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                             }
                             // Após deletar os processos, deletar o cliente
                             dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+                            
                             navigationViewModel.selectedClient = nil
                             deleted.toggle()
                             dismiss()

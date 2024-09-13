@@ -284,6 +284,7 @@ class RecordManager {
         }
     }
     
+    //MARK: Essa função adiciona no CloudKit uma reference do primeiro objeto para o segundo
     func addReference<T: NSManagedObject>(from firstObject: T, to secondObject: T, referenceKey: String) async throws {
         guard let firstRecordName = firstObject.value(forKey: "recordName") as? String else {
             throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "First object not found in CloudKit"])
@@ -342,5 +343,47 @@ class RecordManager {
         
         // Salva as mudanças no CloudKit
         try await self.publicDatabase.save(record)
+    }
+    
+    //MARK: Delete
+    func deleteObjectInCloudKit<T: NSManagedObject>(object: T, deleteRelationships: Bool = true) async throws {
+        // Verificar se o objeto tem um recordName para localizar no CloudKit
+        guard let recordName = object.value(forKey: "recordName") as? String else {
+            print("Error: recordName is missing.")
+            return
+        }
+
+        // Deletar o objeto do CloudKit
+        let recordID = CKRecord.ID(recordName: recordName)
+        do {
+            try await publicDatabase.deleteRecord(withID: recordID)
+        } catch {
+            throw error
+        }
+        
+        // Se a flag `deleteRelationships` estiver ativa, deletar relações associadas
+        if deleteRelationships {
+            // Exemplo de como usar Mirror para deletar relações específicas
+            let mirror = Mirror(reflecting: object)
+            
+            for child in mirror.children {
+                if let relationshipName = child.label, let relationshipValue = child.value as? NSSet {
+                    for relatedObject in relationshipValue {
+                        if let relatedObject = relatedObject as? NSManagedObject {
+                            // Chama recursivamente para deletar os objetos relacionados
+                            try await deleteObjectInCloudKit(object: relatedObject, deleteRelationships: true)
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Deletar o objeto no Core Data
+        context.delete(object)
+        do {
+            try context.save()
+        } catch {
+            print("Error saving CoreData context after deletion.")
+        }
     }
 }
