@@ -15,6 +15,9 @@
 		08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D42C92142E00719571 /* LawsuitErrors.swift */; };
 		08A2B0DA2C935AE200719571 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D92C935AE200719571 /* String+.swift */; };
 		08A2B0DC2C9380AD00719571 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */; };
+		08A2B0DE2C938D7B00719571 /* LawsuitNetworkingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0DD2C938D7B00719571 /* LawsuitNetworkingViewModel.swift */; };
+		08A2B0E02C93AEFF00719571 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0DF2C93AEFF00719571 /* AuthenticationManager.swift */; };
+		08A2B0E22C93B01400719571 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E12C93B01400719571 /* KeychainHelper.swift */; };
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
 		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
@@ -132,6 +135,9 @@
 		08A2B0D42C92142E00719571 /* LawsuitErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitErrors.swift; sourceTree = "<group>"; };
 		08A2B0D92C935AE200719571 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
+		08A2B0DD2C938D7B00719571 /* LawsuitNetworkingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingViewModel.swift; sourceTree = "<group>"; };
+		08A2B0DF2C93AEFF00719571 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		08A2B0E12C93B01400719571 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
@@ -249,10 +255,10 @@
 		08A2B0C02C8F730500719571 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */,
 				08A2B0D12C92103200719571 /* NetworkingServices */,
 				08A2B0C12C8F743E00719571 /* Endpoints */,
 				08A2B0D42C92142E00719571 /* LawsuitErrors.swift */,
-				08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -318,6 +324,7 @@
 				3B0A7AD02C7D16AA005A5946 /* NetworkMonitorViewModel.swift */,
 				3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */,
 				3BD313E32C88FD56001CE5E7 /* DataViewModel.swift */,
+				08A2B0DD2C938D7B00719571 /* LawsuitNetworkingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -360,6 +367,7 @@
 				3B98F10F2C668B1100C45121 /* Assets.xcassets */,
 				3B98F1142C668B1100C45121 /* LawSuit.entitlements */,
 				3B98F1112C668B1100C45121 /* Preview Content */,
+				08A2B0E12C93B01400719571 /* KeychainHelper.swift */,
 			);
 			path = LawSuit;
 			sourceTree = "<group>";
@@ -449,6 +457,7 @@
 				3B0EE5F62C6A90F100CFC91A /* CoreDataManager.swift */,
 				E93BCFA62C77D3DE007CF206 /* CloudManager.swift */,
 				E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */,
+				08A2B0DF2C93AEFF00719571 /* AuthenticationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -712,6 +721,7 @@
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
 				6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */,
 				3B6168022C7E45CE00260585 /* Sections.swift in Sources */,
+				08A2B0DE2C938D7B00719571 /* LawsuitNetworkingViewModel.swift in Sources */,
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
 				08A2B0DC2C9380AD00719571 /* NetworkingManager.swift in Sources */,
 				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
@@ -722,11 +732,13 @@
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,
 				DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */,
 				DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */,
+				08A2B0E22C93B01400719571 /* KeychainHelper.swift in Sources */,
 				3BB9A3502C84F38000AD1E30 /* TagViewComponentV5.swift in Sources */,
 				3B24D4B02C73781F00CCA763 /* Client.swift in Sources */,
 				3B24D4B22C73781F00CCA763 /* FilePDF.swift in Sources */,
 				3B24D4B42C73781F00CCA763 /* Update.swift in Sources */,
 				3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */,
+				08A2B0E02C93AEFF00719571 /* AuthenticationManager.swift in Sources */,
 				08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */,
 				E93BCFA72C77D3DE007CF206 /* CloudManager.swift in Sources */,
 				3BD313E42C88FD56001CE5E7 /* DataViewModel.swift in Sources */,

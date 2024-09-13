@@ -33,15 +33,12 @@ class UpdateManager {
     }
     
     func saveContext() {
-        DispatchQueue.main.async {
-            do {
-                try self.context.save()
-                
-            } catch {
-                print("Error while saving context on update")
-            }
+        do {
+            try self.context.save()
+            
+        } catch {
+            print("Error while saving context on update")
         }
-
     }
     
 }

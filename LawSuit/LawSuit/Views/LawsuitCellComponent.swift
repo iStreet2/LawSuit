@@ -12,9 +12,9 @@ struct LawsuitCellComponent: View {
     @ObservedObject var client: Client
     @ObservedObject var lawyer: Lawyer
     @ObservedObject var lawsuit: Lawsuit
-        
+    
     //MARK: CoreData
-    @EnvironmentObject var dataViewModel: DataViewModel
+    var viewModel: LawsuitNetworkingViewModel
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
@@ -39,7 +39,7 @@ struct LawsuitCellComponent: View {
                 Spacer()
                 
                 Group {
-                    if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit) {
+                    if let latestUpdateDate = viewModel.getLatestUpdateDate(fromLawsuit: lawsuit) {
                         Text(formatDate(latestUpdateDate))
                             .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
                     } else {
@@ -58,12 +58,24 @@ struct LawsuitCellComponent: View {
                 
             }
             .padding(.horizontal, 20)
+            .onAppear {
+                Task {
+                    do {
+                        guard let response = try? await viewModel.getLawsuitUpdates(fromLawsuit: lawsuit) else {
+                            throw LawsuitRequestError.unknown
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
             
         }
         .frame(minWidth: 777)
         .frame(height: 47)
     }
-
+    
     func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy - HH:mm"

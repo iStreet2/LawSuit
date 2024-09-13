@@ -9,8 +9,6 @@ import Foundation
 import CoreData
 import SwiftUI
 
-//buscar dados da api de acordo com o endpoint
-//armazenar dados puxados da api em um objeto do coredata
 
 struct LawsuitNetworkingService {
     
@@ -20,12 +18,11 @@ struct LawsuitNetworkingService {
         self.context = context
     }
     
-    //Armazenar dados do processo da API no coredata
-    
-    func fetchLawsuitUpdatesData(fromProcessNumber numeroProcesso: String) async throws -> Result<Lawsuit, Error> {
+    func fetchLawsuitUpdatesData(fromLawsuit lawsuit: Lawsuit) async throws -> Result<Lawsuit, Error> {
+        
         let updateManager = UpdateManager(context: context)
         
-        guard let url = montarURL(numeroProcesso: numeroProcesso).url else {
+        guard let url = montarURL(numeroProcesso: lawsuit.number ?? "").url else {
             throw LawsuitRequestError.couldNotCreateURL
         }
         
@@ -37,7 +34,7 @@ struct LawsuitNetworkingService {
         let jsonBody: [String: Any] = [
             "query": [
                 "match": [
-                    "numeroProcesso": numeroProcesso
+                    "numeroProcesso": lawsuit.number
                 ]
             ]
         ]
@@ -67,58 +64,30 @@ struct LawsuitNetworkingService {
                   let source = firstHit["_source"] as? [String: Any] else {
                 return .failure(LawsuitRequestError.jsonNavigationError)
             }
-                       
-            //Verifico se um processo com esse nro existe no coreData
-            if let lawsuit = CheckIfLawsuitExistsInCoreData(numeroProcesso: numeroProcesso) {
-                
-                //Salvo os movimentos (updates)
-                if let movimentos = source["movimentos"] as? [[String: Any]] {
-                    for movimento in movimentos {
-                        guard let nomeMovimento = movimento["nome"] as? String,
-                              let dataHoraString = movimento["dataHora"] as? String else {
-                            throw LawsuitRequestError.couldNotGetMovementInfo
-                        }
-                        
-                        let dataHora = dataHoraString.convertToDate()
-                        
-                        //Cria uma nova movimentação para cada movimento na API
-                        updateManager.createUpdate(name: nomeMovimento, date: dataHora, lawsuit: lawsuit)
+            
+            //Salvo os movimentos (updates)
+            if let movimentos = source["movimentos"] as? [[String: Any]] {
+                for movimento in movimentos {
+                    guard let nomeMovimento = movimento["nome"] as? String,
+                          let dataHoraString = movimento["dataHora"] as? String else {
+                        throw LawsuitRequestError.couldNotGetMovementInfo
                     }
+                    
+                    let dataHora = dataHoraString.convertToDate()
+                    
+                    //Cria uma nova movimentação para cada movimento na API
+                    updateManager.createUpdate(name: nomeMovimento, date: dataHora, lawsuit: lawsuit)
                 }
-                
-                // Salva o contexto com o Lawsuit e seus Updates
-                do {
-                    try context.save()
-                } catch {
-                    print("Erro ao salvar as atualizações: \(error)")
-                    return .failure(LawsuitRequestError.coreDataSaveError(error: error.localizedDescription))
-                }
-                
-                return .success(lawsuit)
             }
+            
+            // Salva o contexto com o Lawsuit e seus Updates
+            updateManager.saveContext()
+           
+            return .success(lawsuit)
             
         } catch {
             return .failure(LawsuitRequestError.errorRequest(error: error.localizedDescription))
         }
-        
-        return.failure(LawsuitRequestError.unknown)
-    }
-    
-    //Busca no coreData se um processo com esse nro existe
-    private func CheckIfLawsuitExistsInCoreData(numeroProcesso: String) -> Lawsuit? {
-        
-        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "number == %@", numeroProcesso)
-        
-        do {
-            let lawsuits = try context.fetch(fetchRequest)
-            if let lawsuit = lawsuits.first {
-                return lawsuit
-            }
-        } catch {
-            return nil
-        }
-        return nil
     }
     
     private func montarURL(numeroProcesso: String) -> URLComponents {

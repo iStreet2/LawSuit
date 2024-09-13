@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct LawsuitListViewHeaderContent: View {    
+struct LawsuitListViewHeaderContent: View {
     var lawsuits: FetchedResults<Lawsuit>
     @EnvironmentObject var dataViewModel: DataViewModel
+    @Environment(\.managedObjectContext) var context
     
     var body: some View {
         
@@ -20,13 +21,13 @@ struct LawsuitListViewHeaderContent: View {
                 
                 Text("Tipo")
                     .frame(width: geo.size.width * 0.12, alignment: .leading)
-
+                
                 Text("Última Movimentação")
                     .frame(width: geo.size.width * 0.17, alignment: .leading)
-                   
+                
                 Text("Cliente")
                     .frame(width: geo.size.width * 0.17, alignment: .leading)
-                   
+                
                 Text("Advogado Responsável")
                 
             }
@@ -46,23 +47,23 @@ struct LawsuitListViewHeaderContent: View {
                     NavigationLink {
                         DetailedLawSuitView(lawsuit: lawsuit)
                     } label: {
-                        LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                        LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit, viewModel: LawsuitNetworkingViewModel(lawsuitService: LawsuitNetworkingService(context: context), updateManager: UpdateManager(context: context)))
                             .background(Color(index % 2 == 0 ? .white : .gray).opacity(0.1))
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
             }
         }
-        .onAppear {
-            Task {
-                do {
-                    for lawsuit in lawsuits {
-                        try await dataViewModel.lawsuitNetworkService.fetchLawsuitUpdatesData(fromProcessNumber: lawsuit.number!)
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-        }
+//        .onAppear {
+//            Task {
+//                for lawsuit in lawsuits.reversed() {
+//                    do {
+//                        guard let response = try? await dataViewModel.lawsuitNetworkService.fetchLawsuitUpdatesData(fromProcessNumber: lawsuit.number!) else { return }
+//                    } catch {
+//                        print(error.localizedDescription)
+//                    }
+//                }
+//            }
+//        }
     }
 }
