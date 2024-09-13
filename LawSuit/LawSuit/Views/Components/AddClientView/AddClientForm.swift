@@ -39,6 +39,7 @@ struct AddClientForm: View {
     @Binding var cellphone: String
     
     @State var addressApi = AddressAPI()
+    @State var isEmailValid = true
     
     let textLimit = 50
     let maritalStatusLimit = 10
@@ -62,7 +63,7 @@ struct AddClientForm: View {
                         .onReceive(Just(nationality)) { _ in textFieldDataViewModel.limitText(text: &occupation, upper: textLimit) }
                     LabeledTextField(label: "CPF", placeholder: "Insira o CPF do Cliente", textfieldText: $cpf)
                         .onReceive(Just(cpf)) { _ in cpf = textFieldDataViewModel.formatCPF(cpf) }
-                        .foregroundStyle(textFieldDataViewModel.isValidCPF(cpf) ? .black : .red)
+                        .foregroundStyle(cpf.count == 14 ? (textFieldDataViewModel.isValidCPF(cpf) ? .black : .red) : .black)
                     LabeledTextField(label: "Estado Civil", placeholder: "Insira o Estado Civil do Cliente", textfieldText: $maritalStatus)
                         .onReceive(Just(maritalStatus)) { _ in textFieldDataViewModel.limitMaritalStatus(maritalStatus: &maritalStatus, upper: maritalStatusLimit) }
                     LabeledDateField(selectedDate: $birthDate, label: "Data de Nascimento")
@@ -86,7 +87,7 @@ struct AddClientForm: View {
                                 }
                             }
                         }
-                    })        
+                    })
                 LabeledTextField(label: "Endereço", placeholder: "Insira seu endereço", textfieldText: $address)
                 HStack(spacing: 10) {
                     LabeledTextField(label: "Número", placeholder: "Insira o número", textfieldText: $addressNumber)
@@ -106,6 +107,18 @@ struct AddClientForm: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 15) {
                     LabeledTextField(label: "E-mail", placeholder: "Insira seu e-mail", textfieldText: $email)
+                        .onChange(of: email) { newValue in
+                            isEmailValid = textFieldDataViewModel.isValidEmail(newValue)
+                        }
+                        .foregroundColor(isEmailValid ? .black : .red)
+                    
+                    if !isEmailValid {
+                        Text("E-mail inválido")
+                            .foregroundStyle(.red)
+                            .font(.caption)
+                            .padding(.vertical, -10)
+                            .padding(.horizontal, 10)
+                    } 
                     HStack(spacing: 60) {
                         LabeledTextField(label: "Telefone", placeholder: "Insira seu telefone", textfieldText: $telephone)
                             .onReceive(Just(telephone)) { _ in telephone = textFieldDataViewModel.formatPhoneNumber(telephone, cellphone: false) }
