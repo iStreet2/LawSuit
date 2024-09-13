@@ -92,17 +92,27 @@ struct AddClientView: View {
                         invalidInformation = .invalidRG
                         return
                     }
+                    if stage == 3 {
+                        if !textFieldDataViewModel.isValidEmail(email) {
+                            invalidInformation = .invalidEmail
+                        } else if telephone.count < 10 {
+                            invalidInformation = .missingTelephoneNumber
+                        } else if cellphone.count < 11 {
+                            invalidInformation = .missingCellphoneNumber
+                        }
+                        else {
+                            //MARK: Advogado temporário
+                            let lawyer = lawyers[0]
+                            dataViewModel.coreDataManager.clientManager.createClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                            dismiss()
+                        }
+                        return
+                    }
                     if stage < 3 {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             stage += 1
                         }
-                    } else {
-                        //MARK: Advogado temporário
-                        let lawyer = lawyers[0]
-                        dataViewModel.coreDataManager.clientManager.createClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
-                        dismiss()
                     }
-                    
                 }, label: {
                     if stage == 3 {
                         Text("Adicionar Cliente")
@@ -127,6 +137,18 @@ struct AddClientView: View {
                     case .invalidRG:
                         return Alert(title: Text("RG inválido"),
                                      message: Text("Por favor, insira um RG válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidEmail:
+                        return Alert(title: Text("E-mail inválido"),
+                                     message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .missingTelephoneNumber:
+                        return Alert(title: Text("Número de telefone inválido"),
+                                     message: Text("Por favor, insira um número de telefone válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .missingCellphoneNumber:
+                        return Alert(title: Text("Número de celular inválido"),
+                                     message: Text("Por favor, insira um número de celular válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
                     }
                 }

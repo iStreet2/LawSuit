@@ -96,7 +96,6 @@ struct AddClientForm: View {
                     LabeledTextField(label: "Bairro", placeholder: "Insira seu bairro", textfieldText: $neighborhood)
                     LabeledTextField(label: "Complemento", placeholder: "Insira o complemento", textfieldText: $complement)
                         .frame(width: 170)
-                        .onReceive(Just(complement)) { _ in textFieldDataViewModel.limitText(text: &complement, upper: textLimit) }
                 }
                 HStack(spacing: 10) {
                     LabeledTextField(label: "Estado", placeholder: "Insira seu estado", textfieldText: $state)
@@ -113,14 +112,13 @@ struct AddClientForm: View {
                         }
                         .foregroundColor(isEmailValid ? .black : .red)
                     
-                    // Mensagem de erro se o e-mail for inválido
-                    if isEmailValid {
+                    if !isEmailValid {
                         Text("E-mail inválido")
                             .foregroundStyle(.red)
                             .font(.caption)
                             .padding(.vertical, -10)
                             .padding(.horizontal, 10)
-                    }
+                    } 
                     HStack(spacing: 60) {
                         LabeledTextField(label: "Telefone", placeholder: "Insira seu telefone", textfieldText: $telephone)
                             .onReceive(Just(telephone)) { _ in telephone = textFieldDataViewModel.formatPhoneNumber(telephone, cellphone: false) }
