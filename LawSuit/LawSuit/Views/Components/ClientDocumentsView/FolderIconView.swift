@@ -72,9 +72,14 @@ struct FolderIconView: View {
                 Image(systemName: "pencil")
             }
             Button(action: {
-                // Ação para excluir a pasta
-                withAnimation(.easeIn) {
-                    dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                Task {
+                    //MARK: CloudKit
+                    try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(folder: folder)
+                    
+                    //MARK: CoreData
+                    withAnimation(.easeIn) {
+                        dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                    }
                 }
             }) {
                 Text("Excluir")

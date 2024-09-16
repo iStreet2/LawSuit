@@ -22,7 +22,7 @@ class RecordManager {
     
     init(container: CKContainer, context: NSManagedObjectContext) {
         self.container = container
-        publicDatabase = container.publicCloudDatabase
+        self.publicDatabase = container.publicCloudDatabase
         self.context = context
     }
     
@@ -346,44 +346,68 @@ class RecordManager {
     }
     
     //MARK: Delete
-    func deleteObjectInCloudKit<T: NSManagedObject>(object: T, deleteRelationships: Bool = true) async throws {
+    func deleteObjectInCloudKit<T: NSManagedObject>(object: T, relationshipsToDelete: [String] = []) async throws {
         // Verificar se o objeto tem um recordName para localizar no CloudKit
         guard let recordName = object.value(forKey: "recordName") as? String else {
             print("Error: recordName is missing.")
             return
         }
 
-        // Deletar o objeto do CloudKit
+        // Deletar os relacionamentos especificados no CloudKit
+        for relationshipName in relationshipsToDelete {
+            // Se a relação é uma rootFolder, deletar suas subpastas e arquivos recursivamente
+            if relationshipName == "rootFolder" {
+                if let rootFolder = object.value(forKey: relationshipName) as? NSManagedObject {
+                    try await deleteFolderRecursivelyInCloudKit(folder: rootFolder)
+                }
+            }
+            // Caso o relacionamento seja um NSSet (to-many)
+            else if let relatedObjects = object.value(forKey: relationshipName) as? NSSet {
+                for relatedObject in relatedObjects {
+                    if let relatedObject = relatedObject as? NSManagedObject {	
+                        // Deletar o objeto relacionado diretamente no CloudKit
+                        try await deleteObjectInCloudKit(object: relatedObject, relationshipsToDelete: [])
+                    }
+                }
+            }
+            // Caso o relacionamento seja um NSManagedObject (to-one)
+            else if let relatedObject = object.value(forKey: relationshipName) as? NSManagedObject {
+                // Deletar o objeto relacionado diretamente no CloudKit
+                try await deleteObjectInCloudKit(object: relatedObject, relationshipsToDelete: [])
+            }
+        }
+        
+        // Deletar o objeto no CloudKit
         let recordID = CKRecord.ID(recordName: recordName)
         do {
             try await publicDatabase.deleteRecord(withID: recordID)
         } catch {
             throw error
         }
-        
-        // Se a flag `deleteRelationships` estiver ativa, deletar relações associadas
-        if deleteRelationships {
-            // Exemplo de como usar Mirror para deletar relações específicas
-            let mirror = Mirror(reflecting: object)
-            
-            for child in mirror.children {
-                if let relationshipName = child.label, let relationshipValue = child.value as? NSSet {
-                    for relatedObject in relationshipValue {
-                        if let relatedObject = relatedObject as? NSManagedObject {
-                            // Chama recursivamente para deletar os objetos relacionados
-                            try await deleteObjectInCloudKit(object: relatedObject, deleteRelationships: true)
-                        }
-                    }
+    }
+
+    // Função para deletar pastas e seus conteúdos recursivamente
+    func deleteFolderRecursivelyInCloudKit(folder: NSManagedObject) async throws {
+        // Verificar se a pasta possui subpastas
+        if let subfolders = folder.value(forKey: "folders") as? NSSet {
+            for subfolder in subfolders {
+                if let subfolderObject = subfolder as? NSManagedObject {
+                    // Recursivamente deletar a subpasta
+                    try await deleteFolderRecursivelyInCloudKit(folder: subfolderObject)
                 }
             }
         }
-        
-        // Deletar o objeto no Core Data
-        context.delete(object)
-        do {
-            try context.save()
-        } catch {
-            print("Error saving CoreData context after deletion.")
+
+        // Verificar se a pasta possui arquivos
+        if let files = folder.value(forKey: "files") as? NSSet {
+            for file in files {
+                if let fileObject = file as? NSManagedObject {
+                    // Deletar o arquivo no CloudKit
+                    try await deleteObjectInCloudKit(object: fileObject, relationshipsToDelete: [])
+                }
+            }
         }
-    }
-}
+
+        // Finalmente, deletar a própria pasta
+        try await deleteObjectInCloudKit(object: folder)
+    }}

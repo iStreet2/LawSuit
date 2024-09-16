@@ -71,9 +71,14 @@ struct FilePDFIconView: View {
                 Image(systemName: "pencil")
             }
             Button(action: {
-                // Ação para excluir a pasta
-                withAnimation(.easeIn) {
-                    dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
+                Task {
+                    //MARK: CloudKit
+                    try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: filePDF)
+                    
+                    //MARK: CoreData
+                    withAnimation(.easeIn) {
+                        dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
+                    }
                 }
             }) {
                 Text("Excluir")
