@@ -73,6 +73,7 @@ struct FilePDFIconView: View {
             Button(action: {
                 Task {
                     //MARK: CloudKit
+                    try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolder, to: filePDF, referenceKey: "files")
                     try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: filePDF)
                     
                     //MARK: CoreData
