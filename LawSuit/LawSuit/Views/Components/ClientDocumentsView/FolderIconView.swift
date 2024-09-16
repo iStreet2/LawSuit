@@ -74,7 +74,12 @@ struct FolderIconView: View {
             Button(action: {
                 Task {
                     //MARK: CloudKit
-                    try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(folder: folder)
+                    do {
+                        try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolder, to: folder, referenceKey: "folders")
+                        try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(folder: folder)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                     
                     //MARK: CoreData
                     withAnimation(.easeIn) {

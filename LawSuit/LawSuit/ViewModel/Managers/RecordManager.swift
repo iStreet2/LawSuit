@@ -15,7 +15,7 @@ protocol Recordable {
 }
 
 class RecordManager {
-	
+    
     let container: CKContainer
     let publicDatabase: CKDatabase
     let context: NSManagedObjectContext
@@ -229,7 +229,7 @@ class RecordManager {
         }
     }
     
-	
+    
     
     
     //MARK: Novas funções para teste!
@@ -289,18 +289,18 @@ class RecordManager {
         guard let firstRecordName = firstObject.value(forKey: "recordName") as? String else {
             throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "First object not found in CloudKit"])
         }
-
+        
         guard let secondRecordName = secondObject.value(forKey: "recordName") as? String else {
             throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Second object not found in CloudKit"])
         }
         let secondRecordID = CKRecord.ID(recordName: secondRecordName)
         let secondReference = CKRecord.Reference(recordID: secondRecordID, action: .none)
-
+        
         let firstRecordID = CKRecord.ID(recordName: firstRecordName)
         let firstRecord = try await publicDatabase.record(for: firstRecordID)
-
+        
         let relationships = firstObject.entity.relationshipsByName
-
+        
         if let _ = relationships[referenceKey] {
             var references = firstRecord[referenceKey] as? [CKRecord.Reference] ?? []
             references.append(secondReference)
@@ -308,7 +308,7 @@ class RecordManager {
         } else {
             throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Relationship \(referenceKey) not found"])
         }
-
+        
         try await publicDatabase.save(firstRecord)
     }
     
@@ -352,7 +352,7 @@ class RecordManager {
             print("Error: recordName is missing.")
             return
         }
-
+        
         // Deletar os relacionamentos especificados no CloudKit
         for relationshipName in relationshipsToDelete {
             // Se a relação é uma rootFolder, deletar suas subpastas e arquivos recursivamente
@@ -364,7 +364,7 @@ class RecordManager {
             // Caso o relacionamento seja um NSSet (to-many)
             else if let relatedObjects = object.value(forKey: relationshipName) as? NSSet {
                 for relatedObject in relatedObjects {
-                    if let relatedObject = relatedObject as? NSManagedObject {	
+                    if let relatedObject = relatedObject as? NSManagedObject {
                         // Deletar o objeto relacionado diretamente no CloudKit
                         try await deleteObjectInCloudKit(object: relatedObject, relationshipsToDelete: [])
                     }
@@ -385,7 +385,7 @@ class RecordManager {
             throw error
         }
     }
-
+    
     // Função para deletar pastas e seus conteúdos recursivamente
     func deleteFolderRecursivelyInCloudKit(folder: NSManagedObject) async throws {
         // Verificar se a pasta possui subpastas
@@ -397,7 +397,7 @@ class RecordManager {
                 }
             }
         }
-
+        
         // Verificar se a pasta possui arquivos
         if let files = folder.value(forKey: "files") as? NSSet {
             for file in files {
@@ -407,7 +407,45 @@ class RecordManager {
                 }
             }
         }
-
+        
         // Finalmente, deletar a própria pasta
         try await deleteObjectInCloudKit(object: folder)
-    }}
+    }
+    
+    //MARK: Função para remover uma referencia
+    func removeReference<T: NSManagedObject>(from firstObject: T, to secondObject: T, referenceKey: String) async throws {
+        // Verificar se os objetos possuem recordName
+        guard let firstRecordName = firstObject.value(forKey: "recordName") as? String else {
+            throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "First object not found in CloudKit"])
+        }
+
+        guard let secondRecordName = secondObject.value(forKey: "recordName") as? String else {
+            throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Second object not found in CloudKit"])
+        }
+
+        // Obter os IDs de ambos os objetos
+        let secondRecordID = CKRecord.ID(recordName: secondRecordName)
+        let firstRecordID = CKRecord.ID(recordName: firstRecordName)
+        let firstRecord = try await publicDatabase.record(for: firstRecordID)
+
+        // Verificar se a relação existe
+        let relationships = firstObject.entity.relationshipsByName
+        if let _ = relationships[referenceKey] {
+            // Obter o array de referências existente e remover a que corresponde ao secondObject
+            if var references = firstRecord[referenceKey] as? [CKRecord.Reference] {
+                references.removeAll { $0.recordID == secondRecordID }
+                firstRecord[referenceKey] = references.isEmpty ? nil : references as CKRecordValue
+            } else {
+                throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No references found for \(referenceKey)"])
+            }
+        } else {
+            throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Relationship \(referenceKey) not found"])
+        }
+
+        // Salvar as mudanças no CloudKit
+        try await publicDatabase.save(firstRecord)
+    }
+    
+}
+
+
