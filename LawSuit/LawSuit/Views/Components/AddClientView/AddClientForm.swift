@@ -73,7 +73,7 @@ struct AddClientForm: View {
             .padding(.vertical, 5)
         } else if stage == 2 {
             VStack(alignment: .leading, spacing: 15) {
-                LabeledTextField(label: "CEP", placeholder: "Insira seu CEP", textfieldText: $cep)
+                LabeledTextField(label: "CEP", placeholder: "Insira o CEP do Cliente", textfieldText: $cep)
                     .onReceive(Just(cep)) { _ in cep = textFieldDataViewModel.formatNumber(cep, limit: 8) }
                     .onChange(of: cep, perform: { _ in
                         Task{
@@ -88,25 +88,25 @@ struct AddClientForm: View {
                             }
                         }
                     })
-                LabeledTextField(label: "Endereço", placeholder: "Insira seu endereço", textfieldText: $address)
+                LabeledTextField(label: "Endereço", placeholder: "Insira o endereço do Cliente", textfieldText: $address)
                 HStack(spacing: 10) {
-                    LabeledTextField(label: "Número", placeholder: "Insira o número", textfieldText: $addressNumber)
+                    LabeledTextField(label: "Número", placeholder: "Insira o número do Cliente", textfieldText: $addressNumber)
                         .frame(width: 120)
                         .onReceive(Just(addressNumber)) { _ in addressNumber = textFieldDataViewModel.formatNumber(addressNumber, limit: 7)}
-                    LabeledTextField(label: "Bairro", placeholder: "Insira seu bairro", textfieldText: $neighborhood)
-                    LabeledTextField(label: "Complemento", placeholder: "Insira o complemento", textfieldText: $complement)
+                    LabeledTextField(label: "Bairro", placeholder: "Insira o bairro do Cliente", textfieldText: $neighborhood)
+                    LabeledTextField(label: "Complemento", placeholder: "Insira o complemento do Cliente", textfieldText: $complement)
                         .frame(width: 170)
                 }
                 HStack(spacing: 10) {
-                    LabeledTextField(label: "Estado", placeholder: "Insira seu estado", textfieldText: $state)
-                    LabeledTextField(label: "Cidade", placeholder: "Insira sua cidade", textfieldText: $city)
+                    LabeledTextField(label: "Estado", placeholder: "Insira o estado do Cliente", textfieldText: $state)
+                    LabeledTextField(label: "Cidade", placeholder: "Insira o cidade do Cliente", textfieldText: $city)
                 }
             }
             .padding(.vertical, 5)
         } else if stage == 3 {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 15) {
-                    LabeledTextField(label: "E-mail", placeholder: "Insira seu e-mail", textfieldText: $email)
+                    LabeledTextField(label: "E-mail", placeholder: "Insira o e-mail do Cliente", textfieldText: $email)
                         .onChange(of: email) { newValue in
                             isEmailValid = textFieldDataViewModel.isValidEmail(newValue)
                         }

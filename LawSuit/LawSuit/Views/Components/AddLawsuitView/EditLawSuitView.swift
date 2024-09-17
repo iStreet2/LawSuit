@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import Combine
 
 struct EditLawSuitView: View {
     
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     
     
     //MARK: Variáveis de estado
-    @State var missingInformation = false
+    @State var invalidInformation: InvalidInformation?
     @State var lawsuitNumber = ""
     @State var lawsuitCourt = ""
     @State var lawsuitAuthorName = ""
@@ -26,6 +28,7 @@ struct EditLawSuitView: View {
     @Binding var deleted: Bool
     @State var attributedAuthor = false
     @State var attributedDefendant = false
+    let textLimit = 100
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -34,6 +37,7 @@ struct EditLawSuitView: View {
     var body: some View {
         VStack {
             LabeledTextField(label: "Nº do Processo", placeholder: "", textfieldText: $lawsuitNumber)
+                .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber) }
             LabeledTextField(label: "Vara", placeholder: "", textfieldText: $lawsuitCourt)
             HStack(alignment: .top, spacing: 70) {
                 VStack(alignment: .leading) {
@@ -43,15 +47,8 @@ struct EditLawSuitView: View {
                     }
                     //MARK: Caso usuário atribuir cliente para o réu
                     if attributedDefendant {
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("Autor")
-                                    .bold()
-                            }
-                        }
-                        TextField("", text: $lawsuitAuthorName)
-                            .textFieldStyle(.roundedBorder)
-                            .frame(width: 200)
+                        LabeledTextField(label: "Autor", placeholder: "Adicionar autor", textfieldText: $lawsuitAuthorName)
+                            .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                     }
                     HStack {
                         //MARK: Caso o usuário tenha adicionado um cliente no autor
@@ -105,15 +102,8 @@ struct EditLawSuitView: View {
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
-                        VStack(alignment: .leading){
-                            HStack{
-                                Text("Réu")
-                                    .bold()
-                            }
-                        }
-                        TextField("", text: $lawsuitDefendantName)
-                            .textFieldStyle(.roundedBorder)
-                            .frame(width: 200)
+                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
+                            .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                     }
                     HStack {
                         //MARK: Caso o usuário tenha adicionado um cliente no réu
@@ -143,7 +133,14 @@ struct EditLawSuitView: View {
                             Text("Cancelar")
                         })
                         Button(action: {
-                            if areFieldsFilled() {
+                            if !areFieldsFilled() {
+                                invalidInformation = .missingInformation
+                                return
+                            }
+                            if lawsuitNumber.count < 25 {
+                                invalidInformation = .invalidLawSuitNumber
+                                return
+                            }
                                 if attributedAuthor {
                                     if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                                         let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
@@ -163,17 +160,43 @@ struct EditLawSuitView: View {
                                         print("error achando defendant")
                                     }
                                 }
-                            } else {
-                                missingInformation = true
-                            }
+                            
                         }, label: {
                             Text("Salvar")
                         })
                         .buttonStyle(.borderedProminent)
-                        .alert(isPresented: $missingInformation) {
-                            Alert(title: Text("Informações Faltando"),
-                                  message: Text("Por favor, preencha todos os campos antes de editar um processo."),
-                                  dismissButton: .default(Text("Ok")))
+                        .alert(item: $invalidInformation) { error in
+                            switch error {
+                            case .missingInformation:
+                                return Alert(title: Text("Informações Faltando"),
+                                             message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                             dismissButton: .default(Text("Ok")))
+                            case .invalidCPF:
+                                return Alert(title: Text("CPF inválido"),
+                                             message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                             dismissButton: .default(Text("Ok")))
+                                
+                            case .invalidRG:
+                                return Alert(title: Text("RG inválido"),
+                                             message: Text("Por favor, insira um RG válido antes de continuar"),
+                                             dismissButton: .default(Text("Ok")))
+                            case .invalidEmail:
+                                return Alert(title: Text("E-mail inválido"),
+                                             message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                             dismissButton: .default(Text("Ok")))
+                            case .missingTelephoneNumber:
+                                return Alert(title: Text("Número de telefone inválido"),
+                                             message: Text("Por favor, insira um número de telefone válido antes de continuar"),
+                                             dismissButton: .default(Text("Ok")))
+                            case .missingCellphoneNumber:
+                                return Alert(title: Text("Número de celular inválido"),
+                                             message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                             dismissButton: .default(Text("Ok")))
+                            case .invalidLawSuitNumber:
+                                return Alert(title: Text("Número do processo inválido"),
+                                message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                dismissButton: .default(Text("Ok")))
+                            }
                         }
                     }
                     .padding(.top)

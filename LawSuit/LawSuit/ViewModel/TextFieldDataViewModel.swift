@@ -18,7 +18,7 @@ class TextFieldDataViewModel: ObservableObject {
             text = String(text.prefix(upper))
         }
     }
-
+    
     func limitMaritalStatus(maritalStatus: inout String, upper: Int) {
         
         maritalStatus = maritalStatus.filter { $0.isLetter || $0 == " " }
@@ -49,15 +49,15 @@ class TextFieldDataViewModel: ObservableObject {
     }
     
     func isValidCPF(_ cpf: String) -> Bool {
-            let numbers = cpf.compactMap(\.wholeNumberValue)
-            
-            // Verifica se o CPF tem 11 dígitos antes de validar
-            guard numbers.count == 11 else { return false }
+        let numbers = cpf.compactMap(\.wholeNumberValue)
         
-            guard Set(numbers).count != 1 else { return false }
-            return digitoCPF(numbers.prefix(9)) == numbers[9] &&
-                   digitoCPF(numbers.prefix(10)) == numbers[10]
-        }
+        // Verifica se o CPF tem 11 dígitos antes de validar
+        guard numbers.count == 11 else { return false }
+        
+        guard Set(numbers).count != 1 else { return false }
+        return digitoCPF(numbers.prefix(9)) == numbers[9] &&
+        digitoCPF(numbers.prefix(10)) == numbers[10]
+    }
     
     func digitoCPF(_ numbers: ArraySlice<Int>) -> Int {
         var number = numbers.count + 2
@@ -99,21 +99,22 @@ class TextFieldDataViewModel: ObservableObject {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailPredicate.evaluate(with: email)
-
-    
-    func lawSuitNumberValidation(_ lawsuit: String) -> String {
-        let numbers = lawsuit.filter {"0987654321".contains($0)}
-        var formatLawsuit = ""
-        
-        for (index, character) in numbers.prefix(20).enumerated() {
-            if index == 9 || index == 13 || index == 14 || index == 16 {
-                formatLawsuit.append(".")
-            }
-            if index == 7 {
-                formatLawsuit.append("-")
-            }
-            formatLawsuit.append(character)
-        }
-        return formatLawsuit
     }
-}
+        
+        func lawSuitNumberValidation(_ lawsuit: String) -> String {
+            let numbers = lawsuit.filter {"0987654321".contains($0)}
+            var formatLawsuit = ""
+            
+            for (index, character) in numbers.prefix(20).enumerated() {
+                if index == 9 || index == 13 || index == 14 || index == 16 {
+                    formatLawsuit.append(".")
+                }
+                if index == 7 {
+                    formatLawsuit.append("-")
+                }
+                formatLawsuit.append(character)
+            }
+            return formatLawsuit
+        }
+    }
+

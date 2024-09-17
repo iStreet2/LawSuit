@@ -14,13 +14,13 @@ struct EditClientView: View {
     @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var addressViewModel: AddressViewModel
-
+    
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
     //MARK: Variáveis de estado
+    @State var invalidInformation: InvalidInformation?
     @State var userInfoType = 0
-    @State var missingInformation = false
     @State var clientName: String = ""
     @State var clientOccupation: String = ""
     @State var clientRg: String = ""
@@ -121,21 +121,74 @@ struct EditClientView: View {
                     Text("Cancelar")
                 }
                 Button(action: {
-                    if areFieldsFilled() {
+                    if !areFieldsFilled() {
+                        invalidInformation = .missingInformation
+                        return
+                    }
+                    if clientCpf.count < 14 || !textFieldDataViewModel.isValidCPF(clientCpf) {
+                        invalidInformation = .invalidCPF
+                        return
+                    }
+                    if clientRg.count < 9 {
+                        invalidInformation = .invalidRG
+                        return
+                    }
+                    if !textFieldDataViewModel.isValidEmail(clientEmail) {
+                        invalidInformation = .invalidEmail
+                        return
+                    }
+                    if clientTelephone.count < 14 {
+                        invalidInformation = .missingTelephoneNumber
+                        return
+                    }
+                    if clientCellphone.count < 15 {
+                        invalidInformation = .missingCellphoneNumber
+                        
+                    } else {
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                         dismiss()
-                    } else {
-                        missingInformation = true
+                        
+                        return
                     }
+                    
                 }, label: {
                     Text("Salvar")
                 })
                 .buttonStyle(.borderedProminent)
-                .alert(isPresented: $missingInformation) {
-                    Alert(title: Text("Informações Faltando"),
-                          message: Text("Por favor, preencha todos os campos antes de salvar."),
-                          dismissButton: .default(Text("Ok")))
+                .alert(item: $invalidInformation) { error in
+                    switch error {
+                    case .missingInformation:
+                        return Alert(title: Text("Informações Faltando"),
+                                     message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidCPF:
+                        return Alert(title: Text("CPF inválido"),
+                                     message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                     dismissButton: .default(Text("Ok")))
+                        
+                    case .invalidRG:
+                        return Alert(title: Text("RG inválido"),
+                                     message: Text("Por favor, insira um RG válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidEmail:
+                        return Alert(title: Text("E-mail inválido"),
+                                     message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .missingTelephoneNumber:
+                        return Alert(title: Text("Número de telefone inválido"),
+                                     message: Text("Por favor, insira um número de telefone válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .missingCellphoneNumber:
+                        return Alert(title: Text("Número de celular inválido"),
+                                     message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidLawSuitNumber:
+                        return Alert(title: Text(""),
+                        message: Text(""),
+                        dismissButton: .default(Text("")))
+                    }
                 }
+                
             }
         }
         .frame(minHeight: 250)
@@ -175,7 +228,6 @@ struct EditClientView: View {
             !clientAddress.isEmpty &&
             !clientAddressNumber.isEmpty &&
             !clientNeighborhood.isEmpty &&
-            !clientComplement.isEmpty &&
             !clientState.isEmpty &&
             !clientCity.isEmpty
             !clientEmail.isEmpty &&

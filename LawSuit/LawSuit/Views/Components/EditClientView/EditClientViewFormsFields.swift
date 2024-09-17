@@ -38,6 +38,7 @@ struct EditClientViewFormsFields: View {
     @Binding var email: String
     @Binding var telephone: String
     @Binding var cellphone: String
+    @State var isEmailValid = true
     
     let textLimit = 50
     let maritalStatusLimit = 10
@@ -86,7 +87,7 @@ struct EditClientViewFormsFields: View {
                 }
                 HStack(alignment: .top) {
                     LabeledTextField(label: "Número", placeholder: "Número", textfieldText: $addressNumber)
-                        .onReceive(Just(rg)) { _ in rg = textFieldDataViewModel.formatNumber(rg, limit: 7) }
+                        .onReceive(Just(addressNumber)) { _ in addressNumber = textFieldDataViewModel.formatNumber(addressNumber, limit: 7) }
                     LabeledTextField(label: "Bairro", placeholder: "Bairro", textfieldText: $neighborhood)
                         .onReceive(Just(neighborhood)) { _ in textFieldDataViewModel.limitText(text: &neighborhood, upper: textLimit) }
                     LabeledTextField(label: "Complemento", placeholder: "Complemento", textfieldText: $complement)
@@ -100,6 +101,21 @@ struct EditClientViewFormsFields: View {
         } else if formType == .contact {
             VStack(spacing: 10) {
                 LabeledTextField(label: "E-mail", placeholder: "E-mail", textfieldText: $email)
+                    .onChange(of: email) { newValue in
+                        isEmailValid = textFieldDataViewModel.isValidEmail(newValue)
+                    }
+                    .foregroundColor(isEmailValid ? .black : .red)
+                
+                if !isEmailValid {
+                    HStack {
+                        Text("E-mail inválido")
+                            .foregroundStyle(.red)
+                            .font(.caption)
+                            .padding(.vertical, -5)
+                            .padding(.horizontal, 10)
+                        Spacer()
+                    }
+                }
                 HStack {
                     LabeledTextField(label: "Telefone", placeholder: "Telefone", textfieldText: $telephone)
                         .onReceive(Just(telephone)) { _ in telephone = textFieldDataViewModel.formatPhoneNumber(telephone, cellphone: false) }
