@@ -32,7 +32,7 @@ class LawsuitManager {
         let rootFolder = Folder(context: context)
         rootFolder.parentLawsuit = lawsuit
         rootFolder.name = lawsuit.name
-        rootFolder.id = UUID().uuidString
+        rootFolder.id = "root\(name)"
         
         lawsuit.rootFolder = rootFolder
         saveContext()

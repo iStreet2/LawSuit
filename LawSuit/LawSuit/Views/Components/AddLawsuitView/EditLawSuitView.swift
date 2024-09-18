@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CloudKit
 
 struct EditLawSuitView: View {
     
@@ -79,26 +80,31 @@ struct EditLawSuitView: View {
                         }
                     Spacer()
                     Button(action: {
+                        let temporaryRecordName = lawsuit.recordName
+                        let temporaryRootFolder = lawsuit.rootFolder
+                        
+                        //MARK: CoreData - Deletar
                         Task {
-                            //MARK: CloudKit - Deletar
                             if dataViewModel.coreDataManager.clientManager.authorIsClient(lawsuit: lawsuit) {
                                 if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                                    try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity)
                                     dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                    try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity) //CloudKit
                                 }
                             } else {
                                 if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                                    try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity)
                                     dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                    try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity) //CloudKit
                                 }
                             }
-                            try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: lawsuit, relationshipsToDelete: ["rootFolder"])
-                            
-                            //MARK: CoreData - Deletar
-                            dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
-                            deleted.toggle()
-                            dismiss()
                         }
+                        dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                        Task {
+                            //MARK: CloudKit - Deletar
+                            try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: temporaryRecordName!, rootFolder: temporaryRootFolder!)
+                        }
+                        
+                        deleted.toggle()
+                        dismiss()
                         
                     }, label: {
                         Text("Apagar processo")

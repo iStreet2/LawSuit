@@ -94,7 +94,7 @@ struct EditClientView: View {
                                 // Primeiro, deletar todos os processos e entidades relacionados no CloudKit
                                 //MARK: CloudKit - Deletar
                                 for lawsuit in lawsuits {
-                                    if lawsuit.authorID.hasPrefix("client:") {
+                                    if dataViewModel.coreDataManager.clientManager.authorIsClient(lawsuit: lawsuit) {
                                         if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
                                             try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity)
                                         }
