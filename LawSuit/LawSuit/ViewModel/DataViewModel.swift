@@ -8,6 +8,8 @@
 import Foundation
 import CoreData
 import CloudKit
+import CoreSpotlight
+import CoreServices
 
 class DataViewModel: ObservableObject {
     
@@ -20,6 +22,7 @@ class DataViewModel: ObservableObject {
     var coreDataManager: CoreDataManager
 //    var cloudManager: CloudManager
 //    var cloudDataConverter: CloudDataConverter
+	var spotlightManager: SpotlightManager
     
     init() {
         self.coreDataContainer.loadPersistentStores { descricao, error in
@@ -31,6 +34,37 @@ class DataViewModel: ObservableObject {
         self.coreDataManager = CoreDataManager(context: context)
 //        self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
 //        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter)
+		 self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
     }
+	
+	func fetchCoreDataObjects<T: NSManagedObject>(for model: CoreDataModelsEnumerator) -> [T] {
+		do {
+			return try spotlightManager.fetchCoreDataObjects(for: model)
+		} catch {
+			print("Could not fetch core data objects for model \(model): \(error)")
+		}
+		return []
+	}
+	
+	func getSpotlightList(for section: String) -> [any EntityWrapper] {
+		return spotlightManager.getSpotlightList(for: section)
+	}
+	
+	func getSpotlightListTitles(for searchString: String) -> [String] {
+		return spotlightManager.getSpotlightListTitles(for: searchString)
+	}
+	
+	func indexObjectsToSpotlight(objects: [NSManagedObject], for modelType: CoreDataModelsEnumerator) {
+		spotlightManager.indexObjectsToSpotlight(objects: objects, for: modelType)
+	}
     
+	
+	func removeIndexedObject(_ object: NSManagedObject) {
+		spotlightManager.removeIndexedObject(object)
+	}
+	
+	func getObjectByURI(uri: String) -> Recordable? {
+		return spotlightManager.getObjectByURI(uri: uri)
+	}
 }
+
