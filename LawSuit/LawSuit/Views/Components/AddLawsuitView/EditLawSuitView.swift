@@ -81,32 +81,25 @@ struct EditLawSuitView: View {
                     Button(action: {
                         Task {
                             //MARK: CloudKit - Deletar
-                            if lawsuit.authorID.hasPrefix("client:") {
+                            if dataViewModel.coreDataManager.clientManager.authorIsClient(lawsuit: lawsuit) {
                                 if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
                                     try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity)
+                                    dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
                                 }
                             } else {
                                 if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
                                     try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity)
+                                    dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
                                 }
                             }
-                            // Deletar o processo (lawsuit) no CloudKit
                             try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: lawsuit, relationshipsToDelete: ["rootFolder"])
                             
                             //MARK: CoreData - Deletar
-                            if lawsuit.authorID.hasPrefix("client:") {
-                                if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                                    dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
-                                }
-                            } else {
-                                if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                                    dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
-                                }
-                            }
                             dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                             deleted.toggle()
                             dismiss()
                         }
+                        
                     }, label: {
                         Text("Apagar processo")
                     })

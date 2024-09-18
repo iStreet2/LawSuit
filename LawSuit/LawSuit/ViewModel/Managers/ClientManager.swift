@@ -162,7 +162,7 @@ class ClientManager {
     }
     
     func authorIsClient(lawsuit: Lawsuit) -> Bool {
-        if lawsuit.id.hasPrefix("client:") {
+        if lawsuit.authorID.hasPrefix("client:") {
             return true
         } else {
             return false
