@@ -72,11 +72,11 @@ struct FilePDFIconView: View {
             }
             Button(action: {
                 Task {
-                    //MARK: CloudKit
+                    //MARK: CloudKit - Deletar
                     try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolder, to: filePDF, referenceKey: "files")
                     try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: filePDF)
                     
-                    //MARK: CoreData
+                    //MARK: CoreData - Deletar
                     withAnimation(.easeIn) {
                         dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
                     }
@@ -105,10 +105,10 @@ struct FilePDFIconView: View {
     }
     
     private func saveChanges() {
-        //MARK: CoreData
+        //MARK: CoreData - Editar
         dataViewModel.coreDataManager.filePDFManager.editFilePDFName(filePDF: filePDF, name: fileName)
         
-        //MARK: CloudKit
+        //MARK: CloudKit - Editar
         let propertyNames = ["name"]
         let propertyValues: [Any] = [fileName]
         Task {

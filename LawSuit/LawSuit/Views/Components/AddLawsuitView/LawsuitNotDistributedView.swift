@@ -62,31 +62,22 @@ struct LawsuitNotDistributedView: View {
                     Text("Cancelar")
                 }
                 Button {
-                    let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                    fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
-                    do {
-                        let fetchedClients = try context.fetch(fetchRequest)
-                        if let author = fetchedClients.first {
-                            //MARK: Criar no CoreData
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                            var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                            
-                            //MARK: CloudKit
-                            Task {
-                                try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["files", "folder"])
-                                try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit, relationshipsToSave: ["rootFolder"])
-                            }
-                            
-                            dismiss()
-                            
-                        } else {
-                            print("Cliente não encontrado")
+                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                        //MARK: CoreData - Criar
+                        let category = TagTypeString.string(from: tagType)
+                        let lawyer = lawyers[0]
+                        let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        
+                        //MARK: CloudKit - Criar
+                        Task {
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["files", "folder"])
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit, relationshipsToSave: ["rootFolder"])
                         }
-                    } catch {
-                            print("aaa")
-                        }
+                        dismiss()
+                    } else {
+                        print("Cliente não encontrado")
+                    }
                 } label: {
                     Text("Criar")
                 }

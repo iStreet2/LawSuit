@@ -73,7 +73,7 @@ struct FolderIconView: View {
             }
             Button(action: {
                 Task {
-                    //MARK: CloudKit
+                    //MARK: CloudKit - Deletar
                     do {
                         try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolder, to: folder, referenceKey: "folders")
                         try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(folder: folder)
@@ -81,7 +81,7 @@ struct FolderIconView: View {
                         print(error.localizedDescription)
                     }
                     
-                    //MARK: CoreData
+                    //MARK: CoreData - Deletar
                     withAnimation(.easeIn) {
                         dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
                     }
@@ -110,10 +110,10 @@ struct FolderIconView: View {
     }
     
     private func saveChanges() {
-        //MARK: CoreData
+        //MARK: CoreData - Editar
         dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folderName)
         
-        //MARK: CloudKit
+        //MARK: CloudKit - Editar
         let propertyNames = ["name"]
         let propertyValues: [Any] = [folderName]
         Task {

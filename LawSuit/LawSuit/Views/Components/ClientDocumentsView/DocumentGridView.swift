@@ -43,9 +43,9 @@ struct DocumentGridView: View {
                         Spacer()
                         Menu(content: {
                             Button {
-                                //MARK: Criar no CoreData
+                                //MARK: CoreData - Criar
                                 var folder = dataViewModel.coreDataManager.folderManager.createAndReturnFolder(parentFolder: openFolder, name: "Nova Pasta")
-                                //MARK: CloudKit
+                                //MARK: CloudKit - Criar
                                 Task {
                                     do {
                                         try await dataViewModel.cloudManager.recordManager.saveObject(object: &folder, relationshipsToSave: ["folders", "files"])
@@ -59,22 +59,20 @@ struct DocumentGridView: View {
                                 Image(systemName: "folder")
                             }
                             Button {
-                                //MARK: Salvar no CoreData
+                                //MARK: CoreData - Criar
                                 folderViewModel.importAndReturnPDF(parentFolder: openFolder, dataViewModel: dataViewModel) { filePDF in
                                     guard var mutableFilePDF = filePDF else {
                                         print("Falha ao importar o PDF.")
                                         return
                                     }
-                                    //MARK: CloudKit
+                                    //MARK: CloudKit - Criar
                                     Task {
                                         do {
-                                            // Agora mutableFilePDF é mutável e pode ser passado com `&`
                                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &mutableFilePDF, relationshipsToSave: [])
                                         } catch {
                                             print(error.localizedDescription)
                                         }
 
-                                        // Adicionar referência ao arquivo PDF na pasta aberta
                                         try await dataViewModel.cloudManager.recordManager.addReference(from: openFolder, to: mutableFilePDF, referenceKey: "files")
                                     }
                                 }
@@ -106,9 +104,9 @@ struct DocumentGridView: View {
                 }
                 .contextMenu {
                     Button(action: {
-                        //MARK: Criar no CoreData
+                        //MARK: CoreData - Criar
                         var folder = dataViewModel.coreDataManager.folderManager.createAndReturnFolder(parentFolder: openFolder, name: "Nova Pasta")
-                        //MARK: CloudKit
+                        //MARK: CloudKit - Criar
                         Task {
                             do {
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &folder, relationshipsToSave: ["folders", "files"])
@@ -130,7 +128,7 @@ struct DocumentGridView: View {
                                 return
                             }
                             
-                            //MARK: CloudKit
+                            //MARK: CloudKit - Criar
                             Task {
                                 do {
                                     // Agora mutableFilePDF é mutável e pode ser passado com `&`

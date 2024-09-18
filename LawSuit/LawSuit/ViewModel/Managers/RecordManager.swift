@@ -228,9 +228,7 @@ class RecordManager {
             print("Error saving context on RecordManager: \(error)")
         }
     }
-    
-    
-    
+
     
     //MARK: Novas funções para teste!
     

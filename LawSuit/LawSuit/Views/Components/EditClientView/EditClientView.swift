@@ -92,7 +92,7 @@ struct EditClientView: View {
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
                             Task {
                                 // Primeiro, deletar todos os processos e entidades relacionados no CloudKit
-                                //MARK: CloudKit
+                                //MARK: CloudKit - Deletar
                                 for lawsuit in lawsuits {
                                     if lawsuit.authorID.hasPrefix("client:") {
                                         if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
@@ -110,7 +110,7 @@ struct EditClientView: View {
                                 // Depois de deletar os processos e entidades, deletar o cliente no CloudKit
                                 try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: client, relationshipsToDelete: ["rootFolder"])
                                 
-                                //MARK: CoreData    
+                                //MARK: CoreData - Deletar
                                 // Após garantir que tudo foi deletado no CloudKit, deletar no CoreData
                                 for lawsuit in lawsuits {
                                     if lawsuit.authorID.hasPrefix("client:") {
@@ -150,10 +150,10 @@ struct EditClientView: View {
                 }
                 Button(action: {
                     if areFieldsFilled() {
-                        //MARK: Editar no CoreData
+                        //MARK: CoreData - Editar
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                         
-                        //MARK: CloudKit
+                        //MARK: CloudKit - Editar
                         let propertyNames = ["name", "occupation", "rg", "cpf", "affiliation", "maritalStatus", "nationality", "birthDate", "cep", "address", "addressNumber", "neighborhood", "complement", "state", "city", "email", "telephone", "cellphone"]
                         let propertyValues: [Any] = [clientName, clientOccupation, clientRg, clientCpf, clientAffiliation, clientMaritalStatus, clientNationality, clientBirthDate, clientCep, clientAddress, clientAddressNumber, clientNeighborhood, clientComplement, clientState, clientCity, clientEmail, clientTelephone, clientCellphone]
                         Task {
@@ -171,7 +171,7 @@ struct EditClientView: View {
                     Alert(title: Text("Informações Faltando"),
                           message: Text("Por favor, preencha todos os campos antes de salvar."),
                           dismissButton: .default(Text("Ok")))
-                }
+                } 
             }
         }
         .frame(minHeight: 250)

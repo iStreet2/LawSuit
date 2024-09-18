@@ -80,7 +80,7 @@ struct EditLawSuitView: View {
                     Spacer()
                     Button(action: {
                         Task {
-                            //MARK: CloudKit
+                            //MARK: CloudKit - Deletar
                             if lawsuit.authorID.hasPrefix("client:") {
                                 if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
                                     try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity)
@@ -93,7 +93,7 @@ struct EditLawSuitView: View {
                             // Deletar o processo (lawsuit) no CloudKit
                             try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: lawsuit, relationshipsToDelete: ["rootFolder"])
                             
-                            //MARK: CoreData
+                            //MARK: CoreData - Deletar
                             if lawsuit.authorID.hasPrefix("client:") {
                                 if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
                                     dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
@@ -162,12 +162,12 @@ struct EditLawSuitView: View {
                             if attributedAuthor {
                                 if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                                     if let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
-                                        //MARK: CoreData
+                                        //MARK: CoreData - Editar
                                         dataViewModel.coreDataManager.entityManager.editEntity(entity: defendant, name: lawsuitDefendantName)
                                         let category = TagTypeString.string(from: tagType)
                                         dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                                         
-                                        //MARK: CloudKit
+                                        //MARK: CloudKit - Editar
                                         let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
                                         let propertyValues: [Any] = ["\(lawsuitAuthorName) X \(lawsuitDefendantName)", lawsuitNumber, lawsuitCourt, category, defendant.id, author.id, lawsuitActionDate]
                                         Task {
@@ -183,12 +183,12 @@ struct EditLawSuitView: View {
                             } else if attributedDefendant {
                                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
                                     if let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
-                                        //MARK: CoreData
+                                        //MARK: CoreData - Editar
                                         dataViewModel.coreDataManager.entityManager.editEntity(entity: author, name: lawsuitAuthorName)
                                         let category = TagTypeString.string(from: tagType)
                                         dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                                         
-                                        //MARK: CloudKit
+                                        //MARK: CloudKit - Editar
                                         let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
                                         let propertyValues: [Any] = ["\(lawsuitAuthorName) X \(lawsuitDefendantName)", lawsuitNumber, lawsuitCourt, category, defendant.id, author.id, lawsuitActionDate]
                                         Task {
