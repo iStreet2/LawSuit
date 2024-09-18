@@ -73,7 +73,7 @@ struct LawsuitNotDistributedView: View {
                             let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
                             var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                             
-                            //MARK: Criar no CloudKit
+                            //MARK: CloudKit
                             Task {
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["files", "folder"])
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit, relationshipsToSave: ["rootFolder"])

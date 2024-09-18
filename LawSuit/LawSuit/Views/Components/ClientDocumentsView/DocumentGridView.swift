@@ -45,7 +45,7 @@ struct DocumentGridView: View {
                             Button {
                                 //MARK: Criar no CoreData
                                 var folder = dataViewModel.coreDataManager.folderManager.createAndReturnFolder(parentFolder: openFolder, name: "Nova Pasta")
-                                //MARK: Criar no CloudKit
+                                //MARK: CloudKit
                                 Task {
                                     do {
                                         try await dataViewModel.cloudManager.recordManager.saveObject(object: &folder, relationshipsToSave: ["folders", "files"])
@@ -65,7 +65,7 @@ struct DocumentGridView: View {
                                         print("Falha ao importar o PDF.")
                                         return
                                     }
-                                    //MARK: Salvar no CloudKit
+                                    //MARK: CloudKit
                                     Task {
                                         do {
                                             // Agora mutableFilePDF é mutável e pode ser passado com `&`
@@ -108,7 +108,7 @@ struct DocumentGridView: View {
                     Button(action: {
                         //MARK: Criar no CoreData
                         var folder = dataViewModel.coreDataManager.folderManager.createAndReturnFolder(parentFolder: openFolder, name: "Nova Pasta")
-                        //MARK: Criar no CloudKit
+                        //MARK: CloudKit
                         Task {
                             do {
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &folder, relationshipsToSave: ["folders", "files"])
@@ -130,7 +130,7 @@ struct DocumentGridView: View {
                                 return
                             }
                             
-                            //MARK: Salvar no CloudKit
+                            //MARK: CloudKit
                             Task {
                                 do {
                                     // Agora mutableFilePDF é mutável e pode ser passado com `&`
