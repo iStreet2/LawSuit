@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LawsuitListViewHeaderContent: View {
     var lawsuits: FetchedResults<Lawsuit>
-    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
@@ -47,23 +46,12 @@ struct LawsuitListViewHeaderContent: View {
                     NavigationLink {
                         DetailedLawSuitView(lawsuit: lawsuit)
                     } label: {
-                        LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit, viewModel: LawsuitNetworkingViewModel(lawsuitService: LawsuitNetworkingService(context: context), updateManager: UpdateManager(context: context)))
+                        LawsuitCellComponent(client: lawsuit.parentAuthor!, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
                             .background(Color(index % 2 == 0 ? .white : .gray).opacity(0.1))
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
             }
         }
-//        .onAppear {
-//            Task {
-//                for lawsuit in lawsuits.reversed() {
-//                    do {
-//                        guard let response = try? await dataViewModel.lawsuitNetworkService.fetchLawsuitUpdatesData(fromProcessNumber: lawsuit.number!) else { return }
-//                    } catch {
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//            }
-//        }
     }
 }

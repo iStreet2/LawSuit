@@ -16,13 +16,16 @@ class UpdateManager {
         self.context = context
     }
     
-    func createUpdate(name: String, date: Date, lawsuit: Lawsuit) {
+    func createUpdate(name: String, date: Date, lawsuit: Lawsuit) -> Update {
         let update = Update(context: context)
         update.name = name
         update.date = date
         update.parentLawsuit = lawsuit
         lawsuit.addToUpdates(update)
-        saveContext()
+//        Task {
+//            await saveContext()
+//        }
+        return update
     }
     
     func getLatestUpdateDate(lawsuit: Lawsuit) -> Date? {
@@ -32,12 +35,12 @@ class UpdateManager {
         return updatesArray?.first?.date
     }
     
-    func saveContext() {
+    @MainActor
+    private func saveContext() {
         do {
-            try self.context.save()
-            
-        } catch {
-            print("Error while saving context on update")
+            try context.save()
+        } catch let saveError as NSError {
+            print("Error while saving context on update: \(saveError), \(saveError.localizedDescription)")
         }
     }
     

@@ -22,7 +22,7 @@ class DataViewModel: ObservableObject {
 //    var cloudDataConverter: CloudDataConverter
     
     
-    var lawsuitNetworkService: LawsuitNetworkingService
+//    var lawsuitNetworkService: LawsuitNetworkingService
     
     init() {
         self.coreDataContainer.loadPersistentStores { descricao, error in
@@ -34,7 +34,7 @@ class DataViewModel: ObservableObject {
         self.coreDataManager = CoreDataManager(context: context)
 //        self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
 //        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter)
-        self.lawsuitNetworkService = LawsuitNetworkingService(context: context)
+//        self.lawsuitNetworkService = LawsuitNetworkingService(updateManager: UpdateManager(context: context))
     }
     
 }

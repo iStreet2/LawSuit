@@ -16,6 +16,13 @@ class LawsuitManager {
         self.context = context
     }
     
+    func addUpdates(lawsuit: Lawsuit, updates: [Update]) {
+        for update in updates {
+            lawsuit.addToUpdates(update)
+        }
+        saveContext()
+    }
+    
     func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) {
         let lawsuit = Lawsuit(context: context)
         lawsuit.name = name

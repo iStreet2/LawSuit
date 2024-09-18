@@ -23,5 +23,6 @@ enum LawsuitRequestError: Error {
     case coreDataSaveError(error: String)
     case couldNotGetMovementInfo
     case unknown
+    case couldNotGetUpdatesFromConvertion
 }
 

@@ -14,9 +14,9 @@ struct LawsuitCellComponent: View {
     @ObservedObject var lawsuit: Lawsuit
     
     //MARK: CoreData
-    var viewModel: LawsuitNetworkingViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    
+        
     var body: some View {
         
         GeometryReader { geo in
@@ -39,8 +39,8 @@ struct LawsuitCellComponent: View {
                 Spacer()
                 
                 Group {
-                    if let latestUpdateDate = viewModel.getLatestUpdateDate(fromLawsuit: lawsuit) {
-                        Text(formatDate(latestUpdateDate))
+                    if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() {
+                        Text(latestUpdateDate)
                             .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
                     } else {
                         Text("Sem atualizações")
@@ -58,27 +58,16 @@ struct LawsuitCellComponent: View {
                 
             }
             .padding(.horizontal, 20)
-            .onAppear {
+            .onAppear {    
                 Task {
-                    do {
-                        guard let response = try? await viewModel.getLawsuitUpdates(fromLawsuit: lawsuit) else {
-                            throw LawsuitRequestError.unknown
-                        }
-                    } catch {
-                        print(error.localizedDescription)
-                    }
+                    dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchUpdatesDataFromLawsuit(fromLawsuit: lawsuit)
+
+                    dataViewModel.coreDataManager.lawsuitManager.addUpdates(lawsuit: lawsuit, updates: dataViewModel.coreDataManager.lawsuitNetworkingViewModel.updates)
                 }
-                
             }
             
         }
         .frame(minWidth: 777)
         .frame(height: 47)
-    }
-    
-    func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy - HH:mm"
-        return formatter.string(from: date)
     }
 }

@@ -6,25 +6,37 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct LawsuitNetworkingViewModel {
+class LawsuitNetworkingViewModel: ObservableObject {
     
-    let lawsuitService: LawsuitNetworkingService
+    @Published var updates: [Update] = []
+            
+    private let lawsuitService: LawsuitNetworkingService
     
-    let updateManager: UpdateManager
-    
-    func getLawsuitUpdates(fromLawsuit lawsuit: Lawsuit) async throws -> Lawsuit? {
-        let result = try await lawsuitService.fetchLawsuitUpdatesData(fromLawsuit: lawsuit)
-        
-        switch result {
-        case .success(let response):
-            return response
-        case .failure(let error):
-            throw error
+    init(lawsuitService: LawsuitNetworkingService) {
+        self.lawsuitService = lawsuitService
+    }
+
+    func fetchUpdatesDataFromLawsuit(fromLawsuit lawsuit: Lawsuit) {
+        Task {
+            do {
+                let result = try await lawsuitService.fetchLawsuitUpdatesData(fromLawsuit: lawsuit)
+                switch result {
+                case .success(let updatesFromAPI):
+                    updates = updatesFromAPI
+                    print("recebeu o array de updates para o objeto \(lawsuit.number ?? "ha")")
+                    //print("updates: \(updates)")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
-    func getLatestUpdateDate(fromLawsuit lawsuit: Lawsuit) -> Date? {
+    func getLatestUpdateDate(fromLawsuit lawsuit: Lawsuit, updateManager: UpdateManager) -> Date? {
         return updateManager.getLatestUpdateDate(lawsuit: lawsuit)
     }
 
