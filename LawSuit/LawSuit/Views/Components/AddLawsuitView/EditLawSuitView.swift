@@ -3,7 +3,6 @@
 //  LawSuit
 //
 //  Created by Gabriel Vicentin Negro on 30/08/24.
-//
 
 import SwiftUI
 import Combine
@@ -13,7 +12,6 @@ struct EditLawSuitView: View {
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
-    
     
     //MARK: Variáveis de estado
     @State var invalidInformation: InvalidInformation?
@@ -26,6 +24,7 @@ struct EditLawSuitView: View {
     @State var tagType: TagType = .trabalhista
     @ObservedObject var lawsuit: Lawsuit
     @Binding var deleted: Bool
+    @State var deleteAlert = false
     @State var attributedAuthor = false
     @State var attributedDefendant = false
     let textLimit = 100
@@ -45,6 +44,7 @@ struct EditLawSuitView: View {
                     if !attributedDefendant {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                     }
+                    
                     //MARK: Caso usuário atribuir cliente para o réu
                     if attributedDefendant {
                         LabeledTextField(label: "Autor", placeholder: "Adicionar autor", textfieldText: $lawsuitAuthorName)
@@ -66,37 +66,9 @@ struct EditLawSuitView: View {
                             .padding(.leading, 5)
                         }
                     }
-                    .frame(width: 200, alignment: .leading)
-                    Text("Área")
-                        .padding(.top)
-                        .bold()
-                    TagViewComponent(tagType: tagType)
-                        .onTapGesture {
-                            selectTag.toggle()
-                        }
-                    Spacer()
-                    Button(action: {
-                        if lawsuit.authorID.hasPrefix("client:") {
-                            if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                                dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
-                            }
-                        } else {
-                            if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                                dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
-                            }
-                        }
-                        dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
-                        deleted.toggle()
-                        dismiss()
-                    }, label: {
-                        Text("Apagar processo")
-                    })
-                    .buttonStyle(.borderedProminent)
-                    .tint(.red)
                 }
-                Spacer()
+                .frame(width: 200, alignment: .leading)
                 VStack(alignment: .leading) {
-                    //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                     }
@@ -121,88 +93,132 @@ struct EditLawSuitView: View {
                             .padding(.leading,2)
                         }
                     }
-                    .frame(width: 200, alignment: .leading)
+                }
+                .frame(width: 200, alignment: .leading)
+            }
+            HStack(alignment: .top, spacing: 70) {
+                VStack(alignment: .leading) {
+                    Text("Área")
+                        .padding(.top)
+                        .bold()
+                    TagViewComponent(tagType: tagType)
+                        .onTapGesture {
+                            selectTag.toggle()
+                        }
+                }
+                Spacer()
+                VStack(alignment: .leading) {
                     LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
                         .padding(.top)
-                    HStack(spacing: 10) {
-                        Spacer()
-                        Button(action: {
-                            //resetar os valores
-                            dismiss()
-                        }, label: {
-                            Text("Cancelar")
-                        })
-                        Button(action: {
-                            if !areFieldsFilled() {
-                                invalidInformation = .missingInformation
-                                return
+                        .frame(width: 200, alignment: .leading)
+                    
+                }
+            }
+            Spacer()
+            HStack(alignment: .top, spacing: 70) {
+                Button(action: {
+                    deleteAlert.toggle()
+                }, label: {
+                    Text("Apagar processo")
+                })
+                .buttonStyle(.borderedProminent)
+                .tint(.red)
+                .alert(isPresented: $deleteAlert, content: {
+                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir esse processo irá apagar todos os documentos relacionados a ele."), primaryButton: Alert.Button.destructive(Text("Apagar"),
+                    action: {
+                        if lawsuit.authorID.hasPrefix("client:") {
+                                                if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                                                    dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                                }
+                                            } else {
+                                                if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+                                                    dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                                }
+                                            }
+                                            dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                                            deleted.toggle()
+                                            dismiss()
+                    }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
+                    }))
+                })
+                Spacer()
+                HStack(spacing: 10) {
+                    Spacer()
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Text("Cancelar")
+                    })
+                    Button(action: {
+                        if !areFieldsFilled() {
+                            invalidInformation = .missingInformation
+                            return
+                        }
+                        if lawsuitNumber.count < 25 {
+                            invalidInformation = .invalidLawSuitNumber
+                            return
+                        }
+                        if attributedAuthor {
+                            if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                                let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                                let category = TagTypeString.string(from: tagType)
+                                dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                dismiss()
+                            } else {
+                                print("error achando ou author")
                             }
-                            if lawsuitNumber.count < 25 {
-                                invalidInformation = .invalidLawSuitNumber
-                                return
-                            }
-                                if attributedAuthor {
-                                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                                        let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                                        let category = TagTypeString.string(from: tagType)
-                                        dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                        dismiss()
-                                    } else {
-                                        print("error achando ou author")
-                                    }
-                                } else if attributedDefendant {
-                                    if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
-                                        let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                                        let category = TagTypeString.string(from: tagType)
-                                        dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                        dismiss()
-                                    } else {
-                                        print("error achando defendant")
-                                    }
-                                }
-                            
-                        }, label: {
-                            Text("Salvar")
-                        })
-                        .buttonStyle(.borderedProminent)
-                        .alert(item: $invalidInformation) { error in
-                            switch error {
-                            case .missingInformation:
-                                return Alert(title: Text("Informações Faltando"),
-                                             message: Text("Por favor, preencha todos os campos antes de continuar."),
-                                             dismissButton: .default(Text("Ok")))
-                            case .invalidCPF:
-                                return Alert(title: Text("CPF inválido"),
-                                             message: Text("Por favor, insira um CPF válido antes de continuar."),
-                                             dismissButton: .default(Text("Ok")))
-                                
-                            case .invalidRG:
-                                return Alert(title: Text("RG inválido"),
-                                             message: Text("Por favor, insira um RG válido antes de continuar"),
-                                             dismissButton: .default(Text("Ok")))
-                            case .invalidEmail:
-                                return Alert(title: Text("E-mail inválido"),
-                                             message: Text("Por favor, insira um e-mail válido antes de continuar"),
-                                             dismissButton: .default(Text("Ok")))
-                            case .missingTelephoneNumber:
-                                return Alert(title: Text("Número de telefone inválido"),
-                                             message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                             dismissButton: .default(Text("Ok")))
-                            case .missingCellphoneNumber:
-                                return Alert(title: Text("Número de celular inválido"),
-                                             message: Text("Por favor, insira um número de celular válido antes de continuar"),
-                                             dismissButton: .default(Text("Ok")))
-                            case .invalidLawSuitNumber:
-                                return Alert(title: Text("Número do processo inválido"),
-                                message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                                dismissButton: .default(Text("Ok")))
+                        } else if attributedDefendant {
+                            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                                let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                                let category = TagTypeString.string(from: tagType)
+                                dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                dismiss()
+                            } else {
+                                print("error achando defendant")
                             }
                         }
+                        
+                    }, label: {
+                        Text("Salvar")
+                    })
+                    .buttonStyle(.borderedProminent)
+                    .alert(item: $invalidInformation) { error in
+                        switch error {
+                        case .missingInformation:
+                            return Alert(title: Text("Informações Faltando"),
+                                         message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidCPF:
+                            return Alert(title: Text("CPF inválido"),
+                                         message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                            
+                        case .invalidRG:
+                            return Alert(title: Text("RG inválido"),
+                                         message: Text("Por favor, insira um RG válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidEmail:
+                            return Alert(title: Text("E-mail inválido"),
+                                         message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .missingTelephoneNumber:
+                            return Alert(title: Text("Número de telefone inválido"),
+                                         message: Text("Por favor, insira um número de telefone válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .missingCellphoneNumber:
+                            return Alert(title: Text("Número de celular inválido"),
+                                         message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidLawSuitNumber:
+                            return Alert(title: Text("Número do processo inválido"),
+                                         message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        }
                     }
-                    .padding(.top)
                 }
             }
         }
+        .frame(minHeight: 255)
         .sheet(isPresented: $selectTag, content: {
             VStack {
                 Spacer()
@@ -230,7 +246,7 @@ struct EditLawSuitView: View {
                     lawsuitAuthorName = author.name
                     lawsuitDefendantName = defendant.name
                 }
-            //Se o cliente do processo estiver no reu
+                //Se o cliente do processo estiver no reu
             } else {
                 attributedDefendant = true
                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
@@ -254,4 +270,3 @@ struct EditLawSuitView: View {
         !lawsuitDefendantName.isEmpty
     }
 }
-
