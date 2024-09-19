@@ -73,17 +73,20 @@ struct FolderIconView: View {
             }
             Button(action: {
                 Task {
-                    //MARK: CloudKit - Deletar
-                    do {
-                        try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolder, to: folder, referenceKey: "folders")
-                        try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(folder: folder)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                    
                     //MARK: CoreData - Deletar
+                    let temporaryFolderRecordName = folder.recordName
+                    let temporaryParentFolderRecordName = parentFolder.recordName
+                    
                     withAnimation(.easeIn) {
                         dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                    }
+                    
+                    //MARK: ClourKit - Deletar
+                    do {
+                        try await dataViewModel.cloudManager.recordManager.removeReference(from: temporaryParentFolderRecordName!, to: temporaryFolderRecordName!, referenceKey: "folders")
+                        try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(recordName: temporaryFolderRecordName!)
+                    } catch {
+                        print("Error deleting folder from CloudKit: \(error.localizedDescription)")
                     }
                 }
             }) {

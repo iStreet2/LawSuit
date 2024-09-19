@@ -185,6 +185,15 @@ class RecordManager {
         }
     }
     
+    func deleteObjectWithRecordName(recordName: String) async throws {
+        let recordID = CKRecord.ID(recordName: recordName)
+        do {
+            try await publicDatabase.deleteRecord(withID: recordID)
+        } catch {
+            throw error
+        }
+    }
+    
     func deleteFolderRecursivelyInCloudKit(folder: NSManagedObject) async throws {
         if let subfolders = folder.value(forKey: "folders") as? NSSet {
             for subfolder in subfolders {
@@ -203,6 +212,35 @@ class RecordManager {
             }
         }
         try await deleteObjectInCloudKit(object: folder)
+    }
+    
+    func deleteFolderRecursivelyInCloudKit(recordName: String) async throws {
+        // Criar o ID do registro da pasta no CloudKit
+        let folderRecordID = CKRecord.ID(recordName: recordName)
+
+        // Buscar a pasta no CloudKit
+        let folderRecord = try await publicDatabase.record(for: folderRecordID)
+
+        // Verificar se a pasta possui subpastas (folders)
+        if let subfolderReferences = folderRecord["folders"] as? [CKRecord.Reference] {
+            for subfolderReference in subfolderReferences {
+                // Pegar o recordName da subpasta e deletar recursivamente
+                let subfolderRecordID = subfolderReference.recordID
+                try await deleteFolderRecursivelyInCloudKit(recordName: subfolderRecordID.recordName)
+            }
+        }
+
+        // Verificar se a pasta possui arquivos (files)
+        if let fileReferences = folderRecord["files"] as? [CKRecord.Reference] {
+            for fileReference in fileReferences {
+                // Pegar o recordName do arquivo e deletar
+                let fileRecordID = fileReference.recordID
+                try await publicDatabase.deleteRecord(withID: fileRecordID)
+            }
+        }
+
+        // Finalmente, deletar a própria pasta
+        try await publicDatabase.deleteRecord(withID: folderRecordID)
     }
     
     //MARK: Função para remover uma referencia
@@ -232,6 +270,29 @@ class RecordManager {
         }
 
         try await publicDatabase.save(firstRecord)
+    }
+    
+    func removeReference(from firstRecordName: String, to secondRecordName: String, referenceKey: String) async throws {
+        // Criar os IDs dos registros no CloudKit
+        let firstRecordID = CKRecord.ID(recordName: firstRecordName)
+        let secondRecordID = CKRecord.ID(recordName: secondRecordName)
+
+        // Buscar o primeiro registro (de onde queremos remover a referência)
+        let firstRecord = try await publicDatabase.record(for: firstRecordID)
+
+        // Verificar se há referências na chave fornecida
+        if var references = firstRecord[referenceKey] as? [CKRecord.Reference] {
+            // Remover a referência correspondente ao secondRecordID
+            references.removeAll { $0.recordID == secondRecordID }
+            
+            // Se o array de referências estiver vazio, podemos removê-lo ou definir como `nil`
+            firstRecord[referenceKey] = references.isEmpty ? nil : references as CKRecordValue
+            
+            // Salvar o registro atualizado no CloudKit
+            try await publicDatabase.save(firstRecord)
+        } else {
+            throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No references found for \(referenceKey)"])
+        }
     }
     
 }
