@@ -90,49 +90,43 @@ struct EditClientView: View {
                 .alert(isPresented: $deleteAlert, content: {
                     Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
-                            Task {
-                                // Primeiro, deletar todos os processos e entidades relacionados no CloudKit
-                                //MARK: CloudKit - Deletar
-                                for lawsuit in lawsuits {
+                            //MARK: CoreData - Excluir Processo
+                            let temporaryClientRecordName = client.recordName
+                            let temporaryClientRootFolder = client.rootFolder
+                            for lawsuit in lawsuits {
+                                let temporaryLawsuitRecordName = lawsuit.recordName
+                                let temporaryLawsuitRootFolder = lawsuit.rootFolder
+                                Task {
                                     if dataViewModel.coreDataManager.clientManager.authorIsClient(lawsuit: lawsuit) {
                                         if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                                            try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity)
-                                        }
-                                    } else {
-                                        if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                                            try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity)
-                                        }
-                                    }
-                                    // Deletar o processo (lawsuit) no CloudKit
-                                    try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: lawsuit, relationshipsToDelete: ["rootFolder"])
-                                }
-                                
-                                // Depois de deletar os processos e entidades, deletar o cliente no CloudKit
-                                try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: client, relationshipsToDelete: ["rootFolder"])
-                                
-                                //MARK: CoreData - Deletar
-                                // Após garantir que tudo foi deletado no CloudKit, deletar no CoreData
-                                for lawsuit in lawsuits {
-                                    if lawsuit.authorID.hasPrefix("client:") {
-                                        if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
                                             dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                            try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity) // CloudKit
                                         }
                                     } else {
                                         if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
                                             dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                            try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity) // CloudKit
                                         }
                                     }
-                                    dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                                 }
-                                
-                                // Deletar o cliente no CoreData
-                                dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
-                                
-                                // Atualiza a interface de usuário e finaliza a exclusão
-                                navigationViewModel.selectedClient = nil
-                                deleted.toggle()
-                                dismiss()
+                                dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                                //MARK: CloudKit - Deletar Processo
+                                Task {
+                                    try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: temporaryLawsuitRecordName!, rootFolder: temporaryLawsuitRootFolder!)
+                                }
                             }
+                            //MARK: CoreData - Deletar Cliente
+                            dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+                            
+                            //MARK: CloudKit - Deletar Cliente
+                            Task {
+                                try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: temporaryClientRecordName!, rootFolder: temporaryClientRootFolder!)
+                            }
+                            // Atualiza a interface de usuário e finaliza a exclusão
+                            navigationViewModel.selectedClient = nil
+                            deleted.toggle()
+                            dismiss()
+                            
                         } else {
                             print("Error fetching lawsuits of client: \(client.name)")
                         }
