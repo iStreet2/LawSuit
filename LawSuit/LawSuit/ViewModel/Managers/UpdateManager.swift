@@ -21,10 +21,6 @@ class UpdateManager {
         update.name = name
         update.date = date
         update.parentLawsuit = lawsuit
-        lawsuit.addToUpdates(update)
-//        Task {
-//            await saveContext()
-//        }
         return update
     }
     
@@ -33,15 +29,6 @@ class UpdateManager {
             ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast)
         }
         return updatesArray?.first?.date
-    }
-    
-    @MainActor
-    private func saveContext() {
-        do {
-            try context.save()
-        } catch let saveError as NSError {
-            print("Error while saving context on update: \(saveError), \(saveError.localizedDescription)")
-        }
     }
     
 }

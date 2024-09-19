@@ -9,24 +9,23 @@ import Foundation
 import SwiftUI
 
 class LawsuitNetworkingViewModel: ObservableObject {
-    
-    @Published var updates: [Update] = []
-            
+        
     private let lawsuitService: LawsuitNetworkingService
+    private let lawsuitManager: LawsuitManager
     
-    init(lawsuitService: LawsuitNetworkingService) {
+    init(lawsuitService: LawsuitNetworkingService, lawsuitManager: LawsuitManager) {
         self.lawsuitService = lawsuitService
+        self.lawsuitManager = lawsuitManager
     }
 
-    func fetchUpdatesDataFromLawsuit(fromLawsuit lawsuit: Lawsuit) {
+    func fetchAndSaveUpdatesFromAPI(fromLawsuit lawsuit: Lawsuit) {
         Task {
             do {
                 let result = try await lawsuitService.fetchLawsuitUpdatesData(fromLawsuit: lawsuit)
                 switch result {
-                case .success(let updatesFromAPI):
-                    updates = updatesFromAPI
-                    print("recebeu o array de updates para o objeto \(lawsuit.number ?? "ha")")
-                    //print("updates: \(updates)")
+                case .success(let updates):   
+                    lawsuitManager.addUpdates(lawsuit: lawsuit, updates: updates)
+                    print("recebeu \(updates.count) updates para o objeto \(lawsuit.number ?? "ha")")
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

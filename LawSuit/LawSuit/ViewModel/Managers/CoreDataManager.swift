@@ -31,7 +31,7 @@ class CoreDataManager: ObservableObject {
         self.lawsuitManager = LawsuitManager(context: context)
         self.clientManager = ClientManager(context: context)
         self.updateManager = UpdateManager(context: context)
-        self.lawsuitNetworkingViewModel = LawsuitNetworkingViewModel(lawsuitService: LawsuitNetworkingService(updateManager: self.updateManager))
+        self.lawsuitNetworkingViewModel = LawsuitNetworkingViewModel(lawsuitService: LawsuitNetworkingService(updateManager: self.updateManager), lawsuitManager: self.lawsuitManager)
     }
     
     func deleteAllData() {

@@ -9,8 +9,11 @@ import SwiftUI
 
 struct LawsuitListView: View {
     
+    @EnvironmentObject var dataViewModel: DataViewModel
+
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     @State var createProcess = false
+    @State private var hasFetchedUpdates = false  // Adicionado
     
     var body: some View {
         
@@ -36,6 +39,12 @@ struct LawsuitListView: View {
             }
 
         }
+//        .onAppear {
+//            if !hasFetchedUpdates { //prevenir multiplas chamadas
+//                fetchUpdatesForLawsuits()
+//                hasFetchedUpdates = true
+//            }
+//        }
         .sheet(isPresented: $createProcess, content: {
             AddLawsuitView()
         })
@@ -45,6 +54,19 @@ struct LawsuitListView: View {
             }
         }
     }
+    
+//    func fetchUpdatesForLawsuits() {
+//        for lawsuit in lawsuits {
+//            if lawsuit.updates == nil {
+//                Task {
+//                    dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchUpdatesDataFromLawsuit(fromLawsuit: lawsuit)
+//
+//                    dataViewModel.coreDataManager.lawsuitManager.addUpdates(lawsuit: lawsuit, updates: dataViewModel.coreDataManager.lawsuitNetworkingViewModel.updates)
+//                }
+//            }
+//        }
+//        print("fiz o fetch na lawsuitListView")
+//    }
 }
 
 #Preview {

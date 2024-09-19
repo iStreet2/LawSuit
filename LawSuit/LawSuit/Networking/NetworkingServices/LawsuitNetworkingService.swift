@@ -96,7 +96,7 @@ class LawsuitNetworkingService {
         //navego pelas chaves para chegar no array de processos (q está dentro de _source)
         guard let hits = json["hits"] as? [String: Any],
               let hitsArray = hits["hits"] as? [[String: Any]],
-              let firstHit = hitsArray.first,
+              let firstHit = hitsArray.last,
               let source = firstHit["_source"] as? [String: Any] else {
             throw LawsuitRequestError.jsonNavigationError
         }

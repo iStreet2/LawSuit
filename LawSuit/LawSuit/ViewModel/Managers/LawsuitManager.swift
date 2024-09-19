@@ -80,6 +80,7 @@ class LawsuitManager {
         saveContext()
     }
     
+    //@MainActor
     func saveContext() {
         do {
             try context.save()
