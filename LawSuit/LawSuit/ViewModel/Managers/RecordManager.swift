@@ -38,6 +38,20 @@ class RecordManager {
         }
     }
     
+    // MARK: - Fetch
+    func fetchWithQuery(_ query: CKQuery) async -> [CKRecord]? {
+        //let query = CKQuery(recordType: "Folder", predicate: NSPredicate(format: "TRUEPREDICATE"))
+        do {
+            let result = try await publicDatabase.records(matching: query)
+            let records = try result.matchResults.compactMap { try $0.1.get() }
+            // Caso não for genérico, aqui inicializar os modelos e retorná-los
+            return records
+        } catch {
+            print("Error fetching from CloudKit: \(error)")
+        }
+        return nil
+    }
+    
     //MARK: - Create: Nessa função basta passar o objeto e um vetor com strings escrito o nome dos relationShips que você quer salvar
     func saveObject<T: Recordable>(object: inout T, relationshipsToSave: Set<String>) async throws {
         let className = String(describing: type(of: object))
