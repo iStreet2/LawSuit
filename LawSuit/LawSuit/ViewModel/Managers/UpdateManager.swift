@@ -16,11 +16,11 @@ class UpdateManager {
         self.context = context
     }
     
-    func createUpdate(name: String, date: Date, lawsuit: Lawsuit) -> Update {
+    func createUpdate(name: String, date: Date) -> Update {
         let update = Update(context: context)
         update.name = name
         update.date = date
-        update.parentLawsuit = lawsuit
+        //update.parentLawsuit = lawsuit
         return update
     }
     

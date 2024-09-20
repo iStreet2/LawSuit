@@ -91,7 +91,6 @@ struct AddClientView: View {
                     } else {
                         missingInformation = true
                     }
-                    
                 }, label: {
                     if stage == 3 {
                         Text("Adicionar Cliente")

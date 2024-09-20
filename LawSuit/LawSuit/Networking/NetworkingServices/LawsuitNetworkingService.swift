@@ -121,7 +121,7 @@ class LawsuitNetworkingService {
                 let dataHora = dataHoraString.convertToDate()
                 
                 //Cria uma nova movimentação para cada movimento na API e salva no core data
-                let update = updateManager.createUpdate(name: nomeMovimento, date: dataHora, lawsuit: lawsuit)
+                let update = updateManager.createUpdate(name: nomeMovimento, date: dataHora)
                 updates.append(update)
             }
         

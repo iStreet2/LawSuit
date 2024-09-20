@@ -23,7 +23,6 @@ struct LawsuitDistributedView: View {
     @Binding var lawsuitDefendant: String
     @Binding var lawsuitActionDate: Date
     @EnvironmentObject var dataViewModel: DataViewModel
-
     
     @State var attributedClient = false
     @State var attributedDefendant = false
@@ -103,7 +102,10 @@ struct LawsuitDistributedView: View {
                         let category = TagTypeString.string(from: tagType)
                         //MARK: Advogado temporário
                         let lawyer = lawyers[0]
-                        dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
+                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitParentAuthorName) X \(lawsuitDefendant)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
+                        
+                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+
                         dismiss()
                     } else {
                         print("Cliente não encontrado")
@@ -111,6 +113,7 @@ struct LawsuitDistributedView: View {
                 } catch {
                     print("Erro ao buscar cliente: \(error.localizedDescription)")
                 }
+                
             } label: {
                 Text("Criar")
             }

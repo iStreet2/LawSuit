@@ -23,7 +23,12 @@ class LawsuitManager {
         saveContext()
     }
     
-    func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) {
+    func appendUpdate(lawsuit: Lawsuit, update: Update) {
+        lawsuit.addToUpdates(update)
+        saveContext()
+    }
+    
+    func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) -> Lawsuit {
         let lawsuit = Lawsuit(context: context)
         lawsuit.name = name
         lawsuit.category = category
@@ -44,6 +49,8 @@ class LawsuitManager {
         lawsuit.rootFolder = rootFolder
         
         saveContext()
+        
+        return lawsuit
     }
     
     func createLawsuitNonDistribuited(name: String, number: String, category: String, lawyer: Lawyer, defendant: String, author: Client, actionDate: Date) {

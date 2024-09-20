@@ -22,6 +22,7 @@ struct ClientView: View {
     @State var selectedOption = "Processos"
     @State var createLawsuit = false
     var infos = ["Processos", "Documentos"]
+
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -100,7 +101,7 @@ struct ClientView: View {
 //            }
 //        }
         .sheet(isPresented: $createLawsuit, content: {
-            AddLawsuitView()
+                AddLawsuitView()
         })
     }
 }

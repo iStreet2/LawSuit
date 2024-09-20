@@ -12,9 +12,9 @@ struct LawsuitCellComponent: View {
     @ObservedObject var client: Client
     @ObservedObject var lawyer: Lawyer
     @ObservedObject var lawsuit: Lawsuit
-        
-    //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
+
+    //MARK: CoreData
     @Environment(\.managedObjectContext) var context
         
     var body: some View {
@@ -60,11 +60,9 @@ struct LawsuitCellComponent: View {
                 
             }
             .padding(.horizontal, 20)
-            .onAppear {    
+            .onAppear {
                 Task {
-                    if lawsuit.updates == nil {
                         dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                    }
                 }
             }
         }

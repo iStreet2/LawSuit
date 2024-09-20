@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LawsuitListViewHeaderContent: View {
+    
     var lawsuits: FetchedResults<Lawsuit>
     @Environment(\.managedObjectContext) var context
     
