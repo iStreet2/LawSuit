@@ -122,6 +122,20 @@ final class NetworkManager: ObservableObject {
                 } catch {
                     print(error.localizedDescription)
                 }
+            } else {
+                do {
+                    let hasChanged = try await cloudManager.recordManager.hasObjectChangedOnCloudKit(localObject: file)
+                    if hasChanged {
+                        print("Editando uma pasta")
+                        let propertyNames = ["name"]
+                        let propertyValues: [Any] = [file.name!]
+                        Task {
+                            try await cloudManager.recordManager.updateObjectInCloudKit(object: file, propertyNames: propertyNames, propertyValues: propertyValues)
+                        }
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
         }
         
