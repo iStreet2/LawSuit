@@ -73,7 +73,7 @@ struct FilePDFIconView: View {
             Button(action: {
                 Task {
                     //MARK: CoreData - Deletar
-                    let filePDfRecordName = filePDF.recordName
+                    let filePDFRecordName = filePDF.recordName
                     let parentFolderRecordName = parentFolder.recordName
                     
                     withAnimation(.easeIn) {
@@ -82,8 +82,10 @@ struct FilePDFIconView: View {
                     
                     //MARK: CloudKit - Deletar
                     do {
-                        try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolderRecordName!, to: filePDfRecordName!, referenceKey: "files")
-                        try await dataViewModel.cloudManager.recordManager.deleteObjectWithRecordName(recordName: filePDfRecordName!)
+                        if let filePDFRecordName = filePDFRecordName, let parentFolderRecordName = parentFolderRecordName {
+                            try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolderRecordName, to: filePDFRecordName, referenceKey: "files")
+                            try await dataViewModel.cloudManager.recordManager.deleteObjectWithRecordName(recordName: filePDFRecordName)
+                        }
                     } catch {
                         print("Error deleting FilePDF on CloudKit: \(error.localizedDescription)")
                     }

@@ -87,12 +87,12 @@ struct AddClientView: View {
                                 stage += 1
                             }
                         } else {
-                            //MARK: Adicionando no CoreData
+                            //MARK: CoreData - Criar
                             let lawyer = lawyers[0]
                             
                             var client = dataViewModel.coreDataManager.clientManager.createAndReturnClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
                             
-                            //MARK: Adicionando no CloudKit
+                            //MARK: CloudKit - Criar
                             //Para adicionar o cliente, primeiro eu coloco a rootFolder no cloudKit, depois eu coloco o client
                             Task {
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &client.rootFolder!, relationshipsToSave: ["folders","files"])

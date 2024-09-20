@@ -44,6 +44,17 @@ class FolderManager {
         saveContext()
     }
     
+    func fetchAllFolders() -> [Folder] {
+        let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+        do {
+            let folders = try context.fetch(fetchRequest)
+            return folders
+        } catch {
+            print("Erro ao buscar pastas: \(error)")
+            return []
+        }
+    }
+    
     func saveContext() {
         do {
             try context.save()

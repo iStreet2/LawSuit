@@ -90,6 +90,17 @@ class LawsuitManager {
         return nil
     }
     
+    func fetchAllLawsuits() -> [Lawsuit] {
+        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+        do {
+            let lawsuits = try context.fetch(fetchRequest)
+            return lawsuits
+        } catch {
+            print("Erro ao buscar processos: \(error)")
+            return []
+        }
+    }
+    
     func saveContext() {
         do {
             try context.save()

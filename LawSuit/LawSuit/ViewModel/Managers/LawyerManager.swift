@@ -47,6 +47,17 @@ class LawyerManager {
         saveContext()
     }
     
+    func fetchAllLawyers() -> [Lawyer] {
+        let fetchRequest: NSFetchRequest<Lawyer> = Lawyer.fetchRequest()
+        do {
+            let lawyers = try context.fetch(fetchRequest)
+            return lawyers
+        } catch {
+            print("Erro ao buscar entidades: \(error)")
+            return []
+        }
+    }
+    
     func saveContext() {
         do {
             try context.save()

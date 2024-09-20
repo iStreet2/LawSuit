@@ -45,6 +45,17 @@ class FilePDFManager {
         saveContext()
     }
     
+    func fetchAllFilesPDF() -> [FilePDF] {
+        let fetchRequest: NSFetchRequest<FilePDF> = FilePDF.fetchRequest()
+        do {
+            let files = try context.fetch(fetchRequest)
+            return files
+        } catch {
+            print("Erro ao buscar pastas: \(error)")
+            return []
+        }
+    }
+    
     func saveContext() {
         do {
             try context.save()

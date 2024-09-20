@@ -78,6 +78,17 @@ class EntityManager {
         saveContext()
     }
     
+    func fetchAllEntities() -> [Entity] {
+        let fetchRequest: NSFetchRequest<Entity> = Entity.fetchRequest()
+        do {
+            let entities = try context.fetch(fetchRequest)
+            return entities
+        } catch {
+            print("Error fetching entitys: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
     func saveContext() {
         do {
             try context.save()

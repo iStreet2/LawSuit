@@ -169,6 +169,18 @@ class ClientManager {
         }
     }
     
+    func fetchAllClients() -> [Client] {
+        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+        do {
+            let clients = try context.fetch(fetchRequest)
+            return clients
+        } catch {
+            print("Erro ao buscar clientes: \(error)")
+            return []
+        }
+    }
+
+    
     func saveContext() {
         do {
             try context.save()

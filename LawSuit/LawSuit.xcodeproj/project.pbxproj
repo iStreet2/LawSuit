@@ -18,7 +18,7 @@
 		08E8D2022C87AF11008F3859 /* LawsuitListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8D2012C87AF11008F3859 /* LawsuitListView.swift */; };
 		08E8D2042C88981F008F3859 /* LawsuitListViewHeaderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8D2032C88981F008F3859 /* LawsuitListViewHeaderContent.swift */; };
 		3B04F11D2C7FB9B600991746 /* ClientInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */; };
-		3B0A7AD12C7D16AA005A5946 /* NetworkMonitorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A7AD02C7D16AA005A5946 /* NetworkMonitorViewModel.swift */; };
+		3B0A7AD12C7D16AA005A5946 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A7AD02C7D16AA005A5946 /* NetworkManager.swift */; };
 		3B0EE5F72C6A90F100CFC91A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0EE5F62C6A90F100CFC91A /* CoreDataManager.swift */; };
 		3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4A02C73781F00CCA763 /* Folder.swift */; };
 		3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4A22C73781F00CCA763 /* Lawsuit.swift */; };
@@ -127,7 +127,7 @@
 		08E8D2012C87AF11008F3859 /* LawsuitListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitListView.swift; sourceTree = "<group>"; };
 		08E8D2032C88981F008F3859 /* LawsuitListViewHeaderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitListViewHeaderContent.swift; sourceTree = "<group>"; };
 		3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientInfoView.swift; sourceTree = "<group>"; };
-		3B0A7AD02C7D16AA005A5946 /* NetworkMonitorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorViewModel.swift; sourceTree = "<group>"; };
+		3B0A7AD02C7D16AA005A5946 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3B0EE5F62C6A90F100CFC91A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3B24D4A02C73781F00CCA763 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		3B24D4A22C73781F00CCA763 /* Lawsuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lawsuit.swift; sourceTree = "<group>"; };
@@ -269,7 +269,6 @@
 				3BC731052C6A9D5E00923BB2 /* Managers */,
 				3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */,
 				3BD40B3F2C6E5DD5004048FA /* FolderViewModel.swift */,
-				3B0A7AD02C7D16AA005A5946 /* NetworkMonitorViewModel.swift */,
 				3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */,
 				3BD313E32C88FD56001CE5E7 /* DataViewModel.swift */,
 			);
@@ -402,6 +401,7 @@
 				E981580E2C77A2680039C2FD /* RecordManager.swift */,
 				E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */,
 				3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */,
+				3B0A7AD02C7D16AA005A5946 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -667,7 +667,7 @@
 				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
 				3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */,
-				3B0A7AD12C7D16AA005A5946 /* NetworkMonitorViewModel.swift in Sources */,
+				3B0A7AD12C7D16AA005A5946 /* NetworkManager.swift in Sources */,
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,
 				DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */,
 				DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */,

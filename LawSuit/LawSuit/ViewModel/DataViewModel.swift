@@ -20,6 +20,7 @@ class DataViewModel: ObservableObject {
     var coreDataManager: CoreDataManager
     var cloudManager: CloudManager
     var cloudDataConverter: CloudDataConverter
+    var networkManager: NetworkManager
     
     init() {
         self.coreDataContainer.loadPersistentStores { descricao, error in
@@ -31,6 +32,7 @@ class DataViewModel: ObservableObject {
         self.coreDataManager = CoreDataManager(context: context)
         self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
         self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter, context: context)
+        self.networkManager = NetworkManager(coreDataManager: self.coreDataManager, cloudManager: self.cloudManager, context: self.context)
     }
     
 }

@@ -49,7 +49,7 @@ struct DocumentGridView: View {
                                 Task {
                                     do {
                                         try await dataViewModel.cloudManager.recordManager.saveObject(object: &folder, relationshipsToSave: ["folders", "files"])
-                                        try await dataViewModel.cloudManager.recordManager.addReference(from: folder, to: openFolder, referenceKey: "folders")
+                                        try await dataViewModel.cloudManager.recordManager.addReference(from: folder, to: folder.parentFolder!, referenceKey: "folders")
                                     } catch {
                                         print(error.localizedDescription)
                                     }

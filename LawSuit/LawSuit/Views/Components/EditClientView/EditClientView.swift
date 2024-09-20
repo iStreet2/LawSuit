@@ -91,11 +91,11 @@ struct EditClientView: View {
                     Alert(title: Text("Cuidado"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
                             //MARK: CoreData - Excluir Processo
-                            let temporaryClientRecordName = client.recordName
-                            let temporaryClientRootFolder = client.rootFolder
+                            let clientRecordName = client.recordName
+                            let clientRootFolder = client.rootFolder
                             for lawsuit in lawsuits {
-                                let temporaryLawsuitRecordName = lawsuit.recordName
-                                let temporaryLawsuitRootFolder = lawsuit.rootFolder
+                                let lawsuitRecordName = lawsuit.recordName
+                                let lawsuitRootFolder = lawsuit.rootFolder
                                 Task {
                                     if dataViewModel.coreDataManager.clientManager.authorIsClient(lawsuit: lawsuit) {
                                         if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
@@ -112,7 +112,9 @@ struct EditClientView: View {
                                 dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                                 //MARK: CloudKit - Deletar Processo
                                 Task {
-                                    try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: temporaryLawsuitRecordName!, rootFolder: temporaryLawsuitRootFolder!)
+                                    if let lawsuitRecordName = lawsuitRecordName, let lawsuitRootFolder = lawsuitRootFolder {
+                                        try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: lawsuitRecordName, rootFolder: lawsuitRootFolder)
+                                    }
                                 }
                             }
                             //MARK: CoreData - Deletar Cliente
@@ -120,7 +122,9 @@ struct EditClientView: View {
                             
                             //MARK: CloudKit - Deletar Cliente
                             Task {
-                                try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: temporaryClientRecordName!, rootFolder: temporaryClientRootFolder!)
+                                if let clientRecordName = clientRecordName, let clientRootFolder = clientRootFolder {
+                                    try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: clientRecordName, rootFolder: clientRootFolder)
+                                }
                             }
                             // Atualiza a interface de usuário e finaliza a exclusão
                             navigationViewModel.selectedClient = nil

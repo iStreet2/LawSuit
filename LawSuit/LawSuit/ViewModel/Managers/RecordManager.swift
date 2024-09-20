@@ -60,7 +60,6 @@ class RecordManager {
         if let managedObject = object as? NSManagedObject {
             let attributes = managedObject.entity.attributesByName
             let relationships = managedObject.entity.relationshipsByName
-            // Save attributes
             for (attributeName, _) in attributes {
                 if let value = managedObject.value(forKey: attributeName) {
                     if attributeName == "content" {
@@ -77,7 +76,6 @@ class RecordManager {
                     }
                 }
             }
-            // Save specified relationships (//Reference)
             for (relationshipName, _) in relationships {
                 if relationshipsToSave.contains(relationshipName), let relatedObject = managedObject.value(forKey: relationshipName) as? NSManagedObject {
                     if let recordName = relatedObject.value(forKey: "recordName") as? String {
@@ -198,7 +196,6 @@ class RecordManager {
         if let subfolders = folder.value(forKey: "folders") as? NSSet {
             for subfolder in subfolders {
                 if let subfolderObject = subfolder as? NSManagedObject {
-                    // Recursivamente deletar a subpasta
                     try await deleteFolderRecursivelyInCloudKit(folder: subfolderObject)
                 }
             }
@@ -206,7 +203,6 @@ class RecordManager {
         if let files = folder.value(forKey: "files") as? NSSet {
             for file in files {
                 if let fileObject = file as? NSManagedObject {
-                    // Deletar o arquivo no CloudKit
                     try await deleteObjectInCloudKit(object: fileObject, relationshipsToDelete: [])
                 }
             }
@@ -215,31 +211,24 @@ class RecordManager {
     }
     
     func deleteFolderRecursivelyInCloudKit(recordName: String) async throws {
-        // Criar o ID do registro da pasta no CloudKit
         let folderRecordID = CKRecord.ID(recordName: recordName)
 
-        // Buscar a pasta no CloudKit
         let folderRecord = try await publicDatabase.record(for: folderRecordID)
 
-        // Verificar se a pasta possui subpastas (folders)
         if let subfolderReferences = folderRecord["folders"] as? [CKRecord.Reference] {
             for subfolderReference in subfolderReferences {
-                // Pegar o recordName da subpasta e deletar recursivamente
                 let subfolderRecordID = subfolderReference.recordID
                 try await deleteFolderRecursivelyInCloudKit(recordName: subfolderRecordID.recordName)
             }
         }
 
-        // Verificar se a pasta possui arquivos (files)
         if let fileReferences = folderRecord["files"] as? [CKRecord.Reference] {
             for fileReference in fileReferences {
-                // Pegar o recordName do arquivo e deletar
                 let fileRecordID = fileReference.recordID
                 try await publicDatabase.deleteRecord(withID: fileRecordID)
             }
         }
 
-        // Finalmente, deletar a própria pasta
         try await publicDatabase.deleteRecord(withID: folderRecordID)
     }
     
@@ -273,26 +262,62 @@ class RecordManager {
     }
     
     func removeReference(from firstRecordName: String, to secondRecordName: String, referenceKey: String) async throws {
-        // Criar os IDs dos registros no CloudKit
         let firstRecordID = CKRecord.ID(recordName: firstRecordName)
         let secondRecordID = CKRecord.ID(recordName: secondRecordName)
 
-        // Buscar o primeiro registro (de onde queremos remover a referência)
         let firstRecord = try await publicDatabase.record(for: firstRecordID)
 
-        // Verificar se há referências na chave fornecida
         if var references = firstRecord[referenceKey] as? [CKRecord.Reference] {
-            // Remover a referência correspondente ao secondRecordID
             references.removeAll { $0.recordID == secondRecordID }
             
-            // Se o array de referências estiver vazio, podemos removê-lo ou definir como `nil`
             firstRecord[referenceKey] = references.isEmpty ? nil : references as CKRecordValue
             
-            // Salvar o registro atualizado no CloudKit
             try await publicDatabase.save(firstRecord)
         } else {
             throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No references found for \(referenceKey)"])
         }
+    }
+    
+    func hasObjectChangedOnCloudKit<T: NSManagedObject>(localObject: T, relationshipsToCompare: [String] = []) async throws -> Bool {
+        guard let recordName = localObject.value(forKey: "recordName") as? String else {
+            throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Objeto sem recordName não pode ser comparado com o CloudKit."])
+        }
+
+        let recordID = CKRecord.ID(recordName: recordName)
+        let cloudRecord = try await publicDatabase.record(for: recordID)
+
+        let entity = localObject.entity
+
+        // Verificar os atributos
+        let attributes = entity.attributesByName
+        for (attributeName, _) in attributes {
+            if let localValue = localObject.value(forKey: attributeName),
+               let cloudValue = cloudRecord[attributeName] {
+                if "\(localValue)" != "\(cloudValue)" {
+                    return true
+                }
+            } else if localObject.value(forKey: attributeName) != nil || cloudRecord[attributeName] != nil {
+                return true
+            }
+        }
+
+        let relationships = entity.relationshipsByName
+        for relationshipName in relationshipsToCompare {
+            if let localRelatedObjects = localObject.value(forKey: relationshipName) as? NSSet {
+                for localRelatedObject in localRelatedObjects {
+                    if let localRelatedObject = localRelatedObject as? NSManagedObject,
+                       let relatedRecordName = localRelatedObject.value(forKey: "recordName") as? String {
+                        let relatedRecordID = CKRecord.ID(recordName: relatedRecordName)
+                        let cloudRelatedRecord = try await publicDatabase.record(for: relatedRecordID)
+
+                        if relatedRecordID.recordName != cloudRelatedRecord.recordID.recordName {
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+        return false
     }
     
 }

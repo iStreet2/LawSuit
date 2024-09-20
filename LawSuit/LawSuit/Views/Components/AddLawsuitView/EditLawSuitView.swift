@@ -80,8 +80,8 @@ struct EditLawSuitView: View {
                         }
                     Spacer()
                     Button(action: {
-                        let temporaryRecordName = lawsuit.recordName
-                        let temporaryRootFolder = lawsuit.rootFolder
+                        let recordName = lawsuit.recordName
+                        let rootFolder = lawsuit.rootFolder
                         
                         //MARK: CoreData - Deletar
                         Task {
@@ -100,7 +100,9 @@ struct EditLawSuitView: View {
                         dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                         Task {
                             //MARK: CloudKit - Deletar
-                            try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: temporaryRecordName!, rootFolder: temporaryRootFolder!)
+                            if let recordName = recordName, let rootFolder = rootFolder {
+                                try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: recordName, rootFolder: rootFolder)
+                            }
                         }
                         
                         deleted.toggle()
