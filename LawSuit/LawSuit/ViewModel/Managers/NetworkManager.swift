@@ -69,10 +69,10 @@ final class NetworkManager: ObservableObject {
                     print(error.localizedDescription)
                 }
             } else {
-                print("Editando um cliente")
                 do {
                     let hasChanged = try await cloudManager.recordManager.hasObjectChangedOnCloudKit(localObject: client, relationshipsToCompare: ["rootFolder"])
                     if hasChanged {
+                        print("Editando um cliente")
                         let propertyNames = ["name", "occupation", "rg", "cpf", "affiliation", "maritalStatus", "nationality", "birthDate", "cep", "address", "addressNumber", "neighborhood", "complement", "state", "city", "email", "telephone", "cellphone"]
                         let propertyValues: [Any] = [client.name, client.occupation, client.rg, client.cpf, client.affiliation, client.maritalStatus, client.nationality, client.birthDate, client.cep, client.address, client.addressNumber, client.neighborhood, client.complement, client.state, client.city, client.email, client.telephone, client.cellphone]
                         Task {
@@ -92,6 +92,20 @@ final class NetworkManager: ObservableObject {
                 do {
                     try await cloudManager.recordManager.saveObject(object: &mutableFolder, relationshipsToSave: ["folders", "files"])
                     try await cloudManager.recordManager.addReference(from: mutableFolder.parentFolder!, to: mutableFolder, referenceKey: "folders")
+                } catch {
+                    print(error.localizedDescription)
+                }
+            } else {
+                do {
+                    let hasChanged = try await cloudManager.recordManager.hasObjectChangedOnCloudKit(localObject: folder, relationshipsToCompare: ["files","folders"])
+                    if hasChanged {
+                        print("Editando uma pasta")
+                        let propertyNames = ["name"]
+                        let propertyValues: [Any] = [folder.name!]
+                        Task {
+                            try await cloudManager.recordManager.updateObjectInCloudKit(object: folder, propertyNames: propertyNames, propertyValues: propertyValues)
+                        }
+                    }
                 } catch {
                     print(error.localizedDescription)
                 }

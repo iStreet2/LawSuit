@@ -301,7 +301,6 @@ class RecordManager {
             }
         }
 
-        let relationships = entity.relationshipsByName
         for relationshipName in relationshipsToCompare {
             if let localRelatedObjects = localObject.value(forKey: relationshipName) as? NSSet {
                 for localRelatedObject in localRelatedObjects {
