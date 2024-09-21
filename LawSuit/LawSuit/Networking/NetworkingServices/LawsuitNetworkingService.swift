@@ -9,8 +9,12 @@ import Foundation
 import CoreData
 import SwiftUI
 
+protocol LawsuitNetworkingServiceProtocol {
+    func fetchLawsuitUpdatesData(fromLawsuit lawsuit: Lawsuit) async throws -> Result<[Update], Error>
+}
 
-class LawsuitNetworkingService {
+
+class LawsuitNetworkingService: LawsuitNetworkingServiceProtocol {
             
     var updateManager: UpdateManager
 

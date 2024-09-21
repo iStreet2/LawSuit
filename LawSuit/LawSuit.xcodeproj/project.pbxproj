@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0897CB392C8BA21D00B488A9 /* MailManager.swift */; };
 		0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */; };
+		089B8A9C2C9E312D00FEBCAB /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */; };
 		08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */; };
 		08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */; };
 		08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */; };
@@ -20,6 +21,7 @@
 		08A2B0E22C93B01400719571 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E12C93B01400719571 /* KeychainHelper.swift */; };
 		08A2B0E42C9486CA00719571 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E32C9486CA00719571 /* Date+.swift */; };
 		08A2B0E72C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E62C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift */; };
+		08A2B0E92C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E82C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift */; };
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
 		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
@@ -131,6 +133,7 @@
 		084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0897CB392C8BA21D00B488A9 /* MailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailManager.swift; sourceTree = "<group>"; };
 		0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNameCellComponent.swift; sourceTree = "<group>"; };
+		089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
 		08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingService.swift; sourceTree = "<group>"; };
 		08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosDoJudiciario.swift; sourceTree = "<group>"; };
 		08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosEnums.swift; sourceTree = "<group>"; };
@@ -142,6 +145,7 @@
 		08A2B0E12C93B01400719571 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		08A2B0E32C9486CA00719571 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		08A2B0E62C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingServiceTests.swift; sourceTree = "<group>"; };
+		08A2B0E82C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingViewModelTests.swift; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
@@ -297,6 +301,8 @@
 			isa = PBXGroup;
 			children = (
 				08A2B0E62C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift */,
+				08A2B0E82C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift */,
+				089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -780,7 +786,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B98F11E2C668B1100C45121 /* LawSuitTests.swift in Sources */,
+				08A2B0E92C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift in Sources */,
 				08A2B0E72C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift in Sources */,
+				089B8A9C2C9E312D00FEBCAB /* CoreDataStackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -996,7 +1004,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = 543L4H35A3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -1015,7 +1023,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = 543L4H35A3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;

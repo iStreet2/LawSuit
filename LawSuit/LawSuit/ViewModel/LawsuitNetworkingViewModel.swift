@@ -10,15 +10,15 @@ import SwiftUI
 
 class LawsuitNetworkingViewModel: ObservableObject {
     
-    private let lawsuitService: LawsuitNetworkingService
+    private let lawsuitService: LawsuitNetworkingServiceProtocol
     private let lawsuitManager: LawsuitManager
+    var isLoading: Bool = true
     
-    init(lawsuitService: LawsuitNetworkingService, lawsuitManager: LawsuitManager) {
+    init(lawsuitService: LawsuitNetworkingServiceProtocol, lawsuitManager: LawsuitManager) {
         self.lawsuitService = lawsuitService
         self.lawsuitManager = lawsuitManager
     }
     
-    //fazer: chamada da funcao salva duplicado kkkk fodae
     func fetchAndSaveUpdatesFromAPI(fromLawsuit lawsuit: Lawsuit) {
         
         Task {
@@ -55,6 +55,7 @@ class LawsuitNetworkingViewModel: ObservableObject {
             } catch {
                 print(error.localizedDescription)
             }
+            isLoading = false
         }
     }
     
