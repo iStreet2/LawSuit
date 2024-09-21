@@ -29,6 +29,7 @@ struct DetailedLawSuitView: View {
         formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
         return formatter
     }
+    @State var showingGridView = true
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel

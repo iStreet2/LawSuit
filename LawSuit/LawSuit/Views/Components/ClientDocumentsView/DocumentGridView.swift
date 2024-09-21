@@ -25,7 +25,7 @@ struct DocumentGridView: View {
     let itemWidth: CGFloat = 90
     
     //MARK: Viariáveis
-    var folder: Folder
+    var openFolder: Folder
     
     var body: some View {
         //senao criaria um openFolder novo e não abriria o nosso
@@ -45,50 +45,50 @@ struct DocumentGridView: View {
                         .font(.title2)
                         .padding(.bottom)
                         Spacer()
-                        Menu(content: {
-                            Button {
-                                dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: folder, name: "Nova Pasta")
-                            } label: {
-                                Text("Nova Pasta")
-                                Image(systemName: "folder")
-                            }
-                            Button {
-                                folderViewModel.importPDF(parentFolder: folder, dataViewModel: dataViewModel)
-                            } label: {
-                                Text("Importar PDF")
-                                Image(systemName: "doc")
-                            }
-                        }, label: {
-                            Image(systemName: "plus")
-                        })
-                        .buttonStyle(PlainButtonStyle())
-                        .font(.title2)
-                        .padding(.bottom)
+//                        Menu(content: {
+//                            Button {
+//                                dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: folder, name: "Nova Pasta")
+//                            } label: {
+//                                Text("Nova Pasta")
+//                                Image(systemName: "folder")
+//                            }
+//                            Button {
+//                                folderViewModel.importPDF(parentFolder: folder, dataViewModel: dataViewModel)
+//                            } label: {
+//                                Text("Importar PDF")
+//                                Image(systemName: "doc")
+//                            }
+//                        }, label: {
+//                            Image(systemName: "plus")
+//                        })
+//                        .buttonStyle(PlainButtonStyle())
+//                        .font(.title2)
+//                        .padding(.bottom)
                     }
                     VStack {
                         LazyVGrid(columns: gridItems, spacing: spacing) {
-                            FolderGridView(parentFolder: folder, geometry: geometry)
-                            FilePDFGridView(parentFolder: folder, geometry: geometry)
+                            FolderView(parentFolder: openFolder, geometry: geometry)
+                            FilePDFGridView(parentFolder: openFolder, geometry: geometry)
                         }
-                        if folder.folders!.count == 0 && folder.files!.count == 0{
+                        if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
                             Text("Sem pastas ou arquivos")
                                 .foregroundStyle(.gray)
                         }
                     }
                 }
-                .onChange(of: folder) { _ in
+                .onChange(of: openFolder) { _ in
                     dragAndDropViewModel.updateFramesFolder(folders: folders)
                     dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                 }
                 .contextMenu {
                     Button(action: {
-                        dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: folder, name: "Nova Pasta")
+                        dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
                     }, label: {
                         Text("Nova Pasta")
                         Image(systemName: "folder")
                     })
                     Button {
-                        folderViewModel.importPDF(parentFolder: folder, dataViewModel: dataViewModel)
+                        folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
                     } label: {
                         Text("Importar PDF")
                         Image(systemName: "doc")

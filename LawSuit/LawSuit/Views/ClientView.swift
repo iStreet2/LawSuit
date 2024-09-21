@@ -22,6 +22,7 @@ struct ClientView: View {
     @Binding var deleted: Bool
     @State var selectedOption = "Processos"
     @State var createLawsuit = false
+    @State var showingGridView = true
     var infos = ["Processos", "Documentos"]
     
     //MARK: CoreData
@@ -64,16 +65,10 @@ struct ClientView: View {
                             })
                             .padding(.trailing)
                             .buttonStyle(PlainButtonStyle())
-                        }else{
-
-                            Button(action: {
-                                
-                            }, label: {
-                                Image(systemName: "plus")
-                                    .opacity(0)
-                            })
-                            .padding(.trailing)
-                            .buttonStyle(PlainButtonStyle())
+                        } else {
+                            if let openFolder = folderViewModel.getOpenFolder(){
+                                DocumentActionButtonsView(folder: openFolder )
+                            }
                         }
                     }
                 }
