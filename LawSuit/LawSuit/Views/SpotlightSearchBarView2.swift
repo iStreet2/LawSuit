@@ -12,6 +12,7 @@ struct SpotlightSearchbarView: View {
 	@Environment(\.dismiss) var dismiss
 	@EnvironmentObject var dataViewModel: DataViewModel
 	@EnvironmentObject var navigationViewModel: NavigationViewModel
+	@EnvironmentObject var eventManager: EventManager
 	
 	@State var searchString: String = ""
 	
@@ -33,6 +34,8 @@ struct SpotlightSearchbarView: View {
 					break
 				}
 			}
+		} else if let fileWrapper = entity as? FileWrapper {
+			eventManager.didSelectFileToPreview(fileWrapper.file)
 		}
 		dismiss()
 	}
