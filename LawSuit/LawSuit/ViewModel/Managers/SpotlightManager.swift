@@ -32,7 +32,7 @@ class SpotlightManager {
 		}
 	}
 	
-	func getSpotlightList(for section: String) -> [any EntityWrapper] {
+	func getSpotlightList(for section: String, using searchString: String) -> [any EntityWrapper] {
 		do {
 			let clients = try self.fetchCoreDataObjects(for: .client) as! [Client]
 			let clientWrappers = clients.map { ClientWrapper(client: $0) }
@@ -45,11 +45,11 @@ class SpotlightManager {
 		
 			switch section {
 			case "Clientes":
-				return clientWrappers
+				return clientWrappers.filter { $0.client.name.lowercased().contains(searchString.lowercased()) }
 			case "Processos":
-				return lawsuitWrappers
+				return lawsuitWrappers.filter { $0.lawsuit.name.lowercased().contains(searchString.lowercased()) || $0.lawsuit.number.lowercased().contains(searchString.lowercased()) }
 			case "Documentos":
-				return fileWrappers
+				return fileWrappers.filter { $0.file.name!.lowercased().contains(searchString.lowercased()) }
 			default:
 				return []
 			}

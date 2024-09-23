@@ -46,8 +46,8 @@ class DataViewModel: ObservableObject {
 		return []
 	}
 	
-	func getSpotlightList(for section: String) -> [any EntityWrapper] {
-		return spotlightManager.getSpotlightList(for: section)
+	func getSpotlightList(for section: String, using searchString: String) -> [any EntityWrapper] {
+		return spotlightManager.getSpotlightList(for: section, using: searchString)
 	}
 	
 	func getSpotlightListTitles(for searchString: String) -> [String] {
@@ -68,3 +68,7 @@ class DataViewModel: ObservableObject {
 	}
 }
 
+struct StringElement: Identifiable {
+	let id = UUID()
+	var value: String
+}

@@ -32,10 +32,7 @@ struct LawsuitNotDistributedView: View {
         VStack(alignment: .leading){
             Text("Área")
                 .bold()
-            TagViewComponent(tagType: tagType)
-                .onTapGesture {
-                    selectTag.toggle()
-                }
+			  TagViewPickerComponentV1(currentTag: $tagType)
             HStack(spacing: 70) {
                 VStack(alignment: .leading) {
                     EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
@@ -117,4 +114,10 @@ struct LawsuitNotDistributedView: View {
         return !lawsuitAuthorName.isEmpty &&
         !lawsuitDefendantName.isEmpty
     }
+}
+
+#Preview {
+	LawsuitNotDistributedView(lawsuitNumber: .constant("34567898765"), lawsuitCourt: .constant("fghcvnbjgyutfgh"), lawsuitAuthorName: .constant("AuTHOR NAAAME"), lawsuitDefendantName: .constant("Defendant Name Here"), lawsuitActionDate: .constant(Date.now))
+
+		.environmentObject(DataViewModel())
 }
