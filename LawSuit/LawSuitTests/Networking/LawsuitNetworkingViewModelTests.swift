@@ -22,7 +22,7 @@ final class LawsuitNetworkingViewModelTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        // Destrói as instâncias após os testes
+        //Destrói as instâncias depois dos testes
         coreDataStack = nil
         lawsuitManager = nil
         sut = nil
@@ -44,16 +44,14 @@ final class LawsuitNetworkingViewModelTests: XCTestCase {
     }
     
     //MARK: - Unit Tests
-    func testFetchLawsuitUpdatesDataWithSuccess() async throws {
-        
-        sut = LawsuitNetworkingViewModel(lawsuitService: StubLawsuitNetworkingService(coreDataStack: coreDataStack), lawsuitManager: lawsuitManager)
-        
+    func testFetchAndSaveUpdatesFromAPIWithSuccess() async throws {
+    
         let lawsuit = createMockLawsuitAndSaveIntoCoreData()
         
         sut.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
     
         //Espera um tempo para a execução do código assíncrono
-        try await Task.sleep(nanoseconds: 1_000_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000) //1 segundo
 
         if let updatesSet = lawsuit.updates as? Set<Update> {
             let updatesArray = Array(updatesSet).sorted { $0.date ?? Date() < $1.date ?? Date() } // data do menor para o maior
