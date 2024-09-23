@@ -9,22 +9,25 @@ import Foundation
 import SwiftUI
 
 struct DocumentView: View{
+    
+    //MARK: ViewModels
+    @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var dataViewModel: DataViewModel
+    
+    //MARK: Variáveis
+//    @Binding var showingGridView: Bool
+    
     var body: some View{
-        HStack{
-            Button(action: {
-                DocumentGridView()
-            }, label: {
-                Image(systemName: "square.grid.2x2")
-            })
-            Button(action: {
-                DocumentListView()
-            }, label: {
-                Image(systemName: "list.bullet")
-            })
+        if let openFolder = folderViewModel.getOpenFolder(){
+    
+                //ele chama os dois document grid e list view
+            if  folderViewModel.showingGridView  {
+                    DocumentGridView(openFolder: openFolder)
+                } else {
+                    DocumentListView(openFolder: openFolder)
+            }
         }
     }
 }
 
-#Preview {
-    DocumentView()
-}
+

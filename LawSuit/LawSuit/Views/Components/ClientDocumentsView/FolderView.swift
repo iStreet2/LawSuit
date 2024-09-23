@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct FolderGridView: View {
+struct FolderView: View {
     
     //MARK: Variáveis
     @ObservedObject var parentFolder: Folder
     var geometry: GeometryProxy
+//    @Binding var showingGridView: Bool
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -36,7 +37,7 @@ struct FolderGridView: View {
             predicate: NSPredicate(format: "parentFolder == %@", parentFolder)
         )
     }
-
+    
     var body: some View {
         ForEach(folders, id: \.self) { folder in
             FolderIconView(folder: folder, parentFolder: parentFolder)
