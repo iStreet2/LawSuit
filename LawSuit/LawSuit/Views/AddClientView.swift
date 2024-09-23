@@ -84,7 +84,7 @@ struct AddClientView: View {
                         invalidInformation = .missingInformation
                         return
                     }
-                    if cpf.count < 14 || !textFieldDataViewModel.isValidCPF(cpf) {
+                    if  cpf.count < 14 || !textFieldDataViewModel.isValidCPF(cpf) {
                         invalidInformation = .invalidCPF
                         return
                     }
@@ -95,9 +95,9 @@ struct AddClientView: View {
                     if stage == 3 {
                         if !textFieldDataViewModel.isValidEmail(email) {
                             invalidInformation = .invalidEmail
-                        } else if telephone.count < 10 {
+                        } else if telephone.count < 14 {
                             invalidInformation = .missingTelephoneNumber
-                        } else if cellphone.count < 11 {
+                        } else if cellphone.count < 15 {
                             invalidInformation = .missingCellphoneNumber
                         }
                         else {
@@ -150,6 +150,11 @@ struct AddClientView: View {
                         return Alert(title: Text("Número de celular inválido"),
                                      message: Text("Por favor, insira um número de celular válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
+                    case .invalidLawSuitNumber:
+                        return Alert(title: Text(""),
+                        message: Text(""),
+                        dismissButton: .default(Text("")))
+                   
                     }
                 }
             }

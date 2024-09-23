@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct DetailedLawSuitView: View {
-    
+        
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
@@ -29,6 +29,7 @@ struct DetailedLawSuitView: View {
         formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
         return formatter
     }
+    @State var showingGridView = true
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -67,7 +68,7 @@ struct DetailedLawSuitView: View {
                     }
                     .padding(.vertical)
                     // MARK: - View/Grid de Pastas
-                    DocumentGridView()
+                    DocumentView()
                 }
                 Spacer()
             }

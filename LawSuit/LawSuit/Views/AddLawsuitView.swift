@@ -23,6 +23,7 @@ struct AddLawsuitView: View {
     @State var lawsuitAuthorName = ""
     @State var lawsuitDefandentName = ""
     @State var lawsuitActionDate = Date()
+
     
     //MARK: ViewModels
     
@@ -50,7 +51,7 @@ struct AddLawsuitView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .frame(width: 400, height: 300)
+        .frame(height: 300)
         .padding()
         .onAppear {
             lawsuitTypeString = lawsuitType.rawValue

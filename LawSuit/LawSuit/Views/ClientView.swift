@@ -22,7 +22,9 @@ struct ClientView: View {
     @Binding var deleted: Bool
     @State var selectedOption = "Processos"
     @State var createLawsuit = false
+    @State var showingGridView = true
     var infos = ["Processos", "Documentos"]
+
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -47,7 +49,7 @@ struct ClientView: View {
                     .foregroundColor(.gray)
             } else {
                 VStack(alignment: .leading) {
-                    ClientInfoView(client: client, deleted: $deleted)
+                    ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
                     Divider()
                     HStack {
                         SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
@@ -64,15 +66,10 @@ struct ClientView: View {
                             })
                             .padding(.trailing)
                             .buttonStyle(PlainButtonStyle())
-                        }else{
-                            Button(action: {
-                                
-                            }, label: {
-                                Image(systemName: "plus")
-                                    .opacity(0)
-                            })
-                            .padding(.trailing)
-                            .buttonStyle(PlainButtonStyle())
+                        } else {
+                            if let openFolder = folderViewModel.getOpenFolder(){
+                                DocumentActionButtonsView(folder: openFolder )
+                            }
                         }
                     }
                 }
@@ -82,7 +79,7 @@ struct ClientView: View {
                             LawsuitListViewHeaderContent(lawsuits: lawsuits)
                         }
                     } else {
-                        DocumentGridView()
+                        DocumentView()
                             .onAppear {
                                 navigationViewModel.selectedClient = client
                                 folderViewModel.resetFolderStack()
@@ -94,9 +91,8 @@ struct ClientView: View {
                 }
             }
         }
-        DocumentView()
         .sheet(isPresented: $createLawsuit, content: {
-            AddLawsuitView()
+                AddLawsuitView()
         })
     }
 }
