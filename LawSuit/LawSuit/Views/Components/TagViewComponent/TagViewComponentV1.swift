@@ -24,33 +24,32 @@ struct TagViewPickerComponentV1: View {
                     }
                 }
                 .fixedSize(horizontal: true, vertical: false)
-            if isShowingPickerView {
-                ForEach(tagTypes, id:\.self) { tag in
-                    TagViewComponent(tagType: tag)
-                        .onTapGesture {
-                            withAnimation {
-                                isShowingPickerView.toggle()
-                                currentTag = tag
-                                stateCurrentTag = tag
-                            }
-                        }
-                }
-                .transition(.move(edge: .top))
-                .zIndex(1)
-                .clipped()
-            }
+			  
         }
-        .frame(height: isShowingPickerView ? .infinity : 20, alignment: .top)
+        .frame(height: 20, alignment: .top)
         .background(Color.white)
         .clipShape(Rectangle())
         .animation(.easeInOut, value: isShowingPickerView)
         .onAppear {
             stateCurrentTag = currentTag
         }
-//		  .frame(width: 500, height: 500)
-//		  .sheet(isPresented: ) { 
-//			  <#code#>
-//		  }
+
+		  .sheet(isPresented: $isShowingPickerView) {
+			  ForEach(tagTypes, id:\.self) { tag in
+					TagViewComponent(tagType: tag)
+						 .onTapGesture {
+							  withAnimation {
+									isShowingPickerView.toggle()
+									currentTag = tag
+									stateCurrentTag = tag
+							  }
+						 }
+			  }
+			  .transition(.move(edge: .top))
+			  .zIndex(1)
+			  .clipped()
+			  .padding()
+		  }
         
     }
 }

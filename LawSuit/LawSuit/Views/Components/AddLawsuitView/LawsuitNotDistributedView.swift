@@ -29,87 +29,75 @@ struct LawsuitNotDistributedView: View {
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
     var body: some View {
-        VStack(alignment: .leading){
-            Text("Área")
-                .bold()
-			  TagViewPickerComponentV1(currentTag: $tagType)
-            HStack(spacing: 70) {
-                VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
-                    HStack {
-                        Text(lawsuitAuthorName)
-                        if attributedAuthor {
-                            Button {
-                                //Retirar esse cliente e retirar o estado de autor selecionado
-                                attributedAuthor = false
-                                lawsuitAuthorName = ""
-                            } label: {
-                                Image(systemName: "minus")
-                            }
-                            .padding(.leading,2)
-                        }
-                    }
-                }
-                LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
-            }
-            VStack {
-                Spacer()
-                Button {
-                    dismiss()
-                } label: {
-                    Text("Cancelar")
-                }
-                Button {
-                    if areFieldsFilled() {
-                        let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                        fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
-                        do {
-                            let fetchedClients = try context.fetch(fetchRequest)
-                            if let author = fetchedClients.first {
-                                let category = TagTypeString.string(from: tagType)
-                                let lawyer = lawyers[0]
-                                let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                                dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                dismiss()
-                            } else {
-                                print("Cliente não encontrado")
-                            }
-                        } catch {
-                            print("aaa")
-                        }
-                    } else {
-                        missingInformation = true
-                    }
-                } label: {
-                    Text("Criar")
-                }
-                .buttonStyle(.borderedProminent)
-                .alert(isPresented: $missingInformation) {
-                    Alert(title: Text("Informações Faltando"),
-                          message: Text("Por favor, preencha todos os campos antes de criar um novo processo."),
-                          dismissButton: .default(Text("Ok")))
-                }
-            }
-            .padding(.vertical, 5)
-        }
-        .sheet(isPresented: $selectTag, content: {
-            VStack {
-                Spacer()
-                TagViewPickerComponentV1(currentTag: $tagType)
-                Spacer()
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        selectTag.toggle()
-                    }, label: {
-                        Text("Salvar")
-                    })
-                    .buttonStyle(.borderedProminent)
-                    .padding()
-                }
-            }
-        })
+		 VStack(alignment: .leading){
+			 Text("Área")
+				 .bold()
+			 TagViewPickerComponentV1(currentTag: $tagType)
+			 HStack(spacing: 70) {
+				 VStack(alignment: .leading) {
+					 EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
+					 HStack {
+						 Text(lawsuitAuthorName)
+						 if attributedAuthor {
+							 Button {
+								 //Retirar esse cliente e retirar o estado de autor selecionado
+								 attributedAuthor = false
+								 lawsuitAuthorName = ""
+							 } label: {
+								 Image(systemName: "minus")
+							 }
+							 .padding(.leading,2)
+						 }
+					 }
+				 }
+				 LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
+			 }
+			 VStack {
+				 Spacer()
+				 HStack {
+					 Button {
+						 dismiss()
+					 } label: {
+						 Text("Cancelar")
+					 }
+					 Spacer()
+					 Button {
+						 if areFieldsFilled() {
+							 let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+							 fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
+							 do {
+								 let fetchedClients = try context.fetch(fetchRequest)
+								 if let author = fetchedClients.first {
+									 let category = TagTypeString.string(from: tagType)
+									 let lawyer = lawyers[0]
+									 let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+									 dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+									 dismiss()
+								 } else {
+									 print("Cliente não encontrado")
+								 }
+							 } catch {
+								 print("aaa")
+							 }
+						 } else {
+							 missingInformation = true
+						 }
+					 } label: {
+						 Text("Criar")
+					 }
+					 .buttonStyle(.borderedProminent)
+					 .alert(isPresented: $missingInformation) {
+						 Alert(title: Text("Informações Faltando"),
+								 message: Text("Por favor, preencha todos os campos antes de criar um novo processo."),
+								 dismissButton: .default(Text("Ok")))
+					 }
+				 }
+				 .padding(.vertical, 5)
+			 }
+		 }
+
     }
+	
     func areFieldsFilled() -> Bool {
         return !lawsuitAuthorName.isEmpty &&
         !lawsuitDefendantName.isEmpty
