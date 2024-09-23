@@ -12,8 +12,8 @@ struct NetworkingManager {
     static var shared = NetworkingManager()
     
     func removeCharactersFromLawsuitNumber(lawsuitNumber: String) -> String {
-        var lawsuitNumberWithoutSpecialCharacters = lawsuitNumber.replacingOccurrences(of: ".-", with: "")
-        return lawsuitNumberWithoutSpecialCharacters
+        let lawsuitNumberFiltered = lawsuitNumber.filter { "0123456789".contains($0) }
+        return lawsuitNumberFiltered
     }
     
     func obterJusticaETribunalDoProcesso(lawsuitNumber: String) throws -> (justicaRes: String, tribu: String)  {
