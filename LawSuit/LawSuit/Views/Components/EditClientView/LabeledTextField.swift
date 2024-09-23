@@ -31,8 +31,7 @@ struct LabeledTextField: View {
     }
 }
 
-//#Preview {
-//    @State var text: String = ""
-//    
-//    return LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $text)
-//}
+
+
+
+
