@@ -91,14 +91,40 @@ struct DocumentListView: View {
                 dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
             }
             .contextMenu {
-                Button(action: {
-                    dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
-                }, label: {
+                Button {
+                    //MARK: CoreData - Criar
+                    var folder = dataViewModel.coreDataManager.folderManager.createAndReturnFolder(parentFolder: openFolder, name: "Nova Pasta")
+                    //MARK: CloudKit - Criar
+                    Task {
+                        do {
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &folder, relationshipsToSave: ["folders", "files"])
+                            try await dataViewModel.cloudManager.recordManager.addReference(from: folder, to: folder.parentFolder!, referenceKey: "folders")
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                } label: {
                     Text("Nova Pasta")
                     Image(systemName: "folder")
-                })
+                }
                 Button {
-                    folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
+                    //MARK: CoreData - Criar
+                    folderViewModel.importAndReturnPDF(parentFolder: openFolder, dataViewModel: dataViewModel) { filePDF in
+                        guard var mutableFilePDF = filePDF else {
+                            print("Falha ao importar o PDF.")
+                            return
+                        }
+                        //MARK: CloudKit - Criar
+                        Task {
+                            do {
+                                try await dataViewModel.cloudManager.recordManager.saveObject(object: &mutableFilePDF, relationshipsToSave: [])
+                            } catch {
+                                print(error.localizedDescription)
+                            }
+                            
+                            try await dataViewModel.cloudManager.recordManager.addReference(from: openFolder, to: mutableFilePDF, referenceKey: "files")
+                        }
+                    }
                 } label: {
                     Text("Importar PDF")
                     Image(systemName: "doc")

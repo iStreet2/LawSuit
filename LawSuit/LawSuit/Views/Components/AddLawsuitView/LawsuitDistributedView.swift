@@ -139,7 +139,7 @@ struct LawsuitDistributedView: View {
                         let category = TagTypeString.string(from: tagType)
                         let lawyer = lawyers[0]
                         var defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                         //MARK: CloudKit - Criar
                         Task {
                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["folders","files"])
@@ -158,7 +158,7 @@ struct LawsuitDistributedView: View {
                         let category = TagTypeString.string(from: tagType)
                         let lawyer = lawyers[0]
                         var author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                         //MARK: CloudKit - Criar
                         Task {
                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["folders","files"])

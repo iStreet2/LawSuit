@@ -92,7 +92,7 @@ struct EditLawSuitView: View {
                             } label: {
                                 Image(systemName: "minus")
                             }
-                            .padding(.leading,2)
+                            .padding(.leading, 2)
                         }
                     }
                 }
@@ -176,48 +176,48 @@ struct EditLawSuitView: View {
                             return
                         }
                         if attributedAuthor {
-                                if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                                    if let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
-                                        //MARK: CoreData - Editar
-                                        dataViewModel.coreDataManager.entityManager.editEntity(entity: defendant, name: lawsuitDefendantName)
-                                        let category = TagTypeString.string(from: tagType)
-                                        dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                        
-                                        //MARK: CloudKit - Editar
-                                        let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
-                                        let propertyValues: [Any] = ["\(lawsuitAuthorName) X \(lawsuitDefendantName)", lawsuitNumber, lawsuitCourt, category, defendant.id, author.id, lawsuitActionDate]
-                                        Task {
-                                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: defendant, propertyNames: ["name"], propertyValues: [lawsuitDefendantName])
-                                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: lawsuit, propertyNames: propertyNames, propertyValues: propertyValues)
-                                        }
-                                        dismiss()
-                                    }
+                            if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                                if let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
+                                    //MARK: CoreData - Editar
+                                    dataViewModel.coreDataManager.entityManager.editEntity(entity: defendant, name: lawsuitDefendantName)
+                                    let category = TagTypeString.string(from: tagType)
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                                     
-                                } else {
-                                    print("error achando ou author")
-                                }
-                            } else if attributedDefendant {
-                                if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
-                                    if let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
-                                        //MARK: CoreData - Editar
-                                        dataViewModel.coreDataManager.entityManager.editEntity(entity: author, name: lawsuitAuthorName)
-                                        let category = TagTypeString.string(from: tagType)
-                                        dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                                        
-                                        //MARK: CloudKit - Editar
-                                        let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
-                                        let propertyValues: [Any] = ["\(lawsuitAuthorName) X \(lawsuitDefendantName)", lawsuitNumber, lawsuitCourt, category, defendant.id, author.id, lawsuitActionDate]
-                                        Task {
-                                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: author, propertyNames: ["name"], propertyValues: [lawsuitAuthorName])
-                                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: lawsuit, propertyNames: propertyNames, propertyValues: propertyValues)
-                                        }
-                                        dismiss()
+                                    //MARK: CloudKit - Editar
+                                    let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
+                                    let propertyValues: [Any] = ["\(lawsuitAuthorName) X \(lawsuitDefendantName)", lawsuitNumber, lawsuitCourt, category, defendant.id, author.id, lawsuitActionDate]
+                                    Task {
+                                        try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: defendant, propertyNames: ["name"], propertyValues: [lawsuitDefendantName])
+                                        try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: lawsuit, propertyNames: propertyNames, propertyValues: propertyValues)
                                     }
-                                    
-                                } else {
-                                    print("error achando defendant")
+                                    dismiss()
                                 }
-                        
+                                
+                            } else {
+                                print("error achando ou author")
+                            }
+                        } else if attributedDefendant {
+                            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                                if let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
+                                    //MARK: CoreData - Editar
+                                    dataViewModel.coreDataManager.entityManager.editEntity(entity: author, name: lawsuitAuthorName)
+                                    let category = TagTypeString.string(from: tagType)
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                    
+                                    //MARK: CloudKit - Editar
+                                    let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
+                                    let propertyValues: [Any] = ["\(lawsuitAuthorName) X \(lawsuitDefendantName)", lawsuitNumber, lawsuitCourt, category, defendant.id, author.id, lawsuitActionDate]
+                                    Task {
+                                        try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: author, propertyNames: ["name"], propertyValues: [lawsuitAuthorName])
+                                        try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: lawsuit, propertyNames: propertyNames, propertyValues: propertyValues)
+                                    }
+                                    dismiss()
+                                }
+                                
+                            } else {
+                                print("error achando defendant")
+                            }
+                        }
                     }, label: {
                         Text("Salvar")
                     })
@@ -228,28 +228,11 @@ struct EditLawSuitView: View {
                             return Alert(title: Text("Informações Faltando"),
                                          message: Text("Por favor, preencha todos os campos antes de continuar."),
                                          dismissButton: .default(Text("Ok")))
-                        case .invalidCPF:
-                            return Alert(title: Text("CPF inválido"),
-                                         message: Text("Por favor, insira um CPF válido antes de continuar."),
-                                         dismissButton: .default(Text("Ok")))
-                            
-                        case .invalidRG:
-                            return Alert(title: Text("RG inválido"),
-                                         message: Text("Por favor, insira um RG válido antes de continuar"),
-                                         dismissButton: .default(Text("Ok")))
-                        case .invalidEmail:
-                            return Alert(title: Text("E-mail inválido"),
-                                         message: Text("Por favor, insira um e-mail válido antes de continuar"),
-                                         dismissButton: .default(Text("Ok")))
-                        case .missingTelephoneNumber:
-                            return Alert(title: Text("Número de telefone inválido"),
-                                         message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                         dismissButton: .default(Text("Ok")))
-                        case .missingCellphoneNumber:
-                            return Alert(title: Text("Número de celular inválido"),
-                                         message: Text("Por favor, insira um número de celular válido antes de continuar"),
-                                         dismissButton: .default(Text("Ok")))
                         case .invalidLawSuitNumber:
+                            return Alert(title: Text("Número do processo inválido"),
+                                         message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        default:
                             return Alert(title: Text("Número do processo inválido"),
                                          message: Text("Por favor, insira um número de processo válido antes de continuar"),
                                          dismissButton: .default(Text("Ok")))
@@ -287,7 +270,7 @@ struct EditLawSuitView: View {
                     lawsuitDefendantName = defendant.name
                     self.entityID = defendant.id
                 }
-                //Se o cliente do processo estiver no reu
+                //Se o cliente do processo estiver no réu
             } else {
                 attributedDefendant = true
                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
@@ -304,6 +287,7 @@ struct EditLawSuitView: View {
         }
         .padding()
     }
+    
     func areFieldsFilled() -> Bool {
         return !lawsuitAuthorName.isEmpty &&
         !lawsuitCourt.isEmpty &&

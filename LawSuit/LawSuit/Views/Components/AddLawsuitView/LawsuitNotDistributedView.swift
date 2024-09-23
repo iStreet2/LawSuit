@@ -72,7 +72,7 @@ struct LawsuitNotDistributedView: View {
                             let category = TagTypeString.string(from: tagType)
                             let lawyer = lawyers[0]
                             let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                            var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                             //MARK: CloudKit - Criar
                             Task {
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["files", "folder"])
