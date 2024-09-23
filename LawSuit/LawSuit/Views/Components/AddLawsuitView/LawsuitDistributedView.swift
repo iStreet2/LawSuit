@@ -1,9 +1,9 @@
-//
-//  ProcessDistributedView.swift
-//  LawSuit
-//
-//  Created by Emily Morimoto on 27/08/24.
-//
+////
+////  ProcessDistributedView.swift
+////  LawSuit
+////
+////  Created by Emily Morimoto on 27/08/24.
+////
 
 import SwiftUI
 import Combine
@@ -222,4 +222,3 @@ struct LawsuitDistributedView: View {
         
     }
 }
-

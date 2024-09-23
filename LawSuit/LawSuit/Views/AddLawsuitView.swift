@@ -43,8 +43,8 @@ struct AddLawsuitView: View {
                 .padding(.leading)
             }
             if lawsuitType == .distributed {
-                LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if lawsuitType == .notDistributed {
                 LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

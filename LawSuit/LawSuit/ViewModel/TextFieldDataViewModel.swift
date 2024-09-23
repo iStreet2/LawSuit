@@ -117,4 +117,3 @@ class TextFieldDataViewModel: ObservableObject {
             return formatLawsuit
         }
     }
-
