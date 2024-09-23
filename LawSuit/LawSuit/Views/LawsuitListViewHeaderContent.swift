@@ -12,7 +12,6 @@ struct LawsuitListViewHeaderContent: View {
     //MARK: Variáveis de estado
     @State var lawsuitClient: Client?
     var lawsuits: FetchedResults<Lawsuit>
-    @Environment(\.managedObjectContext) var context
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel

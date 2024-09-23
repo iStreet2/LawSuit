@@ -13,8 +13,6 @@ struct LawsuitListView: View {
     @State var createProcess = false
     @State private var hasFetchedUpdates = false  // Adicionado
     
-    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
-    
     var body: some View {
         
         NavigationStack {
