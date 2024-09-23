@@ -99,23 +99,7 @@ struct LawsuitNotDistributedView: View {
                 }
             }
         }
-        .sheet(isPresented: $selectTag, content: {
-            VStack {
-                Spacer()
-                TagViewPickerComponentV1(currentTag: $tagType)
-                Spacer()
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        selectTag.toggle()
-                    }, label: {
-                        Text("Salvar")
-                    })
-                    .buttonStyle(.borderedProminent)
-                    .padding()
-                }
-            }
-        })
+
     }
     func areFieldsFilled() -> Bool {
         return !lawsuitAuthorName.isEmpty &&
