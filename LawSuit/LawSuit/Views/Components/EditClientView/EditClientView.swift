@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import Combine
 
 struct EditClientView: View {
     
     //MARK: ViewModels
+    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
+    @EnvironmentObject var addressViewModel: AddressViewModel
     
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
     //MARK: Variáveis de estado
+    @State var invalidInformation: InvalidInformation?
     @State var userInfoType = 0
     @State var clientName: String = ""
     @State var clientOccupation: String = ""
@@ -36,6 +40,9 @@ struct EditClientView: View {
     @State var clientTelephone: String = ""
     @State var clientCellphone: String = ""
     
+    let textLimit = 50
+    let maritalStatusLimit = 10
+    
     @State var deleteAlert = false
     @ObservedObject var client: Client
     @Binding var deleted: Bool
@@ -43,16 +50,18 @@ struct EditClientView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-
+    
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $clientName)
+                        .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
                     HStack {
                         LabeledDateField(selectedDate: $clientBirthDate, label: "Data de nascimento")
                         LabeledTextField(label: "Profissão", placeholder: "Profissão", textfieldText: $clientOccupation)
+                            .onReceive(Just(clientOccupation)) { _ in textFieldDataViewModel.limitText(text: &clientOccupation, upper: textLimit) }
                             .frame(maxWidth: .infinity)
                             .padding(.leading, 30)
                     }
@@ -70,15 +79,14 @@ struct EditClientView: View {
             .pickerStyle(.segmented)
             .labelsHidden()
             
-            if userInfoType == 0 { 
-                EditClientViewFormsFields(formType: .personalInfo, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
+            if userInfoType == 0 {
+                EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             } else if userInfoType == 1 {
-                EditClientViewFormsFields(formType: .address, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
+                EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             } else if userInfoType == 2 {
-                EditClientViewFormsFields(formType: .contact, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
+                EditClientViewFormsFields(formType: .contact, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             }
             Spacer()
-            
             HStack {
                 Button {
                     deleteAlert.toggle()
@@ -87,42 +95,102 @@ struct EditClientView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
-                
+                .alert(isPresented: $deleteAlert, content: {
+                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                        if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
+                            for lawsuit in lawsuits {
+                                dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                            }
+                            // Após deletar os processos, deletar o cliente
+                            dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+                            navigationViewModel.selectedClient = nil
+                            deleted.toggle()
+                            dismiss()
+                        } else {
+                            print("Error fetching lawsuits of client: \(client.name)")
+                        }
+                        
+                    }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
+                        dismiss()
+                    }))
+                })
                 Spacer()
                 Button {
                     dismiss()
                 } label: {
                     Text("Cancelar")
                 }
-                Button {
-                    dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
-                    dismiss()
-                } label: {
+                Button(action: {
+                    if !areFieldsFilled() {
+                        invalidInformation = .missingInformation
+                        return
+                    }
+                    if clientCpf.count < 14 || !textFieldDataViewModel.isValidCPF(clientCpf) {
+                        invalidInformation = .invalidCPF
+                        return
+                    }
+                    if clientRg.count < 9 {
+                        invalidInformation = .invalidRG
+                        return
+                    }
+                    if !textFieldDataViewModel.isValidEmail(clientEmail) {
+                        invalidInformation = .invalidEmail
+                        return
+                    }
+                    if clientTelephone.count < 14 {
+                        invalidInformation = .missingTelephoneNumber
+                        return
+                    }
+                    if clientCellphone.count < 15 {
+                        invalidInformation = .missingCellphoneNumber
+                        
+                    } else {
+                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        dismiss()
+                        
+                        return
+                    }
+                    
+                }, label: {
                     Text("Salvar")
-                }
+                })
                 .buttonStyle(.borderedProminent)
+                .alert(item: $invalidInformation) { error in
+                    switch error {
+                    case .missingInformation:
+                        return Alert(title: Text("Informações Faltando"),
+                                     message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidCPF:
+                        return Alert(title: Text("CPF inválido"),
+                                     message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                     dismissButton: .default(Text("Ok")))
+                        
+                    case .invalidRG:
+                        return Alert(title: Text("RG inválido"),
+                                     message: Text("Por favor, insira um RG válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidEmail:
+                        return Alert(title: Text("E-mail inválido"),
+                                     message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .missingTelephoneNumber:
+                        return Alert(title: Text("Número de telefone inválido"),
+                                     message: Text("Por favor, insira um número de telefone válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .missingCellphoneNumber:
+                        return Alert(title: Text("Número de celular inválido"),
+                                     message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidLawSuitNumber:
+                        return Alert(title: Text(""),
+                        message: Text(""),
+                        dismissButton: .default(Text("")))
+                    }
+                }
+                
             }
         }
-        .alert(isPresented: $deleteAlert, content: {
-            Alert(title: Text("Cuidado"), message: Text("Excluir seu clinte irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
-                let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "parentAuthor == %@", client)
-                do {
-                    let lawsuits = try dataViewModel.coreDataContainer.viewContext.fetch(fetchRequest)
-                    for lawsuit in lawsuits {
-                        dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
-                    }
-                } catch {
-                    print("Erro ao buscar processos relacionados ao cliente: \(error)")
-                }
-                dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
-                navigationViewModel.selectedClient = nil
-                deleted.toggle()
-                dismiss()
-            }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
-                dismiss()
-            }))
-        })
         .frame(minHeight: 250)
         .padding()
         .onAppear {
@@ -145,6 +213,27 @@ struct EditClientView: View {
             clientTelephone = client.telephone
             clientCellphone = client.cellphone
         }
-
+    }
+    func areFieldsFilled() -> Bool {
+        if userInfoType >= 0 {
+            return !clientName.isEmpty &&
+            !clientOccupation.isEmpty &&
+            !clientBirthDate.description.isEmpty &&
+            !clientRg.isEmpty &&
+            !clientCpf.isEmpty &&
+            !clientAffiliation.isEmpty &&
+            !clientMaritalStatus.isEmpty &&
+            !clientNationality.isEmpty &&
+            !clientCep.isEmpty &&
+            !clientAddress.isEmpty &&
+            !clientAddressNumber.isEmpty &&
+            !clientNeighborhood.isEmpty &&
+            !clientState.isEmpty &&
+            !clientCity.isEmpty
+            !clientEmail.isEmpty &&
+            !clientTelephone.isEmpty &&
+            !clientCellphone.isEmpty
+        }
+        return true
     }
 }

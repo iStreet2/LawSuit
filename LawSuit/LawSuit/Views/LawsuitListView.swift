@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct LawsuitListView: View {
-    
-    @EnvironmentObject var dataViewModel: DataViewModel
 
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     @State var createProcess = false
     @State private var hasFetchedUpdates = false  // Adicionado
+    
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
     var body: some View {
         
@@ -50,8 +50,4 @@ struct LawsuitListView: View {
             }
         }
     }
-}
-
-#Preview {
-    LawsuitListView()
 }

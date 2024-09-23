@@ -24,8 +24,12 @@ struct DocumentGridView: View {
     let spacing: CGFloat = 10
     let itemWidth: CGFloat = 90
     
+    //MARK: Viariáveis
+    var openFolder: Folder
+    
     var body: some View {
-        if let openFolder = folderViewModel.getOpenFolder() {
+        //senao criaria um openFolder novo e não abriria o nosso
+//        if let openFolder = folderViewModel.getOpenFolder() {
             GeometryReader { geometry in
                 let columns = Int(geometry.size.width / (itemWidth + spacing))
                 let gridItems = Array(repeating: GridItem(.flexible(), spacing: spacing), count: max(columns, 1))
@@ -41,29 +45,29 @@ struct DocumentGridView: View {
                         .font(.title2)
                         .padding(.bottom)
                         Spacer()
-                        Menu(content: {
-                            Button {
-                                dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
-                            } label: {
-                                Text("Nova Pasta")
-                                Image(systemName: "folder")
-                            }
-                            Button {
-                                folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
-                            } label: {
-                                Text("Importar PDF")
-                                Image(systemName: "doc")
-                            }
-                        }, label: {
-                            Image(systemName: "plus")
-                        })
-                        .buttonStyle(PlainButtonStyle())
-                        .font(.title2)
-                        .padding(.bottom)
+//                        Menu(content: {
+//                            Button {
+//                                dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: folder, name: "Nova Pasta")
+//                            } label: {
+//                                Text("Nova Pasta")
+//                                Image(systemName: "folder")
+//                            }
+//                            Button {
+//                                folderViewModel.importPDF(parentFolder: folder, dataViewModel: dataViewModel)
+//                            } label: {
+//                                Text("Importar PDF")
+//                                Image(systemName: "doc")
+//                            }
+//                        }, label: {
+//                            Image(systemName: "plus")
+//                        })
+//                        .buttonStyle(PlainButtonStyle())
+//                        .font(.title2)
+//                        .padding(.bottom)
                     }
                     VStack {
                         LazyVGrid(columns: gridItems, spacing: spacing) {
-                            FolderGridView(parentFolder: openFolder, geometry: geometry)
+                            FolderView(parentFolder: openFolder, geometry: geometry)
                             FilePDFGridView(parentFolder: openFolder, geometry: geometry)
                         }
                         if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
@@ -96,5 +100,5 @@ struct DocumentGridView: View {
                 //            }
             }
         }
-    }
+//    }
 }

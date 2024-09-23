@@ -3,28 +3,31 @@
 //  LawSuit
 //
 //  Created by Gabriel Vicentin Negro on 30/08/24.
-//
 
 import SwiftUI
+import Combine
 
 struct EditLawSuitView: View {
     
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
-    
+    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     
     //MARK: Variáveis de estado
+    @State var invalidInformation: InvalidInformation?
     @State var lawsuitNumber = ""
     @State var lawsuitCourt = ""
-    @State var lawsuitParentAuthorName = ""
-    @State var lawsuitDefendant = ""
+    @State var lawsuitAuthorName = ""
+    @State var lawsuitDefendantName = ""
     @State var lawsuitActionDate = Date()
     @State var selectTag = false
     @State var tagType: TagType = .trabalhista
     @ObservedObject var lawsuit: Lawsuit
     @Binding var deleted: Bool
-    @State var attributedClient = false
+    @State var deleteAlert = false
+    @State var attributedAuthor = false
     @State var attributedDefendant = false
+    let textLimit = 100
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -32,82 +35,190 @@ struct EditLawSuitView: View {
     
     var body: some View {
         VStack {
-            LabeledTextField(label: "Nº do Processo", placeholder: "sei la", textfieldText: $lawsuitNumber)
-            LabeledTextField(label: "Vara", placeholder: "sei la", textfieldText: $lawsuitCourt)
+            LabeledTextField(label: "Nº do Processo", placeholder: "", textfieldText: $lawsuitNumber)
+                .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber) }
+            LabeledTextField(label: "Vara", placeholder: "", textfieldText: $lawsuitCourt)
             HStack(alignment: .top, spacing: 70) {
                 VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Alterar Cliente", label: "Autor", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "client", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
-                        .disabled(attributedDefendant)
-                    TextField("", text: $lawsuitParentAuthorName)
-                        .onChange(of: lawsuitParentAuthorName) { change in
-                            //Se o valor do textField mudar para vazio, a lógica de proibir a seleção em algum reseta
-                            if lawsuitParentAuthorName == "" {
-                                attributedClient = false
-                                attributedDefendant = false
+                    //MARK: Caso usuário não selecionou nada ainda
+                    if !attributedDefendant {
+                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                    }
+                    
+                    //MARK: Caso usuário atribuir cliente para o réu
+                    if attributedDefendant {
+                        LabeledTextField(label: "Autor", placeholder: "Adicionar autor", textfieldText: $lawsuitAuthorName)
+                            .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
+                    }
+                    HStack {
+                        //MARK: Caso o usuário tenha adicionado um cliente no autor
+                        if attributedAuthor {
+                            Text("\(lawsuitAuthorName)")
+                            Button {
+                                withAnimation {
+                                    //Retirar esse cliente e retirar o estado de autor selecionado
+                                    attributedAuthor = false
+                                    lawsuitAuthorName = ""
+                                }
+                            } label: {
+                                Image(systemName: "minus")
                             }
+                            .padding(.leading, 5)
                         }
+                    }
+                }
+                .frame(width: 200, alignment: .leading)
+                VStack(alignment: .leading) {
+                    if !attributedAuthor {
+                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                    }
+                    //MARK: Caso o usuário tenha adicionado um cliente no autor
+                    if attributedAuthor {
+                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
+                            .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
+                    }
+                    HStack {
+                        //MARK: Caso o usuário tenha adicionado um cliente no réu
+                        if attributedDefendant {
+                            Text(lawsuitDefendantName)
+                            Button {
+                                withAnimation {
+                                    //Retirar esse cliente e retirar o estado de autor selecionado
+                                    attributedDefendant = false
+                                    lawsuitDefendantName = ""
+                                }
+                            } label: {
+                                Image(systemName: "minus")
+                            }
+                            .padding(.leading,2)
+                        }
+                    }
+                }
+                .frame(width: 200, alignment: .leading)
+            }
+            HStack(alignment: .top, spacing: 70) {
+                VStack(alignment: .leading) {
                     Text("Área")
+                        .padding(.top)
                         .bold()
                     TagViewComponent(tagType: tagType)
                         .onTapGesture {
                             selectTag.toggle()
                         }
-                    Spacer()
-                    Button(action: {
-                        dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
-                        deleted.toggle()
-                        dismiss()
-                    }, label: {
-                        Text("Apagar processo")
-                    })
-                    .buttonStyle(.borderedProminent)
-                    .tint(.red)
                 }
                 Spacer()
                 VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Atribuir Cliente", label: "Réu", lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefendant, defendantOrClient: "defendant", attributedClient: $attributedClient, attributedDefendant: $attributedDefendant)
-                        .disabled(attributedClient)
-                    TextField("", text: $lawsuitDefendant)
-                        .onChange(of: lawsuitDefendant) { change in
-                            //Se o valor do textField mudar para vazio, a logica de proibir a seleção em algum reseta
-                            if lawsuitDefendant == "" {
-                                attributedClient = false
-                                attributedDefendant = false
+                    LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
+                        .padding(.top)
+                        .frame(width: 200, alignment: .leading)
+                    
+                }
+            }
+            Spacer()
+            HStack(alignment: .top, spacing: 70) {
+                Button(action: {
+                    deleteAlert.toggle()
+                }, label: {
+                    Text("Apagar processo")
+                })
+                .buttonStyle(.borderedProminent)
+                .tint(.red)
+                .alert(isPresented: $deleteAlert, content: {
+                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir esse processo irá apagar todos os documentos relacionados a ele."), primaryButton: Alert.Button.destructive(Text("Apagar"),
+                    action: {
+                        if lawsuit.authorID.hasPrefix("client:") {
+                                                if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                                                    dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                                }
+                                            } else {
+                                                if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+                                                    dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                                }
+                                            }
+                                            dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                                            deleted.toggle()
+                                            dismiss()
+                    }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
+                    }))
+                })
+                Spacer()
+                HStack(spacing: 10) {
+                    Spacer()
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Text("Cancelar")
+                    })
+                    Button(action: {
+                        if !areFieldsFilled() {
+                            invalidInformation = .missingInformation
+                            return
+                        }
+                        if lawsuitNumber.count < 25 {
+                            invalidInformation = .invalidLawSuitNumber
+                            return
+                        }
+                        if attributedAuthor {
+                            if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                                let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                                let category = TagTypeString.string(from: tagType)
+                                dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                dismiss()
+                            } else {
+                                print("error achando ou author")
+                            }
+                        } else if attributedDefendant {
+                            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                                let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                                let category = TagTypeString.string(from: tagType)
+                                dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                dismiss()
+                            } else {
+                                print("error achando defendant")
                             }
                         }
-                    LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
-                    HStack(spacing: 10) {
-                        Spacer()
-                        Button(action: {
-                            //resetar os valores
-                            dismiss()
-                        }, label: {
-                            Text("Cancelar")
-                        })
-                        Button(action: {
-                            let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                            fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitParentAuthorName)
-                            do {
-                                let fetchedClients = try context.fetch(fetchRequest)
-                                if let client = fetchedClients.first {
-                                    let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, number: lawsuitNumber, category: category, defendant: lawsuitDefendant, author: client, actionDate: lawsuitActionDate)
-                                    dismiss()
-                                } else {
-                                    print("Cliente não encontrado")
-                                }
-                            } catch {
-                                print("Erro ao buscar cliente: \(error.localizedDescription)")
-                            }
-                        }, label: {
-                            Text("Salvar")
-                        })
-                        .buttonStyle(.borderedProminent)
+                        
+                    }, label: {
+                        Text("Salvar")
+                    })
+                    .buttonStyle(.borderedProminent)
+                    .alert(item: $invalidInformation) { error in
+                        switch error {
+                        case .missingInformation:
+                            return Alert(title: Text("Informações Faltando"),
+                                         message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidCPF:
+                            return Alert(title: Text("CPF inválido"),
+                                         message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                            
+                        case .invalidRG:
+                            return Alert(title: Text("RG inválido"),
+                                         message: Text("Por favor, insira um RG válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidEmail:
+                            return Alert(title: Text("E-mail inválido"),
+                                         message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .missingTelephoneNumber:
+                            return Alert(title: Text("Número de telefone inválido"),
+                                         message: Text("Por favor, insira um número de telefone válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .missingCellphoneNumber:
+                            return Alert(title: Text("Número de celular inválido"),
+                                         message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidLawSuitNumber:
+                            return Alert(title: Text("Número do processo inválido"),
+                                         message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        }
                     }
-                    .padding(.top)
                 }
             }
         }
+        .frame(minHeight: 255)
         .sheet(isPresented: $selectTag, content: {
             VStack {
                 Spacer()
@@ -127,15 +238,35 @@ struct EditLawSuitView: View {
             .frame(minWidth: 200, minHeight: 250)
         })
         .onAppear {
-            lawsuitNumber = lawsuit.number ?? "Sem número"
-            lawsuitCourt = lawsuit.court ?? ""
-            lawsuitParentAuthorName = lawsuit.parentAuthor?.name ?? ""
-            lawsuitDefendant = lawsuit.defendant ?? ""
-            lawsuitActionDate = lawsuit.actionDate ?? Date()
-            tagType = TagType(s: lawsuit.category ?? "sei la")!
+            //Se o cliente do processo estiver no autor
+            if lawsuit.authorID.hasPrefix("client:") {
+                attributedAuthor = true
+                if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
+                   let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                    lawsuitAuthorName = author.name
+                    lawsuitDefendantName = defendant.name
+                }
+                //Se o cliente do processo estiver no reu
+            } else {
+                attributedDefendant = true
+                if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
+                   let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+                    lawsuitAuthorName = author.name
+                    lawsuitDefendantName = defendant.name
+                }
+            }
+            lawsuitNumber = lawsuit.number
+            lawsuitCourt = lawsuit.court
+            lawsuitActionDate = lawsuit.actionDate
+            tagType = TagType(s: lawsuit.category)!
         }
         .padding()
     }
-    
+    func areFieldsFilled() -> Bool {
+        return !lawsuitAuthorName.isEmpty &&
+        !lawsuitCourt.isEmpty &&
+        !lawsuitNumber.isEmpty &&
+        !lawsuitActionDate.description.isEmpty &&
+        !lawsuitDefendantName.isEmpty
+    }
 }
-

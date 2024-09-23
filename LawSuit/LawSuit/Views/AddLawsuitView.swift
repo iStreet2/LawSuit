@@ -20,8 +20,8 @@ struct AddLawsuitView: View {
     @State var lawsuitTypeString: String = ""
     @State var lawsuitNumber = ""
     @State var lawsuitCourt = ""
-    @State var lawsuitParentAuthorName = ""
-    @State var lawsuitDefandent = ""
+    @State var lawsuitAuthorName = ""
+    @State var lawsuitDefandentName = ""
     @State var lawsuitActionDate = Date()
 
     
@@ -44,14 +44,14 @@ struct AddLawsuitView: View {
                 .padding(.leading)
             }
             if lawsuitType == .distributed {
-                LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent, lawsuitActionDate: $lawsuitActionDate)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if lawsuitType == .notDistributed {
-                LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitParentAuthorName: $lawsuitParentAuthorName, lawsuitDefendant: $lawsuitDefandent, lawsuitActionDate: $lawsuitActionDate)
+                LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .frame(width: 400, height: 300)
+        .frame(height: 300)
         .padding()
         .onAppear {
             lawsuitTypeString = lawsuitType.rawValue

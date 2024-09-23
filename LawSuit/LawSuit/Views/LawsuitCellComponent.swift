@@ -22,11 +22,11 @@ struct LawsuitCellComponent: View {
         GeometryReader { geo in
             HStack {
                 VStack(alignment: .leading) {
-                    Text(lawsuit.name ?? "Sem nome")
+                    Text(lawsuit.name)
                         .lineLimit(1)
                         .font(.callout)
                         .bold()
-                    Text(lawsuit.number ?? "Sem número")
+                    Text(lawsuit.number)
                         .lineLimit(1)
                         .font(.callout)
                         .foregroundStyle(Color(.gray))
@@ -34,7 +34,7 @@ struct LawsuitCellComponent: View {
                 .frame(width: geo.size.width * 0.27, height: 47, alignment: .leading)
                 
                 Spacer()
-                TagViewComponent(tagType: TagType(s: lawsuit.category ?? "trabalhista")!)
+                TagViewComponent(tagType: TagType(s: lawsuit.category)!)
                     .frame(width: geo.size.width * 0.12, height: 47, alignment: .leading)
                 Spacer()
                 

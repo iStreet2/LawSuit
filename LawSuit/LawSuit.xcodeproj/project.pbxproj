@@ -42,7 +42,7 @@
 		3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4AA2C73781F00CCA763 /* Lawyer.swift */; };
 		3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */; };
 		3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */; };
-		3B423E7E2C80E2D8005B1B7F /* FolderGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7D2C80E2D8005B1B7F /* FolderGridView.swift */; };
+		3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7D2C80E2D8005B1B7F /* FolderView.swift */; };
 		3B423E802C80E2E1005B1B7F /* FilePDFGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */; };
 		3B423E832C80E613005B1B7F /* FolderIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E822C80E613005B1B7F /* FolderIconView.swift */; };
 		3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6167FF2C7E43AC00260585 /* SideBarView.swift */; };
@@ -76,6 +76,8 @@
 		3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B3F2C6E5DD5004048FA /* FolderViewModel.swift */; };
 		3BD40B422C6E5E16004048FA /* FolderStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B412C6E5E16004048FA /* FolderStack.swift */; };
 		3BD40B6F2C6E76EC004048FA /* ClientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B6E2C6E76EC004048FA /* ClientListView.swift */; };
+		3BDEFFCD2C8A4A6A00990528 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCB2C8A4A6A00990528 /* Entity.swift */; };
+		3BDEFFD02C8A4C5500990528 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */; };
 		6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */; };
 		6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */; };
 		6ABD796F2C6E97AD00A98BA3 /* RequestDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */; };
@@ -88,15 +90,34 @@
 		6AC0BB082C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB072C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift */; };
 		6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */; };
 		6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */; };
+		6AC0BB6A2C8F8B9600FAF3E6 /* AddressAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB692C8F8B9600FAF3E6 /* AddressAPI.swift */; };
+		6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */; };
+		6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */; };
+		6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */; };
+		6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */; };
+		6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */; };
+		6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */; };
+		6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */; };
+		DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */; };
 		DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */; };
 		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
 		DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */; };
 		DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */; };
+		DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC401F9C2C931FE3006FC949 /* Alerts.swift */; };
 		DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD2F2C77B23900000195 /* AddClientView.swift */; };
 		DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */; };
 		DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDB963F2C7E61C400817814 /* AddClientForm.swift */; };
 		E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */; };
 		E93BCFA72C77D3DE007CF206 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA62C77D3DE007CF206 /* CloudManager.swift */; };
+		E93FFB052C98A108004F96FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FFB042C98A108004F96FC /* AppDelegate.swift */; };
+		E93FFB072C98A4E0004F96FC /* CoreDataModelsEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FFB062C98A4E0004F96FC /* CoreDataModelsEnumerator.swift */; };
+		E93FFB092C98B8BE004F96FC /* SpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FFB082C98B8BE004F96FC /* SpotlightView.swift */; };
+		E93FFB0B2C98C867004F96FC /* EventMonitorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FFB0A2C98C867004F96FC /* EventMonitorProtocol.swift */; };
+		E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FFB0E2C98C949004F96FC /* EventMonitor.swift */; };
+		E93FFB112C9A00D8004F96FC /* SpotlightSearchbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FFB102C9A00D8004F96FC /* SpotlightSearchbarView.swift */; };
+		E93FFB142C9A037E004F96FC /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = E93FFB132C9A037E004F96FC /* HotKey */; };
+		E94C015C2C9B6F7200F6316F /* SpotlightManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C015B2C9B6F7200F6316F /* SpotlightManager.swift */; };
+		E94C015E2C9B70F400F6316F /* EntityWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C015D2C9B70F400F6316F /* EntityWrappers.swift */; };
 		E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E981580E2C77A2680039C2FD /* RecordManager.swift */; };
 		E9A949BA2C7CFB310006BC99 /* CloudDataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */; };
 		E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */; };
@@ -166,7 +187,7 @@
 		3B24D4AA2C73781F00CCA763 /* Lawyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lawyer.swift; sourceTree = "<group>"; };
 		3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentGridView.swift; sourceTree = "<group>"; };
-		3B423E7D2C80E2D8005B1B7F /* FolderGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderGridView.swift; sourceTree = "<group>"; };
+		3B423E7D2C80E2D8005B1B7F /* FolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
 		3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePDFGridView.swift; sourceTree = "<group>"; };
 		3B423E822C80E613005B1B7F /* FolderIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderIconView.swift; sourceTree = "<group>"; };
 		3B6167FF2C7E43AC00260585 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
@@ -201,6 +222,8 @@
 		3BD40B3F2C6E5DD5004048FA /* FolderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewModel.swift; sourceTree = "<group>"; };
 		3BD40B412C6E5E16004048FA /* FolderStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStack.swift; sourceTree = "<group>"; };
 		3BD40B6E2C6E76EC004048FA /* ClientListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientListView.swift; sourceTree = "<group>"; };
+		3BDEFFCB2C8A4A6A00990528 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		6A2C68FF2C6D4FA300E017EE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxIconComponent.swift; sourceTree = "<group>"; };
 		6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
@@ -213,15 +236,36 @@
 		6AC0BB072C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNotDistributedView.swift; sourceTree = "<group>"; };
 		6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorProcessButton.swift; sourceTree = "<group>"; };
 		6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeEnumerator.swift; sourceTree = "<group>"; };
+		6AC0BB692C8F8B9600FAF3E6 /* AddressAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAPI.swift; sourceTree = "<group>"; };
+		6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
+		6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListView.swift; sourceTree = "<group>"; };
+		6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
+		6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderIconListView.swift; sourceTree = "<group>"; };
+		6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentActionButtonsView.swift; sourceTree = "<group>"; };
+		6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
+		6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFListView.swift; sourceTree = "<group>"; };
+		DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDataViewModel.swift; sourceTree = "<group>"; };
 		DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentStyleView.swift; sourceTree = "<group>"; };
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
 		DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentStyle.swift; sourceTree = "<group>"; };
 		DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentView.swift; sourceTree = "<group>"; };
+		DC401F962C90DA98006FC949 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC401F972C90DA98006FC949 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC401F982C90DA98006FC949 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC401F9C2C931FE3006FC949 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		DCC1BD2F2C77B23900000195 /* AddClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientView.swift; sourceTree = "<group>"; };
 		DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientProgressView.swift; sourceTree = "<group>"; };
 		DCDB963F2C7E61C400817814 /* AddClientForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientForm.swift; sourceTree = "<group>"; };
 		E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudTestingView.swift; sourceTree = "<group>"; };
 		E93BCFA62C77D3DE007CF206 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
+		E93FFB042C98A108004F96FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "../../../../../../.Trash/LawSuit 14.16.25/LawSuit/LawSuit/AppDelegate.swift"; sourceTree = "<group>"; };
+		E93FFB062C98A4E0004F96FC /* CoreDataModelsEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataModelsEnumerator.swift; path = "../../../../../../../../.Trash/LawSuit 14.16.25/LawSuit/LawSuit/Model/Enums/CoreDataModelsEnumerator.swift"; sourceTree = "<group>"; };
+		E93FFB082C98B8BE004F96FC /* SpotlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SpotlightView.swift; path = "../../../../../../../.Trash/LawSuit 14.16.25/LawSuit/LawSuit/Views/SpotlightView.swift"; sourceTree = "<group>"; };
+		E93FFB0A2C98C867004F96FC /* EventMonitorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventMonitorProtocol.swift; path = "../../../../../../../../.Trash/LawSuit 14.16.25/LawSuit/LawSuit/Model/Enums/EventMonitorProtocol.swift"; sourceTree = "<group>"; };
+		E93FFB0E2C98C949004F96FC /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
+		E93FFB102C9A00D8004F96FC /* SpotlightSearchbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SpotlightSearchbarView.swift; path = "../../../../../../../.Trash/LawSuit 14.16.25/LawSuit/LawSuit/Views/SpotlightSearchbarView.swift"; sourceTree = "<group>"; };
+		E94C015B2C9B6F7200F6316F /* SpotlightManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightManager.swift; sourceTree = "<group>"; };
+		E94C015D2C9B70F400F6316F /* EntityWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityWrappers.swift; sourceTree = "<group>"; };
 		E981580E2C77A2680039C2FD /* RecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordManager.swift; sourceTree = "<group>"; };
 		E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDataConverter.swift; sourceTree = "<group>"; };
 		E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
@@ -240,6 +284,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E93FFB142C9A037E004F96FC /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,11 +367,17 @@
 		3B04F11B2C7FB99300991746 /* ClientDocumentsView */ = {
 			isa = PBXGroup;
 			children = (
+				6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */,
+				6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */,
 				3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */,
+				6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */,
 				3B423E822C80E613005B1B7F /* FolderIconView.swift */,
-				3B423E7D2C80E2D8005B1B7F /* FolderGridView.swift */,
+				6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */,
+				3B423E7D2C80E2D8005B1B7F /* FolderView.swift */,
+				6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
 				3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */,
+				6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */,
 				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
 				3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
@@ -337,13 +388,16 @@
 		3B0EE5F52C6A90E600CFC91A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E93FFB0E2C98C949004F96FC /* EventMonitor.swift */,
 				3BC731052C6A9D5E00923BB2 /* Managers */,
 				3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */,
+				6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */,
 				3BD40B3F2C6E5DD5004048FA /* FolderViewModel.swift */,
 				3B0A7AD02C7D16AA005A5946 /* NetworkMonitorViewModel.swift */,
 				3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */,
 				3BD313E32C88FD56001CE5E7 /* DataViewModel.swift */,
 				08A2B0DD2C938D7B00719571 /* LawsuitNetworkingViewModel.swift */,
+				DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -351,8 +405,10 @@
 		3B0EE6042C6A929E00CFC91A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E94C015D2C9B70F400F6316F /* EntityWrappers.swift */,
 				3BD40B6D2C6E7681004048FA /* CoreDataModel */,
 				3BD40B412C6E5E16004048FA /* FolderStack.swift */,
+				6AC0BB692C8F8B9600FAF3E6 /* AddressAPI.swift */,
 				6AC0BB0B2C7FB53600FAF3E6 /* Enums */,
 				3B6168012C7E45CE00260585 /* Sections.swift */,
 			);
@@ -382,6 +438,7 @@
 				3B0EE6042C6A929E00CFC91A /* Model */,
 				3B0EE5F52C6A90E600CFC91A /* ViewModel */,
 				3B98F10B2C668B1000C45121 /* LawSuitApp.swift */,
+				E93FFB042C98A108004F96FC /* AppDelegate.swift */,
 				3B98F10D2C668B1000C45121 /* ContentView.swift */,
 				3B98F10F2C668B1100C45121 /* Assets.xcassets */,
 				3B98F1142C668B1100C45121 /* LawSuit.entitlements */,
@@ -478,6 +535,8 @@
 				E93BCFA62C77D3DE007CF206 /* CloudManager.swift */,
 				E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */,
 				08A2B0DF2C93AEFF00719571 /* AuthenticationManager.swift */,
+				3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */,
+				E94C015B2C9B6F7200F6316F /* SpotlightManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -503,6 +562,8 @@
 				3B6167FF2C7E43AC00260585 /* SideBarView.swift */,
 				DCC1BD2F2C77B23900000195 /* AddClientView.swift */,
 				0897CB392C8BA21D00B488A9 /* MailManager.swift */,
+				E93FFB082C98B8BE004F96FC /* SpotlightView.swift */,
+				E93FFB102C9A00D8004F96FC /* SpotlightSearchbarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -536,6 +597,7 @@
 		3BD40B6D2C6E7681004048FA /* CoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				3BDEFFCB2C8A4A6A00990528 /* Entity.swift */,
 				3B24D4A02C73781F00CCA763 /* Folder.swift */,
 				3B24D4A22C73781F00CCA763 /* Lawsuit.swift */,
 				3B24D4A42C73781F00CCA763 /* Client.swift */,
@@ -551,6 +613,9 @@
 			children = (
 				6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */,
 				E9F3A4252C87755800595150 /* QueryEnumerator.swift */,
+				DC401F9C2C931FE3006FC949 /* Alerts.swift */,
+				E93FFB062C98A4E0004F96FC /* CoreDataModelsEnumerator.swift */,
+				E93FFB0A2C98C867004F96FC /* EventMonitorProtocol.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -571,6 +636,9 @@
 			dependencies = (
 			);
 			name = LawSuit;
+			packageProductDependencies = (
+				E93FFB132C9A037E004F96FC /* HotKey */,
+			);
 			productName = LawSuit;
 			productReference = 084D404F2C8A4AAE00C96111 /* LawSuit.app */;
 			productType = "com.apple.product-type.application";
@@ -643,6 +711,9 @@
 				Base,
 			);
 			mainGroup = 3B98F0FF2C668B1000C45121;
+			packageReferences = (
+				E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */,
+			);
 			productRefGroup = 3B98F0FF2C668B1000C45121;
 			projectDirPath = "";
 			projectRoot = "";
@@ -685,18 +756,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E94C015C2C9B6F7200F6316F /* SpotlightManager.swift in Sources */,
 				6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */,
 				08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */,
 				3BD40B6F2C6E76EC004048FA /* ClientListView.swift in Sources */,
 				3BB9A34A2C84F36800AD1E30 /* TagViewComponentV2.swift in Sources */,
 				E9E323E22C7FB6F3000BA6FD /* ClientMoreInfoView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
+				6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */,
 				3BB9A34C2C84F37300AD1E30 /* TagViewComponentV3.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
 				0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */,
 				E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */,
 				3BD40B3B2C6D4624004048FA /* FolderExamples.swift in Sources */,
+				E93FFB072C98A4E0004F96FC /* CoreDataModelsEnumerator.swift in Sources */,
+				E93FFB092C98B8BE004F96FC /* SpotlightView.swift in Sources */,
 				3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */,
+				3BDEFFD02C8A4C5500990528 /* EntityManager.swift in Sources */,
 				6AC0BB062C7E5D7C00FAF3E6 /* LawsuitDistributedView.swift in Sources */,
 				3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */,
 				3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */,
@@ -708,10 +784,12 @@
 				3B0EE5F72C6A90F100CFC91A /* CoreDataManager.swift in Sources */,
 				DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */,
 				6ABD79752C78FB2100A98BA3 /* AddLawsuitView.swift in Sources */,
+				6AC0BB6A2C8F8B9600FAF3E6 /* AddressAPI.swift in Sources */,
 				3BD40B2F2C6D3FB8004048FA /* ClientManager.swift in Sources */,
 				08E657342C7D08D800313FCB /* LabeledPickerField.swift in Sources */,
 				DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */,
 				0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */,
+				E94C015E2C9B70F400F6316F /* EntityWrappers.swift in Sources */,
 				3BD40B332C6D41EC004048FA /* LawsuitManager.swift in Sources */,
 				3BAF94CC2C73D5BF001FCA45 /* FilePDFIconView.swift in Sources */,
 				3B98F10C2C668B1000C45121 /* LawSuitApp.swift in Sources */,
@@ -719,7 +797,8 @@
 				6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */,
 				08E8D2042C88981F008F3859 /* LawsuitListViewHeaderContent.swift in Sources */,
 				DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */,
-				3B423E7E2C80E2D8005B1B7F /* FolderGridView.swift in Sources */,
+				6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */,
+				3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */,
 				6ABD797B2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift in Sources */,
 				08A2B0E42C9486CA00719571 /* Date+.swift in Sources */,
 				6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */,
@@ -728,6 +807,7 @@
 				3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */,
 				E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */,
 				E9E323E42C80EA12000BA6FD /* DetailedLawSuitView.swift in Sources */,
+				DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */,
 				3B423E802C80E2E1005B1B7F /* FilePDFGridView.swift in Sources */,
 				3BD40B312C6D40FE004048FA /* LawyerManager.swift in Sources */,
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
@@ -740,6 +820,7 @@
 				E9A949BA2C7CFB310006BC99 /* CloudDataConverter.swift in Sources */,
 				3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */,
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
+				6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */,
 				6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */,
 				3B6168022C7E45CE00260585 /* Sections.swift in Sources */,
 				08A2B0DE2C938D7B00719571 /* LawsuitNetworkingViewModel.swift in Sources */,
@@ -748,12 +829,17 @@
 				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
 				08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */,
+				6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */,
+				E93FFB112C9A00D8004F96FC /* SpotlightSearchbarView.swift in Sources */,
+				6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */,
+				E93FFB052C98A108004F96FC /* AppDelegate.swift in Sources */,
 				3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */,
 				3B0A7AD12C7D16AA005A5946 /* NetworkMonitorViewModel.swift in Sources */,
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,
 				DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */,
 				DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */,
 				08A2B0E22C93B01400719571 /* KeychainHelper.swift in Sources */,
+				3BDEFFCD2C8A4A6A00990528 /* Entity.swift in Sources */,
 				3BB9A3502C84F38000AD1E30 /* TagViewComponentV5.swift in Sources */,
 				3B24D4B02C73781F00CCA763 /* Client.swift in Sources */,
 				3B24D4B22C73781F00CCA763 /* FilePDF.swift in Sources */,
@@ -764,15 +850,20 @@
 				E93BCFA72C77D3DE007CF206 /* CloudManager.swift in Sources */,
 				3BD313E42C88FD56001CE5E7 /* DataViewModel.swift in Sources */,
 				E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */,
+				E93FFB0B2C98C867004F96FC /* EventMonitorProtocol.swift in Sources */,
 				E9F3A4262C87755800595150 /* QueryEnumerator.swift in Sources */,
 				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
 				E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */,
 				08E8D2002C87ACDA008F3859 /* LawsuitCellComponent.swift in Sources */,
 				08A2B0DA2C935AE200719571 /* String+.swift in Sources */,
 				3BD40B382C6D454B004048FA /* ClientView.swift in Sources */,
+				6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */,
+				6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */,
 				3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */,
+				E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				6ABD796F2C6E97AD00A98BA3 /* RequestDocumentsView.swift in Sources */,
+				DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
 				08E8D2022C87AF11008F3859 /* LawsuitListView.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
@@ -1109,6 +1200,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/soffes/HotKey";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E93FFB132C9A037E004F96FC /* HotKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */ = {

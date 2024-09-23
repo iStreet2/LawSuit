@@ -15,12 +15,14 @@ struct ClientView: View {
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: Variáveis de estado
     @ObservedObject var client: Client
     @Binding var deleted: Bool
     @State var selectedOption = "Processos"
     @State var createLawsuit = false
+    @State var showingGridView = true
     var infos = ["Processos", "Documentos"]
 
     
@@ -34,9 +36,9 @@ struct ClientView: View {
         self.client = client
         self._deleted = deleted
         
-        _lawsuits =  FetchRequest<Lawsuit>(
-            sortDescriptors: []
-            ,predicate: NSPredicate(format: "parentAuthor == %@", client)
+        _lawsuits = FetchRequest<Lawsuit>(
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "authorID == %@ OR defendantID == %@", client.id, client.id)
         )
     }
     
@@ -64,15 +66,10 @@ struct ClientView: View {
                             })
                             .padding(.trailing)
                             .buttonStyle(PlainButtonStyle())
-                        }else{
-                            Button(action: {
-                                
-                            }, label: {
-                                Image(systemName: "plus")
-                                    .opacity(0)
-                            })
-                            .padding(.trailing)
-                            .buttonStyle(PlainButtonStyle())
+                        } else {
+                            if let openFolder = folderViewModel.getOpenFolder(){
+                                DocumentActionButtonsView(folder: openFolder )
+                            }
                         }
                     }
                 }
@@ -82,24 +79,18 @@ struct ClientView: View {
                             LawsuitListViewHeaderContent(lawsuits: lawsuits)
                         }
                     } else {
-                        DocumentGridView()
+                        DocumentView()
                             .onAppear {
+                                navigationViewModel.selectedClient = client
+                                folderViewModel.resetFolderStack()
                                 folderViewModel.openFolder(folder: client.rootFolder)
+                                navigationViewModel.dismissLawsuitView.toggle()
                             }
                             .padding()
                     }
                 }
             }
         }
-//        .toolbar {
-//            ToolbarItem(placement: .destructiveAction) {
-//                Button(action: {
-//                    dataViewModel.coreDataManager.deleteAllData()
-//                }, label: {
-//                    Image(systemName: "trash")
-//                })
-//            }
-//        }
         .sheet(isPresented: $createLawsuit, content: {
                 AddLawsuitView()
         })
