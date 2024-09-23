@@ -16,7 +16,6 @@ struct DocumentActionButtonsView: View {
     @EnvironmentObject var dataViewModel: DataViewModel
     
     //MARK: Viariáveis
-//    @Binding var showingGridView: Bool
     var folder: Folder
     
     var body: some View {
