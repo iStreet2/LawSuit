@@ -427,9 +427,9 @@
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
+				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
 				08A2B0D82C935ADA00719571 /* Extensions */,
 				08A2B0C02C8F730500719571 /* Networking */,
-				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
 				3BD40B392C6D4613004048FA /* Examples */,
 				3BD40B362C6D453A004048FA /* Views */,
 				3B0EE6042C6A929E00CFC91A /* Model */,
@@ -437,10 +437,10 @@
 				3B98F10B2C668B1000C45121 /* LawSuitApp.swift */,
 				E94C01672CA1E2D800F6316F /* AppDelegate2.swift */,
 				3B98F10D2C668B1000C45121 /* ContentView.swift */,
+				08A2B0E12C93B01400719571 /* KeychainHelper.swift */,
 				3B98F10F2C668B1100C45121 /* Assets.xcassets */,
 				3B98F1142C668B1100C45121 /* LawSuit.entitlements */,
 				3B98F1112C668B1100C45121 /* Preview Content */,
-				08A2B0E12C93B01400719571 /* KeychainHelper.swift */,
 			);
 			path = LawSuit;
 			sourceTree = "<group>";
