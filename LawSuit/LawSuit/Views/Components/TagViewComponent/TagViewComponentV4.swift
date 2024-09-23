@@ -81,3 +81,7 @@ struct TagViewPickerComponentV4: View {
         }
     }
 }
+
+#Preview {
+	TagViewPickerComponentV4(currentTag: .constant(.ambiental))
+}
