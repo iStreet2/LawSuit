@@ -70,5 +70,10 @@ struct TagViewPickerComponentV5: View {
         .onAppear {
             stateCurrentTag = currentTag
         }
+		  .frame(width: 500, height: 500)
     }
+}
+
+#Preview {
+	TagViewPickerComponentV5(currentTag: .constant(.civel))
 }

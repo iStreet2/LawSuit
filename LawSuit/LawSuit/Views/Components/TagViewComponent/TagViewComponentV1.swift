@@ -47,6 +47,14 @@ struct TagViewPickerComponentV1: View {
         .onAppear {
             stateCurrentTag = currentTag
         }
+//		  .frame(width: 500, height: 500)
+//		  .sheet(isPresented: ) { 
+//			  <#code#>
+//		  }
         
     }
+}
+
+#Preview {
+	TagViewPickerComponentV1(currentTag: .constant(.ambiental))
 }

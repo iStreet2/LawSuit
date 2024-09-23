@@ -7,7 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0897CB392C8BA21D00B488A9 /* MailManager.swift */; };
 		0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */; };
+		089B8A9C2C9E312D00FEBCAB /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */; };
+		08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */; };
+		08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */; };
+		08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */; };
+		08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D42C92142E00719571 /* LawsuitErrors.swift */; };
+		08A2B0DA2C935AE200719571 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0D92C935AE200719571 /* String+.swift */; };
+		08A2B0DC2C9380AD00719571 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */; };
+		08A2B0DE2C938D7B00719571 /* LawsuitNetworkingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0DD2C938D7B00719571 /* LawsuitNetworkingViewModel.swift */; };
+		08A2B0E02C93AEFF00719571 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0DF2C93AEFF00719571 /* AuthenticationManager.swift */; };
+		08A2B0E22C93B01400719571 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E12C93B01400719571 /* KeychainHelper.swift */; };
+		08A2B0E42C9486CA00719571 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E32C9486CA00719571 /* Date+.swift */; };
+		08A2B0E72C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E62C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift */; };
+		08A2B0E92C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E82C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift */; };
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
 		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
@@ -28,7 +42,7 @@
 		3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4AA2C73781F00CCA763 /* Lawyer.swift */; };
 		3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */; };
 		3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */; };
-		3B423E7E2C80E2D8005B1B7F /* FolderGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7D2C80E2D8005B1B7F /* FolderGridView.swift */; };
+		3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7D2C80E2D8005B1B7F /* FolderView.swift */; };
 		3B423E802C80E2E1005B1B7F /* FilePDFGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */; };
 		3B423E832C80E613005B1B7F /* FolderIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E822C80E613005B1B7F /* FolderIconView.swift */; };
 		3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6167FF2C7E43AC00260585 /* SideBarView.swift */; };
@@ -76,15 +90,34 @@
 		6AC0BB082C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB072C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift */; };
 		6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */; };
 		6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */; };
+		6AC0BB6A2C8F8B9600FAF3E6 /* AddressAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB692C8F8B9600FAF3E6 /* AddressAPI.swift */; };
+		6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */; };
+		6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */; };
+		6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */; };
+		6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */; };
+		6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */; };
+		6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */; };
+		6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */; };
+		DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */; };
 		DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */; };
 		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
 		DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */; };
 		DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */; };
+		DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC401F9C2C931FE3006FC949 /* Alerts.swift */; };
 		DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD2F2C77B23900000195 /* AddClientView.swift */; };
 		DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */; };
 		DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDB963F2C7E61C400817814 /* AddClientForm.swift */; };
 		E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */; };
 		E93BCFA72C77D3DE007CF206 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA62C77D3DE007CF206 /* CloudManager.swift */; };
+		E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FFB0E2C98C949004F96FC /* EventMonitor.swift */; };
+		E93FFB142C9A037E004F96FC /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = E93FFB132C9A037E004F96FC /* HotKey */; };
+		E94C015C2C9B6F7200F6316F /* SpotlightManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C015B2C9B6F7200F6316F /* SpotlightManager.swift */; };
+		E94C015E2C9B70F400F6316F /* EntityWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C015D2C9B70F400F6316F /* EntityWrappers.swift */; };
+		E94C01602CA1E23D00F6316F /* SpotlightView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C015F2CA1E23D00F6316F /* SpotlightView2.swift */; };
+		E94C01622CA1E28300F6316F /* SpotlightSearchBarView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C01612CA1E28300F6316F /* SpotlightSearchBarView2.swift */; };
+		E94C01642CA1E2AE00F6316F /* CoreDataModelsEnumerator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C01632CA1E2AE00F6316F /* CoreDataModelsEnumerator2.swift */; };
+		E94C01662CA1E2C100F6316F /* EventMonitorProtocol2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C01652CA1E2C100F6316F /* EventMonitorProtocol2.swift */; };
+		E94C01682CA1E2D800F6316F /* AppDelegate2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C01672CA1E2D800F6316F /* AppDelegate2.swift */; };
 		E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E981580E2C77A2680039C2FD /* RecordManager.swift */; };
 		E9A949BA2C7CFB310006BC99 /* CloudDataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */; };
 		E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */; };
@@ -116,7 +149,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		084D404F2C8A4AAE00C96111 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0897CB392C8BA21D00B488A9 /* MailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailManager.swift; sourceTree = "<group>"; };
 		0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNameCellComponent.swift; sourceTree = "<group>"; };
+		089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
+		08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingService.swift; sourceTree = "<group>"; };
+		08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosDoJudiciario.swift; sourceTree = "<group>"; };
+		08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentosEnums.swift; sourceTree = "<group>"; };
+		08A2B0D42C92142E00719571 /* LawsuitErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitErrors.swift; sourceTree = "<group>"; };
+		08A2B0D92C935AE200719571 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
+		08A2B0DD2C938D7B00719571 /* LawsuitNetworkingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingViewModel.swift; sourceTree = "<group>"; };
+		08A2B0DF2C93AEFF00719571 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		08A2B0E12C93B01400719571 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		08A2B0E32C9486CA00719571 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		08A2B0E62C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingServiceTests.swift; sourceTree = "<group>"; };
+		08A2B0E82C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingViewModelTests.swift; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
@@ -137,7 +187,7 @@
 		3B24D4AA2C73781F00CCA763 /* Lawyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lawyer.swift; sourceTree = "<group>"; };
 		3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentGridView.swift; sourceTree = "<group>"; };
-		3B423E7D2C80E2D8005B1B7F /* FolderGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderGridView.swift; sourceTree = "<group>"; };
+		3B423E7D2C80E2D8005B1B7F /* FolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
 		3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePDFGridView.swift; sourceTree = "<group>"; };
 		3B423E822C80E613005B1B7F /* FolderIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderIconView.swift; sourceTree = "<group>"; };
 		3B6167FF2C7E43AC00260585 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
@@ -189,15 +239,33 @@
 		6AC0BB072C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNotDistributedView.swift; sourceTree = "<group>"; };
 		6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorProcessButton.swift; sourceTree = "<group>"; };
 		6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeEnumerator.swift; sourceTree = "<group>"; };
+		6AC0BB692C8F8B9600FAF3E6 /* AddressAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAPI.swift; sourceTree = "<group>"; };
+		6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
+		6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListView.swift; sourceTree = "<group>"; };
+		6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
+		6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderIconListView.swift; sourceTree = "<group>"; };
+		6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentActionButtonsView.swift; sourceTree = "<group>"; };
+		6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
+		6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFListView.swift; sourceTree = "<group>"; };
+		DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDataViewModel.swift; sourceTree = "<group>"; };
 		DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentStyleView.swift; sourceTree = "<group>"; };
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
 		DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentStyle.swift; sourceTree = "<group>"; };
 		DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentView.swift; sourceTree = "<group>"; };
+		DC401F9C2C931FE3006FC949 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		DCC1BD2F2C77B23900000195 /* AddClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientView.swift; sourceTree = "<group>"; };
 		DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientProgressView.swift; sourceTree = "<group>"; };
 		DCDB963F2C7E61C400817814 /* AddClientForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientForm.swift; sourceTree = "<group>"; };
 		E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudTestingView.swift; sourceTree = "<group>"; };
 		E93BCFA62C77D3DE007CF206 /* CloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
+		E93FFB0E2C98C949004F96FC /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
+		E94C015B2C9B6F7200F6316F /* SpotlightManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightManager.swift; sourceTree = "<group>"; };
+		E94C015D2C9B70F400F6316F /* EntityWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityWrappers.swift; sourceTree = "<group>"; };
+		E94C015F2CA1E23D00F6316F /* SpotlightView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightView2.swift; sourceTree = "<group>"; };
+		E94C01612CA1E28300F6316F /* SpotlightSearchBarView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightSearchBarView2.swift; sourceTree = "<group>"; };
+		E94C01632CA1E2AE00F6316F /* CoreDataModelsEnumerator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModelsEnumerator2.swift; sourceTree = "<group>"; };
+		E94C01652CA1E2C100F6316F /* EventMonitorProtocol2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitorProtocol2.swift; sourceTree = "<group>"; };
+		E94C01672CA1E2D800F6316F /* AppDelegate2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate2.swift; sourceTree = "<group>"; };
 		E981580E2C77A2680039C2FD /* RecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordManager.swift; sourceTree = "<group>"; };
 		E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDataConverter.swift; sourceTree = "<group>"; };
 		E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
@@ -216,6 +284,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E93FFB142C9A037E004F96FC /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +305,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08A2B0C02C8F730500719571 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				08A2B0DB2C9380AD00719571 /* NetworkingManager.swift */,
+				08A2B0D12C92103200719571 /* NetworkingServices */,
+				08A2B0C12C8F743E00719571 /* Endpoints */,
+				08A2B0D42C92142E00719571 /* LawsuitErrors.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		08A2B0C12C8F743E00719571 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */,
+				08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
+		08A2B0D12C92103200719571 /* NetworkingServices */ = {
+			isa = PBXGroup;
+			children = (
+				08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */,
+			);
+			path = NetworkingServices;
+			sourceTree = "<group>";
+		};
+		08A2B0D82C935ADA00719571 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				08A2B0D92C935AE200719571 /* String+.swift */,
+				08A2B0E32C9486CA00719571 /* Date+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		08A2B0E52C99ED6B00719571 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				08A2B0E62C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift */,
+				08A2B0E82C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift */,
+				089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		08E6572E2C7929FA00313FCB /* EditClientView */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,11 +367,17 @@
 		3B04F11B2C7FB99300991746 /* ClientDocumentsView */ = {
 			isa = PBXGroup;
 			children = (
+				6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */,
+				6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */,
 				3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */,
+				6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */,
 				3B423E822C80E613005B1B7F /* FolderIconView.swift */,
-				3B423E7D2C80E2D8005B1B7F /* FolderGridView.swift */,
+				6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */,
+				3B423E7D2C80E2D8005B1B7F /* FolderView.swift */,
+				6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
 				3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */,
+				6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */,
 				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
 				3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
@@ -266,11 +388,15 @@
 		3B0EE5F52C6A90E600CFC91A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E93FFB0E2C98C949004F96FC /* EventMonitor.swift */,
 				3BC731052C6A9D5E00923BB2 /* Managers */,
 				3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */,
+				6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */,
 				3BD40B3F2C6E5DD5004048FA /* FolderViewModel.swift */,
 				3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */,
 				3BD313E32C88FD56001CE5E7 /* DataViewModel.swift */,
+				08A2B0DD2C938D7B00719571 /* LawsuitNetworkingViewModel.swift */,
+				DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -278,8 +404,10 @@
 		3B0EE6042C6A929E00CFC91A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E94C015D2C9B70F400F6316F /* EntityWrappers.swift */,
 				3BD40B6D2C6E7681004048FA /* CoreDataModel */,
 				3BD40B412C6E5E16004048FA /* FolderStack.swift */,
+				6AC0BB692C8F8B9600FAF3E6 /* AddressAPI.swift */,
 				6AC0BB0B2C7FB53600FAF3E6 /* Enums */,
 				3B6168012C7E45CE00260585 /* Sections.swift */,
 			);
@@ -293,21 +421,26 @@
 				3B98F10A2C668B1000C45121 /* LawSuit */,
 				3B98F11C2C668B1100C45121 /* LawSuitTests */,
 				3B98F1262C668B1100C45121 /* LawSuitUITests */,
-				3BE07DEE2C99EC230016C866 /* LawSuit.app */,
-				3BE07DEF2C99EC230016C866 /* LawSuitTests.xctest */,
-				3BE07DF02C99EC230016C866 /* LawSuitUITests.xctest */,
+				084D404F2C8A4AAE00C96111 /* LawSuit.app */,
+				084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */,
+				084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
+				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
+				08A2B0D82C935ADA00719571 /* Extensions */,
+				08A2B0C02C8F730500719571 /* Networking */,
 				3BD40B392C6D4613004048FA /* Examples */,
 				3BD40B362C6D453A004048FA /* Views */,
 				3B0EE6042C6A929E00CFC91A /* Model */,
 				3B0EE5F52C6A90E600CFC91A /* ViewModel */,
 				3B98F10B2C668B1000C45121 /* LawSuitApp.swift */,
+				E94C01672CA1E2D800F6316F /* AppDelegate2.swift */,
 				3B98F10D2C668B1000C45121 /* ContentView.swift */,
+				08A2B0E12C93B01400719571 /* KeychainHelper.swift */,
 				3B98F10F2C668B1100C45121 /* Assets.xcassets */,
 				3B98F1142C668B1100C45121 /* LawSuit.entitlements */,
 				3B98F1112C668B1100C45121 /* Preview Content */,
@@ -326,6 +459,7 @@
 		3B98F11C2C668B1100C45121 /* LawSuitTests */ = {
 			isa = PBXGroup;
 			children = (
+				08A2B0E52C99ED6B00719571 /* Networking */,
 				3B98F11D2C668B1100C45121 /* LawSuitTests.swift */,
 			);
 			path = LawSuitTests;
@@ -400,8 +534,10 @@
 				E93BCFA62C77D3DE007CF206 /* CloudManager.swift */,
 				E981580E2C77A2680039C2FD /* RecordManager.swift */,
 				E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */,
+				08A2B0DF2C93AEFF00719571 /* AuthenticationManager.swift */,
 				3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */,
 				3B0A7AD02C7D16AA005A5946 /* NetworkManager.swift */,
+				E94C015B2C9B6F7200F6316F /* SpotlightManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -426,6 +562,9 @@
 				08E8D2032C88981F008F3859 /* LawsuitListViewHeaderContent.swift */,
 				3B6167FF2C7E43AC00260585 /* SideBarView.swift */,
 				DCC1BD2F2C77B23900000195 /* AddClientView.swift */,
+				E94C015F2CA1E23D00F6316F /* SpotlightView2.swift */,
+				E94C01612CA1E28300F6316F /* SpotlightSearchBarView2.swift */,
+				0897CB392C8BA21D00B488A9 /* MailManager.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -475,6 +614,9 @@
 			children = (
 				6AC0BB0C2C7FB54800FAF3E6 /* SizeEnumerator.swift */,
 				E9F3A4252C87755800595150 /* QueryEnumerator.swift */,
+				DC401F9C2C931FE3006FC949 /* Alerts.swift */,
+				E94C01632CA1E2AE00F6316F /* CoreDataModelsEnumerator2.swift */,
+				E94C01652CA1E2C100F6316F /* EventMonitorProtocol2.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -495,8 +637,11 @@
 			dependencies = (
 			);
 			name = LawSuit;
+			packageProductDependencies = (
+				E93FFB132C9A037E004F96FC /* HotKey */,
+			);
 			productName = LawSuit;
-			productReference = 3BE07DEE2C99EC230016C866 /* LawSuit.app */;
+			productReference = 084D404F2C8A4AAE00C96111 /* LawSuit.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3B98F1182C668B1100C45121 /* LawSuitTests */ = {
@@ -514,7 +659,7 @@
 			);
 			name = LawSuitTests;
 			productName = LawSuitTests;
-			productReference = 3BE07DEF2C99EC230016C866 /* LawSuitTests.xctest */;
+			productReference = 084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		3B98F1222C668B1100C45121 /* LawSuitUITests */ = {
@@ -532,7 +677,7 @@
 			);
 			name = LawSuitUITests;
 			productName = LawSuitUITests;
-			productReference = 3BE07DF02C99EC230016C866 /* LawSuitUITests.xctest */;
+			productReference = 084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -567,6 +712,9 @@
 				Base,
 			);
 			mainGroup = 3B98F0FF2C668B1000C45121;
+			packageReferences = (
+				E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */,
+			);
 			productRefGroup = 3B98F0FF2C668B1000C45121;
 			projectDirPath = "";
 			projectRoot = "";
@@ -609,13 +757,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E94C015C2C9B6F7200F6316F /* SpotlightManager.swift in Sources */,
 				6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */,
+				08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */,
 				3BD40B6F2C6E76EC004048FA /* ClientListView.swift in Sources */,
 				3BB9A34A2C84F36800AD1E30 /* TagViewComponentV2.swift in Sources */,
 				E9E323E22C7FB6F3000BA6FD /* ClientMoreInfoView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
+				6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */,
 				3BB9A34C2C84F37300AD1E30 /* TagViewComponentV3.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
+				E94C01602CA1E23D00F6316F /* SpotlightView2.swift in Sources */,
 				0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */,
 				E9A949BE2C7E46640006BC99 /* TagViewComponent.swift in Sources */,
 				3BD40B3B2C6D4624004048FA /* FolderExamples.swift in Sources */,
@@ -629,12 +781,17 @@
 				6AC0BB082C7E5DF000FAF3E6 /* LawsuitNotDistributedView.swift in Sources */,
 				6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */,
 				E9F3A4242C86325E00595150 /* CoreCloudTestingView.swift in Sources */,
+				E94C01642CA1E2AE00F6316F /* CoreDataModelsEnumerator2.swift in Sources */,
 				3B0EE5F72C6A90F100CFC91A /* CoreDataManager.swift in Sources */,
 				DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */,
 				6ABD79752C78FB2100A98BA3 /* AddLawsuitView.swift in Sources */,
+				6AC0BB6A2C8F8B9600FAF3E6 /* AddressAPI.swift in Sources */,
 				3BD40B2F2C6D3FB8004048FA /* ClientManager.swift in Sources */,
 				08E657342C7D08D800313FCB /* LabeledPickerField.swift in Sources */,
+				E94C01622CA1E28300F6316F /* SpotlightSearchBarView2.swift in Sources */,
 				DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */,
+				0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */,
+				E94C015E2C9B70F400F6316F /* EntityWrappers.swift in Sources */,
 				3BD40B332C6D41EC004048FA /* LawsuitManager.swift in Sources */,
 				3BAF94CC2C73D5BF001FCA45 /* FilePDFIconView.swift in Sources */,
 				3B98F10C2C668B1000C45121 /* LawSuitApp.swift in Sources */,
@@ -642,17 +799,24 @@
 				6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */,
 				08E8D2042C88981F008F3859 /* LawsuitListViewHeaderContent.swift in Sources */,
 				DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */,
-				3B423E7E2C80E2D8005B1B7F /* FolderGridView.swift in Sources */,
+				E94C01682CA1E2D800F6316F /* AppDelegate2.swift in Sources */,
+				3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */,
+				6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */,
+				3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */,
 				6ABD797B2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift in Sources */,
+				08A2B0E42C9486CA00719571 /* Date+.swift in Sources */,
 				6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */,
 				3B04F11D2C7FB9B600991746 /* ClientInfoView.swift in Sources */,
 				3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */,
 				3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */,
 				E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */,
 				E9E323E42C80EA12000BA6FD /* DetailedLawSuitView.swift in Sources */,
+				DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */,
+				E94C01662CA1E2C100F6316F /* EventMonitorProtocol2.swift in Sources */,
 				3B423E802C80E2E1005B1B7F /* FilePDFGridView.swift in Sources */,
 				3BD40B312C6D40FE004048FA /* LawyerManager.swift in Sources */,
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
+				08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */,
 				3B423E832C80E613005B1B7F /* FolderIconView.swift in Sources */,
 				3BB9A3482C84F35300AD1E30 /* TagViewComponentV1.swift in Sources */,
 				6ABD79712C6E990F00A98BA3 /* SelectClientComponent.swift in Sources */,
@@ -661,22 +825,32 @@
 				E9A949BA2C7CFB310006BC99 /* CloudDataConverter.swift in Sources */,
 				3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */,
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
+				6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */,
 				6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */,
 				3B6168022C7E45CE00260585 /* Sections.swift in Sources */,
+				6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */,
+				08A2B0DE2C938D7B00719571 /* LawsuitNetworkingViewModel.swift in Sources */,
 				3B24D4AE2C73781F00CCA763 /* Lawsuit.swift in Sources */,
+				08A2B0DC2C9380AD00719571 /* NetworkingManager.swift in Sources */,
 				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
+				08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */,
+				6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */,
+				6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */,
 				3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */,
 				3B0A7AD12C7D16AA005A5946 /* NetworkManager.swift in Sources */,
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,
 				DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */,
 				DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */,
+				08A2B0E22C93B01400719571 /* KeychainHelper.swift in Sources */,
 				3BDEFFCD2C8A4A6A00990528 /* Entity.swift in Sources */,
 				3BB9A3502C84F38000AD1E30 /* TagViewComponentV5.swift in Sources */,
 				3B24D4B02C73781F00CCA763 /* Client.swift in Sources */,
 				3B24D4B22C73781F00CCA763 /* FilePDF.swift in Sources */,
 				3B24D4B42C73781F00CCA763 /* Update.swift in Sources */,
 				3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */,
+				08A2B0E02C93AEFF00719571 /* AuthenticationManager.swift in Sources */,
+				08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */,
 				E93BCFA72C77D3DE007CF206 /* CloudManager.swift in Sources */,
 				3BD313E42C88FD56001CE5E7 /* DataViewModel.swift in Sources */,
 				E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */,
@@ -684,10 +858,15 @@
 				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
 				E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */,
 				08E8D2002C87ACDA008F3859 /* LawsuitCellComponent.swift in Sources */,
+				08A2B0DA2C935AE200719571 /* String+.swift in Sources */,
 				3BD40B382C6D454B004048FA /* ClientView.swift in Sources */,
+				6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */,
+				6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */,
 				3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */,
+				E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				6ABD796F2C6E97AD00A98BA3 /* RequestDocumentsView.swift in Sources */,
+				DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
 				08E8D2022C87AF11008F3859 /* LawsuitListView.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
@@ -701,6 +880,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B98F11E2C668B1100C45121 /* LawSuitTests.swift in Sources */,
+				08A2B0E92C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift in Sources */,
+				08A2B0E72C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift in Sources */,
+				089B8A9C2C9E312D00FEBCAB /* CoreDataStackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -869,7 +1051,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -900,7 +1082,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -916,7 +1098,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = 543L4H35A3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -935,7 +1117,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = 543L4H35A3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -1021,6 +1203,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/soffes/HotKey";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E93FFB132C9A037E004F96FC /* HotKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */ = {

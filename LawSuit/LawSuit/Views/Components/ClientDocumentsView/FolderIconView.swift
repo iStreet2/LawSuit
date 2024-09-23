@@ -4,8 +4,10 @@
 //
 //  Created by Gabriel Vicentin Negro on 14/08/24.
 //
+// icone das pastas em grid
 
 import SwiftUI
+import Foundation
 
 struct FolderIconView: View {
     
@@ -30,82 +32,115 @@ struct FolderIconView: View {
     }
     
     var body: some View {
-        VStack {
-            Image("folder")
-            
-            if isEditing {
-                TextField("", text: $folderName, onEditingChanged: { _ in
-                }, onCommit: {
-                    saveChanges()
-                })
-                .onExitCommand(perform: cancelChanges)
-                .lineLimit(2)
-                .frame(height: 12)
-            }
-            else {
-                Text(folder.name ?? "Sem nome")
-                    .lineLimit(1)
-                    .onTapGesture(count: 2) {
-                        isEditing = true
-                    }
-            }
-        }
-        .onDisappear {
-            isEditing = false
-        }
-        .onAppear {
-            if folderName == "Nova Pasta" {
-                isEditing = true
-            }
-        }
-        .contextMenu {
-            Button(action: {
-                folderViewModel.openFolder(folder: folder)
-            }) {
-                Text("Abrir Pasta")
-                Image(systemName: "folder")
-            }
-            Button(action: {
-                isEditing = true
-            }) {
-                Text("Renomear")
-                Image(systemName: "pencil")
-            }
-            Button(action: {
-                Task {
-                    //MARK: CoreData - Deletar
-                    let temporaryFolderRecordName = folder.recordName
-                    let temporaryParentFolderRecordName = parentFolder.recordName
-                    
-                    withAnimation(.easeIn) {
-                        dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
-                    }
-                    
-                    //MARK: ClourKit - Deletar
-                    do {
-                        try await dataViewModel.cloudManager.recordManager.removeReference(from: temporaryParentFolderRecordName!, to: temporaryFolderRecordName!, referenceKey: "folders")
-                        try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(recordName: temporaryFolderRecordName!)
-                    } catch {
-                        print("Error deleting folder from CloudKit: \(error.localizedDescription)")
-                    }
+        if folderViewModel.showingGridView {
+            VStack {
+                Image("folder")
+                
+                if isEditing {
+                    TextField("", text: $folderName, onEditingChanged: { _ in
+                    }, onCommit: {
+                        saveChanges()
+                    })
+                    .onExitCommand(perform: cancelChanges)
+                    .lineLimit(2)
+                    .frame(height: 12)
                 }
-            }) {
-                Text("Excluir")
-                Image(systemName: "trash")
+                else {
+                    Text(folder.name ?? "Sem nome")
+                        .lineLimit(1)
+                        .onTapGesture(count: 2) {
+                            isEditing = true
+                        }
+                }
             }
+            .onDisappear {
+                isEditing = false
+            }
+            .onAppear {
+                if folderName == "Nova Pasta" {
+                    isEditing = true
+                }
+            }
+        } else {
+            HStack {
+                Image("folder")
+                    .resizable()
+                    .frame(width: 18,height: 14)
+                
+                if isEditing {
+                    TextField("", text: $folderName, onEditingChanged: { _ in
+                    }, onCommit: {
+                        saveChanges()
+                    })
+                    .onExitCommand(perform: cancelChanges)
+                    .lineLimit(2)
+                    .frame(height: 12)
+                }
+                else {
+                    Text(folder.name ?? "Sem nome")
+                        .lineLimit(1)
+                        .onTapGesture(count: 2) {
+                            isEditing = true
+                        }
+                }
+            }
+            .onDisappear {
+                isEditing = false
+            }
+            
+            .onAppear {
+                if folderName == "Nova Pasta" {
+                    isEditing = true
+                }
+            }
+            .contextMenu {
+                Button(action: {
+                    folderViewModel.openFolder(folder: folder)
+                }) {
+                    Text("Abrir Pasta")
+                    Image(systemName: "folder")
+                }
+                Button(action: {
+                    isEditing = true
+                }) {
+                    Text("Renomear")
+                    Image(systemName: "pencil")
+                }
+                Button(action: {
+                    Task {
+                        //MARK: CoreData - Deletar
+                        let temporaryFolderRecordName = folder.recordName
+                        let temporaryParentFolderRecordName = parentFolder.recordName
+                        
+                        withAnimation(.easeIn) {
+                            dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                        }
+                        
+                        //MARK: ClourKit - Deletar
+                        do {
+                            try await dataViewModel.cloudManager.recordManager.removeReference(from: temporaryParentFolderRecordName!, to: temporaryFolderRecordName!, referenceKey: "folders")
+                            try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(recordName: temporaryFolderRecordName!)
+                        } catch {
+                            print("Error deleting folder from CloudKit: \(error.localizedDescription)")
+                        }
+                    }
+                }) {
+                    Text("Excluir")
+                    Image(systemName: "trash")
+                }
+            }
+            //        .onDrag {
+            //            // Gera uma URL temporária para a pasta
+            //            let tempDirectory = FileManager.default.temporaryDirectory
+            //            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
+            //
+            //            // Cria a pasta temporária
+            //            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
+            //
+            //            // Retorna o NSItemProvider com a URL da pasta temporária
+            //            return NSItemProvider(object: tempFolderURL as NSURL)
+            //        }
         }
-//        .onDrag {
-//            // Gera uma URL temporária para a pasta
-//            let tempDirectory = FileManager.default.temporaryDirectory
-//            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
-//            
-//            // Cria a pasta temporária
-//            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
-//            
-//            // Retorna o NSItemProvider com a URL da pasta temporária
-//            return NSItemProvider(object: tempFolderURL as NSURL)
-//        }
-        
     }
     private func cancelChanges() {
         folderName = folder.name!

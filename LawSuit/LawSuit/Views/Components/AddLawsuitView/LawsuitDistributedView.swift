@@ -1,39 +1,46 @@
-//
-//  ProcessDistributedView.swift
-//  LawSuit
-//
-//  Created by Emily Morimoto on 27/08/24.
-//
+////
+////  ProcessDistributedView.swift
+////  LawSuit
+////
+////  Created by Emily Morimoto on 27/08/24.
+////
 
 import SwiftUI
+import Combine
 
 struct LawsuitDistributedView: View {
     
     //MARK: Variáveis de Ambiente
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     
     @State var textInput = ""
     @State var tagType: TagType = .civel
     @State var selectTag = false
     
     //MARK: Variáveis de estado
+    @State var invalidInformation: InvalidInformation?
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
     @Binding var lawsuitDefendantName: String
     @Binding var lawsuitActionDate: Date
+    @EnvironmentObject var dataViewModel: DataViewModel
     
     @State var attributedAuthor = false
     @State var attributedDefendant = false
     
+    let textLimit = 50
+    
     //MARK: CoreData
-    @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
     var body: some View {
         VStack{
             LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
+                .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
+                }
             LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
         }
         HStack(alignment: .top){
@@ -44,15 +51,8 @@ struct LawsuitDistributedView: View {
                 }
                 //MARK: Caso usuário atribuir cliente para o réu
                 if attributedDefendant {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Autor")
-                                .bold()
-                        }
-                    }
-                    TextField("", text: $lawsuitAuthorName)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 200)
+                    LabeledTextField(label: "Autor", placeholder: "Adicionar autor", textfieldText: $lawsuitAuthorName)
+                        .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                 }
                 HStack {
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
@@ -86,18 +86,12 @@ struct LawsuitDistributedView: View {
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                            
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
-                        VStack(alignment: .leading){
-                            HStack{
-                                Text("Réu")
-                                    .bold()
-                            }
-                        }
-                        TextField("", text: $lawsuitDefendantName)
-                            .textFieldStyle(.roundedBorder)
-                            .frame(width: 200)
+                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
+                            .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                     }
                     HStack {
                         //MARK: Caso o usuário tenha adicionado um cliente no réu
@@ -112,16 +106,16 @@ struct LawsuitDistributedView: View {
                             } label: {
                                 Image(systemName: "minus")
                             }
-                            .padding(.leading,2)
                         }
                     }
                     .frame(width: 200, alignment: .leading)
-                    
                 }
                 LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
                     .padding(.top)
             }
         }
+        Spacer()
+        Spacer()
         HStack {
             Spacer()
             Button {
@@ -130,6 +124,14 @@ struct LawsuitDistributedView: View {
                 Text("Cancelar")
             }
             Button {
+                if !areFieldsFilled() {
+                    invalidInformation = .missingInformation
+                    return
+                }
+                if lawsuitNumber.count < 25 {
+                    invalidInformation = .invalidLawSuitNumber
+                    return
+                }
                 //MARK: Se o cliente foi atribuido ao autor
                 if attributedAuthor {
                     if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
@@ -167,28 +169,70 @@ struct LawsuitDistributedView: View {
                     } else {
                         print("Client not found")
                     }
-                }
+                    }
+                
             } label: {
                 Text("Criar")
             }
             .buttonStyle(.borderedProminent)
-        }
-        .sheet(isPresented: $selectTag, content: {
-            VStack {
-                Spacer()
-                TagViewPickerComponentV1(currentTag: $tagType)
-                Spacer()
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        selectTag.toggle()
-                    }, label: {
-                        Text("Salvar")
-                    })
-                    .buttonStyle(.borderedProminent)
-                    .padding()
+            .alert(item: $invalidInformation) { error in
+                switch error {
+                case .missingInformation:
+                    return Alert(title: Text("Informações Faltando"),
+                                 message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                 dismissButton: .default(Text("Ok")))
+                case .invalidCPF:
+                    return Alert(title: Text("CPF inválido"),
+                                 message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                 dismissButton: .default(Text("Ok")))
+                    
+                case .invalidRG:
+                    return Alert(title: Text("RG inválido"),
+                                 message: Text("Por favor, insira um RG válido antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
+                case .invalidEmail:
+                    return Alert(title: Text("E-mail inválido"),
+                                 message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
+                case .missingTelephoneNumber:
+                    return Alert(title: Text("Número de telefone inválido"),
+                                 message: Text("Por favor, insira um número de telefone válido antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
+                case .missingCellphoneNumber:
+                    return Alert(title: Text("Número de celular inválido"),
+                                 message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
+                case .invalidLawSuitNumber:
+                    return Alert(title: Text("Número do processo inválido"),
+                    message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                    dismissButton: .default(Text("Ok")))
                 }
             }
-        })
+            .sheet(isPresented: $selectTag, content: {
+                VStack {
+                    Spacer()
+                    TagViewPickerComponentV1(currentTag: $tagType)
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            selectTag.toggle()
+                        }, label: {
+                            Text("Salvar")
+                        })
+                        .buttonStyle(.borderedProminent)
+                        .padding()
+                    }
+                }
+            })
+        }
+    }
+    func areFieldsFilled() -> Bool {
+        return !lawsuitNumber.isEmpty &&
+        !lawsuitCourt.isEmpty &&
+        !lawsuitActionDate.description.isEmpty &&
+        !lawsuitAuthorName.isEmpty &&
+        !lawsuitDefendantName.isEmpty
+        
     }
 }

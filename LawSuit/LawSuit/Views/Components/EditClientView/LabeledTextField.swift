@@ -23,13 +23,15 @@ struct LabeledTextField: View {
                 .foregroundStyle(Color.black)
             TextField(placeholder, text: $textfieldText)
                 .textFieldStyle(.roundedBorder)
+                .onChange(of: textfieldText) { newValue in
+                    textfieldText = newValue.capitalized
+                }
             
         }
     }
 }
 
-//#Preview {
-//    @State var text: String = ""
-//    
-//    return LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $text)
-//}
+
+
+
+

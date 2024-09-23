@@ -14,6 +14,7 @@ class FolderViewModel: ObservableObject {
     
     @Published private var openFolder: Folder?
     @Published private var path = FolderStack()
+    @Published var showingGridView = true
     
     func getOpenFolder() -> Folder? {
         if let openFolder = openFolder {

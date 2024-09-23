@@ -18,6 +18,7 @@ struct ClientInfoView: View {
     @State var editClient = false
     @State var imageData: Data?
     @Binding var deleted: Bool
+    var mailManager: MailManager 
 
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -68,7 +69,6 @@ struct ClientInfoView: View {
                     Text(client.name)
                         .font(.title)
                         .bold()
-                    Text("\(client.age) anos")
                     Button {
                         // Ação para editar o cliente
                         editClient.toggle()
@@ -79,6 +79,19 @@ struct ClientInfoView: View {
                     .buttonStyle(PlainButtonStyle())
                     
                 }
+                
+                HStack {
+                    Text("Celular")
+                        .bold()
+                        .foregroundStyle(Color(.gray))
+                    Text(client.cellphone)
+                    Text("E-mail")
+                        .bold()
+                        .foregroundStyle(Color(.gray))
+                    Text(client.email)
+                }
+                .font(.footnote)
+                
                 NavigationLink {
                     ClientMoreInfoView(client: client)
 
@@ -88,6 +101,13 @@ struct ClientInfoView: View {
                         .foregroundColor(.blue)
                 }
                 .buttonStyle(PlainButtonStyle())
+                
+                Button {
+                    mailManager.showMailComposer()
+                } label: {
+                    Text("Enviar e-mail")
+                }
+                .buttonStyle(.borderedProminent)
             }
             Spacer()
         }

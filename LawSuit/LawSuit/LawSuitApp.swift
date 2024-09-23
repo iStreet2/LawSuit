@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HotKey
 
 @main
 struct LawSuitApp: App {
@@ -14,6 +15,13 @@ struct LawSuitApp: App {
     @StateObject var folderViewModel = FolderViewModel()
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
     @StateObject var navigationViewModel = NavigationViewModel()
+    @StateObject var clientDataViewModel = TextFieldDataViewModel()
+    @StateObject var addressViewModel = AddressViewModel()
+	 @StateObject var eventManager = EventManager()
+
+	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+	
+	 let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
     
     var body: some Scene {
         WindowGroup {   
@@ -23,8 +31,18 @@ struct LawSuitApp: App {
                 .environmentObject(folderViewModel)
                 .environmentObject(dragAndDropViewModel)
                 .environmentObject(navigationViewModel)
+                .environmentObject(clientDataViewModel)
+                .environmentObject(addressViewModel)
                 .preferredColorScheme(.light)
                 .frame(minHeight: 530)
+					 .onAppear {
+						 hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+					 }
+					 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
+						 SpotlightSearchbarView()
+							 .environmentObject(dataViewModel)
+							 .environmentObject(navigationViewModel)
+					 }
         }
     }
 }

@@ -27,13 +27,13 @@ struct LawsuitListViewHeaderContent: View {
                 
                 Text("Tipo")
                     .frame(width: geo.size.width * 0.12, alignment: .leading)
-
+                
                 Text("Última Movimentação")
                     .frame(width: geo.size.width * 0.17, alignment: .leading)
-                   
+                
                 Text("Cliente")
                     .frame(width: geo.size.width * 0.17, alignment: .leading)
-                   
+                
                 Text("Advogado Responsável")
                 
             }

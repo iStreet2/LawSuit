@@ -13,10 +13,11 @@ enum ClientType {
 }
 
 struct AddClientForm: View {
+    //MARK: ViewModels
+    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
+    @EnvironmentObject var addressViewModel: AddressViewModel
     
     @Binding var stage: Int
-    @State var states = ["São Paulo", "Rio de Janeiro", "Mato Grosso do Sul", "Minas Gerais", "Rio Grande do Sul", "Acre", "Ceará"]
-    @State var cities = ["São Paulo", "Mogi das Cruzes", "Maringá", "Iaras", "Osasco", "Carapicuíba", "Barueri"]
     
     @Binding var name: String
     @Binding var occupation: String
@@ -37,6 +38,9 @@ struct AddClientForm: View {
     @Binding var telephone: String
     @Binding var cellphone: String
     
+    @State var addressApi = AddressAPI()
+    @State var isEmailValid = true
+    
     let textLimit = 50
     let maritalStatusLimit = 10
     
@@ -46,22 +50,22 @@ struct AddClientForm: View {
             HStack {
                 VStack(spacing: 15) {
                     LabeledTextField(label: "Nome Completo", placeholder: "Insira o nome do Cliente", textfieldText: $name)
-                        .onReceive(Just(name)) { _ in limitText(textLimit) }
+                        .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
                     LabeledTextField(label: "RG", placeholder: "Insira o RG do Cliente", textfieldText: $rg)
-                        .onReceive(Just(rg)) { _ in rg = formatNumber(rg, limit: 9) }
+                        .onReceive(Just(rg)) { _ in rg = textFieldDataViewModel.formatNumber(rg, limit: 9) }
                     LabeledTextField(label: "Filiação", placeholder: "Insira a Filiação do Cliente", textfieldText: $affiliation)
-                        .onReceive(Just(affiliation)) { _ in limitText(textLimit) }
+                        .onReceive(Just(affiliation)) { _ in textFieldDataViewModel.limitText(text: &affiliation, upper: textLimit) }
                     LabeledTextField(label: "Nacionalidade", placeholder: "Insira a Nacionalidade do Cliente", textfieldText: $nationality)
-                        .onReceive(Just(nationality)) { _ in limitText(textLimit) }
+                        .onReceive(Just(nationality)) { _ in textFieldDataViewModel.limitText(text: &nationality, upper: textLimit) }
                 }
                 VStack(alignment: .leading, spacing: 15) {
                     LabeledTextField(label: "Profissão", placeholder: "Insira a Profissão do Cliente", textfieldText: $occupation)
-                        .onReceive(Just(occupation)) { _ in limitText(textLimit) }
+                        .onReceive(Just(nationality)) { _ in textFieldDataViewModel.limitText(text: &occupation, upper: textLimit) }
                     LabeledTextField(label: "CPF", placeholder: "Insira o CPF do Cliente", textfieldText: $cpf)
-                        .onReceive(Just(cpf)) { _ in cpf = formatCPF(cpf) }
-                        .foregroundStyle(isValidCPF(cpf) ? .black : .red)
+                        .onReceive(Just(cpf)) { _ in cpf = textFieldDataViewModel.formatCPF(cpf) }
+                        .foregroundStyle(cpf.count == 14 ? (textFieldDataViewModel.isValidCPF(cpf) ? .black : .red) : .black)
                     LabeledTextField(label: "Estado Civil", placeholder: "Insira o Estado Civil do Cliente", textfieldText: $maritalStatus)
-                        .onReceive(Just(maritalStatus)) { _ in limitMaritalStatus(maritalStatusLimit) }
+                        .onReceive(Just(maritalStatus)) { _ in textFieldDataViewModel.limitMaritalStatus(maritalStatus: &maritalStatus, upper: maritalStatusLimit) }
                     LabeledDateField(selectedDate: $birthDate, label: "Data de Nascimento")
                     
                 }
@@ -69,89 +73,63 @@ struct AddClientForm: View {
             .padding(.vertical, 5)
         } else if stage == 2 {
             VStack(alignment: .leading, spacing: 15) {
-                LabeledTextField(label: "CEP", placeholder: "Insira seu CEP", textfieldText: $cep)
-                    .onReceive(Just(cep)) { _ in cep = formatNumber(cep, limit: 8) }
-                LabeledTextField(label: "Endereço", placeholder: "Insira seu endereço", textfieldText: $address)
+                LabeledTextField(label: "CEP", placeholder: "Insira o CEP do Cliente", textfieldText: $cep)
+                    .onReceive(Just(cep)) { _ in cep = textFieldDataViewModel.formatNumber(cep, limit: 8) }
+                    .onChange(of: cep, perform: { _ in
+                        Task{
+                            if cep.count >= 8{
+                                if let addressApi = await addressViewModel.fetch(for: cep) {
+                                    cep = addressApi.cep
+                                    address = addressApi.logradouro
+                                    neighborhood = addressApi.bairro
+                                    state = addressApi.estado
+                                    city = addressApi.localidade
+                                }
+                            }
+                        }
+                    })
+                LabeledTextField(label: "Endereço", placeholder: "Insira o endereço do Cliente", textfieldText: $address)
                 HStack(spacing: 10) {
-                    LabeledTextField(label: "Número", placeholder: "Insira o número", textfieldText: $addressNumber)
+                    LabeledTextField(label: "Número", placeholder: "Insira o número do Cliente", textfieldText: $addressNumber)
                         .frame(width: 120)
-                    LabeledTextField(label: "Bairro", placeholder: "Insira seu bairro", textfieldText: $neighborhood)
-                    LabeledTextField(label: "Complemento", placeholder: "Insira o complemento", textfieldText: $complement)
+                        .onReceive(Just(addressNumber)) { _ in addressNumber = textFieldDataViewModel.formatNumber(addressNumber, limit: 7)}
+                    LabeledTextField(label: "Bairro", placeholder: "Insira o bairro do Cliente", textfieldText: $neighborhood)
+                    LabeledTextField(label: "Complemento", placeholder: "Insira o complemento do Cliente", textfieldText: $complement)
                         .frame(width: 170)
                 }
-                HStack(spacing: 20) {
-                    LabeledPickerField(selectedOption: $state, arrayInfo: states, label: "Estado")
-                    Spacer()
-                    LabeledPickerField(selectedOption: $city, arrayInfo: cities, label: "Cidade")
+                HStack(spacing: 10) {
+                    LabeledTextField(label: "Estado", placeholder: "Insira o estado do Cliente", textfieldText: $state)
+                    LabeledTextField(label: "Cidade", placeholder: "Insira o cidade do Cliente", textfieldText: $city)
                 }
-                .frame(width: 250)
             }
             .padding(.vertical, 5)
         } else if stage == 3 {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 15) {
-                    LabeledTextField(label: "E-mail", placeholder: "Insira seu e-mail", textfieldText: $email)
+                    LabeledTextField(label: "E-mail", placeholder: "Insira o e-mail do Cliente", textfieldText: $email)
+                        .onChange(of: email) { newValue in
+                            isEmailValid = textFieldDataViewModel.isValidEmail(newValue)
+                        }
+                        .foregroundColor(isEmailValid ? .black : .red)
+                    
+                    if !isEmailValid {
+                        Text("E-mail inválido")
+                            .foregroundStyle(.red)
+                            .font(.caption)
+                            .padding(.vertical, -10)
+                            .padding(.horizontal, 10)
+                    } 
                     HStack(spacing: 60) {
                         LabeledTextField(label: "Telefone", placeholder: "Insira seu telefone", textfieldText: $telephone)
+                            .onReceive(Just(telephone)) { _ in telephone = textFieldDataViewModel.formatPhoneNumber(telephone, cellphone: false) }
                         LabeledTextField(label: "Celular", placeholder: "Insira seu celular", textfieldText: $cellphone)
+                            .onReceive(Just(cellphone)) { _ in cellphone = textFieldDataViewModel.formatPhoneNumber(cellphone, cellphone: true) }
                     }
                 }
             }
             Spacer()
                 .padding(.vertical, -5)
         }
-    }
-    func limitText(_ upper: Int) {
-        if name.count > upper {
-            name = String(name.prefix(upper))
-        }
-        if affiliation.count > upper {
-            affiliation = String(affiliation.prefix(upper))
-        }
-        if nationality.count > upper {
-            nationality = String(nationality.prefix(upper))
-        }
-        if occupation.count > upper {
-            occupation = String(occupation.prefix(upper))
-        }
-    }
-    func limitMaritalStatus(_ upper: Int) {
-        if maritalStatus.count > upper {
-            maritalStatus = String(maritalStatus.prefix(upper))
-        }
-    }
-    func formatNumber(_ string: String, limit: Int) -> String {
-        let filtered = string.filter { "0123456789".contains($0) }
-        return String(filtered.prefix(limit))
-    }
-    func formatCPF(_ cpf: String) -> String {
-        let numbers = cpf.filter { "0123456789".contains($0)}
-        var formatCPF = ""
-        
-        for (index, character) in numbers.prefix(11).enumerated() {
-            if index == 3 || index == 6 {
-                formatCPF.append(".")
-            }
-            if index == 9 {
-                formatCPF.append("-")
-            }
-            formatCPF.append(character)
-        }
-        return formatCPF
-    }
-    func isValidCPF(_ cpf: String) -> Bool {
-        let numbers = cpf.compactMap(\.wholeNumberValue)
-        guard numbers.count == 11 && Set(numbers).count != 1 else { return false }
-        return digitoCPF(numbers.prefix(9)) == numbers[9] &&
-        digitoCPF(numbers.prefix(10)) == numbers[10]
-    }
-    func digitoCPF(_ numbers: ArraySlice<Int>) -> Int {
-        var number = numbers.count + 2
-        let digit = 11 - numbers.reduce(into: 0) {
-            number -= 1
-            $0 += $1 * number
-        } % 11
-        return digit > 9 ? 0 : digit
     }
 }
 
