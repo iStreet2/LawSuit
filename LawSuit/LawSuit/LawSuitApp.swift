@@ -11,7 +11,6 @@ import HotKey
 @main
 struct LawSuitApp: App {
     
-    
     @StateObject var dataViewModel = DataViewModel()
     @StateObject var folderViewModel = FolderViewModel()
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()

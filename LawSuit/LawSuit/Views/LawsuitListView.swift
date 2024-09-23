@@ -9,7 +9,9 @@ import SwiftUI
 
 struct LawsuitListView: View {
 
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     @State var createProcess = false
+    @State private var hasFetchedUpdates = false  // Adicionado
     
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
@@ -35,7 +37,10 @@ struct LawsuitListView: View {
                 
                 LawsuitListViewHeaderContent(lawsuits: lawsuits)
             }
+
         }
+
+
         .sheet(isPresented: $createProcess, content: {
             AddLawsuitView()
         })

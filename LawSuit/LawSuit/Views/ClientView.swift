@@ -24,6 +24,7 @@ struct ClientView: View {
     @State var createLawsuit = false
     @State var showingGridView = true
     var infos = ["Processos", "Documentos"]
+
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -48,7 +49,7 @@ struct ClientView: View {
                     .foregroundColor(.gray)
             } else {
                 VStack(alignment: .leading) {
-                    ClientInfoView(client: client, deleted: $deleted)
+                    ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
                     Divider()
                     HStack {
                         SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
@@ -91,7 +92,7 @@ struct ClientView: View {
             }
         }
         .sheet(isPresented: $createLawsuit, content: {
-            AddLawsuitView()
+                AddLawsuitView()
         })
     }
 }

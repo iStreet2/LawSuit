@@ -16,28 +16,19 @@ class UpdateManager {
         self.context = context
     }
     
-    func createUpdate(name: String, date: Date, desc: String?, lawsuit: Lawsuit) {
+    func createUpdate(name: String, date: Date) -> Update {
         let update = Update(context: context)
         update.name = name
         update.date = date
-        update.desc = desc
-        update.parentLawsuit = lawsuit
-        saveContext()
+        //update.parentLawsuit = lawsuit
+        return update
     }
     
     func getLatestUpdateDate(lawsuit: Lawsuit) -> Date? {
         let updatesArray = (lawsuit.updates as? Set<Update>)?.sorted {
-            ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast)
+            ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast) // do maior para o menor
         }
         return updatesArray?.first?.date
-    }
-    
-    func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving context on update")
-        }
     }
     
 }

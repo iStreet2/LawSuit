@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct DetailedLawSuitView: View {
-    
+        
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
