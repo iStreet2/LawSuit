@@ -56,6 +56,7 @@
         <attribute name="court" attributeType="String"/>
         <attribute name="defendantID" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="isLoading" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="number" attributeType="String"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>

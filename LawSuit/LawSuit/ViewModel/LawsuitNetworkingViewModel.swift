@@ -12,7 +12,6 @@ class LawsuitNetworkingViewModel: ObservableObject {
     
     private let lawsuitService: LawsuitNetworkingServiceProtocol
     private let lawsuitManager: LawsuitManager
-    var isLoading: Bool = true
     
     init(lawsuitService: LawsuitNetworkingServiceProtocol, lawsuitManager: LawsuitManager) {
         self.lawsuitService = lawsuitService
@@ -20,13 +19,14 @@ class LawsuitNetworkingViewModel: ObservableObject {
     }
     
     func fetchAndSaveUpdatesFromAPI(fromLawsuit lawsuit: Lawsuit) {
-        
+        lawsuit.isLoading = true
+
         Task {
             do {
                 let result = try await lawsuitService.fetchLawsuitUpdatesData(fromLawsuit: lawsuit)
                 switch result {
                 case .success(let updatesFromAPI):
-                    print("Antes da iteracao: \(lawsuit.updates?.count) movimentacoes para o processo \(lawsuit.number ?? "")")
+                    print("Antes da iteracao: \(String(describing: lawsuit.updates?.count)) movimentacoes para o processo \(lawsuit.number)")
                     let existingUpdates = lawsuit.updates ?? []
                     let newUpdates = updatesFromAPI.filter { updateFromAPI in
                         !(existingUpdates.contains(where: { ($0 as AnyObject).date == updateFromAPI.date }))
@@ -35,28 +35,35 @@ class LawsuitNetworkingViewModel: ObservableObject {
                     
                     if lawsuit.updates?.count == 0 {
                         for update in updatesFromAPI {
-                            lawsuitManager.appendUpdate(lawsuit: lawsuit, update: update)
+                            DispatchQueue.main.async {
+                                self.lawsuitManager.appendUpdate(lawsuit: lawsuit, update: update)
+                            }
                         }
-                        print("Array de updates estava vazio e adicionou \(updatesFromAPI.count) novos updates para o processo \(lawsuit.number ?? "")")
+                        print("Array de updates estava vazio e adicionou \(updatesFromAPI.count) novos updates para o processo \(lawsuit.number)")
+                        
                     } else if !newUpdates.isEmpty {
                         for newUpdate in newUpdates {
-                            lawsuitManager.appendUpdate(lawsuit: lawsuit, update: newUpdate)
+                            DispatchQueue.main.async {
+                                self.lawsuitManager.appendUpdate(lawsuit: lawsuit, update: newUpdate)
+                            }
                         }
-                        print("Adicionou \(newUpdates.count) novos updates para o processo \(lawsuit.number ?? "ha")")
+                        print("Adicionou \(newUpdates.count) novos updates para o processo \(lawsuit.number)")
+                        
                     } else {
-                        print("Já tinha updates no lawsuit e não há updates novos vindos da api para o processo \(lawsuit.number ?? "ha")")
+                        print("Já tinha updates no lawsuit e não há updates novos vindos da api para o processo \(lawsuit.number)")
                     }
+                    print("Depois da iteracao: \(String(describing: lawsuit.updates?.count)) movimentacoes para o processo \(lawsuit.number)")
                     
-                    print("Depois da iteracao: \(lawsuit.updates?.count) movimentacoes para o processo \(lawsuit.number)")
- 
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
+                
             } catch {
-                print(error.localizedDescription)
+                print("Erro no Task:\(error.localizedDescription)")
             }
-            isLoading = false
+            lawsuit.isLoading = false
         }
+        
     }
     
     func getLatestUpdateDate(fromLawsuit lawsuit: Lawsuit, updateManager: UpdateManager) -> Date? {

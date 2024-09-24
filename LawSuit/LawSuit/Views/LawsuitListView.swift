@@ -12,6 +12,7 @@ struct LawsuitListView: View {
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     @State var createProcess = false
     @State private var hasFetchedUpdates = false  // Adicionado
+    @EnvironmentObject var dataViewModel: DataViewModel
     
     var body: some View {
         
@@ -29,6 +30,18 @@ struct LawsuitListView: View {
                             .foregroundStyle(Color(.gray))
                     })
                     .buttonStyle(PlainButtonStyle())
+                    
+                    Spacer()
+                    Button(action: {
+                        for lawsuit in lawsuits {
+                            Task {
+                                dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                            }
+                        }
+                        print("-----------------------------------------------fez o fetch para os lawsuits")
+                    }, label: {
+                        Image(systemName: "arrow.clockwise")
+                    })
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
@@ -37,8 +50,6 @@ struct LawsuitListView: View {
             }
 
         }
-
-
         .sheet(isPresented: $createProcess, content: {
             AddLawsuitView()
         })

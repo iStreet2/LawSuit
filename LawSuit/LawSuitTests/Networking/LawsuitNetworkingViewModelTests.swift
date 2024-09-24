@@ -31,7 +31,7 @@ final class LawsuitNetworkingViewModelTests: XCTestCase {
     func createMockLawsuitAndSaveIntoCoreData() -> Lawsuit{
         
         let lawsuit = Lawsuit(context: coreDataStack.context)
-        lawsuit.number = "11442015920238260100"
+        lawsuit.number = "1144201-59.2023.8.26.0100"
         lawsuit.category = ""
         lawsuit.name = "Usucapião"
         do {

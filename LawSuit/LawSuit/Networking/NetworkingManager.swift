@@ -16,7 +16,8 @@ struct NetworkingManager {
         return lawsuitNumberFiltered
     }
     
-    func obterJusticaETribunalDoProcesso(lawsuitNumber: String) throws -> (justicaRes: String, tribu: String)  {
+    func obterJusticaETribunalDoProcesso(lawsuitNumber: inout String) throws -> (justicaRes: String, tribu: String)  {
+        lawsuitNumber = removeCharactersFromLawsuitNumber(lawsuitNumber: lawsuitNumber)
         
         guard lawsuitNumber.count == 20 else {
             throw LawsuitNumberError.invalidLawsuitNumber

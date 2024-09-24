@@ -24,7 +24,8 @@ class LawsuitNetworkingService: LawsuitNetworkingServiceProtocol {
     
     func fetchLawsuitUpdatesData(fromLawsuit lawsuit: Lawsuit) async throws -> Result<[Update], Error> {
 
-        guard let url = setupURL(numeroProcesso: lawsuit.number ?? "").url else {
+        lawsuit.number = NetworkingManager.shared.removeCharactersFromLawsuitNumber(lawsuitNumber: lawsuit.number)
+        guard let url = setupURL(numeroProcesso: &lawsuit.number).url else {
             throw LawsuitRequestError.couldNotCreateURL
         }
         
@@ -49,11 +50,11 @@ class LawsuitNetworkingService: LawsuitNetworkingServiceProtocol {
         }
     }
     
-    private func setupURL(numeroProcesso: String) -> URLComponents {
+    private func setupURL(numeroProcesso: inout String) -> URLComponents {
         var urlComponents = URLComponents()
         
         do {
-            let (justica, tribunal) = try NetworkingManager.shared.obterJusticaETribunalDoProcesso(lawsuitNumber: numeroProcesso)
+            let (justica, tribunal) = try NetworkingManager.shared.obterJusticaETribunalDoProcesso(lawsuitNumber: &numeroProcesso)
             let endpoint = try NetworkingManager.shared.obterEndpointDoProcesso(digitoJusticaResponsavel: justica, digitoTribunal: tribunal)
             
             urlComponents.scheme = "https"

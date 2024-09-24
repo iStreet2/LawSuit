@@ -13,10 +13,10 @@ struct LawsuitCellComponent: View {
     @ObservedObject var lawyer: Lawyer
     @ObservedObject var lawsuit: Lawsuit
     @EnvironmentObject var dataViewModel: DataViewModel
-
+    
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
-        
+    
     var body: some View {
         
         GeometryReader { geo in
@@ -39,15 +39,19 @@ struct LawsuitCellComponent: View {
                 Spacer()
                 
                 Group {
-                    
-                    if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() {
-                        Text(latestUpdateDate)
-                            .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                    if lawsuit.isLoading {
+                        ProgressView()
+                            .frame(width: geo.size.width * 0.17, height: 47)
                     } else {
-                        Text("Sem atualizações")
-                            .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                        if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() {
+                            Text(latestUpdateDate)
+                                .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                        } else {
+                            Text("Sem atualizações")
+                                .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                        }
                     }
-                    
+
                     Text(client.name)
                         .lineLimit(1)
                         .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
@@ -60,11 +64,6 @@ struct LawsuitCellComponent: View {
                 
             }
             .padding(.horizontal, 20)
-            .onAppear {
-                Task {
-                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                }
-            }
         }
         .frame(minWidth: 777)
         .frame(height: 47)

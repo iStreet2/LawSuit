@@ -205,36 +205,34 @@ extension DetailedLawSuitView {
 	private var movimentationBlock: some View {
 		BoxView {
 			VStack(alignment: .leading) {
-				HStack {
-					Text("Última Movimentação")
-						.font(.title2)
-						.bold()
-					Button {
-						// ver todas as movimentações
-					} label: {
-						Text("Ver Todas")
-							.font(.subheadline)
-					}
-					.buttonStyle(LinkButtonStyle())
-					
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Última Movimentação")
+                            .font(.title2)
+                            .bold()
+                        Text(dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() ?? "Sem movimentações")
+                            .font(.title3)
+                            .bold()
+                        HStack {
+                            Button(action: {
+                                
+                            }, label: {
+                                Text("Acessar JusBrasil")
+                            })
+                            Button(action: {
+                                
+                            }, label: {
+                                Text("Avisar Cliente")
+                            })
+                        }
+                        
+                        Text("Movimentações Anteriores")
+                        
+                       
+                    }
 					Spacer()
 				}
 				.padding(.bottom, 3)
-				
-				HStack {
-					Text("Designação de Audiência")
-						.font(.headline)
-						.bold()
-					Text("30/07/2024 - 14:35")
-						.font(.subheadline)
-						.foregroundStyle(.secondary)
-				}
-				.padding(.bottom, 1)
-				
-				Text("Audiência inicial designada para o dia 25/07/2024 às 9:00 horas.")
-					.frame(height: 35)
-					.lineLimit(nil)
-				
 			}
 		}
 	}
