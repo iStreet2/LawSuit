@@ -227,7 +227,14 @@ extension DetailedLawSuitView {
                         }
                         
                         Text("Movimentações Anteriores")
-                        
+                            .font(.headline)
+                        ScrollView {
+                            ForEach(dataViewModel.coreDataManager.updateManager.sortUpdates(lawsuit: lawsuit)) { update in
+                                Text(update.date?.convertToString() ?? "Sem movimentações")
+                                    .font(.subheadline)
+                            }
+                        }
+                        .frame(maxHeight: 100)
                        
                     }
 					Spacer()

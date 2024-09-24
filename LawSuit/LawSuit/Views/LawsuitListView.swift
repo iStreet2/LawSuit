@@ -35,7 +35,7 @@ struct LawsuitListView: View {
                     Button(action: {
                         for lawsuit in lawsuits {
                             Task {
-                                dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                                await dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                             }
                         }
                         print("-----------------------------------------------fez o fetch para os lawsuits")

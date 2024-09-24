@@ -39,12 +39,8 @@ class LawsuitNetworkingService: LawsuitNetworkingServiceProtocol {
                 return .failure(LawsuitRequestError.couldNotTransformDataError)
             }
             
-            if let updates = try filterLawsuitResponse(json: json, lawsuit: lawsuit) {
-                return .success(updates)
-
-            } else {
-                return .failure(LawsuitRequestError.couldNotGetUpdatesFromConvertion)
-            }
+            let updates = try filterLawsuitResponse(json: json, lawsuit: lawsuit)
+            return .success(updates)
         } catch {
             return .failure(LawsuitRequestError.errorRequest(error: error.localizedDescription))
         }
@@ -97,7 +93,8 @@ class LawsuitNetworkingService: LawsuitNetworkingServiceProtocol {
         }
     }
     
-    private func filterLawsuitResponse(json: [String: Any], lawsuit: Lawsuit) throws -> [Update]? {
+    private func filterLawsuitResponse(json: [String: Any], lawsuit: Lawsuit) throws -> [Update] {
+
         //navego pelas chaves para chegar no array de processos (q está dentro de _source)
         guard let hits = json["hits"] as? [String: Any],
               let hitsArray = hits["hits"] as? [[String: Any]],
@@ -110,7 +107,7 @@ class LawsuitNetworkingService: LawsuitNetworkingServiceProtocol {
             return try returnUpdatesFromFetch(movimentos: movimentos, lawsuit: lawsuit)
         }
 
-        return nil
+        return []
     }
     
     private func returnUpdatesFromFetch(movimentos: [[String: Any]], lawsuit: Lawsuit) throws -> [Update] {
