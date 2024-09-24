@@ -61,6 +61,42 @@ struct FolderIconView: View {
                     isEditing = true
                 }
             }
+            .contextMenu {
+                Button(action: {
+                    folderViewModel.openFolder(folder: folder)
+                }) {
+                    Text("Abrir Pasta")
+                    Image(systemName: "folder")
+                }
+                Button(action: {
+                    isEditing = true
+                }) {
+                    Text("Renomear")
+                    Image(systemName: "pencil")
+                }
+                Button(action: {
+                    Task {
+                        //MARK: CoreData - Deletar
+                        let temporaryFolderRecordName = folder.recordName
+                        let temporaryParentFolderRecordName = parentFolder.recordName
+                        
+                        withAnimation(.easeIn) {
+                            dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                        }
+                        
+                        //MARK: ClourKit - Deletar
+                        do {
+                            try await dataViewModel.cloudManager.recordManager.removeReference(from: temporaryParentFolderRecordName!, to: temporaryFolderRecordName!, referenceKey: "folders")
+                            try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(recordName: temporaryFolderRecordName!)
+                        } catch {
+                            print("Error deleting folder from CloudKit: \(error.localizedDescription)")
+                        }
+                    }
+                }) {
+                    Text("Excluir")
+                    Image(systemName: "trash")
+                }
+            }
         } else {
             HStack {
                 Image("folder")

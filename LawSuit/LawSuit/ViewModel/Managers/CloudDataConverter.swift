@@ -15,13 +15,13 @@ class CloudDataConverter {
     var context: NSManagedObjectContext
     
     let container: CKContainer
-	let publicDatabase: CKDatabase
+	let privateDataBase: CKDatabase
 	
     init(context: NSManagedObjectContext, container: CKContainer) {
 		self.context = context
 		self.context.automaticallyMergesChangesFromParent = true
         self.container = container
-		self.publicDatabase = container.publicCloudDatabase
+        self.privateDataBase = container.privateCloudDatabase
 	}
 	
 	
@@ -71,7 +71,7 @@ class CloudDataConverter {
 				if let folderReferences = record["folders"] as? [CKRecord.Reference] {
 					for reference in folderReferences {
 						do {
-							let relatedRecord = try await publicDatabase.record(for: reference.recordID)
+							let relatedRecord = try await privateDataBase.record(for: reference.recordID)
 							if let relatedObject = await makeObjectsFromRecords(records: [relatedRecord]) as? [Folder] {
 								folderObject.addToFolders(relatedObject.first!)
 							}
@@ -83,7 +83,7 @@ class CloudDataConverter {
 				if let fileReferences = record["files"] as? [CKRecord.Reference] {
 					for reference in fileReferences {
 						do {
-							let relatedRecord = try await publicDatabase.record(for: reference.recordID)
+							let relatedRecord = try await privateDataBase.record(for: reference.recordID)
 							if let relatedObject = await makeObjectsFromRecords(records: [relatedRecord]) as? [FilePDF] {
 								folderObject.addToFiles(relatedObject.first!)
 							}

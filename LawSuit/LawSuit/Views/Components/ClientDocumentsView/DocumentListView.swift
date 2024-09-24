@@ -27,7 +27,7 @@ struct DocumentListView: View {
     let itemWidth: CGFloat = 90
     
     //MARK: Variáveis
-//    @State var showingGridView = false
+    //    @State var showingGridView = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -66,20 +66,15 @@ struct DocumentListView: View {
                 }
                 
                 ScrollView {
-                
-                        VStack(alignment: .leading) {
-                            FolderView(parentFolder: openFolder, geometry: geometry)
-                                .onTapGesture(count: 2) {
-                                    folderViewModel.openFolder(folder: openFolder)
-                                }
-                            FilePDFGridView(parentFolder: openFolder, geometry: geometry)
-
-                        }
-//                        .background(IndexPath % 2 == 0 ? Color.gray.opacity(0.1) : Color.white)
-
-                    
-
-                    
+                    VStack(alignment: .leading) {
+                        FolderView(parentFolder: openFolder, geometry: geometry)
+                            .onTapGesture(count: 2) {
+                                folderViewModel.openFolder(folder: openFolder)
+                            }
+                        FilePDFGridView(parentFolder: openFolder, geometry: geometry)
+                        
+                    }
+                    // .background(IndexPath % 2 == 0 ? Color.gray.opacity(0.1) : Color.white)
                     if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
                         Text("Sem pastas ou arquivos")
                             .foregroundStyle(.gray)
