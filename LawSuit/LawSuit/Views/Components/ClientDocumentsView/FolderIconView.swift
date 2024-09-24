@@ -61,6 +61,29 @@ struct FolderIconView: View {
                     isEditing = true
                 }
             }
+            .contextMenu {
+                Button(action: {
+                    folderViewModel.openFolder(folder: folder)
+                }) {
+                    Text("Abrir Pasta")
+                    Image(systemName: "folder")
+                }
+                Button(action: {
+                    isEditing = true
+                }) {
+                    Text("Renomear")
+                    Image(systemName: "pencil")
+                }
+                Button(action: {
+                    // Ação para excluir a pasta
+                    withAnimation(.easeIn) {
+                        dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                    }
+                }) {
+                    Text("Excluir")
+                    Image(systemName: "trash")
+                }
+            }
         } else {
             HStack {
                 Image("folder")
@@ -74,14 +97,17 @@ struct FolderIconView: View {
                     })
                     .onExitCommand(perform: cancelChanges)
                     .lineLimit(2)
-                    .frame(height: 12)
+                    .frame(width: 40, height: 12)
                 }
                 else {
                     Text(folder.name ?? "Sem nome")
                         .lineLimit(1)
                         .onTapGesture(count: 2) {
-                            isEditing = true
+                            folderViewModel.openFolder(folder: folder)
                         }
+                        .onLongPressGesture(perform: {
+                            isEditing = true
+                        })
                 }
             }
             .onDisappear {

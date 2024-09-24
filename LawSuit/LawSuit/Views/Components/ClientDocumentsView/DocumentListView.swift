@@ -30,61 +30,60 @@ struct DocumentListView: View {
 //    @State var showingGridView = false
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .leading){
-                HStack {
-                    Text("Nome e Número")
-                        .frame(width: geometry.size.width * 0.60, alignment: .leading)
-                    
-                    Text("Tamanho")
-                        .frame(width: geometry.size.width * 0.1, alignment: .leading)
-                    
-                    Text("Tipo")
-                        .frame(width: geometry.size.width * 0.1, alignment: .leading)
-                    
-                    Text("Data de criação")
-                        .frame(width: geometry.size.width * 0.15, alignment: .leading)
+        VStack(alignment: .leading) {
+            HStack{
+                Button {
+                    folderViewModel.closeFolder()
+                } label: {
+                    Image(systemName: "chevron.left")
                 }
-                .frame(minWidth: 777)
-                .frame(height: 13)
-                .font(.footnote)
-                .bold()
-                .foregroundStyle(Color(.gray))
+                .disabled(folderViewModel.getPath().count() == 1)
+                .buttonStyle(PlainButtonStyle())
+                .font(.title2)
+                .padding(.bottom)
                 
-                Divider()
-                
-                HStack{
-                    Button {
-                        folderViewModel.closeFolder()
-                    } label: {
-                        Image(systemName: "chevron.left")
+            }
+        
+            GeometryReader { geometry in
+                VStack(alignment: .leading){
+                    HStack {
+                        Text("Nome e Número")
+                            .frame(width: geometry.size.width * 0.60, alignment: .leading)
+                        
+                        Text("Tamanho")
+                            .frame(width: geometry.size.width * 0.1, alignment: .leading)
+                        
+                        Text("Tipo")
+                            .frame(width: geometry.size.width * 0.1, alignment: .leading)
+                        
+                        Text("Data de criação")
+                            .frame(width: geometry.size.width * 0.15, alignment: .leading)
                     }
-                    .disabled(folderViewModel.getPath().count() == 1)
-                    .buttonStyle(PlainButtonStyle())
-                    .font(.title2)
-                    .padding(.bottom)
-                }
-                
-                ScrollView {
-                
+                    .frame(minWidth: 777)
+                    .frame(height: 13)
+                    .font(.footnote)
+                    .bold()
+                    .foregroundStyle(Color(.gray))
+                    
+                    Divider()
+                    
+                    ScrollView {
                         VStack(alignment: .leading) {
                             FolderView(parentFolder: openFolder, geometry: geometry)
                                 .onTapGesture(count: 2) {
                                     folderViewModel.openFolder(folder: openFolder)
                                 }
                             FilePDFGridView(parentFolder: openFolder, geometry: geometry)
-
                         }
-//                        .background(IndexPath % 2 == 0 ? Color.gray.opacity(0.1) : Color.white)
-
-                    
-
-                    
-                    if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
-                        Text("Sem pastas ou arquivos")
-                            .foregroundStyle(.gray)
+                        if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
+                            Text("Sem pastas ou arquivos")
+                                .foregroundStyle(.gray)
+                        }
                     }
-                }
+                    .frame(maxWidth: .infinity)
+                    .border(.blue)
+
+               }
             }
             .onChange(of: openFolder) { _ in
                 dragAndDropViewModel.updateFramesFolder(folders: folders)

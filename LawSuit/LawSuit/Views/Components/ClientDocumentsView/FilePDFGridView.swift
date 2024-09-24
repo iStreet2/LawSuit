@@ -36,8 +36,9 @@ struct FilePDFGridView: View {
     }
     
     var body: some View {
-        ForEach(filesPDF, id: \.self) { file in
+        ForEach(Array(filesPDF.enumerated()), id: \.offset) { index, file in
             FilePDFIconView(filePDF: file, parentFolder: parentFolder)
+                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
                 .onTapGesture(count: 2) {
                     selectedFilePDF = file
                     showPDF.toggle()

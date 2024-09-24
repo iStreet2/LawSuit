@@ -78,6 +78,7 @@
 		3BD40B6F2C6E76EC004048FA /* ClientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B6E2C6E76EC004048FA /* ClientListView.swift */; };
 		3BDEFFCD2C8A4A6A00990528 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCB2C8A4A6A00990528 /* Entity.swift */; };
 		3BDEFFD02C8A4C5500990528 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */; };
+		6A08C4972CA1F86E00CF3A7F /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 6A08C4962CA1F86E00CF3A7F /* HotKey */; };
 		6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */; };
 		6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */; };
 		6ABD796F2C6E97AD00A98BA3 /* RequestDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */; };
@@ -110,7 +111,6 @@
 		E93BCFA52C77D3B1007CF206 /* CloudTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA42C77D3B1007CF206 /* CloudTestingView.swift */; };
 		E93BCFA72C77D3DE007CF206 /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93BCFA62C77D3DE007CF206 /* CloudManager.swift */; };
 		E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93FFB0E2C98C949004F96FC /* EventMonitor.swift */; };
-		E93FFB142C9A037E004F96FC /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = E93FFB132C9A037E004F96FC /* HotKey */; };
 		E94C015C2C9B6F7200F6316F /* SpotlightManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C015B2C9B6F7200F6316F /* SpotlightManager.swift */; };
 		E94C015E2C9B70F400F6316F /* EntityWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C015D2C9B70F400F6316F /* EntityWrappers.swift */; };
 		E94C01602CA1E23D00F6316F /* SpotlightView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C015F2CA1E23D00F6316F /* SpotlightView2.swift */; };
@@ -281,7 +281,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E93FFB142C9A037E004F96FC /* HotKey in Frameworks */,
+				6A08C4972CA1F86E00CF3A7F /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,7 +634,7 @@
 			);
 			name = LawSuit;
 			packageProductDependencies = (
-				E93FFB132C9A037E004F96FC /* HotKey */,
+				6A08C4962CA1F86E00CF3A7F /* HotKey */,
 			);
 			productName = LawSuit;
 			productReference = 084D404F2C8A4AAE00C96111 /* LawSuit.app */;
@@ -1035,7 +1035,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = JPTYDVK6TT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1047,7 +1047,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.emily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1066,7 +1066,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = JPTYDVK6TT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1078,7 +1078,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.emily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1212,9 +1212,8 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E93FFB132C9A037E004F96FC /* HotKey */ = {
+		6A08C4962CA1F86E00CF3A7F /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */;
 			productName = HotKey;
 		};
 /* End XCSwiftPackageProductDependency section */

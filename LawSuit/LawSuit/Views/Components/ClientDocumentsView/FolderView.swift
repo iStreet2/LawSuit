@@ -12,7 +12,7 @@ struct FolderView: View {
     //MARK: Variáveis
     @ObservedObject var parentFolder: Folder
     var geometry: GeometryProxy
-//    @Binding var showingGridView: Bool
+    //    @Binding var showingGridView: Bool
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -39,12 +39,17 @@ struct FolderView: View {
     }
     
     var body: some View {
-        ForEach(folders, id: \.self) { folder in
+        //        VStack(alignment: .leading){
+        ForEach(Array(folders.enumerated()), id: \.offset) { index, folder in
             FolderIconView(folder: folder, parentFolder: parentFolder)
+                .frame(maxWidth: .infinity, alignment: folderViewModel.showingGridView ? .center : .leading)
+//                .multilineTextAlignment((folderViewModel.showingGridView ? .center : .leading)
+                .background(folderViewModel.showingGridView ? Color.clear : Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
                 .onTapGesture(count: 2) {
                     folderViewModel.openFolder(folder: folder)
                 }
-                .padding(.leading)
+                .border(.red)
+//                .padding(.leading)
                 .offset(x: dragAndDropViewModel.folderOffsets[folder.id!]?.width ?? 0, y: dragAndDropViewModel.folderOffsets[folder.id!]?.height ?? 0)
                 .gesture(
                     DragGesture()
