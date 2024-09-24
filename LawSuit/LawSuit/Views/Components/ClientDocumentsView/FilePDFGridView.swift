@@ -52,7 +52,15 @@ struct FilePDFGridView: View {
                         .onEnded { _ in
                             if let destinationFolder = dragAndDropViewModel.onDragEndedFilePDF(filePDF: file, context: context) {
                                 withAnimation(.easeIn) {
+                                    //MARK: CoreData - Mover
                                     dataViewModel.coreDataManager.filePDFManager.moveFilePDF(parentFolder: parentFolder, movingFilePDF: file, destinationFolder: destinationFolder)
+                                    
+                                    //MARK: CloudKit - Mover
+                                    Task {
+                                        try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolder, to: file, referenceKey: "files")
+                                        try await dataViewModel.cloudManager.recordManager.addReference(from: destinationFolder, to: file, referenceKey: "files")
+                                    }
+                                    
                                     dragAndDropViewModel.filePDFOffsets[file.id!] = .zero
                                 }
                             } else {

@@ -57,6 +57,45 @@ struct FilePDFIconView: View {
                     isEditing = true
                 }
             }
+            .contextMenu {
+                Button(action: {
+                    //MARK: Fazer a view de visualizar um pdf ainda
+                    
+                }) {
+                    Text("Abrir Arquivo")
+                    Image(systemName: "doc")
+                }
+                Button(action: {
+                    isEditing = true
+                }) {
+                    Text("Renomear")
+                    Image(systemName: "pencil")
+                }
+                Button(action: {
+                    Task {
+                        //MARK: CoreData - Deletar
+                        let filePDFRecordName = filePDF.recordName
+                        let parentFolderRecordName = parentFolder.recordName
+                        
+                        withAnimation(.easeIn) {
+                            dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
+                        }
+                        
+                        //MARK: CloudKit - Deletar
+                        do {
+                            if let filePDFRecordName = filePDFRecordName, let parentFolderRecordName = parentFolderRecordName {
+                                try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolderRecordName, to: filePDFRecordName, referenceKey: "files")
+                                try await dataViewModel.cloudManager.recordManager.deleteObjectWithRecordName(recordName: filePDFRecordName)
+                            }
+                        } catch {
+                            print("Error deleting FilePDF on CloudKit: \(error.localizedDescription)")
+                        }
+                    }
+                }) {
+                    Text("Excluir")
+                    Image(systemName: "trash")
+                }
+            }
         } else {
             
             HStack {

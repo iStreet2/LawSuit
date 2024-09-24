@@ -18,10 +18,7 @@ public class Lawyer: NSManagedObject, Identifiable, Recordable {
 
     @NSManaged public var id: String?
     @NSManaged public var name: String?
-    @NSManaged public var oab: String?
     @NSManaged public var photo: Data?
-    @NSManaged public var clients: NSSet? //Reference
-    @NSManaged public var lawsuits: NSSet? //Reference
     @NSManaged public var recordName: String?
 
 }
