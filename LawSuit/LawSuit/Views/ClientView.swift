@@ -24,6 +24,8 @@ struct ClientView: View {
     @State var createLawsuit = false
     @State var showingGridView = true
     var infos = ["Processos", "Documentos"]
+	
+	@State var spotlightSearchBarIsPresented: Bool = false
 
     
     //MARK: CoreData
@@ -90,10 +92,26 @@ struct ClientView: View {
                     }
                 }
             }
+				  
         }
         .sheet(isPresented: $createLawsuit, content: {
                 AddLawsuitView()
         })
+		 
+		  .sheet(isPresented: $spotlightSearchBarIsPresented, content: {
+			  SpotlightSearchbarView(priorityClient: self.client)
+		  })
+		 
+		  .toolbar {
+			  ToolbarItem(placement: .confirmationAction) {
+				  Button {
+					  spotlightSearchBarIsPresented.toggle()
+				  } label: {
+					  Image(systemName: "magnifyingglass")
+				  }
+				  .buttonStyle(PlainButtonStyle())
+			  }
+		  }
     }
 }
 

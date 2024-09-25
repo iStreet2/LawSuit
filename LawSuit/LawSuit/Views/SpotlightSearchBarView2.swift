@@ -18,6 +18,8 @@ struct SpotlightSearchbarView: View {
 	
 	@State var currentEntity: (any EntityWrapper)? = nil
 	
+	var priorityClient: Client? = nil
+	
 	//	@State var currentClientList: [ClientWrapper] = []
 	//	@State var currentLawsuitList: [LawsuitWrapper] = []
 	//	@State var currentFileList: [FileWrapper] = []
@@ -51,8 +53,10 @@ struct SpotlightSearchbarView: View {
 					break
 				}
 			}
-			dismiss()
+		} else if let fileWrapper = currentEntity as? FileWrapper {
+			eventManager.didSelectFileToPreview(fileWrapper.file)
 		}
+		dismiss()
 	}
 	
 	
