@@ -61,6 +61,42 @@ struct FolderIconView: View {
                     isEditing = true
                 }
             }
+            .contextMenu {
+                Button(action: {
+                    folderViewModel.openFolder(folder: folder)
+                }) {
+                    Text("Abrir Pasta")
+                    Image(systemName: "folder")
+                }
+                Button(action: {
+                    isEditing = true
+                }) {
+                    Text("Renomear")
+                    Image(systemName: "pencil")
+                }
+                Button(action: {
+                    Task {
+                        //MARK: CoreData - Deletar
+                        let temporaryFolderRecordName = folder.recordName
+                        let temporaryParentFolderRecordName = parentFolder.recordName
+                        
+                        withAnimation(.easeIn) {
+                            dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                        }
+                        
+                        //MARK: ClourKit - Deletar
+                        do {
+                            try await dataViewModel.cloudManager.recordManager.removeReference(from: temporaryParentFolderRecordName!, to: temporaryFolderRecordName!, referenceKey: "folders")
+                            try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(recordName: temporaryFolderRecordName!)
+                        } catch {
+                            print("Error deleting folder from CloudKit: \(error.localizedDescription)")
+                        }
+                    }
+                }) {
+                    Text("Excluir")
+                    Image(systemName: "trash")
+                }
+            }
         } else {
             HStack {
                 Image("folder")
@@ -93,7 +129,6 @@ struct FolderIconView: View {
                     isEditing = true
                 }
             }
-            
             .contextMenu {
                 Button(action: {
                     folderViewModel.openFolder(folder: folder)
@@ -108,9 +143,22 @@ struct FolderIconView: View {
                     Image(systemName: "pencil")
                 }
                 Button(action: {
-                    // Ação para excluir a pasta
-                    withAnimation(.easeIn) {
-                        dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                    Task {
+                        //MARK: CoreData - Deletar
+                        let temporaryFolderRecordName = folder.recordName
+                        let temporaryParentFolderRecordName = parentFolder.recordName
+                        
+                        withAnimation(.easeIn) {
+                            dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                        }
+                        
+                        //MARK: ClourKit - Deletar
+                        do {
+                            try await dataViewModel.cloudManager.recordManager.removeReference(from: temporaryParentFolderRecordName!, to: temporaryFolderRecordName!, referenceKey: "folders")
+                            try await dataViewModel.cloudManager.recordManager.deleteFolderRecursivelyInCloudKit(recordName: temporaryFolderRecordName!)
+                        } catch {
+                            print("Error deleting folder from CloudKit: \(error.localizedDescription)")
+                        }
                     }
                 }) {
                     Text("Excluir")
@@ -136,7 +184,16 @@ struct FolderIconView: View {
     }
     
     private func saveChanges() {
+        //MARK: CoreData - Editar
         dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folderName)
+        
+        //MARK: CloudKit - Editar
+        let propertyNames = ["name"]
+        let propertyValues: [Any] = [folderName]
+        Task {
+            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: folder, propertyNames: propertyNames, propertyValues: propertyValues)
+        }
+        
         isEditing = false
     }
 }

@@ -54,7 +54,15 @@ struct FolderView: View {
                         .onEnded { _ in
                             if let destinationFolder = dragAndDropViewModel.onDragEndedFolder(folder: folder, context: context) {
                                 withAnimation(.easeIn) {
+                                    //MARK: CoreData - Mover
                                     dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
+                                    
+                                    //MARK: CloudKit - Mover
+                                    Task {
+                                        try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolder, to: folder, referenceKey: "folders")
+                                        try await dataViewModel.cloudManager.recordManager.addReference(from: destinationFolder, to: folder, referenceKey: "folders")
+                                    }
+                                    
                                     dragAndDropViewModel.folderOffsets[folder.id!] = .zero
                                 }
                             } else {

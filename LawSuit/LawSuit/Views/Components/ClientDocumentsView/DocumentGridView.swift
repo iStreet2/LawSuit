@@ -45,25 +45,51 @@ struct DocumentGridView: View {
                         .font(.title2)
                         .padding(.bottom)
                         Spacer()
-//                        Menu(content: {
-//                            Button {
-//                                dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: folder, name: "Nova Pasta")
-//                            } label: {
-//                                Text("Nova Pasta")
-//                                Image(systemName: "folder")
-//                            }
-//                            Button {
-//                                folderViewModel.importPDF(parentFolder: folder, dataViewModel: dataViewModel)
-//                            } label: {
-//                                Text("Importar PDF")
-//                                Image(systemName: "doc")
-//                            }
-//                        }, label: {
-//                            Image(systemName: "plus")
-//                        })
-//                        .buttonStyle(PlainButtonStyle())
-//                        .font(.title2)
-//                        .padding(.bottom)
+ //                       Menu(content: {
+ //                           Button {
+ //                               //MARK: CoreData - Criar
+ //                               var folder = dataViewModel.coreDataManager.folderManager.createAndReturnFolder(parentFolder: openFolder, name: "Nova Pasta")
+ //                               //MARK: CloudKit - Criar
+ //                               Task {
+ //                                   do {
+ //                                       try await dataViewModel.cloudManager.recordManager.saveObject(object: &folder, relationshipsToSave: ["folders", "files"])
+ //                                       try await dataViewModel.cloudManager.recordManager.addReference(from: folder, to: folder.parentFolder!, referenceKey: "folders")
+ //                                   } catch {
+ //                                       print(error.localizedDescription)
+ //                                   }
+ //                               }
+ //                           } label: {
+ //                               Text("Nova Pasta")
+ //                               Image(systemName: "folder")
+ //                           }
+ //                           Button {
+ //                               //MARK: CoreData - Criar
+ //                               folderViewModel.importAndReturnPDF(parentFolder: openFolder, dataViewModel: dataViewModel) { filePDF in
+ //                                   guard var mutableFilePDF = filePDF else {
+ //                                       print("Falha ao importar o PDF.")
+ //                                       return
+ //                                   }
+ //                                   //MARK: CloudKit - Criar
+ //                                   Task {
+ //                                       do {
+ //                                          try await dataViewModel.cloudManager.recordManager.saveObject(object: &mutableFilePDF, relationshipsToSave: [])
+ //                                       } catch {
+ //                                           print(error.localizedDescription)
+ //                                       }
+ //
+ //                                       try await dataViewModel.cloudManager.recordManager.addReference(from: openFolder, to: mutableFilePDF, referenceKey: "files")
+ //                                   }
+ //                              }
+ //                           } label: {
+ //                               Text("Importar PDF")
+ //                               Image(systemName: "doc")
+ //                           }
+ //                       }, label: {
+ //                           Image(systemName: "plus")
+ //                       })
+ //                       .buttonStyle(PlainButtonStyle())
+ //                       .font(.title2)
+ //                       .padding(.bottom)
                     }
                     VStack {
                         LazyVGrid(columns: gridItems, spacing: spacing) {
@@ -82,13 +108,43 @@ struct DocumentGridView: View {
                 }
                 .contextMenu {
                     Button(action: {
-                        dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
+                        //MARK: CoreData - Criar
+                        var folder = dataViewModel.coreDataManager.folderManager.createAndReturnFolder(parentFolder: openFolder, name: "Nova Pasta")
+                        //MARK: CloudKit - Criar
+                        Task {
+                            do {
+                                try await dataViewModel.cloudManager.recordManager.saveObject(object: &folder, relationshipsToSave: ["folders", "files"])
+                                try await dataViewModel.cloudManager.recordManager.addReference(from: openFolder, to: folder, referenceKey: "folders")
+                            } catch {
+                                print(error.localizedDescription)
+                            }
+                        }
                     }, label: {
                         Text("Nova Pasta")
                         Image(systemName: "folder")
                     })
                     Button {
-                        folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
+                        //MARK: Salvar no CoreData
+                        folderViewModel.importAndReturnPDF(parentFolder: openFolder, dataViewModel: dataViewModel) { filePDF in
+                            // Verifique se o PDF foi corretamente retornado
+                            guard var mutableFilePDF = filePDF else {
+                                print("Falha ao importar o PDF.")
+                                return
+                            }
+                            
+                            //MARK: CloudKit - Criar
+                            Task {
+                                do {
+                                    // Agora mutableFilePDF é mutável e pode ser passado com `&`
+                                    try await dataViewModel.cloudManager.recordManager.saveObject(object: &mutableFilePDF, relationshipsToSave: [])
+                                } catch {
+                                    print(error.localizedDescription)
+                                }
+
+                                // Adicionar referência ao arquivo PDF na pasta aberta
+                                try await dataViewModel.cloudManager.recordManager.addReference(from: openFolder, to: mutableFilePDF, referenceKey: "files")
+                            }
+                        }
                     } label: {
                         Text("Importar PDF")
                         Image(systemName: "doc")

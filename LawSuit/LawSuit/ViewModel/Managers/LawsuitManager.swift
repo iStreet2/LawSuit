@@ -44,11 +44,10 @@ class LawsuitManager {
         let rootFolder = Folder(context: context)
         rootFolder.parentLawsuit = lawsuit
         rootFolder.name = lawsuit.name
-        rootFolder.id = UUID().uuidString
+        rootFolder.id = "root\(name)"
         
         lawsuit.rootFolder = rootFolder
         saveContext()
-        
         return lawsuit
     }
     
@@ -102,6 +101,17 @@ class LawsuitManager {
         }
         
         return nil
+    }
+    
+    func fetchAllLawsuits() -> [Lawsuit] {
+        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+        do {
+            let lawsuits = try context.fetch(fetchRequest)
+            return lawsuits
+        } catch {
+            print("Erro ao buscar processos: \(error)")
+            return []
+        }
     }
     
     func saveContext() {

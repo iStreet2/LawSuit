@@ -130,31 +130,43 @@ struct LawsuitDistributedView: View {
                     invalidInformation = .invalidLawSuitNumber
                     return
                 }
-                    //MARK: Se o cliente foi atribuido ao autor
-                    if attributedAuthor {
-                        if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                            var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                            dismiss()
-                        } else {
-                            print("Client not found")
+                //MARK: Se o cliente foi atribuido ao autor
+                if attributedAuthor {
+                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                        //MARK: CoreData - Criar
+                        let category = TagTypeString.string(from: tagType)
+                        let lawyer = lawyers[0]
+                        var defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        //MARK: CloudKit - Criar
+                        Task {
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["folders","files"])
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &defendant, relationshipsToSave: [])
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit, relationshipsToSave: ["rootFolder"])
                         }
+                        dismiss()
+                    } else {
+                        print("Client not found")
                     }
-                    //MARK: Se o cliente foi atribuido ao réu
-                    else if attributedDefendant {
-                        if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                            var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                            dismiss()
-                        } else {
-                            print("Client not found")
+                }
+                //MARK: Se o cliente foi atribuido ao réu
+                else if attributedDefendant {
+                    if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                        //MARK: CoreData - Criar
+                        let category = TagTypeString.string(from: tagType)
+                        let lawyer = lawyers[0]
+                        var author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        //MARK: CloudKit - Criar
+                        Task {
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["folders","files"])
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &author, relationshipsToSave: [])
+                            try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit, relationshipsToSave: ["rootFolder"])
                         }
+                        dismiss()
+                    } else {
+                        print("Client not found")
+                    }
                     }
                 
             } label: {

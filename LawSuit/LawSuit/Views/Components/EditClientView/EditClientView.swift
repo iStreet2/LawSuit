@@ -19,6 +19,7 @@ struct EditClientView: View {
     @Environment(\.dismiss) var dismiss
     
     //MARK: Variáveis de estado
+    @ObservedObject var client: Client
     @State var invalidInformation: InvalidInformation?
     @State var userInfoType = 0
     @State var clientName: String = ""
@@ -44,8 +45,8 @@ struct EditClientView: View {
     let maritalStatusLimit = 10
     
     @State var deleteAlert = false
-    @ObservedObject var client: Client
     @Binding var deleted: Bool
+
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -98,14 +99,47 @@ struct EditClientView: View {
                 .alert(isPresented: $deleteAlert, content: {
                     Alert(title: Text("Você tem certeza?"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
+                            //MARK: CoreData - Excluir Processo
+                            let clientRecordName = client.recordName
+                            let clientRootFolder = client.rootFolder
                             for lawsuit in lawsuits {
+                                let lawsuitRecordName = lawsuit.recordName
+                                let lawsuitRootFolder = lawsuit.rootFolder
+                                Task {
+                                    if dataViewModel.coreDataManager.clientManager.authorIsClient(lawsuit: lawsuit) {
+                                        if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                                            dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                            try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity) // CloudKit
+                                        }
+                                    } else {
+                                        if let entity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+                                            dataViewModel.coreDataManager.entityManager.deleteEntity(entity: entity)
+                                            try await dataViewModel.cloudManager.recordManager.deleteObjectInCloudKit(object: entity) // CloudKit
+                                        }
+                                    }
+                                }
                                 dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
+                                //MARK: CloudKit - Deletar Processo
+                                Task {
+                                    if let lawsuitRecordName = lawsuitRecordName, let lawsuitRootFolder = lawsuitRootFolder {
+                                        try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: lawsuitRecordName, rootFolder: lawsuitRootFolder)
+                                    }
+                                }
                             }
-                            // Após deletar os processos, deletar o cliente
+                            //MARK: CoreData - Deletar Cliente
                             dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+                            
+                            //MARK: CloudKit - Deletar Cliente
+                            Task {
+                                if let clientRecordName = clientRecordName, let clientRootFolder = clientRootFolder {
+                                    try await dataViewModel.cloudManager.recordManager.deleteLawsuitOrClientWithRecordName(recordName: clientRecordName, rootFolder: clientRootFolder)
+                                }
+                            }
+                            // Atualiza a interface de usuário e finaliza a exclusão
                             navigationViewModel.selectedClient = nil
                             deleted.toggle()
                             dismiss()
+                            
                         } else {
                             print("Error fetching lawsuits of client: \(client.name)")
                         }
@@ -145,7 +179,15 @@ struct EditClientView: View {
                         invalidInformation = .missingCellphoneNumber
                         
                     } else {
+                        //MARK: CoreData - Editar
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        
+                        //MARK: CloudKit - Editar
+                        let propertyNames = ["name", "occupation", "rg", "cpf", "affiliation", "maritalStatus", "nationality", "birthDate", "cep", "address", "addressNumber", "neighborhood", "complement", "state", "city", "email", "telephone", "cellphone"]
+                        let propertyValues: [Any] = [clientName, clientOccupation, clientRg, clientCpf, clientAffiliation, clientMaritalStatus, clientNationality, clientBirthDate, clientCep, clientAddress, clientAddressNumber, clientNeighborhood, clientComplement, clientState, clientCity, clientEmail, clientTelephone, clientCellphone]
+                        Task {
+                            try await dataViewModel.cloudManager.recordManager.updateObjectInCloudKit(object: client, propertyNames: propertyNames, propertyValues: propertyValues)
+                        }
                         dismiss()
                         
                         return
@@ -229,7 +271,7 @@ struct EditClientView: View {
             !clientAddressNumber.isEmpty &&
             !clientNeighborhood.isEmpty &&
             !clientState.isEmpty &&
-            !clientCity.isEmpty
+            !clientCity.isEmpty &&
             !clientEmail.isEmpty &&
             !clientTelephone.isEmpty &&
             !clientCellphone.isEmpty

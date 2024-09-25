@@ -30,7 +30,6 @@ class LawyerManager {
     func createLawyer(name: String, photo: Data, oab: String) {
         let lawyer = Lawyer(context: context)
         lawyer.name = name
-        lawyer.oab = oab
         lawyer.photo = photo
         lawyer.id = UUID().uuidString
         saveContext()
@@ -45,6 +44,17 @@ class LawyerManager {
         lawyer.name = name
         lawyer.photo = photo
         saveContext()
+    }
+    
+    func fetchAllLawyers() -> [Lawyer] {
+        let fetchRequest: NSFetchRequest<Lawyer> = Lawyer.fetchRequest()
+        do {
+            let lawyers = try context.fetch(fetchRequest)
+            return lawyers
+        } catch {
+            print("Erro ao buscar entidades: \(error)")
+            return []
+        }
     }
     
     func saveContext() {

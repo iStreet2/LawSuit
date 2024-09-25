@@ -16,13 +16,14 @@ class FolderManager {
         self.context = context
     }
     
-    func createFolder(parentFolder: Folder, name: String) {
+    func createAndReturnFolder(parentFolder: Folder, name: String) -> Folder {
         let newFolder = Folder(context: context)
         newFolder.id = UUID().uuidString
         newFolder.name = name
         newFolder.parentFolder = parentFolder
         parentFolder.addToFolders(newFolder)
         saveContext()
+        return newFolder
     }
     
     func deleteFolder(parentFolder: Folder, folder: Folder) {
@@ -41,6 +42,17 @@ class FolderManager {
         movingFolder.parentFolder = destinationFolder
         destinationFolder.addToFolders(movingFolder)
         saveContext()
+    }
+    
+    func fetchAllFolders() -> [Folder] {
+        let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+        do {
+            let folders = try context.fetch(fetchRequest)
+            return folders
+        } catch {
+            print("Erro ao buscar pastas: \(error)")
+            return []
+        }
     }
     
     func saveContext() {

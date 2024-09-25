@@ -17,16 +17,14 @@ class DataViewModel: ObservableObject {
     
     let coreDataContainer = NSPersistentContainer(name: "Model")
     let context: NSManagedObjectContext
-//    let cloudContainer: CKContainer = CKContainer(identifier: "iCloud.com.TFS.LawSuit.CKContainer")
+    let cloudContainer: CKContainer = CKContainer(identifier: "iCloud.com.TFS.LawSuit.CKContainer")
     
     var coreDataManager: CoreDataManager
-//    var cloudManager: CloudManager
-//    var cloudDataConverter: CloudDataConverter
+    var cloudManager: CloudManager
+    var cloudDataConverter: CloudDataConverter
+//    var networkManager: NetworkManager
 	var spotlightManager: SpotlightManager
-    
-    
-//    var lawsuitNetworkService: LawsuitNetworkingService
-    
+	    
     init() {
         self.coreDataContainer.loadPersistentStores { descricao, error in
             if let error = error {
@@ -35,10 +33,10 @@ class DataViewModel: ObservableObject {
         }
         self.context = coreDataContainer.viewContext
         self.coreDataManager = CoreDataManager(context: context)
-//        self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
-//        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter)
-//        self.lawsuitNetworkService = LawsuitNetworkingService(updateManager: UpdateManager(context: context))
-		 self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
+        self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
+        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter, context: context)
+//        self.networkManager = NetworkManager(coreDataManager: self.coreDataManager, cloudManager: self.cloudManager, context: self.context)
+		self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
     }
 	
 	func fetchCoreDataObjects<T: NSManagedObject>(for model: CoreDataModelsEnumerator) -> [T] {

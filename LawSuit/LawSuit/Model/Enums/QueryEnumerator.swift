@@ -12,6 +12,8 @@ enum QueryType {
 	case file
 	case client
 	case folder
+    case entity
+    case lawsuit
 	
 	var query: CKQuery {
 		switch self {
@@ -21,6 +23,10 @@ enum QueryType {
 			return CKQuery(recordType: "Client", predicate: NSPredicate(format: "TRUEPREDICATE"))
 		case .folder:
 			return CKQuery(recordType: "Folder", predicate: NSPredicate(format: "TRUEPREDICATE"))
+        case .entity:
+            return CKQuery(recordType: "Entity", predicate: NSPredicate(format: "TRUEPREDICATE"))
+        case .lawsuit:
+            return CKQuery(recordType: "Lawsuit", predicate: NSPredicate(format: "TRUEPREDICATE"))
 		}
 	}
 }

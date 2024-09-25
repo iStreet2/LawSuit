@@ -77,6 +77,7 @@ struct ClientInfoView: View {
                             .font(.system(size: 18))
                     }
                     .buttonStyle(PlainButtonStyle())
+                    
                 }
                 
                 HStack {

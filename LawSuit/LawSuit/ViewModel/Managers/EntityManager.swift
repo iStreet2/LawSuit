@@ -61,6 +61,14 @@ class EntityManager {
         return nil
     }
     
+    func authorIsEntity(lawsuit: Lawsuit) -> Bool {
+        if lawsuit.authorID.hasPrefix("client:") {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func deleteEntity(entity: Entity) {
         context.delete(entity)
     }
@@ -68,6 +76,17 @@ class EntityManager {
     func editEntity(entity: Entity, name: String) {
         entity.name = name
         saveContext()
+    }
+    
+    func fetchAllEntities() -> [Entity] {
+        let fetchRequest: NSFetchRequest<Entity> = Entity.fetchRequest()
+        do {
+            let entities = try context.fetch(fetchRequest)
+            return entities
+        } catch {
+            print("Error fetching entitys: \(error.localizedDescription)")
+            return []
+        }
     }
     
     func saveContext() {

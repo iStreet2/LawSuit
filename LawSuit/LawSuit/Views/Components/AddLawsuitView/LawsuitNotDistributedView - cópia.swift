@@ -6,16 +6,13 @@
 //
 
 import SwiftUI
-import Combine
 
 struct LawsuitNotDistributedView: View {
     
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     
     //MARK: Variáveis de estado
-    @State var missingInformation = false
     @State var selectTag = false
     @State var tagType: TagType = .civel
     @State var attributedAuthor = false
@@ -24,7 +21,6 @@ struct LawsuitNotDistributedView: View {
     @Binding var lawsuitAuthorName: String
     @Binding var lawsuitDefendantName: String
     @Binding var lawsuitActionDate: Date
-    let textLimit = 100
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -35,7 +31,10 @@ struct LawsuitNotDistributedView: View {
         VStack(alignment: .leading){
             Text("Área")
                 .bold()
-			  TagViewPickerComponentV1(currentTag: $tagType)
+            TagViewComponent(tagType: tagType)
+                .onTapGesture {
+                    selectTag.toggle()
+                }
             HStack(spacing: 70) {
                 VStack(alignment: .leading) {
                     EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
@@ -54,59 +53,63 @@ struct LawsuitNotDistributedView: View {
                     }
                 }
                 LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
-                    .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
             }
             VStack {
                 Spacer()
-                HStack {
-                    Spacer()
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Cancelar")
-                    }
-                    Button {
-                        if areFieldsFilled() {
-                            if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                            //MARK: CoreData - Criar
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Cancelar")
+                }
+                Button {
+                    let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+                    fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
+                    do {
+                        let fetchedClients = try context.fetch(fetchRequest)
+                        if let author = fetchedClients.first {
+                            //MARK: Criar no CoreData
                             let category = TagTypeString.string(from: tagType)
                             let lawyer = lawyers[0]
                             let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                                var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                            //MARK: CloudKit - Criar
+                            var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createAndReturnLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                            
+                            //MARK: Criar no CloudKit
                             Task {
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["files", "folder"])
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit, relationshipsToSave: ["rootFolder"])
                             }
+                            
                             dismiss()
+                            
                         } else {
                             print("Cliente não encontrado")
                         }
-                    } else {
-                            missingInformation = true
-                    }
-                    } label: {
-                        Text("Criar")
-                    }
+                    } catch {
+                            print("aaa")
+                        }
+                } label: {
+                    Text("Criar")
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(.vertical, 5)
+        }
+        .sheet(isPresented: $selectTag, content: {
+            VStack {
+                Spacer()
+                TagViewPickerComponentV1(currentTag: $tagType)
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        selectTag.toggle()
+                    }, label: {
+                        Text("Salvar")
+                    })
                     .buttonStyle(.borderedProminent)
-                    .alert(isPresented: $missingInformation) {
-                        Alert(title: Text("Informações Faltando"),
-                              message: Text("Por favor, preencha todos os campos antes de criar um novo processo."),
-                              dismissButton: .default(Text("Ok")))
-                    }
+                    .padding()
                 }
             }
-        }
-
+        })
     }
-    func areFieldsFilled() -> Bool {
-        return !lawsuitAuthorName.isEmpty &&
-        !lawsuitDefendantName.isEmpty
-    }
-}
-
-#Preview {
-	LawsuitNotDistributedView(lawsuitNumber: .constant("34567898765"), lawsuitCourt: .constant("fghcvnbjgyutfgh"), lawsuitAuthorName: .constant("AuTHOR NAAAME"), lawsuitDefendantName: .constant("Defendant Name Here"), lawsuitActionDate: .constant(Date.now))
-
-		.environmentObject(DataViewModel())
 }
