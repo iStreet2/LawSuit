@@ -26,7 +26,7 @@ class CloudManager: ObservableObject {
         self.container = container
 		self.publicDatabase = container.publicCloudDatabase
 		self.recordManager = RecordManager(container: container)
-        self.cloudDataConverter = cloudDataConverter
+        self.cloudDataConverter = cloudDataConverter 
 	}
 	
 	public func getObjectsWith(query: QueryType) async -> [Recordable] {
