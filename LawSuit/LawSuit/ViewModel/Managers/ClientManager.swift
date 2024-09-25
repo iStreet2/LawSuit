@@ -182,11 +182,11 @@ class ClientManager {
 
     
     func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving context on client (\(error)")
-        }
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error while saving context on client (\(error)")
+//        }
     }
     
     

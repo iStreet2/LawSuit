@@ -50,9 +50,8 @@ class CloudDataConverter {
 						print("Could not get pdf Data as BIN: \(error)")
 					}
 				}
-				if let recordName = record.recordID.recordName as? String {
-					fileObject.recordName = recordName
-				}
+                
+                fileObject.recordName = record.recordID.recordName
 				
 				objects.append(fileObject)
 			

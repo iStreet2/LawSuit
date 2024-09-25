@@ -56,10 +56,11 @@ class FolderManager {
     }
     
     func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving the context on folder")
-        }
+        //MARK: Não vamos mais salvar os dados no dispositivo local
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error while saving the context on folder")
+//        }
     }
 }
