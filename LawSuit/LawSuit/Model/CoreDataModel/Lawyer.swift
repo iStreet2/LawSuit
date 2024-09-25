@@ -20,6 +20,7 @@ public class Lawyer: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var name: String?
     @NSManaged public var photo: Data?
     @NSManaged public var email: String?
+    @NSManaged public var officeID: String
     @NSManaged public var recordName: String?
 
 }
