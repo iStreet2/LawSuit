@@ -17,12 +17,12 @@ protocol Recordable {
 class RecordManager {
     
     let container: CKContainer
-    let privateDataBase: CKDatabase
+    let plublicDataBase: CKDatabase
     var context: NSManagedObjectContext
     
     init(container: CKContainer, context: NSManagedObjectContext) {
         self.container = container
-        self.privateDataBase = container.privateCloudDatabase
+        self.plublicDataBase = container.publicCloudDatabase
         self.context = context
     }
     
@@ -42,7 +42,7 @@ class RecordManager {
     func fetchWithQuery(_ query: CKQuery) async -> [CKRecord]? {
         //let query = CKQuery(recordType: "Folder", predicate: NSPredicate(format: "TRUEPREDICATE"))
         do {
-            let result = try await privateDataBase.records(matching: query)
+            let result = try await plublicDataBase.records(matching: query)
             let records = try result.matchResults.compactMap { try $0.1.get() }
             // Caso não for genérico, aqui inicializar os modelos e retorná-los
             return records
@@ -88,7 +88,7 @@ class RecordManager {
         }
         record.setValue(Date(), forKey: "createdAt")
         do {
-            let savedRecord = try await privateDataBase.save(record)
+            let savedRecord = try await plublicDataBase.save(record)
             object.recordName = savedRecord.recordID.recordName
             saveContext()
         } catch {
@@ -107,7 +107,7 @@ class RecordManager {
         let secondRecordID = CKRecord.ID(recordName: secondRecordName)
         let secondReference = CKRecord.Reference(recordID: secondRecordID, action: .none)
         let firstRecordID = CKRecord.ID(recordName: firstRecordName)
-        let firstRecord = try await privateDataBase.record(for: firstRecordID)
+        let firstRecord = try await plublicDataBase.record(for: firstRecordID)
         let relationships = firstObject.entity.relationshipsByName
         if let _ = relationships[referenceKey] {
             var references = firstRecord[referenceKey] as? [CKRecord.Reference] ?? []
@@ -116,7 +116,7 @@ class RecordManager {
         } else {
             throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Relationship \(referenceKey) not found"])
         }
-        try await privateDataBase.save(firstRecord)
+        try await plublicDataBase.save(firstRecord)
     }
     
     //MARK: - Update de um objeto passando várias propriedades
@@ -135,11 +135,11 @@ class RecordManager {
             return
         }
         let recordID = CKRecord.ID(recordName: recordName)
-        let record = try await self.privateDataBase.record(for: recordID)
+        let record = try await self.plublicDataBase.record(for: recordID)
         for (key, value) in updatedFields {
             record.setValue(value, forKey: key)
         }
-        try await self.privateDataBase.save(record)
+        try await self.plublicDataBase.save(record)
     }
     
     //MARK: Delete
@@ -167,7 +167,7 @@ class RecordManager {
         }
         let recordID = CKRecord.ID(recordName: recordName)
         do {
-            try await privateDataBase.deleteRecord(withID: recordID)
+            try await plublicDataBase.deleteRecord(withID: recordID)
         } catch {
             throw error
         }
@@ -177,7 +177,7 @@ class RecordManager {
         let recordID = CKRecord.ID(recordName: recordName)
         try await deleteFolderRecursivelyInCloudKit(folder: rootFolder)
         do {
-            try await privateDataBase.deleteRecord(withID: recordID)
+            try await plublicDataBase.deleteRecord(withID: recordID)
         } catch {
             throw error
         }
@@ -186,7 +186,7 @@ class RecordManager {
     func deleteObjectWithRecordName(recordName: String) async throws {
         let recordID = CKRecord.ID(recordName: recordName)
         do {
-            try await privateDataBase.deleteRecord(withID: recordID)
+            try await plublicDataBase.deleteRecord(withID: recordID)
         } catch {
             throw error
         }
@@ -213,7 +213,7 @@ class RecordManager {
     func deleteFolderRecursivelyInCloudKit(recordName: String) async throws {
         let folderRecordID = CKRecord.ID(recordName: recordName)
 
-        let folderRecord = try await privateDataBase.record(for: folderRecordID)
+        let folderRecord = try await plublicDataBase.record(for: folderRecordID)
 
         if let subfolderReferences = folderRecord["folders"] as? [CKRecord.Reference] {
             for subfolderReference in subfolderReferences {
@@ -225,11 +225,11 @@ class RecordManager {
         if let fileReferences = folderRecord["files"] as? [CKRecord.Reference] {
             for fileReference in fileReferences {
                 let fileRecordID = fileReference.recordID
-                try await privateDataBase.deleteRecord(withID: fileRecordID)
+                try await plublicDataBase.deleteRecord(withID: fileRecordID)
             }
         }
 
-        try await privateDataBase.deleteRecord(withID: folderRecordID)
+        try await plublicDataBase.deleteRecord(withID: folderRecordID)
     }
     
     //MARK: Função para remover uma referencia
@@ -244,7 +244,7 @@ class RecordManager {
 
         let secondRecordID = CKRecord.ID(recordName: secondRecordName)
         let firstRecordID = CKRecord.ID(recordName: firstRecordName)
-        let firstRecord = try await privateDataBase.record(for: firstRecordID)
+        let firstRecord = try await plublicDataBase.record(for: firstRecordID)
 
         let relationships = firstObject.entity.relationshipsByName
         if let _ = relationships[referenceKey] {
@@ -258,21 +258,21 @@ class RecordManager {
             throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Relationship \(referenceKey) not found"])
         }
 
-        try await privateDataBase.save(firstRecord)
+        try await plublicDataBase.save(firstRecord)
     }
     
     func removeReference(from firstRecordName: String, to secondRecordName: String, referenceKey: String) async throws {
         let firstRecordID = CKRecord.ID(recordName: firstRecordName)
         let secondRecordID = CKRecord.ID(recordName: secondRecordName)
 
-        let firstRecord = try await privateDataBase.record(for: firstRecordID)
+        let firstRecord = try await plublicDataBase.record(for: firstRecordID)
 
         if var references = firstRecord[referenceKey] as? [CKRecord.Reference] {
             references.removeAll { $0.recordID == secondRecordID }
             
             firstRecord[referenceKey] = references.isEmpty ? nil : references as CKRecordValue
             
-            try await privateDataBase.save(firstRecord)
+            try await plublicDataBase.save(firstRecord)
         } else {
             throw NSError(domain: "CloudKitError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No references found for \(referenceKey)"])
         }
@@ -284,7 +284,7 @@ class RecordManager {
         }
 
         let recordID = CKRecord.ID(recordName: recordName)
-        let cloudRecord = try await privateDataBase.record(for: recordID)
+        let cloudRecord = try await plublicDataBase.record(for: recordID)
 
         let entity = localObject.entity
 
@@ -307,7 +307,7 @@ class RecordManager {
                     if let localRelatedObject = localRelatedObject as? NSManagedObject,
                        let relatedRecordName = localRelatedObject.value(forKey: "recordName") as? String {
                         let relatedRecordID = CKRecord.ID(recordName: relatedRecordName)
-                        let cloudRelatedRecord = try await privateDataBase.record(for: relatedRecordID)
+                        let cloudRelatedRecord = try await plublicDataBase.record(for: relatedRecordID)
 
                         if relatedRecordID.recordName != cloudRelatedRecord.recordID.recordName {
                             return true

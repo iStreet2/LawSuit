@@ -17,7 +17,7 @@ class DataViewModel: ObservableObject {
     
     let coreDataContainer = NSPersistentContainer(name: "Model")
     let context: NSManagedObjectContext
-    let cloudContainer: CKContainer = CKContainer(identifier: "iCloud.com.TFS.LawSuit")
+    let cloudContainer: CKContainer = CKContainer(identifier: "iCloud.com.TFS.LawSuit.CKContainer")
     
     var coreDataManager: CoreDataManager
     var cloudManager: CloudManager

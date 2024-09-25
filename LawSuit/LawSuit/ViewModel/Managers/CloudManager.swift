@@ -11,7 +11,7 @@ import CoreData
 
 class CloudManager: ObservableObject {
 	let container: CKContainer
-	let privateDataBase: CKDatabase
+	let publicDataBase: CKDatabase
 	let recordManager: RecordManager
 	let cloudDataConverter: CloudDataConverter
     let context: NSManagedObjectContext
@@ -26,7 +26,7 @@ class CloudManager: ObservableObject {
 	
     init(container: CKContainer, cloudDataConverter: CloudDataConverter, context: NSManagedObjectContext) {
         self.container = container
-        self.privateDataBase = container.privateCloudDatabase
+        self.publicDataBase = container.publicCloudDatabase
         self.recordManager = RecordManager(container: container, context: context)
         self.cloudDataConverter = cloudDataConverter
         self.context = context

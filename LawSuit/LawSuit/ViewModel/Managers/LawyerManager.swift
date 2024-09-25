@@ -30,7 +30,6 @@ class LawyerManager {
     func createLawyer(name: String, photo: Data, oab: String) {
         let lawyer = Lawyer(context: context)
         lawyer.name = name
-        lawyer.oab = oab
         lawyer.photo = photo
         lawyer.id = UUID().uuidString
         saveContext()

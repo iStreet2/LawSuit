@@ -224,9 +224,6 @@
 		3BD40B6E2C6E76EC004048FA /* ClientListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientListView.swift; sourceTree = "<group>"; };
 		3BDEFFCB2C8A4A6A00990528 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
-		3BE07DEE2C99EC230016C866 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3BE07DEF2C99EC230016C866 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3BE07DF02C99EC230016C866 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A2C68FF2C6D4FA300E017EE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxIconComponent.swift; sourceTree = "<group>"; };
 		6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
@@ -430,7 +427,6 @@
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
-				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
 				08A2B0D82C935ADA00719571 /* Extensions */,
 				08A2B0C02C8F730500719571 /* Networking */,
 				3BD40B392C6D4613004048FA /* Examples */,
@@ -1039,7 +1035,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = YHC26T5B2D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1051,7 +1047,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1070,7 +1066,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = YHC26T5B2D;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1082,7 +1078,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
