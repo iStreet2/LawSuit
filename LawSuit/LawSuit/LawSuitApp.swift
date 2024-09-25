@@ -42,6 +42,10 @@ struct LawSuitApp: App {
 						 SpotlightSearchbarView()
 							 .environmentObject(dataViewModel)
 							 .environmentObject(navigationViewModel)
+							 .environmentObject(eventManager)
+					 }
+					 .sheet(isPresented: $eventManager.filePreviewIsPresented) {
+						 OpenFilePDFView(selectedFile: $eventManager.fileToPreview)
 					 }
         }
     }

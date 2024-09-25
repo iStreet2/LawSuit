@@ -75,10 +75,8 @@ struct LawsuitDistributedView: View {
                 Text("Área")
                     .padding(.top)
                     .bold()
-                TagViewComponent(tagType: tagType)
-                    .onTapGesture {
-                        selectTag.toggle()
-                    }
+					TagViewPickerComponentV1(currentTag: $tagType)
+
             }
             Spacer()
             VStack(alignment: .leading){
@@ -208,23 +206,7 @@ struct LawsuitDistributedView: View {
                     dismissButton: .default(Text("Ok")))
                 }
             }
-            .sheet(isPresented: $selectTag, content: {
-                VStack {
-                    Spacer()
-                    TagViewPickerComponentV1(currentTag: $tagType)
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            selectTag.toggle()
-                        }, label: {
-                            Text("Salvar")
-                        })
-                        .buttonStyle(.borderedProminent)
-                        .padding()
-                    }
-                }
-            })
+
         }
     }
     func areFieldsFilled() -> Bool {

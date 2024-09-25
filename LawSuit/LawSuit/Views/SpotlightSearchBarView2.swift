@@ -12,10 +12,13 @@ struct SpotlightSearchbarView: View {
 	@Environment(\.dismiss) var dismiss
 	@EnvironmentObject var dataViewModel: DataViewModel
 	@EnvironmentObject var navigationViewModel: NavigationViewModel
+	@EnvironmentObject var eventManager: EventManager
 	
 	@State var searchString: String = ""
 	
 	@State var currentEntity: (any EntityWrapper)? = nil
+	
+	var priorityClient: Client? = nil
 	
 	//	@State var currentClientList: [ClientWrapper] = []
 	//	@State var currentLawsuitList: [LawsuitWrapper] = []
@@ -33,6 +36,8 @@ struct SpotlightSearchbarView: View {
 					break
 				}
 			}
+		} else if let fileWrapper = entity as? FileWrapper {
+			eventManager.didSelectFileToPreview(fileWrapper.file)
 		}
 		dismiss()
 	}
@@ -48,8 +53,10 @@ struct SpotlightSearchbarView: View {
 					break
 				}
 			}
-			dismiss()
+		} else if let fileWrapper = currentEntity as? FileWrapper {
+			eventManager.didSelectFileToPreview(fileWrapper.file)
 		}
+		dismiss()
 	}
 	
 	
