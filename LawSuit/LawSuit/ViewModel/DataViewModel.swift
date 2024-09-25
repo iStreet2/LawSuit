@@ -22,7 +22,7 @@ class DataViewModel: ObservableObject {
     var coreDataManager: CoreDataManager
     var cloudManager: CloudManager
     var cloudDataConverter: CloudDataConverter
-    var networkManager: NetworkManager
+//    var networkManager: NetworkManager
 	var spotlightManager: SpotlightManager
 	    
     init() {
@@ -35,7 +35,7 @@ class DataViewModel: ObservableObject {
         self.coreDataManager = CoreDataManager(context: context)
         self.cloudDataConverter = CloudDataConverter(context: context, container: cloudContainer)
         self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter, context: context)
-        self.networkManager = NetworkManager(coreDataManager: self.coreDataManager, cloudManager: self.cloudManager, context: self.context)
+//        self.networkManager = NetworkManager(coreDataManager: self.coreDataManager, cloudManager: self.cloudManager, context: self.context)
 		self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
     }
 	
