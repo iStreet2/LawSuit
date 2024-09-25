@@ -41,7 +41,8 @@ struct LawsuitCellComponent: View {
                 Group {
                     if lawsuit.isLoading {
                         ProgressView()
-                            .frame(width: geo.size.width * 0.17, height: 47)
+                            .scaleEffect(0.5, anchor: .center)
+                            .frame(width: geo.size.width * 0.17, height: 30)
                     } else {
                         if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() {
                             Text(latestUpdateDate)

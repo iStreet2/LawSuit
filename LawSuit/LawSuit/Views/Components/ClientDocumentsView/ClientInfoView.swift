@@ -19,6 +19,8 @@ struct ClientInfoView: View {
     @State var imageData: Data?
     @Binding var deleted: Bool
     var mailManager: MailManager 
+    @State var requestDocument = false
+
 
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -29,41 +31,6 @@ struct ClientInfoView: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            //Foto do cliente
-//            if let photoData = client.photo,
-//               let nsImage = NSImage(data: photoData) {
-//                Image(nsImage: nsImage)
-//                    .resizable()
-//                    .frame(width: 80, height: 80)
-//                    .onTapGesture(count: 2) {
-//                        withAnimation() {
-//                            folderViewModel.importPhoto { data in
-//                                if let data = data {
-//                                    imageData = data
-//                                    dataViewModel.coreDataManager.clientManager.addPhotoOnClient(client: client, photo: data)
-//                                    client.photo = data
-//                                }
-//                            }
-//                        }
-//                    }
-//            } else {
-//                ZStack {
-//                    Rectangle()
-//                        .foregroundColor(.gray)
-//                        .frame(width: 80, height: 80)
-//                    Image(systemName: "square.and.arrow.down")
-//                }
-//                .onTapGesture(count: 2) {
-//                    withAnimation {
-//                        folderViewModel.importPhoto { data in
-//                            if let data = data {
-//                                imageData = data
-//                                dataViewModel.coreDataManager.clientManager.addPhotoOnClient(client: client, photo: data)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             VStack(alignment: .leading) {
                 HStack {
                     Text(client.name)
@@ -101,26 +68,33 @@ struct ClientInfoView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 
-                Button {
-                    mailManager.showMailComposer()
-                } label: {
-                    Text("Enviar e-mail")
+                HStack {
+                    Button {
+                        mailManager.showMailComposer()
+                    } label: {
+                        Text("Enviar e-mail")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                    Button {
+                        requestDocument.toggle()
+                    } label: {
+                        Text("Solicitar documentos")
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
             }
             Spacer()
         }
         .onChange(of: deleted) { change in
             dismiss()
         }
+        .sheet(isPresented: $requestDocument, content: {
+            RequestDocumentsView(client: client)
+        })
         .sheet(isPresented: $editClient, content: {
             EditClientView(client: client, deleted: $deleted)
         })
         .padding()
     }
 }
-
-
-//#Preview {
-//    ClientInfoView()
-//}

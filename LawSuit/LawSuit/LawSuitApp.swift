@@ -18,7 +18,7 @@ struct LawSuitApp: App {
     @StateObject var navigationViewModel = NavigationViewModel()
     @StateObject var clientDataViewModel = TextFieldDataViewModel()
     @StateObject var addressViewModel = AddressViewModel()
-	 @StateObject var eventManager = EventManager()
+    @StateObject var eventManager = EventManager()
 
 	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	

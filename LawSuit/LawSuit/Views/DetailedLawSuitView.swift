@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct DetailedLawSuitView: View {
-        
+    
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
     
@@ -49,8 +49,6 @@ struct DetailedLawSuitView: View {
                         movimentationBlock
                             .frame(maxHeight: .infinity)
                         
-                        audienceBlock
-                            .frame(maxHeight: .infinity)
                     }
                     .frame(maxHeight: .infinity)
                     .fixedSize(horizontal: false, vertical: true)
@@ -107,7 +105,7 @@ struct DetailedLawSuitView: View {
                 lawsuitAuthorName = author.name
                 lawsuitDefendantName = defendant.name
             }
-        //Se o cliente do processo estiver no reu
+            //Se o cliente do processo estiver no reu
         } else {
             if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
                let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
@@ -119,92 +117,92 @@ struct DetailedLawSuitView: View {
 }
 
 extension DetailedLawSuitView {
-	private var mainBlockHeader: some View {
-		HStack {
+    private var mainBlockHeader: some View {
+        HStack {
             TagViewComponent(tagType: TagType(s: lawsuit.category) ?? .trabalhista)
-			Spacer()
-			Button {
-				// editar
+            Spacer()
+            Button {
+                // editar
                 editLawSuit.toggle()
-			} label: {
-				Image(systemName: "square.and.pencil")
-					.resizable()
-					.scaledToFit()
-					.frame(height: 21)
-					.foregroundStyle(.secondary)
-			}
-			.buttonStyle(PlainButtonStyle())
-		}
-	}
-	
-	private var mainBlockNumber: some View {
-		HStack {
+            } label: {
+                Image(systemName: "square.and.pencil")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 21)
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+    }
+    
+    private var mainBlockNumber: some View {
+        HStack {
             Text(lawsuit.number)
-				.font(.title3)
-				.bold()
-			Button {
-				// copiar o número para o clipboard
-			} label: {
-				Image(systemName: "rectangle.portrait.on.rectangle.portrait")
-					.resizable()
-					.scaledToFit()
-					.frame(height: 20)
-					.foregroundStyle(.secondary)
-			}
-			.buttonStyle(PlainButtonStyle())
-		}
-	}
-	
-	private var mainBlock: some View {
-		BoxView {
-			VStack(alignment: .leading) {
-				mainBlockHeader
-				
-				mainBlockNumber
-				
-				Text(lawsuit.court)
-				
-				Text("Distribuição da ação")
-					.font(.subheadline)
-					.foregroundStyle(.secondary)
-					.bold()
-//                Text(dateFormatter.string(from: lawsuit.actionDate))
+                .font(.title3)
+                .bold()
+            Button {
+                // copiar o número para o clipboard
+            } label: {
+                Image(systemName: "rectangle.portrait.on.rectangle.portrait")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 20)
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+    }
+    
+    private var mainBlock: some View {
+        BoxView {
+            VStack(alignment: .leading) {
+                mainBlockHeader
+                
+                mainBlockNumber
+                
+                Text(lawsuit.court)
+                
+                Text("Distribuição da ação")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .bold()
+                //                Text(dateFormatter.string(from: lawsuit.actionDate))
                 Text("\(lawsuit.actionDate, formatter: dateFormatter)")
-//					.padding(.bottom, 60)
-				
-				Spacer()
-				
-				HStack {
-					VStack(alignment: .leading) {
-						Text("Autor")
-							.font(.subheadline)
-							.foregroundStyle(.secondary)
-							.bold()
+                //					.padding(.bottom, 60)
+                
+                Spacer()
+                
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Autor")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
                         Text(lawsuitAuthorName)
-							.font(.subheadline)
-							.bold()
-					}
-					Spacer()
-					VStack(alignment: .leading) {
-						Text("Réu")
-							.font(.subheadline)
-							.foregroundStyle(.secondary)
-							.bold()
+                            .font(.subheadline)
+                            .bold()
+                    }
+                    Spacer()
+                    VStack(alignment: .leading) {
+                        Text("Réu")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
                         Text(lawsuitDefendantName)
-							.font(.subheadline)
-							.bold()
-					}
-					Spacer()
-				}
-			}
-		}
-	}
-	
-	private var movimentationBlock: some View {
-		BoxView {
-			VStack(alignment: .leading) {
+                            .font(.subheadline)
+                            .bold()
+                    }
+                    Spacer()
+                }
+            }
+        }
+    }
+    
+    private var movimentationBlock: some View {
+        BoxView {
+            VStack(alignment: .leading) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Última Movimentação")
@@ -225,62 +223,24 @@ extension DetailedLawSuitView {
                                 Text("Avisar Cliente")
                             })
                         }
-                        
-                        Text("Movimentações Anteriores")
-                            .font(.headline)
-                        ScrollView {
-                            ForEach(dataViewModel.coreDataManager.updateManager.sortUpdates(lawsuit: lawsuit)) { update in
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Movimentações Anteriores")
+                                .font(.headline)
+                                .foregroundStyle(Color(.secondaryLabelColor))
+                            
+                            ForEach(dataViewModel.coreDataManager.updateManager.sortUpdates(lawsuit: lawsuit).prefix(5)) { update in
                                 Text(update.date?.convertToString() ?? "Sem movimentações")
                                     .font(.subheadline)
+                                    .foregroundStyle(Color(.secondaryLabelColor))
                             }
-                        }
-                        .frame(maxHeight: 100)
-                       
+                        }.padding(.top, 10)
+                        
                     }
-					Spacer()
-				}
-				.padding(.bottom, 3)
-			}
-		}
-	}
-	
-	private var audienceBlock: some View {
-		BoxView {
-			VStack(alignment: .leading) {
-				HStack {
-					Text("Audiência")
-						.font(.title3)
-						.bold()
-					Spacer()
-					Button {
-						
-					} label: {
-						Image(systemName: "square.and.pencil")
-							.resizable()
-							.scaledToFit()
-							.frame(height: 20)
-							.foregroundStyle(.secondary)
-					}
-					.buttonStyle(PlainButtonStyle())
-				}
-				.padding(.bottom, 3)
-				
-				Text("Precatória")
-					.font(.subheadline)
-					.bold()
-					.padding(.bottom, 4)
-				
-				HStack {
-					Image(systemName: "calendar")
-						.resizable().scaledToFit().frame(height: 16).foregroundStyle(.secondary)
-					Text("23/08/2024")
-				}
-				HStack {
-					Image(systemName: "clock")
-						.resizable().scaledToFit().frame(height: 16).foregroundStyle(.secondary)
-					Text("9:00")
-				}
-			}
-		}
-	}
+                    
+                    Spacer()
+                }
+                .padding(.bottom, 3)
+            }
+        }
+    }
 }

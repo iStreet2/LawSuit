@@ -1,57 +1,59 @@
 //
-//  CheckboxView.swift
+//  RequestDocumentsView.swift
 //  LawSuit
 //
-//  Created by Emily Morimoto on 15/08/24.
+//  Created by Giovanna Micher on 25/09/24.
 //
 
 import SwiftUI
 
 struct RequestDocumentsView: View {
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var client: Client
+    @State var isRgOn: Bool = false
+    @State var isCPFOn: Bool = false
+    @State var isCNHOn: Bool = false
+    @State var isCertidaoNascimentoOn: Bool = false
+    @State var isCertidaoCasamentoOn: Bool = false
     
-    @State var choosedClient: String = ""
-    @State var files = ["RG", "CPF"]
-    var cliente: SelectClientComponent
-    var screen: SizeEnumerator
-//    @Binding var lawsuit: ProcessMock
-    @State var seiLa: String = ""
-
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading, spacing: 20) {
             Text("Solicitar documentos")
                 .font(.title)
                 .bold()
-            Text("Ciente: \(choosedClient)")
-                .font(.title3)
-                .bold()
-            //MARK: Componente não funcionando para essa view!!! ass: Bonito
-            //SelectClientComponent(lawsuit: $lawsuit, choosedClient: $choosedClient, screen: .big, defendantOrClient: $seiLa)
-            Text("Documentos:")
-                .font(.title3)
-                .bold()
-            HStack{
-                ForEach(files, id: \.self) {file in
-                    CheckboxIconComponent(files: file)
-                }
+            
+            Text("Cliente: \(client.name)")
+                .font(.title2)
+            
+            HStack(spacing: 50) {
+                CheckboxIconComponent(isChecked: isRgOn, text: "RG")
+                CheckboxIconComponent(isChecked: isCPFOn,text: "CPF")
+                CheckboxIconComponent(isChecked: isCNHOn,text: "CNH")
+                CheckboxIconComponent(isChecked: isCertidaoNascimentoOn,text: "Certidão de Nascimento")
             }
+            CheckboxIconComponent(isChecked: isCertidaoCasamentoOn,text: "Certidão de Casamento")
+            Spacer()
+            
             HStack {
                 Spacer()
-            Button {
-            } label: {
-                Text("Cancelar")
-            }
-                Button {
-                    
-                } label: {
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    Text("Cancelar")
+                })
+                Button(action: {
+                    print(isRgOn)
+                    print(isCPFOn)
+                    print(isCNHOn)
+                    print(isCertidaoNascimentoOn)
+                    print(isCertidaoCasamentoOn)
+                }, label: {
                     Text("Solicitar")
-                }
+                })
                 .buttonStyle(.borderedProminent)
+            }
         }
-        }
-        .frame(width: 500)
-        .padding(15)
-        .background(.white)
-
+        .frame(width: 450, height: 200)
+        .padding(20)
     }
 }
-
