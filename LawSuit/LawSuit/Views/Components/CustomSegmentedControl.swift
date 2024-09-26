@@ -19,13 +19,13 @@ struct CustomSegmentedControl: View {
             ForEach(infos.indices, id:\.self) { index in
                 if selectedOption == infos[index] {
                     Text(infos[index])
-                        .font(.title3)
-                        .foregroundStyle(.orange)
+                        .font(.body)
+                        .foregroundStyle(.red)
                         .fontWeight(.semibold)
                         .padding(.horizontal, 10)
                         .background{
                             RoundedRectangle(cornerRadius: 3)
-                                .foregroundStyle(.orange.opacity(0.3))
+                                .foregroundStyle(.red.opacity(0.3))
                                 
                         }
                         .overlay {
@@ -34,7 +34,7 @@ struct CustomSegmentedControl: View {
                         }
                 } else {
                     Text(infos[index])
-                        .font(.title3)
+                        .font(.body)
                         .foregroundStyle(.gray)
                         .fontWeight(.semibold)
                         .padding(.horizontal, 10)
