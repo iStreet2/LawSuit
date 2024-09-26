@@ -25,7 +25,7 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
-        HStack {
+        HStack (spacing: 0){
             SideBarView(selectedView: $selectedView)
             switch selectedView {
             case .clients:
@@ -41,10 +41,10 @@ struct ContentView: View {
                     }
                 }
             case .lawsuits:
-                Divider()
-                Spacer()
+//                Divider()
+//                Spacer()
                 LawsuitListView()
-                Spacer()
+//                Spacer()
             }
         }
         .sheet(isPresented: $addClient, content: {

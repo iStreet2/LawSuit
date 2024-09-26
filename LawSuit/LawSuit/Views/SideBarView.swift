@@ -21,12 +21,13 @@ struct SideBarView: View {
         VStack {
             ZStack {
                 if selectedView == .clients {
-                    Color.gray
-                        .opacity(0.3)
+                    Color.white
+                        .opacity(0.2)
                         .cornerRadius(10)
                 }
                 Image(systemName: "person.2")
                     .font(.system(size: 19))
+                    .foregroundStyle(.white)
             }
             .frame(width: 55, height: 46)
             .onTapGesture {
@@ -40,12 +41,13 @@ struct SideBarView: View {
             }
             ZStack {
                 if selectedView == .lawsuits {
-                    Color.gray
-                        .opacity(0.3)
+                    Color.white
+                        .opacity(0.2)
                         .cornerRadius(10)
                 }
                 Image(systemName: "briefcase")
                     .font(.system(size: 19))
+                    .foregroundStyle(.white)
             }
             .frame(width: 55, height: 46)
             .onTapGesture {
@@ -56,6 +58,8 @@ struct SideBarView: View {
             Spacer()
         }
         .padding()
+        .padding(.trailing,5)
+        .background(Color(hex: "932425").blendMode(.multiply))
     }
     
     

@@ -45,6 +45,8 @@ struct LawSuitApp: App {
 							 .environmentObject(dataViewModel)
 							 .environmentObject(navigationViewModel)
 					 }
+                     .background(MaterialWindow().ignoresSafeArea())
         }
+   
     }
 }
