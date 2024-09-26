@@ -12,7 +12,7 @@ struct NetworkingManager {
     static var shared = NetworkingManager()
     
     func removeCharactersFromLawsuitNumber(lawsuitNumber: String) -> String {
-        var lawsuitNumberWithoutSpecialCharacters = lawsuitNumber.replacingOccurrences(of: ".-", with: "")
+        let lawsuitNumberWithoutSpecialCharacters = lawsuitNumber.replacingOccurrences(of: ".-", with: "")
         return lawsuitNumberWithoutSpecialCharacters
     }
     

@@ -94,7 +94,6 @@
 		6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */; };
 		6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */; };
 		6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */; };
-		6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */; };
 		6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */; };
 		6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */; };
 		6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */; };
@@ -254,7 +253,6 @@
 		6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
 		6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListView.swift; sourceTree = "<group>"; };
 		6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
-		6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderIconListView.swift; sourceTree = "<group>"; };
 		6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentActionButtonsView.swift; sourceTree = "<group>"; };
 		6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
 		6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFListView.swift; sourceTree = "<group>"; };
@@ -384,7 +382,6 @@
 				3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */,
 				6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */,
 				3B423E822C80E613005B1B7F /* FolderIconView.swift */,
-				6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */,
 				3B423E7D2C80E2D8005B1B7F /* FolderView.swift */,
 				6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
@@ -393,6 +390,7 @@
 				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
 				3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
+				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
 			);
 			path = ClientDocumentsView;
 			sourceTree = "<group>";
@@ -503,7 +501,6 @@
 				6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */,
 				6ABD79782C7918B600A98BA3 /* EditLawsuitAuthorComponent.swift */,
 				0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */,
-				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
 				6ABD79702C6E990F00A98BA3 /* SelectClientComponent.swift */,
 			);
 			path = AddLawsuitView;
@@ -849,7 +846,6 @@
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
 				08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */,
 				6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */,
-				6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */,
 				3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */,
 				3B0A7AD12C7D16AA005A5946 /* NetworkMonitorViewModel.swift in Sources */,
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,

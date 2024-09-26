@@ -24,7 +24,7 @@ class LawsuitNetworkingService: LawsuitNetworkingServiceProtocol {
     
     func fetchLawsuitUpdatesData(fromLawsuit lawsuit: Lawsuit) async throws -> Result<[Update], Error> {
 
-        guard let url = setupURL(numeroProcesso: lawsuit.number ?? "").url else {
+        guard let url = setupURL(numeroProcesso: lawsuit.number).url else {
             throw LawsuitRequestError.couldNotCreateURL
         }
         
