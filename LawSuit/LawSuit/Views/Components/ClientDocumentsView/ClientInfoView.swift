@@ -81,13 +81,17 @@ struct ClientInfoView: View {
                 
                 HStack {
                     Text("Celular")
+                        .font(.body)
                         .bold()
                         .foregroundStyle(Color(.gray))
                     Text(client.cellphone)
+                        .font(.body)
                     Text("E-mail")
+                        .font(.body)
                         .bold()
                         .foregroundStyle(Color(.gray))
                     Text(client.email)
+                        .font(.body)
                 }
                 .font(.footnote)
                 
@@ -96,8 +100,10 @@ struct ClientInfoView: View {
 
                 } label: {
                     Text("Mais informações")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
+                        .font(.body)
+                        .foregroundColor(.wine)
+                        .underline()
+                        .bold()
                 }
                 .buttonStyle(PlainButtonStyle())
                 
@@ -105,8 +111,12 @@ struct ClientInfoView: View {
                     mailManager.showMailComposer()
                 } label: {
                     Text("Enviar e-mail")
+                        
                 }
+                .font(.title3)
                 .buttonStyle(.borderedProminent)
+                .tint(Color(.arqBlack))
+                
             }
             Spacer()
         }

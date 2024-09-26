@@ -23,9 +23,6 @@ struct LabeledTextField: View {
                 .foregroundStyle(Color.black)
             TextField(placeholder, text: $textfieldText)
                 .textFieldStyle(.roundedBorder)
-                .onChange(of: textfieldText) { newValue in
-                    textfieldText = newValue.capitalized
-                }
             
         }
     }

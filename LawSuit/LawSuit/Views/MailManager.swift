@@ -20,7 +20,7 @@ class MailManager {
         let service = NSSharingService(named: NSSharingService.Name.composeEmail)
         service?.recipients = [client.email]
         service?.subject = "Arqion: Aviso de movimentação de processo"
-        service?.perform(withItems: ["Test Mail body"])
+        service?.perform(withItems: [""])
     }
   
 //    func makeEmailBody() -> String {

@@ -55,13 +55,7 @@ struct SideBarView: View {
             }
             Spacer()
         }
-        .padding()
+        .padding()        
     }
-    
-    
-    
-    
-    
-    
-    
 }
+
