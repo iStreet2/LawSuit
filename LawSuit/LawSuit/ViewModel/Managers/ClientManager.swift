@@ -17,7 +17,7 @@ class ClientManager {
         self.context = context
     }
     
-    func createClient(name: String, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
+    func createClient(name: String, socialName: String?, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
         let client = Client(context: context)
         let folder = Folder(context: context)
         folder.name = "\(name)"
@@ -25,6 +25,7 @@ class ClientManager {
         client.rootFolder = folder
         folder.parentClient = client
         client.name = name
+        client.socialName = socialName
         client.id = "client:\(UUID().uuidString)"
         client.occupation = occupation
         client.rg = rg
@@ -53,8 +54,9 @@ class ClientManager {
 //        lawyer.removeFromClients(client)
     }
     
-    func editClient(client: Client, name: String, occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
+    func editClient(client: Client, name: String, socialName: String?, occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
         client.name = name
+        client.socialName = socialName
         client.occupation = occupation
         client.rg = rg
         client.cpf = cpf

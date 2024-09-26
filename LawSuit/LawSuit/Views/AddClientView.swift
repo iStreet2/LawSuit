@@ -18,6 +18,7 @@ struct AddClientView: View {
     @State var stage: Int = 1
     @State var invalidInformation: InvalidInformation?
     @State var name: String = ""
+    @State var socialName: String = ""
     @State var occupation: String = ""
     @State var rg: String = ""
     @State var cpf: String = ""
@@ -103,7 +104,7 @@ struct AddClientView: View {
                         else {
                             //MARK: Advogado temporário
                             let lawyer = lawyers[0]
-                            dataViewModel.coreDataManager.clientManager.createClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                            dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
                             dismiss()
                         }
                         return
