@@ -35,8 +35,10 @@ struct FolderIconView: View {
         Group {
             if folderViewModel.showingGridView {
                 VStack {
-                    Image("folder")
-                    
+                    Image("PastaLight")
+                        .resizable()
+                        .frame(width: 73, height: 58)
+
                     if isEditing {
                         TextField("", text: $folderName, onEditingChanged: { _ in
                         }, onCommit: {
@@ -56,7 +58,7 @@ struct FolderIconView: View {
                 }
             } else {
                 HStack {
-                    Image("folder")
+                    Image("PastaLight")
                         .resizable()
                         .frame(width: 18,height: 14)
                     

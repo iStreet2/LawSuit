@@ -21,16 +21,16 @@ struct AddClientProgressView: View {
                         .fill(index <= stage ? Color(.wine) : Color.gray)
                         .frame(width: 10, height: 10)
                     Text(index == stage ? stageTexts[index - 1] : "")
-                        .frame(width: 80)
-                        .font(.caption)
+                        .frame(width: 100)
+                        .font(.callout)
                         .foregroundColor(Color.secondary)
                         .lineLimit(1)
                 }
                 if index < 4 {
                     Rectangle()
                         .fill(index < stage ? Color(.wine) : Color.gray)
-                        .frame(height: 2)
-                        .padding(.horizontal, -43)
+                        .frame(height: 3)
+                        .padding(.horizontal, -53)
                         .padding(.vertical, 4)
                 }
             }
