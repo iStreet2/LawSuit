@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct CustomSegmentedControl: View {
-    @State var selectedOption: Int = 0
-    var options: [String] = ["Processos","Documentos"]
+    @Binding var selectedOption: String
+    var infos: [String]
     let color = Color("segmentedControl")
     @State var isHovering: Bool = false
+    @State var hoveringIndex: Int?
     
     var body: some View {
         HStack(spacing: 0){
-            ForEach(options.indices, id:\.self) { index in
-                if selectedOption == index {
-                    Text(options[index])
+            ForEach(infos.indices, id:\.self) { index in
+                if selectedOption == infos[index] {
+                    Text(infos[index])
+                        .font(.title3)
                         .foregroundStyle(.orange)
                         .fontWeight(.semibold)
                         .padding(.horizontal, 10)
@@ -28,16 +30,22 @@ struct CustomSegmentedControl: View {
                         }
                         .overlay {
                             RoundedRectangle(cornerRadius: 3)
-                                .stroke(.secondary, lineWidth: 0.3)
+                                .stroke(.black.opacity(0.05), lineWidth: 0.3)
                         }
                 } else {
-                    Text(options[index])
+                    Text(infos[index])
+                        .font(.title3)
                         .foregroundStyle(.gray)
                         .fontWeight(.semibold)
                         .padding(.horizontal, 10)
                         .background{
-                            RoundedRectangle(cornerRadius: 3)
-                                .foregroundStyle(isHovering ? .black.opacity(0.05) : .clear)
+                            if hoveringIndex == index {
+                                RoundedRectangle(cornerRadius: 3)
+                                    .foregroundStyle(.black.opacity(0.05))
+                            } else{
+                                RoundedRectangle(cornerRadius: 3)
+                                    .foregroundStyle(.clear)
+                            }
                                 
                         }
                         .overlay {
@@ -45,14 +53,17 @@ struct CustomSegmentedControl: View {
                                 .stroke(.clear, lineWidth: 0.3)
                         }
                         .onTapGesture(){
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                selectedOption = index
+                            withAnimation(.easeInOut(duration: 0.1)) {
+                                selectedOption = infos[index]
                             }
                             
                         }
                         .onHover { bool in
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 isHovering = bool
+                                if isHovering {
+                                    hoveringIndex = index
+                                } else {hoveringIndex = nil}
                             }
                         }
                 }
@@ -76,13 +87,13 @@ struct CustomSegmentedControl: View {
     }
 }
 
-#Preview {
-    VStack{
-        CustomSegmentedControl()
-            .padding()
-            .background(.white)
-
-    }
-    //   @State var selectedOption = 0
-//    return VStack{CustomSegmentedControl(selectedOption: $selectedOption, options: ["Processos","Documentos"])}.padding().background(.white)
-}
+//#Preview {
+//    VStack{
+//        CustomSegmentedControl()
+//            .padding()
+//            .background(.white)
+//
+//    }
+//    //   @State var selectedOption = 0
+////    return VStack{CustomSegmentedControl(selectedOption: $selectedOption, options: ["Processos","Documentos"])}.padding().background(.white)
+//}

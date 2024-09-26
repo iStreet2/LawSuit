@@ -38,7 +38,7 @@ struct AddLawsuitView: View {
                 .bold()
                 .font(.title)
             VStack(alignment: .leading) {
-                SegmentedControlComponent(
+                CustomSegmentedControl(
                     selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
                 .frame(width: 150)
                 .padding(.leading)
