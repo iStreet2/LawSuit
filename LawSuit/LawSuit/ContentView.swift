@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     
     //MARK: Variáveis de estado
@@ -24,32 +25,69 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
+    @State var navigationVisibility: NavigationSplitViewVisibility = .all
+    
+    var isLawsuit: Bool {
+        switch selectedView {
+        case .clients:
+            false
+        case .lawsuits:
+            true
+        }
+    }
+    
     var body: some View {
         HStack (spacing: 0){
             SideBarView(selectedView: $selectedView)
-            switch selectedView {
-            case .clients:
-                NavigationSplitView {
+//            switch selectedView {
+//            case .clients:
+            NavigationSplitView(columnVisibility: isLawsuit ? .constant(.detailOnly) : $navigationVisibility) {
+                if #available(macOS 14.0, *) {
                     ClientListView(addClient: $addClient, deleted: $deleted)
                         .frame(minWidth: 170)
+                        .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
+                } else {
+                    ClientListView(addClient: $addClient, deleted: $deleted)
+                        .frame(minWidth: 170)
+                        
+                }
+                    
                 } detail: {
-                    if let selectedClient = navigationViewModel.selectedClient {
-                        ClientView(client: selectedClient, deleted: $deleted)
-                    } else {
-                        Text("Selecione um cliente")
-                            .foregroundColor(.gray)
+                    switch selectedView {
+                    case .clients:
+                        if let selectedClient = navigationViewModel.selectedClient {
+                            ClientView(client: selectedClient, deleted: $deleted)
+                                .background(.white)
+                
+                        } else {
+                            VStack{
+                                Text("Selecione um cliente")
+                                    .padding()
+                                    .foregroundColor(.gray)
+                            }
+                            .background(.white)
+                        }
+                    case .lawsuits:
+                     
+                            LawsuitListView()
+                                .background(.white)
+                       
                     }
                 }
-            case .lawsuits:
-//                Divider()
-//                Spacer()
-                LawsuitListView()
-//                Spacer()
-            }
+              
+ 
         }
         .sheet(isPresented: $addClient, content: {
             AddClientView()
         })
+        .onChange(of: selectedView){ _ in
+            switch selectedView {
+            case .clients:
+                navigationVisibility = .all
+            case .lawsuits:
+                navigationVisibility = .detailOnly
+            }
+        }
     }
 }
 

@@ -46,6 +46,15 @@ struct LawSuitApp: App {
 							 .environmentObject(navigationViewModel)
 					 }
                      .background(MaterialWindow().ignoresSafeArea())
+                     .toolbar(){
+                         ToolbarItem(placement: .primaryAction){
+                             Button(action: {
+                                 self.eventManager.spotlightBarIsPresented.toggle()
+                             }){
+                                 Image(systemName: "magnifyingglass")
+                             }
+                         }
+                     }
         }
    
     }

@@ -116,7 +116,7 @@ struct SpotlightSearchbarView: View {
 						}
 					}
 					.listRowSeparator(.hidden)
-					.listRowBackground(VisualEffect())
+                    .listRowBackground(VisualEffect().ignoresSafeArea())
 					.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
 					
 				}
@@ -127,7 +127,7 @@ struct SpotlightSearchbarView: View {
 			}
 			
 		}
-		.background(VisualEffect())
+        .background(VisualEffect().ignoresSafeArea())
 		
 	}
 }

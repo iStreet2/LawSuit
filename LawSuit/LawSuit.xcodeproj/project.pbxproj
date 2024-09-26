@@ -149,6 +149,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FD7EBBBE2CA5EA5600C44ECA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		084D404F2C8A4AAE00C96111 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -630,6 +643,7 @@
 				3B98F1042C668B1000C45121 /* Sources */,
 				3B98F1052C668B1000C45121 /* Frameworks */,
 				3B98F1062C668B1000C45121 /* Resources */,
+				FD7EBBBE2CA5EA5600C44ECA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
