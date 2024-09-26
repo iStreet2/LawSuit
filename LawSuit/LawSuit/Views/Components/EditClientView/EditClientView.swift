@@ -22,6 +22,7 @@ struct EditClientView: View {
     @State var invalidInformation: InvalidInformation?
     @State var userInfoType = 0
     @State var clientName: String = ""
+    @State var clientSocialName: String = ""
     @State var clientOccupation: String = ""
     @State var clientRg: String = ""
     @State var clientCpf: String = ""
@@ -145,7 +146,7 @@ struct EditClientView: View {
                         invalidInformation = .missingCellphoneNumber
                         
                     } else {
-                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                         dismiss()
                         
                         return
@@ -229,7 +230,7 @@ struct EditClientView: View {
             !clientAddressNumber.isEmpty &&
             !clientNeighborhood.isEmpty &&
             !clientState.isEmpty &&
-            !clientCity.isEmpty
+            !clientCity.isEmpty &&
             !clientEmail.isEmpty &&
             !clientTelephone.isEmpty &&
             !clientCellphone.isEmpty

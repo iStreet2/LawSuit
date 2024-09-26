@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24A335" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Client" representedClassName="Client" syncable="YES">
         <attribute name="address" attributeType="String"/>
         <attribute name="addressNumber" attributeType="String"/>
@@ -21,6 +21,7 @@
         <attribute name="photo" optional="YES" attributeType="Binary"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
         <attribute name="rg" attributeType="String"/>
+        <attribute name="socialName" optional="YES" attributeType="String"/>
         <attribute name="state" attributeType="String"/>
         <attribute name="telephone" attributeType="String"/>
         <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
