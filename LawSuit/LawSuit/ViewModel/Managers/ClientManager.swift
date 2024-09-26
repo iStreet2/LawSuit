@@ -53,8 +53,9 @@ class ClientManager {
 //        lawyer.removeFromClients(client)
     }
     
-    func editClient(client: Client, name: String, occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
+    func editClient(client: Client, name: String, socialName: String = "", occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
         client.name = name
+        client.socialName = socialName
         client.occupation = occupation
         client.rg = rg
         client.cpf = cpf
