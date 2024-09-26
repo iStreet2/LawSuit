@@ -128,6 +128,8 @@ class DragAndDropViewModel: ObservableObject {
         }
     }
     
+    //MARK: Funções para drag and drop externo
+    
     func handleDrop(providers: [NSItemProvider], parentFolder: Folder, context: NSManagedObjectContext, dataViewModel: DataViewModel) {
         print("handleDrop: Iniciando o processamento do drop...")
         

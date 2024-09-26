@@ -19,8 +19,6 @@ struct DocumentView: View{
     
     var body: some View{
         if let openFolder = folderViewModel.getOpenFolder(){
-    
-                //ele chama os dois document grid e list view
             if  folderViewModel.showingGridView  {
                     DocumentGridView(openFolder: openFolder)
                 } else {
