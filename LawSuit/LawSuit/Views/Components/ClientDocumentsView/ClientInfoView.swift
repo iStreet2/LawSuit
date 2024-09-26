@@ -18,8 +18,8 @@ struct ClientInfoView: View {
     @State var editClient = false
     @State var imageData: Data?
     @Binding var deleted: Bool
-    var mailManager: MailManager 
     @State var requestDocument = false
+    var mailManager: MailManager
 
 
     //MARK: ViewModels
@@ -70,7 +70,7 @@ struct ClientInfoView: View {
                 
                 HStack {
                     Button {
-                        mailManager.showMailComposer()
+                        mailManager.sendMail(emailSubject: "Arqion", message: "")
                     } label: {
                         Text("Enviar e-mail")
                     }
@@ -90,7 +90,7 @@ struct ClientInfoView: View {
             dismiss()
         }
         .sheet(isPresented: $requestDocument, content: {
-            RequestDocumentsView(client: client)
+            RequestDocumentsView(client: client, mailManager: mailManager)
         })
         .sheet(isPresented: $editClient, content: {
             EditClientView(client: client, deleted: $deleted)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CheckboxIconComponent: View {
     
-    @State var isChecked: Bool = false
+    @Binding var isChecked: Bool
     var text: String
     
     var body: some View {
@@ -19,7 +19,3 @@ struct CheckboxIconComponent: View {
         .toggleStyle(.checkbox)
     }
 }
-
-//#Preview {
-//    CheckboxIconComponent(.c)
-//}

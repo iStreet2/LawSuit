@@ -10,11 +10,21 @@ import SwiftUI
 struct RequestDocumentsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var client: Client
-    @State var isRgOn: Bool = false
-    @State var isCPFOn: Bool = false
-    @State var isCNHOn: Bool = false
-    @State var isCertidaoNascimentoOn: Bool = false
-    @State var isCertidaoCasamentoOn: Bool = false
+//    @State var isRgOn: Bool = false
+//    @State var isCPFOn: Bool = false
+//    @State var isCNHOn: Bool = false
+//    @State var isCertidaoNascimentoOn: Bool = false
+//    @State var isCertidaoCasamentoOn: Bool = false
+//    
+    @State var documents: [(name: String, isSelected: Bool)] = [
+        ("RG", false),
+        ("CPF", false),
+        ("CNH", false),
+        ("Certidão de Nascimento", false),
+        ("Certidão de Casamento", false)
+    ]
+    
+    var mailManager: MailManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -26,12 +36,12 @@ struct RequestDocumentsView: View {
                 .font(.title2)
             
             HStack(spacing: 50) {
-                CheckboxIconComponent(isChecked: isRgOn, text: "RG")
-                CheckboxIconComponent(isChecked: isCPFOn,text: "CPF")
-                CheckboxIconComponent(isChecked: isCNHOn,text: "CNH")
-                CheckboxIconComponent(isChecked: isCertidaoNascimentoOn,text: "Certidão de Nascimento")
+                ForEach(0..<4) { index in
+                    CheckboxIconComponent(isChecked: $documents[index].isSelected, text: documents[index].name)
+                }
             }
-            CheckboxIconComponent(isChecked: isCertidaoCasamentoOn,text: "Certidão de Casamento")
+            CheckboxIconComponent(isChecked: $documents[4].isSelected, text: documents[4].name)
+
             Spacer()
             
             HStack {
@@ -42,11 +52,9 @@ struct RequestDocumentsView: View {
                     Text("Cancelar")
                 })
                 Button(action: {
-                    print(isRgOn)
-                    print(isCPFOn)
-                    print(isCNHOn)
-                    print(isCertidaoNascimentoOn)
-                    print(isCertidaoCasamentoOn)
+                    mailManager.sendMail(
+                        emailSubject: "Solicitação de documentos para seu processo",
+                        message: MailMessageEnum.requestDocumentsMessage.returnRequestDocumentsMessage(documents: selectedDocuments(), client: client))
                 }, label: {
                     Text("Solicitar")
                 })
@@ -55,5 +63,9 @@ struct RequestDocumentsView: View {
         }
         .frame(width: 450, height: 200)
         .padding(20)
+    }
+    
+    func selectedDocuments() -> [String] {
+        documents.filter { $0.isSelected }.map { $0.name }
     }
 }

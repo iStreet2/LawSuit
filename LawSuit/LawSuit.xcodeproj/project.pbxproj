@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		08079F232CA4A1F4004EDF98 /* RequestDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */; };
+		08079F262CA5EFCB004EDF98 /* MailMessageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */; };
 		0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0897CB392C8BA21D00B488A9 /* MailManager.swift */; };
 		0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */; };
 		089B8A9C2C9E312D00FEBCAB /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */; };
@@ -150,6 +151,7 @@
 
 /* Begin PBXFileReference section */
 		08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
+		08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailMessageEnum.swift; sourceTree = "<group>"; };
 		084D404F2C8A4AAE00C96111 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,6 +304,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08079F242CA5EFB0004EDF98 /* Mail */ = {
+			isa = PBXGroup;
+			children = (
+				08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */,
+			);
+			path = Mail;
+			sourceTree = "<group>";
+		};
 		08A2B0C02C8F730500719571 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +437,7 @@
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
+				08079F242CA5EFB0004EDF98 /* Mail */,
 				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
 				08A2B0D82C935ADA00719571 /* Extensions */,
 				08A2B0C02C8F730500719571 /* Networking */,
@@ -806,6 +817,7 @@
 				3B04F11D2C7FB9B600991746 /* ClientInfoView.swift in Sources */,
 				3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */,
 				3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */,
+				08079F262CA5EFCB004EDF98 /* MailMessageEnum.swift in Sources */,
 				E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */,
 				E9E323E42C80EA12000BA6FD /* DetailedLawSuitView.swift in Sources */,
 				DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */,
