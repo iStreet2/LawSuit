@@ -52,9 +52,9 @@ struct ClientView: View {
                     ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
                     Divider()
                     HStack {
-                        SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
+                        CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
                             .padding(5)
-                            .frame(width: 190, alignment: .leading)
+                           
                         Spacer()
                         if selectedOption == "Processos" {
                             Button(action: {

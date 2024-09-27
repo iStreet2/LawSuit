@@ -41,6 +41,9 @@ struct EditClientView: View {
     @State var clientTelephone: String = ""
     @State var clientCellphone: String = ""
     
+    @State var selectedOption = "Informações Pessoais"
+    var infos = ["Informações Pessoais", "Endereço", "Contato"]
+    
     let textLimit = 50
     let maritalStatusLimit = 10
     
@@ -51,6 +54,7 @@ struct EditClientView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+    
     
     
     var body: some View {
@@ -69,22 +73,23 @@ struct EditClientView: View {
                     .padding(.top, 2)
                 }
             }
-            Picker(selection: $userInfoType, label: Text("picker")) {
-                Text("Informações Pessoais").tag(0)
-                Text("Endereço").tag(1)
-                Text("Contato").tag(2)
-                Text("Outros").tag(3)
-            }
-            .padding(.top, 10)
-            .padding(.trailing, 100)
-            .pickerStyle(.segmented)
-            .labelsHidden()
+            CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
+//            Picker(selection: $userInfoType, label: Text("picker")) {
+//                Text("Informações Pessoais").tag(0)
+//                Text("Endereço").tag(1)
+//                Text("Contato").tag(2)
+//                Text("Outros").tag(3)
+//            }
+//            .padding(.top, 10)
+//            .padding(.trailing, 100)
+//            .pickerStyle(.segmented)
+//            .labelsHidden()
             
-            if userInfoType == 0 {
+            if selectedOption == "Informações Pessoais" {
                 EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
-            } else if userInfoType == 1 {
+            } else if selectedOption == "Endereço" {
                 EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
-            } else if userInfoType == 2 {
+            } else if selectedOption == "Contato" {
                 EditClientViewFormsFields(formType: .contact, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             }
             Spacer()
