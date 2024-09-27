@@ -82,8 +82,8 @@ struct ClientView: View {
                         DocumentView()
                             .onAppear {
                                 navigationViewModel.selectedClient = client
-                                folderViewModel.resetFolderStack()
-                                folderViewModel.openFolder(folder: client.rootFolder)
+                                folderViewModel.resetFolderStack() //caminho fica sem nada
+                                folderViewModel.openFolder(folder: client.rootFolder) //abre a root folder do cliente que estou selecionado
                                 navigationViewModel.dismissLawsuitView.toggle()
                             }
                             .padding()
