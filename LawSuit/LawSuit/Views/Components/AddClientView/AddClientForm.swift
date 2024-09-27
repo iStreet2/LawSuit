@@ -186,17 +186,17 @@ struct AddClientForm: View {
             ScrollView(showsIndicators: false) {
                 Group {
                     VStack(alignment: .leading, spacing: 15) {
-                        HStack(alignment: .top) {
-                            Rectangle()
-                                .frame(width: 134, height: 134)
-                                .cornerRadius(10)
-                            VStack(alignment: .leading){
-                                LabeledTextField(label: "Nome Completo", placeholder: "Insira o nome do Cliente", textfieldText: $name)
+//                        HStack(alignment: .top) {
+//                            Rectangle()
+//                                .frame(width: 134, height: 134)
+//                                .cornerRadius(10)
+//                            VStack(alignment: .leading){
+                                LabeledTextField(label: "Nome Civil", placeholder: "Insira o nome civil do Cliente", textfieldText: $name)
                                     .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
                                 LabeledDateField(selectedDate: $birthDate, label: "Data de Nascimento")
                                 
-                            }
-                        }
+//                            }
+//                        }
                         LabeledTextField(label: "Nome Social", placeholder: "Insira o nome social do Cliente", textfieldText: $socialName)
                             .onReceive(Just(socialName)) { _ in textFieldDataViewModel.limitText(text: &socialName, upper: textLimit) }
                             .padding(.horizontal, 2)
@@ -207,20 +207,19 @@ struct AddClientForm: View {
                                 .onReceive(Just(cpf)) { _ in cpf = textFieldDataViewModel.formatCPF(cpf) }
                                 .foregroundStyle(cpf.count == 14 ? (textFieldDataViewModel.isValidCPF(cpf) ? .black : .red) : .black)
                         }
-                        LabeledTextField(label: "Filiação", placeholder: "Insira a Filiação do Cliente", textfieldText: $affiliation)
+                        LabeledTextField(label: "Filiação", placeholder: "Insira a filiação do Cliente", textfieldText: $affiliation)
                             .onReceive(Just(affiliation)) { _ in textFieldDataViewModel.limitText(text: &affiliation, upper: textLimit) }
-                        LabeledTextField(label: "Nacionalidade", placeholder: "Insira a Nacionalidade do Cliente", textfieldText: $nationality)
+                        LabeledTextField(label: "Nacionalidade", placeholder: "Insira a nacionalidade do Cliente", textfieldText: $nationality)
                             .onReceive(Just(nationality)) { _ in textFieldDataViewModel.limitText(text: &nationality, upper: textLimit) }
                         HStack(spacing: 15) {
-                            LabeledTextField(label: "Profissão", placeholder: "Insira a Profissão do Cliente", textfieldText: $occupation)
+                            LabeledTextField(label: "Profissão", placeholder: "Insira a profissão do Cliente", textfieldText: $occupation)
                                 .onReceive(Just(occupation)) { _ in textFieldDataViewModel.limitText(text: &occupation, upper: textLimit) }
-                            LabeledTextField(label: "Estado Civil", placeholder: "Insira o Estado Civil do Cliente", textfieldText: $maritalStatus)
+                            LabeledTextField(label: "Estado Civil", placeholder: "Insira o estado civil do Cliente", textfieldText: $maritalStatus)
                                 .onReceive(Just(maritalStatus)) { _ in textFieldDataViewModel.limitMaritalStatus(maritalStatus: &maritalStatus, upper: maritalStatusLimit) }
                         }
                     }
                     
                 }
-                .background(Color("ScrollBackground"))
                 .padding(.vertical, 5)
                 .padding(.horizontal, 2)
             }
@@ -243,11 +242,11 @@ struct AddClientForm: View {
                     })
                 LabeledTextField(label: "Endereço", placeholder: "Insira o endereço do Cliente", textfieldText: $address)
                 HStack(spacing: 10) {
-                    LabeledTextField(label: "Número", placeholder: "Insira o número do Cliente", textfieldText: $addressNumber)
+                    LabeledTextField(label: "Número", placeholder: "Número do endereço", textfieldText: $addressNumber)
                         .frame(width: 120)
                         .onReceive(Just(addressNumber)) { _ in addressNumber = textFieldDataViewModel.formatNumber(addressNumber, limit: 7)}
                     LabeledTextField(label: "Bairro", placeholder: "Insira o bairro do Cliente", textfieldText: $neighborhood)
-                    LabeledTextField(label: "Complemento", placeholder: "Insira o complemento do Cliente", textfieldText: $complement)
+                    LabeledTextField(label: "Complemento", placeholder: "Insira o complemento", textfieldText: $complement)
                         .frame(width: 170)
                 }
                 HStack(spacing: 10) {
@@ -258,37 +257,25 @@ struct AddClientForm: View {
             Spacer()
                 .padding(.vertical, 5)
         } else if stage == 3 {
-            HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 15) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("E-mail")
-                            .bold()
-                            .font(.body)
-                            .foregroundStyle(Color.black)
-                        TextField("Insira o e-mail do Cliente", text: $email)
-                            .font(.body)
-                            .textFieldStyle(.roundedBorder)
+                    LabeledTextField(label: "E-mail", placeholder: "Insira o e-mail do Cliente", textfieldText: $email)
                             .onChange(of: email) { newValue in
                                 isEmailValid = textFieldDataViewModel.isValidEmail(newValue)
                             }
                             .foregroundColor(isEmailValid ? .black : .red)
-                    }
                     if !isEmailValid {
                         Text("E-mail inválido")
                             .foregroundStyle(.red)
                             .font(.caption)
                             .padding(.vertical, -10)
-                            .padding(.horizontal, 10)
+                            .padding(.horizontal, 5)
                     }
-                    
-                    HStack(spacing: 60) {
-                        LabeledTextField(label: "Telefone", placeholder: "Insira seu telefone", textfieldText: $telephone)
+                        LabeledTextField(label: "Telefone", placeholder: "Insira o telefone do Cliente", textfieldText: $telephone)
                             .onReceive(Just(telephone)) { _ in telephone = textFieldDataViewModel.formatPhoneNumber(telephone, cellphone: false) }
-                        LabeledTextField(label: "Celular", placeholder: "Insira seu celular", textfieldText: $cellphone)
+                        LabeledTextField(label: "Celular", placeholder: "Insira o celular do Cliente", textfieldText: $cellphone)
                             .onReceive(Just(cellphone)) { _ in cellphone = textFieldDataViewModel.formatPhoneNumber(cellphone, cellphone: true) }
-                    }
+                    
                 }
-            }
             Spacer()
                 .padding(.vertical, -5)
         }

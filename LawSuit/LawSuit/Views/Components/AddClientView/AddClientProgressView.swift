@@ -11,11 +11,11 @@ struct AddClientProgressView: View {
     
     @Binding var stage: Int
     
-    let stageTexts = ["Dados Pessoais", "Endereço", "Contato", "Outros"]
+    let stageTexts = ["Dados Pessoais", "Endereço", "Contato"]
     
     var body: some View {
         HStack(alignment: .top) {
-            ForEach(1...4, id: \.self) { index in
+            ForEach(1...3, id: \.self) { index in
                 VStack {
                     Circle()
                         .fill(index <= stage ? Color(.wine) : Color.gray)
@@ -26,7 +26,7 @@ struct AddClientProgressView: View {
                         .foregroundColor(Color.secondary)
                         .lineLimit(1)
                 }
-                if index < 4 {
+                if index < 3 {
                     Rectangle()
                         .fill(index < stage ? Color(.wine) : Color.gray)
                         .frame(height: 3)

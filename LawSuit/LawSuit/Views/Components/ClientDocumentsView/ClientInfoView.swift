@@ -66,9 +66,15 @@ struct ClientInfoView: View {
 //            }
             VStack(alignment: .leading) {
                 HStack {
-                    Text(client.name)
-                        .font(.title)
-                        .bold()
+                    if let socialName = client.socialName {
+                        Text(socialName)
+                            .font(.title)
+                            .bold()
+                    } else {
+                        Text(client.name)
+                            .font(.title)
+                            .bold()
+                    }
                     Button {
                         // Ação para editar o cliente
                         editClient.toggle()
