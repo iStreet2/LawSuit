@@ -52,19 +52,7 @@ struct DocumentListView: View {
                 .foregroundStyle(Color(.gray))
                 
                 Divider()
-                
-                HStack{
-                    Button {
-                        folderViewModel.closeFolder()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                    }
-                    .disabled(folderViewModel.getPath().count() == 1)
-                    .buttonStyle(PlainButtonStyle())
-                    .font(.title2)
-                    .padding(.bottom)
-                }
-                
+
                 ScrollView {
                 
                         VStack(alignment: .leading) {
@@ -75,16 +63,15 @@ struct DocumentListView: View {
                             FilePDFGridView(parentFolder: openFolder, geometry: geometry)
 
                         }
-//                        .background(IndexPath % 2 == 0 ? Color.gray.opacity(0.1) : Color.white)
 
-                    
-
-                    
                     if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
                         Text("Sem pastas ou arquivos")
                             .foregroundStyle(.gray)
                     }
                 }
+                Spacer()
+                PathViewComponent()
+
             }
             .onChange(of: openFolder) { _ in
                 dragAndDropViewModel.updateFramesFolder(folders: folders)

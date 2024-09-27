@@ -47,6 +47,7 @@ struct ContentView: View {
                 Spacer()
             }
         }
+        .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {
             AddClientView()
         })

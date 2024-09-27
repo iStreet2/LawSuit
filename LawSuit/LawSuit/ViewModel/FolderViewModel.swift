@@ -12,9 +12,21 @@ import UniformTypeIdentifiers
 
 class FolderViewModel: ObservableObject {
     
-    @Published private var openFolder: Folder?
-    @Published private var path = FolderStack()
+    @Published private var openFolder: Folder? //fala qual pasta ta aberta, n consegue acessar diretamente usa getOpenFolder, a q vc ta vendo agora
+    @Published private var path = FolderStack() //path.itens acessa array d folders
     @Published var showingGridView = true
+    
+    func getFolderPath() -> String {
+//        ForEach(getPath().getItens()) { item in
+//            HStack {
+//                Text(item.name ?? "sem item")
+//                Image(systemName: "chevron.right")
+//            }
+//        }
+
+        let folderNames = path.getItens().dropFirst().map { $0.name ?? "Sem nome"}
+        return folderNames.joined(separator: " / ")
+    }
     
     func getOpenFolder() -> Folder? {
         if let openFolder = openFolder {
@@ -44,7 +56,7 @@ class FolderViewModel: ObservableObject {
         }
     }
     
-    func resetFolderStack() {
+    func resetFolderStack() { //path fica vazio []
         withAnimation(.easeIn(duration: 0.1)) {
             path.reset()
         }

@@ -19,6 +19,7 @@ struct DetailedLawSuitView: View {
     
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
+    
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
@@ -42,7 +43,7 @@ struct DetailedLawSuitView: View {
             if !deleted {
                 HStack(alignment: .top, spacing: 22) {
                     mainBlock
-                        .frame(maxHeight: .infinity)
+                    //                        .frame(maxHeight: .infinity)
                     
                     VStack(spacing: 10) {
                         
@@ -54,17 +55,32 @@ struct DetailedLawSuitView: View {
                     .fixedSize(horizontal: false, vertical: true)
                 }
                 .fixedSize(horizontal: false, vertical: true)
-                .frame(minHeight: 220, maxHeight: 280)
+                .frame(minHeight: 150, maxHeight: 190)
                 .frame(minWidth: 620)
                 Divider()
+                    .padding(.top, 8)
                 VStack {
                     HStack {
-                        Text("Arquivos do Processo")
+                        
+                        Button {
+                            folderViewModel.closeFolder()
+                        } label: {
+                            Image(systemName: "chevron.left")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .font(.title2)
+                        .disabled(folderViewModel.getPath().count() == 1)
+                        
+                        Text((folderViewModel.getPath().count() == 1 ? "Arquivos do Processo" : folderViewModel.getOpenFolder()?.name) ?? "Sem nome")
                             .font(.title3)
                             .bold()
                         Spacer()
+                        if let openFolder = folderViewModel.getOpenFolder(){
+                            DocumentActionButtonsView(folder: openFolder )
+                        }
+                        
                     }
-                    .padding(.vertical)
+                    .padding(.vertical, 5)
                     // MARK: - View/Grid de Pastas
                     DocumentView()
                 }
@@ -95,6 +111,7 @@ struct DetailedLawSuitView: View {
             navigationViewModel.dismissLawsuitView.toggle()
             dismiss()
         }
+        .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
     
     func updateNames() {
@@ -168,7 +185,7 @@ extension DetailedLawSuitView {
                     .bold()
                 //                Text(dateFormatter.string(from: lawsuit.actionDate))
                 Text("\(lawsuit.actionDate, formatter: dateFormatter)")
-                //					.padding(.bottom, 60)
+                //                					.padding(.bottom, 30)
                 
                 Spacer()
                 
@@ -217,24 +234,18 @@ extension DetailedLawSuitView {
                             }, label: {
                                 Text("Acessar JusBrasil")
                             })
-                            Button(action: {
-                                
-                            }, label: {
-                                Text("Avisar Cliente")
-                            })
                         }
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Movimentações Anteriores")
                                 .font(.headline)
                                 .foregroundStyle(Color(.secondaryLabelColor))
                             
-                            ForEach(dataViewModel.coreDataManager.updateManager.sortUpdates(lawsuit: lawsuit).prefix(5)) { update in
+                            ForEach(dataViewModel.coreDataManager.updateManager.sortUpdates(lawsuit: lawsuit).prefix(3)) { update in
                                 Text(update.date?.convertToString() ?? "Sem movimentações")
                                     .font(.subheadline)
                                     .foregroundStyle(Color(.secondaryLabelColor))
                             }
                         }.padding(.top, 10)
-                        
                     }
                     
                     Spacer()
