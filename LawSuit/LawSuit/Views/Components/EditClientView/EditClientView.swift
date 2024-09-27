@@ -102,7 +102,7 @@ struct EditClientView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
                 .alert(isPresented: $deleteAlert, content: {
-                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir seu cliente irá apagar todos os dados relacionados a ele, incluindo seus processos!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
                             for lawsuit in lawsuits {
                                 dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
@@ -117,7 +117,6 @@ struct EditClientView: View {
                         }
                         
                     }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
-                        dismiss()
                     }))
                 })
                 Spacer()

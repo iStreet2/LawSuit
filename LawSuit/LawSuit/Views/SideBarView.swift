@@ -61,11 +61,5 @@ struct SideBarView: View {
         .padding(.trailing,5)
         .background(Color(hex: "932425").blendMode(.darken))
     }
-    
-    
-    
-    
-    
-    
-    
 }
+

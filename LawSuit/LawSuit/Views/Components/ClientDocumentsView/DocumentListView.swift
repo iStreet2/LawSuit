@@ -96,6 +96,8 @@ struct DocumentListView: View {
                 }, label: {
                     Text("Nova Pasta")
                     Image(systemName: "folder")
+                        .resizable()
+
                 })
                 Button {
                     folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)

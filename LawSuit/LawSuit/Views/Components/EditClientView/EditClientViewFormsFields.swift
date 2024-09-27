@@ -100,22 +100,29 @@ struct EditClientViewFormsFields: View {
             
         } else if formType == .contact {
             VStack(spacing: 10) {
-                LabeledTextField(label: "E-mail", placeholder: "E-mail", textfieldText: $email)
-                    .onChange(of: email) { newValue in
-                        isEmailValid = textFieldDataViewModel.isValidEmail(newValue)
-                    }
-                    .foregroundColor(isEmailValid ? .black : .red)
-                
-                if !isEmailValid {
-                    HStack {
-                        Text("E-mail inválido")
-                            .foregroundStyle(.red)
-                            .font(.caption)
-                            .padding(.vertical, -5)
-                            .padding(.horizontal, 10)
-                        Spacer()
-                    }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("E-mail")
+                        .bold()
+                        .font(.body)
+                        .foregroundStyle(Color.black)
+                    TextField("Insira o e-mail do Cliente", text: $email)
+                        .font(.body)
+                        .textFieldStyle(.roundedBorder)
+                        .onChange(of: email) { newValue in
+                            isEmailValid = textFieldDataViewModel.isValidEmail(newValue)
+                        }
+                        .foregroundColor(isEmailValid ? .black : .red)
                 }
+                    if !isEmailValid {
+                        HStack {
+                            Text("E-mail inválido")
+                                .foregroundStyle(.red)
+                                .font(.caption)
+                                .padding(.vertical, -5)
+                                .padding(.horizontal, 10)
+                            Spacer()
+                        }
+                    }
                 HStack {
                     LabeledTextField(label: "Telefone", placeholder: "Telefone", textfieldText: $telephone)
                         .onReceive(Just(telephone)) { _ in telephone = textFieldDataViewModel.formatPhoneNumber(telephone, cellphone: false) }

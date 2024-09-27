@@ -66,9 +66,15 @@ struct ClientInfoView: View {
 //            }
             VStack(alignment: .leading) {
                 HStack {
-                    Text(client.name)
-                        .font(.title)
-                        .bold()
+                    if let socialName = client.socialName {
+                        Text(socialName)
+                            .font(.title)
+                            .bold()
+                    } else {
+                        Text(client.name)
+                            .font(.title)
+                            .bold()
+                    }
                     Button {
                         // Ação para editar o cliente
                         editClient.toggle()
@@ -81,13 +87,17 @@ struct ClientInfoView: View {
                 
                 HStack {
                     Text("Celular")
+                        .font(.body)
                         .bold()
                         .foregroundStyle(Color(.gray))
                     Text(client.cellphone)
+                        .font(.body)
                     Text("E-mail")
+                        .font(.body)
                         .bold()
                         .foregroundStyle(Color(.gray))
                     Text(client.email)
+                        .font(.body)
                 }
                 .font(.footnote)
                 
@@ -96,8 +106,10 @@ struct ClientInfoView: View {
 
                 } label: {
                     Text("Mais informações")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
+                        .font(.body)
+                        .foregroundColor(.wine)
+                        .underline()
+                        .bold()
                 }
                 .buttonStyle(PlainButtonStyle())
                 
@@ -105,8 +117,12 @@ struct ClientInfoView: View {
                     mailManager.showMailComposer()
                 } label: {
                     Text("Enviar e-mail")
+                        
                 }
+                .font(.title3)
                 .buttonStyle(.borderedProminent)
+                .tint(Color(.arqBlack))
+                
             }
             Spacer()
         }
