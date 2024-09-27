@@ -105,6 +105,7 @@
 		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
 		DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */; };
 		DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */; };
+		DC2851E52CA74B200038A2E4 /* PathViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2851E42CA74B200038A2E4 /* PathViewComponent.swift */; };
 		DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC401F9C2C931FE3006FC949 /* Alerts.swift */; };
 		DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD2F2C77B23900000195 /* AddClientView.swift */; };
 		DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */; };
@@ -265,6 +266,7 @@
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
 		DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentStyle.swift; sourceTree = "<group>"; };
 		DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentView.swift; sourceTree = "<group>"; };
+		DC2851E42CA74B200038A2E4 /* PathViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathViewComponent.swift; sourceTree = "<group>"; };
 		DC401F9C2C931FE3006FC949 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		DCC1BD2F2C77B23900000195 /* AddClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientView.swift; sourceTree = "<group>"; };
 		DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientProgressView.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				084D404F2C8A4AAE00C96111 /* LawSuit.app */,
 				084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */,
 				084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */,
+				DC2851E32CA74B120038A2E4 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -601,6 +604,7 @@
 		3BD40B3C2C6D4DE8004048FA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				DC2851E42CA74B200038A2E4 /* PathViewComponent.swift */,
 				3BAEA2E22C84F6E300AF5D6F /* PendentDocumentsView */,
 				3BB9A3462C84F32E00AD1E30 /* TagViewComponent */,
 				3BB9A3452C84F28600AD1E30 /* AddClientView */,
@@ -641,6 +645,14 @@
 				E94C01652CA1E2C100F6316F /* EventMonitorProtocol2.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		DC2851E32CA74B120038A2E4 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				08079F272CA744BE004EDF98 /* PathViewComponent.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -781,6 +793,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E94C015C2C9B6F7200F6316F /* SpotlightManager.swift in Sources */,
+				DC2851E52CA74B200038A2E4 /* PathViewComponent.swift in Sources */,
 				6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */,
 				08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */,
 				08079F232CA4A1F4004EDF98 /* RequestDocumentsView.swift in Sources */,
