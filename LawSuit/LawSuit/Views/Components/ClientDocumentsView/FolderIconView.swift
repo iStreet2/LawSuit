@@ -32,103 +32,97 @@ struct FolderIconView: View {
     }
     
     var body: some View {
-        if folderViewModel.showingGridView {
-            VStack {
-                Image("folder")
-                
-                if isEditing {
-                    TextField("", text: $folderName, onEditingChanged: { _ in
-                    }, onCommit: {
-                        saveChanges()
-                    })
-                    .onExitCommand(perform: cancelChanges)
-                    .lineLimit(2)
-                    .frame(height: 12)
-                }
-                else {
-                    Text(folder.name ?? "Sem nome")
-                        .lineLimit(1)
-                        .onTapGesture(count: 2) {
-                            isEditing = true
-                        }
-                }
-            }
-            .onDisappear {
-                isEditing = false
-            }
-            .onAppear {
-                if folderName == "Nova Pasta" {
-                    isEditing = true
-                }
-            }
-        } else {
-            HStack {
-                Image("folder")
-                    .resizable()
-                    .frame(width: 18,height: 14)
-                
-                if isEditing {
-                    TextField("", text: $folderName, onEditingChanged: { _ in
-                    }, onCommit: {
-                        saveChanges()
-                    })
-                    .onExitCommand(perform: cancelChanges)
-                    .lineLimit(2)
-                    .frame(height: 12)
-                }
-                else {
-                    Text(folder.name ?? "Sem nome")
-                        .lineLimit(1)
-                        .onTapGesture(count: 2) {
-                            isEditing = true
-                        }
-                }
-            }
-            .onDisappear {
-                isEditing = false
-            }
-            
-            .onAppear {
-                if folderName == "Nova Pasta" {
-                    isEditing = true
-                }
-            }
-            
-            .contextMenu {
-                Button(action: {
-                    folderViewModel.openFolder(folder: folder)
-                }) {
-                    Text("Abrir Pasta")
-                    Image(systemName: "folder")
-                }
-                Button(action: {
-                    isEditing = true
-                }) {
-                    Text("Renomear")
-                    Image(systemName: "pencil")
-                }
-                Button(action: {
-                    // Ação para excluir a pasta
-                    withAnimation(.easeIn) {
-                        dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+        Group {
+            if folderViewModel.showingGridView {
+                VStack {
+                    Image("PastaLight")
+                        .resizable()
+                        .frame(width: 73, height: 58)
+
+                    if isEditing {
+                        TextField("", text: $folderName, onEditingChanged: { _ in
+                        }, onCommit: {
+                            saveChanges()
+                        })
+                        .onExitCommand(perform: cancelChanges)
+                        .lineLimit(2)
+                        .frame(height: 12)
                     }
-                }) {
-                    Text("Excluir")
-                    Image(systemName: "trash")
+                    else {
+                        Text(folder.name ?? "Sem nome")
+                            .lineLimit(1)
+                            .onTapGesture(count: 2) {
+                                isEditing = true
+                            }
+                    }
+                }
+            } else {
+                HStack {
+                    Image("PastaLight")
+                        .resizable()
+                        .frame(width: 18,height: 14)
+                    
+                    if isEditing {
+                        TextField("", text: $folderName, onEditingChanged: { _ in
+                        }, onCommit: {
+                            saveChanges()
+                        })
+                        .onExitCommand(perform: cancelChanges)
+                        .lineLimit(2)
+                        .frame(height: 12)
+                    }
+                    else {
+                        Text(folder.name ?? "Sem nome")
+                            .lineLimit(1)
+                            .onTapGesture(count: 2) {
+                                isEditing = true
+                            }
+                    }
                 }
             }
-            //        .onDrag {
-            //            // Gera uma URL temporária para a pasta
-            //            let tempDirectory = FileManager.default.temporaryDirectory
-            //            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
-            //
-            //            // Cria a pasta temporária
-            //            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
-            //
-            //            // Retorna o NSItemProvider com a URL da pasta temporária
-            //            return NSItemProvider(object: tempFolderURL as NSURL)
-            //        }
         }
+        .onDisappear {
+            isEditing = false
+        }
+        .onAppear {
+            if folderName == "Nova Pasta" {
+                isEditing = true
+            }
+        }
+        .contextMenu {
+            Button(action: {
+                folderViewModel.openFolder(folder: folder)
+            }) {
+                Text("Abrir Pasta")
+                Image(systemName: "folder")
+            }
+            Button(action: {
+                isEditing = true
+            }) {
+                Text("Renomear")
+                Image(systemName: "pencil")
+            }
+            Button(action: {
+                // Ação para excluir a pasta
+                withAnimation(.easeIn) {
+                    dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                }
+            }) {
+                Text("Excluir")
+                Image(systemName: "trash")
+            }
+        }
+        //        .onDrag {
+        //            // Gera uma URL temporária para a pasta
+        //            let tempDirectory = FileManager.default.temporaryDirectory
+        //            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
+        //
+        //            // Cria a pasta temporária
+        //            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
+        //
+        //            // Retorna o NSItemProvider com a URL da pasta temporária
+        //            return NSItemProvider(object: tempFolderURL as NSURL)
+        //        }
     }
     private func cancelChanges() {
         folderName = folder.name!

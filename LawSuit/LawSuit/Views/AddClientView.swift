@@ -18,6 +18,7 @@ struct AddClientView: View {
     @State var stage: Int = 1
     @State var invalidInformation: InvalidInformation?
     @State var name: String = ""
+    @State var socialName: String = ""
     @State var occupation: String = ""
     @State var rg: String = ""
     @State var cpf: String = ""
@@ -44,21 +45,37 @@ struct AddClientView: View {
     
     
     var body: some View {
-        VStack() {
-            HStack {
-                Text("Novo Cliente")
-                    .font(.title)
-                    .bold()
-                    .padding(.leading, 2)
-                Spacer()
+        VStack(spacing: 0) {
+            VStack {
+                HStack {
+                    Text("Novo Cliente")
+                        .font(.title)
+                        .bold()
+                        .padding(.horizontal, 15)
+                    Spacer()
+                }
+                //MARK: ProgressBar
+                AddClientProgressView(stage: $stage)
             }
-            //MARK: ProgressBar
-            AddClientProgressView(stage: $stage)
+            .padding(.vertical, 7)
             Spacer()
-            AddClientForm(stage: $stage, name: $name, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone)
+            Divider()
+            VStack(spacing: 0) {
+                AddClientForm(stage: $stage, name: $name, socialName: $socialName, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone)
+            }
+            .padding()
+            .background(Color("ScrollBackground"))
+            Divider()
+            
             Spacer()
             //MARK: Botões
             HStack {
+//                Button(action: {
+//                    
+//                }, label: {
+//                    Text("Importar Dados")
+//                        .foregroundStyle(.wine)
+//                })
                 Spacer()
                 Button(action: {
                     if stage == 1 {
@@ -103,7 +120,7 @@ struct AddClientView: View {
                         else {
                             //MARK: Advogado temporário
                             let lawyer = lawyers[0]
-                            dataViewModel.coreDataManager.clientManager.createClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                            dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
                             dismiss()
                         }
                         return
@@ -152,15 +169,17 @@ struct AddClientView: View {
                                      dismissButton: .default(Text("Ok")))
                     case .invalidLawSuitNumber:
                         return Alert(title: Text(""),
-                        message: Text(""),
-                        dismissButton: .default(Text("")))
-                   
+                                     message: Text(""),
+                                     dismissButton: .default(Text("")))
+                        
                     }
                 }
             }
+            .padding(.vertical, 7)
+            .padding(.horizontal, 10)
         }
-        .padding()
-        .frame(width: 500)
+        .padding(.vertical, 5)
+        .frame(width: 515, height: 500)
     }
     
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage

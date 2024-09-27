@@ -54,9 +54,17 @@ struct ClientListView: View {
                                 RoundedRectangle(cornerRadius: 5)
                                     .foregroundStyle(.gray)
                                     .opacity(0.4)
-                                Text(client.name)
-                                    .padding(.leading,10)
+                                if let socialName = client.socialName {
+                                    Text(socialName)
+                                        .padding(.leading,10)
+                                } else {
+                                    Text(client.name)
+                                        .padding(.leading,10)
+                                }
                             }
+                        } else if let socialName = client.socialName{
+                            Text(socialName)
+                                .padding(.leading,10)
                         } else {
                             Text(client.name)
                                 .padding(.leading,10)

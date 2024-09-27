@@ -23,7 +23,7 @@ struct SpotlightView: View {
 			Text("SpotlightVioew")
 				.font(.largeTitle)
 			
-			if let currentRecordable = currentRecordable {
+            if currentRecordable != nil {
 				if let client = currentClient {
 					Text(client.name)
 					Text(client.id)

@@ -97,7 +97,6 @@
 		6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */; };
 		6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */; };
 		6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */; };
-		6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */; };
 		6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */; };
 		6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */; };
 		6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */; };
@@ -131,6 +130,7 @@
 		E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4272C8775CB00595150 /* TextRecognizer.swift */; };
 		E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4292C87795000595150 /* OCRTestingView.swift */; };
 		E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A42F2C87AF6000595150 /* ContactsManager.swift */; };
+		FD7EBBB52CA5C84600C44ECA /* VisualEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +149,19 @@
 			remoteInfo = LawSuit;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FD7EBBBE2CA5EA5600C44ECA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
@@ -244,7 +257,6 @@
 		6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
 		6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListView.swift; sourceTree = "<group>"; };
 		6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
-		6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderIconListView.swift; sourceTree = "<group>"; };
 		6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentActionButtonsView.swift; sourceTree = "<group>"; };
 		6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
 		6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFListView.swift; sourceTree = "<group>"; };
@@ -278,6 +290,7 @@
 		E9F3A4272C8775CB00595150 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		E9F3A4292C87795000595150 /* OCRTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTestingView.swift; sourceTree = "<group>"; };
 		E9F3A42F2C87AF6000595150 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,7 +394,6 @@
 				3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */,
 				6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */,
 				3B423E822C80E613005B1B7F /* FolderIconView.swift */,
-				6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */,
 				3B423E7D2C80E2D8005B1B7F /* FolderView.swift */,
 				6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
@@ -390,6 +402,7 @@
 				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
 				3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
+				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
 			);
 			path = ClientDocumentsView;
 			sourceTree = "<group>";
@@ -501,7 +514,6 @@
 				6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */,
 				6ABD79782C7918B600A98BA3 /* EditLawsuitAuthorComponent.swift */,
 				0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */,
-				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
 				6ABD79702C6E990F00A98BA3 /* SelectClientComponent.swift */,
 			);
 			path = AddLawsuitView;
@@ -600,7 +612,7 @@
 				E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */,
 				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
 				08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */,
-				08079F272CA744BE004EDF98 /* PathViewComponent.swift */,
+				FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -641,6 +653,7 @@
 				3B98F1042C668B1000C45121 /* Sources */,
 				3B98F1052C668B1000C45121 /* Frameworks */,
 				3B98F1062C668B1000C45121 /* Resources */,
+				FD7EBBBE2CA5EA5600C44ECA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -848,7 +861,6 @@
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
 				08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */,
 				6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */,
-				6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */,
 				3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */,
 				3B0A7AD12C7D16AA005A5946 /* NetworkMonitorViewModel.swift in Sources */,
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,
@@ -883,6 +895,7 @@
 				08E8D2022C87AF11008F3859 /* LawsuitListView.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
 				3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */,
+				FD7EBBB52CA5C84600C44ECA /* VisualEffects.swift in Sources */,
 				3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1051,7 +1064,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 543L4H35A3;
+				DEVELOPMENT_TEAM = 6KVP348U3Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1063,7 +1076,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.micher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1082,7 +1095,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 543L4H35A3;
+				DEVELOPMENT_TEAM = 6KVP348U3Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1094,7 +1107,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.micher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1110,7 +1123,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 543L4H35A3;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -1129,7 +1142,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 543L4H35A3;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -1147,7 +1160,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuitUITests;
@@ -1164,7 +1177,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuitUITests;
