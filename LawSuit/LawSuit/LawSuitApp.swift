@@ -25,7 +25,7 @@ struct LawSuitApp: App {
     
     var body: some Scene {
         WindowGroup {   
-			  ContentView()
+			  LoginView()
                 .environment(\.managedObjectContext, dataViewModel.coreDataContainer.viewContext)
                 .environmentObject(dataViewModel)
                 .environmentObject(folderViewModel)
@@ -47,6 +47,9 @@ struct LawSuitApp: App {
 					 .sheet(isPresented: $eventManager.filePreviewIsPresented) {
 						 OpenFilePDFView(selectedFile: $eventManager.fileToPreview)
 					 }
+//					 .sheet(isPresented: $dataViewModel.authenticationManager.userShouldAuthenticate) {
+//						 <#code#>
+//					 }
         }
     }
 }

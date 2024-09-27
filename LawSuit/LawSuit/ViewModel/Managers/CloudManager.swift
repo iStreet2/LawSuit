@@ -11,10 +11,12 @@ import CoreData
 
 class CloudManager: ObservableObject {
 	let container: CKContainer
-	let publicDataBase: CKDatabase
+	static var publicDataBase = CKContainer.default().publicCloudDatabase // TODO: Talvez dê errado isso aqui
 	let recordManager: RecordManager
 	let cloudDataConverter: CloudDataConverter
-    let context: NSManagedObjectContext
+	let context: NSManagedObjectContext
+	
+	var office: Office? = nil
 	
 	// MARK: - Na implementação de mais modelos, será necessário fazer um array de "current{model}", atualizar a func `updateArrays` e o enum `QueryType`
 	// MARK: Além de atualizar a função `makeObjectsFromRecords` do recordObjectManager para lidar com outros tipos de objeto.
@@ -24,12 +26,20 @@ class CloudManager: ObservableObject {
 	
 	@Published var loading = false
 	
-    init(container: CKContainer, cloudDataConverter: CloudDataConverter, context: NSManagedObjectContext) {
-        self.container = container
-        self.publicDataBase = container.publicCloudDatabase
-        self.recordManager = RecordManager(container: container, context: context)
-        self.cloudDataConverter = cloudDataConverter
-        self.context = context
+	init(container: CKContainer, cloudDataConverter: CloudDataConverter, context: NSManagedObjectContext) {
+		self.container = container
+		CloudManager.publicDataBase = container.publicCloudDatabase
+		self.recordManager = RecordManager(container: container, context: context)
+		self.cloudDataConverter = cloudDataConverter
+		self.context = context
+	}
+	
+	public static func getRecordFromReference(_ reference: CKRecord.Reference, completion: @escaping (CKRecord?, Error?) -> Void) {
+		let recordID = reference.recordID
+		
+		self.publicDataBase.fetch(withRecordID: recordID) { record, error in
+			completion(record, error)
+		}
 	}
 	
 	public func getObjectsWith(query: QueryType) async -> [Recordable] {
@@ -71,6 +81,33 @@ class CloudManager: ObservableObject {
 			self.currentFolders = []
 		}
 	}
+	
+	func createOffice(name: String, lawyer: Lawyer) {
+		let record = CKRecord(recordType: "Office")
+		
+		record.setValue([lawyer.email], forKey: "lawyers")
+		
+		CloudManager.publicDataBase.save(record) { record, error in
+			if let record = record {
+				self.office = Office(record, context: self.context)
+				print("Record saved succesfully: \(record)")
+			}
+			if let error = error {
+				print("Error saving record: \(error)")
+			}
+		}
+		
+	}
+	
+	func getUserOfficeFrom(officeID: String) async {  // MARK: Quero que este officeID seja o CKRecord.RecordID do office
+		do {
+			let officeRecord = try await CloudManager.publicDataBase.record(for: CKRecord.ID(recordName: officeID))
+			self.office = Office(officeRecord, context: context)
+		} catch {
+			print("No office with ID \(officeID) found: \(error)")
+		}
+	}
+	
 	
 }
 

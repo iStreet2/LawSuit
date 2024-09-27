@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CloudKit
 
 @objc(Lawyer)
 public class Lawyer: NSManagedObject, Identifiable, Recordable {
@@ -15,10 +16,31 @@ public class Lawyer: NSManagedObject, Identifiable, Recordable {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Lawyer> {
         return NSFetchRequest<Lawyer>(entityName: "Lawyer")
     }
+	
+	convenience init?(_ record: CKRecord, context: NSManagedObjectContext) {
+		guard let entity = NSEntityDescription.entity(forEntityName: "Lawyer", in: context) else { return nil }
+		
+		self.init(entity: entity, insertInto: context)
+		
+		guard
+			let id = record[LawyerFields.id.rawValue] as? String,
+			let name = record[LawyerFields.name.rawValue] as? String,
+			let email = record[LawyerFields.email.rawValue] as? String,
+			let username = record[LawyerFields.username.rawValue] as? String
+		else { print("Could not initialize Lawyer from CKRecord"); return nil }
+		
+		self.id = id
+		self.name = name
+		self.email = email
+		self.username = username
+	}
 
     @NSManaged public var id: String?
     @NSManaged public var name: String?
+	 @NSManaged public var officeID: String?
+	 @NSManaged public var username: String?
     @NSManaged public var photo: Data?
+	 @NSManaged public var email: String?
     @NSManaged public var recordName: String?
 
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CloudKit
 
 @objc(Folder)
 public class Folder: NSManagedObject, Identifiable, Recordable {
@@ -15,6 +16,53 @@ public class Folder: NSManagedObject, Identifiable, Recordable {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Folder> {
         return NSFetchRequest<Folder>(entityName: "Folder")
     }
+	
+	convenience init?(_ record: CKRecord, context: NSManagedObjectContext) {
+		guard let entity = NSEntityDescription.entity(forEntityName: "Folder", in: context) else { return nil }
+		
+		self.init(entity: entity, insertInto: context)
+		
+		guard
+			let files = record[FolderFields.files.rawValue] as? [CKRecord.Reference],
+			let folders = record[FolderFields.folders.rawValue] as? [CKRecord.Reference],
+			let name = record[FolderFields.name.rawValue] as? String,
+			let id = record[FolderFields.id.rawValue] as? String
+		else { print("Error initializing Folder from CKRecord"); return nil }
+		
+		self.id = id
+		self.name = name
+		
+		for file in files {
+			CloudManager.getRecordFromReference(file) { record, error in
+				if let record = record {
+					// MARK: INICIALIZADOR DE FILE POR CKRecord
+					if let fileObject = FilePDF(record, context: context) {
+						self.addToFiles(fileObject)
+					} else {
+						print("fileObject could not be created")
+					}
+				} else {
+					print("Error getting file record from reference: \(error!)")
+				}
+			}
+		}
+		
+		for folder in folders {
+			CloudManager.getRecordFromReference(folder) { record, error in
+				if let record = record {
+					// MARK: INICIALIZADOR DE FOLDER POR CKRecord
+					if let folderObject = Folder(record, context: context) {
+						self.addToFolders(folderObject)
+					} else {
+						print("folderObject could not be created")
+					}
+				} else {
+					print("Error getting folder from reference: \(error!)")
+				}
+			}
+		}
+		
+	}
 
     @NSManaged public var id: String?
     @NSManaged public var name: String?

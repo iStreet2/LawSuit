@@ -14,7 +14,7 @@ class LawyerManager {
     
     init(context: NSManagedObjectContext) {
         self.context = context
-        initLawyer()
+//        initLawyer()
     }
     
     func initLawyer() {

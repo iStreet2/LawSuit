@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Client" representedClassName="Client" syncable="YES">
         <attribute name="address" attributeType="String"/>
         <attribute name="addressNumber" attributeType="String"/>
@@ -23,7 +23,7 @@
         <attribute name="rg" attributeType="String"/>
         <attribute name="state" attributeType="String"/>
         <attribute name="telephone" attributeType="String"/>
-        <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="clients" inverseEntity="Lawyer"/>
+        <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer"/>
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentClient" inverseEntity="Folder"/>
     </entity>
     <entity name="Entity" representedClassName="Entity" syncable="YES">
@@ -59,18 +59,18 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="number" attributeType="String"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
-        <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer" inverseName="lawsuits" inverseEntity="Lawyer"/>
+        <relationship name="parentLawyer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lawyer"/>
         <relationship name="rootFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="parentLawsuit" inverseEntity="Folder"/>
         <relationship name="updates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Update" inverseName="parentLawsuit" inverseEntity="Update"/>
     </entity>
     <entity name="Lawyer" representedClassName="Lawyer" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="oab" optional="YES" attributeType="String"/>
+        <attribute name="officeID" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="Binary"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
-        <relationship name="clients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Client" inverseName="parentLawyer" inverseEntity="Client"/>
-        <relationship name="lawsuits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lawsuit" inverseName="parentLawyer" inverseEntity="Lawsuit"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Update" representedClassName="Update" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

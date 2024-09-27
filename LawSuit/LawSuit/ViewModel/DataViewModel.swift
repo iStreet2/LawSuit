@@ -24,6 +24,7 @@ class DataViewModel: ObservableObject {
     var cloudDataConverter: CloudDataConverter
 //    var networkManager: NetworkManager
 	var spotlightManager: SpotlightManager
+	var authenticationManager: AuthenticationManager
 	    
     init() {
         self.coreDataContainer.loadPersistentStores { descricao, error in
@@ -37,6 +38,7 @@ class DataViewModel: ObservableObject {
         self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter, context: context)
 //        self.networkManager = NetworkManager(coreDataManager: self.coreDataManager, cloudManager: self.cloudManager, context: self.context)
 		self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
+		 self.authenticationManager = AuthenticationManager(context: self.context)
     }
 	
 	func fetchCoreDataObjects<T: NSManagedObject>(for model: CoreDataModelsEnumerator) -> [T] {
@@ -67,6 +69,16 @@ class DataViewModel: ObservableObject {
 	
 	func getObjectByURI(uri: String) -> Recordable? {
 		return spotlightManager.getObjectByURI(uri: uri)
+	}
+	
+	func getUserOffice() async {
+		if let user = self.authenticationManager.fetchUser() {  // Se o usuário existir
+			if let officeID = user.officeID {  // Se ele já estiver em um escritório
+				await self.cloudManager.getUserOfficeFrom(officeID: officeID)
+			} else {  // Usuário existe mas não tem escritório
+				
+			}
+		}
 	}
 }
 
