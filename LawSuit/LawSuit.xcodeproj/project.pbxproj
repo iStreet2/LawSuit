@@ -128,6 +128,7 @@
 		E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4272C8775CB00595150 /* TextRecognizer.swift */; };
 		E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4292C87795000595150 /* OCRTestingView.swift */; };
 		E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A42F2C87AF6000595150 /* ContactsManager.swift */; };
+		FD7EBBB52CA5C84600C44ECA /* VisualEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +147,19 @@
 			remoteInfo = LawSuit;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FD7EBBBE2CA5EA5600C44ECA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		084D404F2C8A4AAE00C96111 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,6 +286,7 @@
 		E9F3A4272C8775CB00595150 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		E9F3A4292C87795000595150 /* OCRTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTestingView.swift; sourceTree = "<group>"; };
 		E9F3A42F2C87AF6000595150 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -584,6 +599,7 @@
 				E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */,
 				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
 				08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */,
+				FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -624,6 +640,7 @@
 				3B98F1042C668B1000C45121 /* Sources */,
 				3B98F1052C668B1000C45121 /* Frameworks */,
 				3B98F1062C668B1000C45121 /* Resources */,
+				FD7EBBBE2CA5EA5600C44ECA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -863,6 +880,7 @@
 				08E8D2022C87AF11008F3859 /* LawsuitListView.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
 				3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */,
+				FD7EBBB52CA5C84600C44ECA /* VisualEffects.swift in Sources */,
 				3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1031,7 +1049,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = Z2Y94548LY;
+				DEVELOPMENT_TEAM = 6KVP348U3Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1043,7 +1061,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.br;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1062,7 +1080,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = Z2Y94548LY;
+				DEVELOPMENT_TEAM = 6KVP348U3Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1074,7 +1092,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.br;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
