@@ -73,12 +73,21 @@ struct ClientView: View {
                         }
                     }
                 }
-                VStack {
+                VStack(alignment: .leading) {
+                    
                     if selectedOption == "Processos" {
                         NavigationStack {
                             LawsuitListViewHeaderContent(lawsuits: lawsuits)
                         }
                     } else {
+                        Button {
+                            folderViewModel.closeFolder()
+                        } label: {
+                            Image(systemName: "chevron.left")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .font(.title2)
+                        .disabled(folderViewModel.getPath().count() == 1)
                         DocumentView()
                             .onAppear {
                                 navigationViewModel.selectedClient = client
