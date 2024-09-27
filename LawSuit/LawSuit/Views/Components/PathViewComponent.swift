@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+/
 struct PathViewComponent: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     
