@@ -10,14 +10,15 @@ import CoreData
 import SwiftUI
 
 class DragAndDropViewModel: ObservableObject {
-    
+                                    //id da pasta : posicao
     @Published var folderOffsets: [String: CGSize] = [:]
+                                    //id : frame (quadrado invisivel p detectar colisao)
     @Published var folderFrames: [String: CGRect] = [:]
     @Published var filePDFOffsets: [String: CGSize] = [:]
     @Published var filePDFFrames: [String: CGRect] = [:]
     
     func onDragChangedFolder(gesture: DragGesture.Value, folder: Folder, geometry: GeometryProxy) {
-        folderOffsets[folder.id!] = gesture.translation
+        folderOffsets[folder.id!] = gesture.translation //cada pixel q eu ando, pega CGSize da posicao da folder
         let frame = geometry.frame(in: .global).offsetBy(dx: gesture.translation.width, dy: gesture.translation.height)
         folderFrames[folder.id!] = frame
     }
@@ -128,7 +129,7 @@ class DragAndDropViewModel: ObservableObject {
         }
     }
     
-    //MARK: Funções para drag and drop externo
+    //MARK: para drag and drop externo, n tao sendo usadas!!
     
     func handleDrop(providers: [NSItemProvider], parentFolder: Folder, context: NSManagedObjectContext, dataViewModel: DataViewModel) {
         print("handleDrop: Iniciando o processamento do drop...")

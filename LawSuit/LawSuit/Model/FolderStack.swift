@@ -29,21 +29,21 @@ struct FolderStack: Identifiable, Hashable {
         }
     }
     
-    func top() -> Folder {
+    func top() -> Folder { //retorna topo
         guard let topElement = itens.last else { fatalError("This stack is empty. Top error") }
         return topElement
     }
     
-    mutating func pop() -> Folder {
+    mutating func pop() -> Folder { //remove topo e retorna topo
         guard itens.last != nil else { fatalError("This stack is empty. Pop error") }
         return itens.removeLast()
     }
     
-    mutating func push(_ folder: Folder) {
+    mutating func push(_ folder: Folder) { //colocar
         itens.append(folder)
     }
     
-    mutating func reset() {
+    mutating func reset() { //
         itens.removeAll()
     }
 }

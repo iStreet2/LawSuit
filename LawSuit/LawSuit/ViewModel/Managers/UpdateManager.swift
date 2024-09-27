@@ -25,10 +25,15 @@ class UpdateManager {
     }
     
     func getLatestUpdateDate(lawsuit: Lawsuit) -> Date? {
+        let updatesArray = sortUpdates(lawsuit: lawsuit)
+        return updatesArray.first?.date
+    }
+    
+    func sortUpdates(lawsuit: Lawsuit) -> [Update] {
         let updatesArray = (lawsuit.updates as? Set<Update>)?.sorted {
             ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast) // do maior para o menor
         }
-        return updatesArray?.first?.date
+        return updatesArray ?? []
     }
     
 }

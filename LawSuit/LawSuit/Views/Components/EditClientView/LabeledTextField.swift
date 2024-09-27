@@ -38,7 +38,6 @@ struct LabeledTextField: View {
     @State private var width = CGFloat.zero
     @State private var labelWidth =  CGFloat.zero
     
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
