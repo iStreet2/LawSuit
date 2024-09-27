@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct LawsuitListView: View {
-
+    
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     @State var createProcess = false
     @State private var hasFetchedUpdates = false  // Adicionado
     @EnvironmentObject var dataViewModel: DataViewModel
+    
+    var isLoading: Bool {
+        lawsuits.contains { $0.isLoading }
+    }
     
     var body: some View {
         
@@ -34,21 +38,20 @@ struct LawsuitListView: View {
                     Spacer()
                     Button(action: {
                         for lawsuit in lawsuits {
-                            Task {
-                                await dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                            }
+                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                         }
-                        print("-----------------------------------------------fez o fetch para os lawsuits")
+                        print("----------------fez o fetch para os lawsuits------------------")
                     }, label: {
                         Image(systemName: "arrow.clockwise")
                     })
+                    .disabled(isLoading)
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 
                 LawsuitListViewHeaderContent(lawsuits: lawsuits)
             }
-
+            
         }
         .sheet(isPresented: $createProcess, content: {
             AddLawsuitView()
