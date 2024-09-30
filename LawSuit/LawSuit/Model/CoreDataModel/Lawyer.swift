@@ -22,17 +22,30 @@ public class Lawyer: NSManagedObject, Identifiable, Recordable {
 		
 		self.init(entity: entity, insertInto: context)
 		
-		guard
-			let id = record[LawyerFields.id.rawValue] as? String,
-			let name = record[LawyerFields.name.rawValue] as? String,
-			let email = record[LawyerFields.email.rawValue] as? String,
-			let username = record[LawyerFields.username.rawValue] as? String
-		else { print("Could not initialize Lawyer from CKRecord"); return nil }
+		if let id = record[LawyerFields.id.rawValue] as? String {
+			self.id = id
+		} else {
+			print("Could not get ID for lawyer")
+		}
 		
-		self.id = id
-		self.name = name
-		self.email = email
-		self.username = username
+		if let name = record[LawyerFields.name.rawValue] as? String {
+			self.name = name
+		} else {
+			print("Could not get name for lawyer")
+		}
+		
+		if let email = record[LawyerFields.email.rawValue] as? String {
+			self.email = email
+		} else {
+			print("Could not get email for lawyer")
+		}
+		
+		if let username = record[LawyerFields.username.rawValue] as? String {
+			self.username = username
+		} else {
+			print("Could not get username for lawyer")
+		}
+		
 	}
 
     @NSManaged public var id: String?

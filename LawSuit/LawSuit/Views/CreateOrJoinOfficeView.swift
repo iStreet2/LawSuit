@@ -93,8 +93,8 @@ extension CreateOrJoinOfficeView {
 			
 			Spacer()
 			
-			Button {
-				// TODO: Criar escritório
+			NavigationLink {
+				CreateOfficeView()
 			} label: {
 				HStack {
 					Image(systemName: "plus")

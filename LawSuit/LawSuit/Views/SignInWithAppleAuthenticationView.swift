@@ -16,6 +16,8 @@ struct SignInWithAppleAuthenticationView: View {
 	
 	@Binding var authenticationViewIsPresented: Bool
 	
+	@State var shouldAnimate: Bool = false
+	
 	var body: some View {
 		ZStack {
 			
@@ -40,12 +42,18 @@ struct SignInWithAppleAuthenticationView: View {
 						
 						authenticationViewIsPresented = false
 						// MARK: IR PARA PRÓXIMA TELA
+						
+						withAnimation(.easeIn(duration: 1)) {
+							shouldAnimate = true
+						}
+						
 					case .failure(let error):
 						dataViewModel.authenticationManager.handleLoginError(with: error)
 						authenticationStatus = false
 					}
 				}
 				.frame(width: 130) // MARK: FRAME OPCIONAL
+				.offset(y: shouldAnimate ? (NSScreen.main?.visibleFrame.height)! + 100 : 0)
 				
 				
 				// MARK: - confirmação visual do sign in with apple dentro do APP
@@ -65,17 +73,17 @@ struct SignInWithAppleAuthenticationView: View {
 				//				}
 				
 			}
-			.frame(width: 700, height: 600)
-			.background(
-				ZStack {
-					Color.white
-					Image("Login_Background")
-						.resizable()
-				}
-			)
+//			.frame(width: 700, height: 600)
+//			.background(
+//				ZStack {
+//					Color.white
+//					Image("Login_Background")
+//						.resizable()
+//				}
+//			)
 		}
 		.ignoresSafeArea()
-		.frame(maxWidth: .infinity, maxHeight: .infinity)
+//		.frame(maxWidth: .infinity, maxHeight: .infinity)
 		
 	}
 }

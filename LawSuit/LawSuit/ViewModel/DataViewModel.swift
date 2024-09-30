@@ -71,15 +71,43 @@ class DataViewModel: ObservableObject {
 		return spotlightManager.getObjectByURI(uri: uri)
 	}
 	
-	func getUserOffice() async {
-		if let user = self.authenticationManager.fetchUser() {  // Se o usuário existir
-			if let officeID = user.officeID {  // Se ele já estiver em um escritório
-				await self.cloudManager.getUserOfficeFrom(officeID: officeID)
-			} else {  // Usuário existe mas não tem escritório
+	func createOffice(name: String, lawyer: Lawyer) async {
+		do {
+			if let office = await cloudManager.createOffice(name: name, lawyer: lawyer) {
+				let user = authenticationManager.fetchUser()
+				user?.officeID = office.record?.recordID.recordName
 				
+				try context.save()
+			} else {
+				print("cloudManager.createOffice() -> nil")
 			}
+		} catch {
+			print("Error creating office: \(error)")
 		}
 	}
+	
+	func getUserOffice() async -> Office? {
+		if let user = self.authenticationManager.fetchUser() {  // Se o usuário existir
+			if let officeID = user.officeID {  // Se ele já estiver em um escritório
+				return await self.cloudManager.getUserOfficeFrom(officeID: officeID)
+			} else {  // Usuário existe mas não tem escritório
+				return nil
+			}
+		}
+		return nil
+	}
+	
+	func userDidJoinOffice() -> Bool {
+		if let user = self.authenticationManager.fetchUser() {
+			if let officeID = user.officeID {
+				print("Usuário faz parte do escritório: \(officeID)")
+				return true
+			}
+		}
+		print("O usuário não faz parte de nenhum escritório")
+		return false
+	}
+	
 }
 
 struct StringElement: Identifiable {

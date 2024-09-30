@@ -16,6 +16,7 @@ struct CreateAccountView: View {
 	@State var seeYouNextTimeIsPresented: Bool = false
 	
 	@Binding var authenticationViewIsPresented: Bool
+	@Binding var userHasAUsername: Bool
 	
 	var body: some View {
 		ZStack {
@@ -28,7 +29,7 @@ struct CreateAccountView: View {
 					.frame(width: 200)
 				
 				Color.white
-					.frame(width: .infinity, height: .infinity)
+					
 			}
 			
 			HStack {
@@ -99,6 +100,7 @@ struct CreateAccountView: View {
 							
 							Button {
 								dataViewModel.authenticationManager.setUserUsername(username: nameValue)
+								userHasAUsername = true
 							} label: {
 								Text("Criar")
 							}
@@ -123,5 +125,6 @@ struct CreateAccountView: View {
 					.background(VisualEffect())
 			}
 		}
+		.frame(maxWidth: .infinity, maxHeight: .infinity)
 	}
 }

@@ -20,6 +20,9 @@ struct LoginView: View {
 	@State var transitionProgress = 0.0
 	
 	@State var authenticationViewIsPresented: Bool = true
+	@State var userHasAUsername: Bool = false
+	
+	@State var office: Office? = nil
 	
 	var body: some View {
 		NavigationStack(path: $navigationPath) {
@@ -28,24 +31,37 @@ struct LoginView: View {
 				
 				
 				if let result = dataViewModel.authenticationManager.userIsFirstTimeLoggingIn() {
-					if result == true {  // Primeira vez loggando no app
-						CreateAccountView(authenticationViewIsPresented: $authenticationViewIsPresented) // atribui nome ao usuário
+					if result == true && userHasAUsername == false {  // Primeira vez loggando no app
+						CreateAccountView(authenticationViewIsPresented: $authenticationViewIsPresented, userHasAUsername: $userHasAUsername) // atribui nome ao usuário
 					}
+					
 					else {  // Usuário já está loggado no app
-						// MARK: Se o usuário não fizer parte de nenhum escritório:
-						CreateOrJoinOfficeView(authenticationViewIsPresented: $authenticationViewIsPresented) // cria o office e atribui o officeID ao usuário.officeID
 						
-						// TODO: Se fizer
-						// MARK: ContentView(office)? -> Ir para o APP normal
+						if !dataViewModel.userDidJoinOffice() {
+							// MARK: Se o usuário não fizer parte de nenhum escritório:
+							CreateOrJoinOfficeView(authenticationViewIsPresented: $authenticationViewIsPresented)
+							// cria o office e atribui o officeID ao usuário.officeID
+						} else {
+							
+							// TODO: Se fizer
+							// MARK: ContentView(office) ?????? -> Ir para o APP normal
+							ContentView()
+								.onAppear {
+									Task {
+										self.office = await dataViewModel.getUserOffice()
+									}
+								}
+						}
 					}
+					
 				}
-				else {  // Usuário não foi criado
+				else {  // Usuário não foi criado -> não deve entrar nisso nunca
 					
 				}
 					
 				SignInWithAppleAuthenticationView(authenticationViewIsPresented: $authenticationViewIsPresented) // cria o usuário caso ele não exista
 					.scaleEffect(1 + transitionProgress)
-					.opacity(1 - 2*transitionProgress)
+					.opacity(1 - (2 * transitionProgress))
 				
 			}
 			
@@ -63,7 +79,7 @@ struct LoginView: View {
 			}
 			
 		}
-		.frame(maxWidth: 611, maxHeight: 400)
+//		.frame(maxWidth: 611, maxHeight: 400)
 	}
 	
 }

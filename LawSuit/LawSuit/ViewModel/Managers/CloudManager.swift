@@ -82,29 +82,52 @@ class CloudManager: ObservableObject {
 		}
 	}
 	
-	func createOffice(name: String, lawyer: Lawyer) {
-		let record = CKRecord(recordType: "Office")
+	func createOffice(name: String, lawyer: Lawyer) async -> Office? {
+		let ownerRecord = CKRecord(recordType: "Lawyer")
 		
-		record.setValue([lawyer.email], forKey: "lawyers")
+		ownerRecord.setValue(lawyer.name, forKey: LawyerFields.name.rawValue)
+		ownerRecord.setValue(lawyer.email, forKey: LawyerFields.email.rawValue)
+		ownerRecord.setValue(lawyer.username, forKey: LawyerFields.username.rawValue)
+//		ownerRecord.setValue(lawyer., forKey: LawyerFields.username.rawValue)
+
+		var ownerReference: CKRecord.Reference = CKRecord.Reference(record: ownerRecord, action: .none)
 		
-		CloudManager.publicDataBase.save(record) { record, error in
-			if let record = record {
-				self.office = Office(record, context: self.context)
-				print("Record saved succesfully: \(record)")
-			}
-			if let error = error {
-				print("Error saving record: \(error)")
-			}
+		do {
+			let ownerReturnedRecord = try await CloudManager.publicDataBase.save(ownerRecord)
+			lawyer.recordName = ownerReturnedRecord.recordID.recordName
+			ownerReference = CKRecord.Reference(record: ownerReturnedRecord, action: .none)
+		} catch {
+			print("Could not save ownerRecord")
 		}
 		
+		let officeRecord = CKRecord(recordType: "Office")
+		
+		officeRecord.setValue([lawyer.email], forKey: OfficeFields.lawyers.rawValue)
+		officeRecord.setValue(name, forKey: OfficeFields.name.rawValue)
+		officeRecord.setValue(ownerReference, forKey: OfficeFields.owner.rawValue)
+		
+		var officeToReturn: Office? = nil
+		
+		do {
+			let officeReturnedRecord = try await CloudManager.publicDataBase.save(officeRecord)
+			officeToReturn = Office(officeReturnedRecord, context: context)
+			officeToReturn?.record = officeReturnedRecord
+		} catch {
+			print("Could not save officeRecord")
+		}
+		
+		return officeToReturn
 	}
 	
-	func getUserOfficeFrom(officeID: String) async {  // MARK: Quero que este officeID seja o CKRecord.RecordID do office
+	func getUserOfficeFrom(officeID: String) async -> Office? {  // MARK: Quero que este officeID seja o CKRecord.RecordID do office
 		do {
 			let officeRecord = try await CloudManager.publicDataBase.record(for: CKRecord.ID(recordName: officeID))
-			self.office = Office(officeRecord, context: context)
+			let officeObj = Office(officeRecord, context: context)
+			self.office = officeObj
+			return officeObj
 		} catch {
 			print("No office with ID \(officeID) found: \(error)")
+			return nil
 		}
 	}
 	

@@ -140,6 +140,7 @@
 		E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4272C8775CB00595150 /* TextRecognizer.swift */; };
 		E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4292C87795000595150 /* OCRTestingView.swift */; };
 		E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A42F2C87AF6000595150 /* ContactsManager.swift */; };
+		E9F756012CAB159A005A7E91 /* CreateOfficeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F756002CAB159A005A7E91 /* CreateOfficeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +297,7 @@
 		E9F3A4272C8775CB00595150 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		E9F3A4292C87795000595150 /* OCRTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTestingView.swift; sourceTree = "<group>"; };
 		E9F3A42F2C87AF6000595150 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		E9F756002CAB159A005A7E91 /* CreateOfficeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOfficeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -588,6 +590,7 @@
 				E9D2211B2CA5D610006314B4 /* SignInWithAppleAuthenticationView.swift */,
 				E9D221192CA5CBA3006314B4 /* CreateAccountView.swift */,
 				E9D2211D2CA5EEB2006314B4 /* CreateOrJoinOfficeView.swift */,
+				E9F756002CAB159A005A7E91 /* CreateOfficeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				6ABD79792C7918B600A98BA3 /* EditLawsuitAuthorComponent.swift in Sources */,
 				E9A949BA2C7CFB310006BC99 /* CloudDataConverter.swift in Sources */,
 				3BD40B402C6E5DD5004048FA /* FolderViewModel.swift in Sources */,
+				E9F756012CAB159A005A7E91 /* CreateOfficeView.swift in Sources */,
 				3B24D4AC2C73781F00CCA763 /* Folder.swift in Sources */,
 				6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */,
 				6AC0BB0A2C7E606F00FAF3E6 /* AuthorProcessButton.swift in Sources */,
