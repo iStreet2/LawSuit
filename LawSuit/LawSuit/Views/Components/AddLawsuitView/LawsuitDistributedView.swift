@@ -75,10 +75,8 @@ struct LawsuitDistributedView: View {
                 Text("Área")
                     .padding(.top)
                     .bold()
-                TagViewComponent(tagType: tagType)
-                    .onTapGesture {
-                        selectTag.toggle()
-                    }
+					TagViewPickerComponentV1(currentTag: $tagType)
+
             }
             Spacer()
             VStack(alignment: .leading){
@@ -139,7 +137,9 @@ struct LawsuitDistributedView: View {
                             let lawyer = lawyers[0]
                             let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
                             var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+
                             dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                          
                             dismiss()
                         } else {
                             print("Client not found")
@@ -151,8 +151,10 @@ struct LawsuitDistributedView: View {
                             let category = TagTypeString.string(from: tagType)
                             let lawyer = lawyers[0]
                             let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                            var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                            let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        
+                                dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+  
                             dismiss()
                         } else {
                             print("Client not found")
@@ -196,23 +198,7 @@ struct LawsuitDistributedView: View {
                     dismissButton: .default(Text("Ok")))
                 }
             }
-            .sheet(isPresented: $selectTag, content: {
-                VStack {
-                    Spacer()
-                    TagViewPickerComponentV1(currentTag: $tagType)
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            selectTag.toggle()
-                        }, label: {
-                            Text("Salvar")
-                        })
-                        .buttonStyle(.borderedProminent)
-                        .padding()
-                    }
-                }
-            })
+
         }
     }
     func areFieldsFilled() -> Bool {

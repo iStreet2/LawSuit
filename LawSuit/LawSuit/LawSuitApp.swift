@@ -18,7 +18,7 @@ struct LawSuitApp: App {
     @StateObject var navigationViewModel = NavigationViewModel()
     @StateObject var clientDataViewModel = TextFieldDataViewModel()
     @StateObject var addressViewModel = AddressViewModel()
-	 @StateObject var eventManager = EventManager()
+    @StateObject var eventManager = EventManager()
 
 	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
@@ -45,6 +45,17 @@ struct LawSuitApp: App {
 							 .environmentObject(dataViewModel)
 							 .environmentObject(navigationViewModel)
 					 }
+                     .background(MaterialWindow().ignoresSafeArea())
+                     .toolbar(){
+                         ToolbarItem(placement: .primaryAction){
+                             Button(action: {
+                                 self.eventManager.spotlightBarIsPresented.toggle()
+                             }){
+                                 Image(systemName: "magnifyingglass")
+                             }
+                         }
+                     }
         }
+   
     }
 }

@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08079F232CA4A1F4004EDF98 /* RequestDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */; };
+		08079F262CA5EFCB004EDF98 /* MailMessageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */; };
+		08079F282CA744BE004EDF98 /* PathViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F272CA744BE004EDF98 /* PathViewComponent.swift */; };
 		0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0897CB392C8BA21D00B488A9 /* MailManager.swift */; };
 		0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */; };
 		089B8A9C2C9E312D00FEBCAB /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */; };
+		089B8A9E2CA1F5B100FEBCAB /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 089B8A9D2CA1F5B100FEBCAB /* HotKey */; };
 		08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */; };
 		08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */; };
 		08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */; };
@@ -81,7 +85,6 @@
 		6A08C4972CA1F86E00CF3A7F /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 6A08C4962CA1F86E00CF3A7F /* HotKey */; };
 		6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */; };
 		6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */; };
-		6ABD796F2C6E97AD00A98BA3 /* RequestDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */; };
 		6ABD79712C6E990F00A98BA3 /* SelectClientComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79702C6E990F00A98BA3 /* SelectClientComponent.swift */; };
 		6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79722C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift */; };
 		6ABD79752C78FB2100A98BA3 /* AddLawsuitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79742C78FB2100A98BA3 /* AddLawsuitView.swift */; };
@@ -95,7 +98,6 @@
 		6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */; };
 		6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */; };
 		6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */; };
-		6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */; };
 		6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */; };
 		6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */; };
 		6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */; };
@@ -104,6 +106,7 @@
 		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
 		DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */; };
 		DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */; };
+		DC2851E52CA74B200038A2E4 /* PathViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2851E42CA74B200038A2E4 /* PathViewComponent.swift */; };
 		DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC401F9C2C931FE3006FC949 /* Alerts.swift */; };
 		DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD2F2C77B23900000195 /* AddClientView.swift */; };
 		DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */; };
@@ -129,6 +132,7 @@
 		E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4272C8775CB00595150 /* TextRecognizer.swift */; };
 		E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4292C87795000595150 /* OCRTestingView.swift */; };
 		E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A42F2C87AF6000595150 /* ContactsManager.swift */; };
+		FD7EBBB52CA5C84600C44ECA /* VisualEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,7 +152,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FD7EBBBE2CA5EA5600C44ECA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
+		08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailMessageEnum.swift; sourceTree = "<group>"; };
+		08079F272CA744BE004EDF98 /* PathViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathViewComponent.swift; sourceTree = "<group>"; };
 		084D404F2C8A4AAE00C96111 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,7 +246,6 @@
 		3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		6A2C68FF2C6D4FA300E017EE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxIconComponent.swift; sourceTree = "<group>"; };
-		6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
 		6ABD79702C6E990F00A98BA3 /* SelectClientComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectClientComponent.swift; sourceTree = "<group>"; };
 		6ABD79722C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarCheckboxComponent.swift; sourceTree = "<group>"; };
 		6ABD79742C78FB2100A98BA3 /* AddLawsuitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLawsuitView.swift; sourceTree = "<group>"; };
@@ -240,7 +259,6 @@
 		6AC0BB6B2C8F8C5F00FAF3E6 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
 		6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListView.swift; sourceTree = "<group>"; };
 		6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
-		6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderIconListView.swift; sourceTree = "<group>"; };
 		6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentActionButtonsView.swift; sourceTree = "<group>"; };
 		6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
 		6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFListView.swift; sourceTree = "<group>"; };
@@ -249,6 +267,7 @@
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
 		DC1572BE2C73DE70007815E1 /* PendentClientDocumentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentStyle.swift; sourceTree = "<group>"; };
 		DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentClientDocumentView.swift; sourceTree = "<group>"; };
+		DC2851E42CA74B200038A2E4 /* PathViewComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathViewComponent.swift; sourceTree = "<group>"; };
 		DC401F9C2C931FE3006FC949 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		DCC1BD2F2C77B23900000195 /* AddClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientView.swift; sourceTree = "<group>"; };
 		DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientProgressView.swift; sourceTree = "<group>"; };
@@ -274,6 +293,7 @@
 		E9F3A4272C8775CB00595150 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		E9F3A4292C87795000595150 /* OCRTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTestingView.swift; sourceTree = "<group>"; };
 		E9F3A42F2C87AF6000595150 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +322,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08079F242CA5EFB0004EDF98 /* Mail */ = {
+			isa = PBXGroup;
+			children = (
+				08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */,
+			);
+			path = Mail;
+			sourceTree = "<group>";
+		};
 		08A2B0C02C8F730500719571 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,7 +397,6 @@
 				3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */,
 				6AC0BB8C2C92318B00FAF3E6 /* DocumentListView.swift */,
 				3B423E822C80E613005B1B7F /* FolderIconView.swift */,
-				6AC0BB902C938BCA00FAF3E6 /* FolderIconListView.swift */,
 				3B423E7D2C80E2D8005B1B7F /* FolderView.swift */,
 				6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
@@ -378,6 +405,7 @@
 				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
 				3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
+				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
 			);
 			path = ClientDocumentsView;
 			sourceTree = "<group>";
@@ -421,12 +449,14 @@
 				084D404F2C8A4AAE00C96111 /* LawSuit.app */,
 				084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */,
 				084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */,
+				DC2851E32CA74B120038A2E4 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
+				08079F242CA5EFB0004EDF98 /* Mail */,
 				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
 				08A2B0D82C935ADA00719571 /* Extensions */,
 				08A2B0C02C8F730500719571 /* Networking */,
@@ -488,7 +518,6 @@
 				6AC0BB092C7E606F00FAF3E6 /* AuthorProcessButton.swift */,
 				6ABD79782C7918B600A98BA3 /* EditLawsuitAuthorComponent.swift */,
 				0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */,
-				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
 				6ABD79702C6E990F00A98BA3 /* SelectClientComponent.swift */,
 			);
 			path = AddLawsuitView;
@@ -545,7 +574,6 @@
 				E9F3A4292C87795000595150 /* OCRTestingView.swift */,
 				3BD40B3C2C6D4DE8004048FA /* Components */,
 				3BD40B372C6D454B004048FA /* ClientView.swift */,
-				6ABD796E2C6E97AD00A98BA3 /* RequestDocumentsView.swift */,
 				6ABD79742C78FB2100A98BA3 /* AddLawsuitView.swift */,
 				3BD40B6E2C6E76EC004048FA /* ClientListView.swift */,
 				DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */,
@@ -561,6 +589,7 @@
 				E94C015F2CA1E23D00F6316F /* SpotlightView2.swift */,
 				E94C01612CA1E28300F6316F /* SpotlightSearchBarView2.swift */,
 				0897CB392C8BA21D00B488A9 /* MailManager.swift */,
+				08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -576,6 +605,7 @@
 		3BD40B3C2C6D4DE8004048FA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				DC2851E42CA74B200038A2E4 /* PathViewComponent.swift */,
 				3BAEA2E22C84F6E300AF5D6F /* PendentDocumentsView */,
 				3BB9A3462C84F32E00AD1E30 /* TagViewComponent */,
 				3BB9A3452C84F28600AD1E30 /* AddClientView */,
@@ -587,6 +617,7 @@
 				E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */,
 				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
 				08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */,
+				FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -617,6 +648,14 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
+		DC2851E32CA74B120038A2E4 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				08079F272CA744BE004EDF98 /* PathViewComponent.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -627,6 +666,7 @@
 				3B98F1042C668B1000C45121 /* Sources */,
 				3B98F1052C668B1000C45121 /* Frameworks */,
 				3B98F1062C668B1000C45121 /* Resources */,
+				FD7EBBBE2CA5EA5600C44ECA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -754,8 +794,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E94C015C2C9B6F7200F6316F /* SpotlightManager.swift in Sources */,
+				DC2851E52CA74B200038A2E4 /* PathViewComponent.swift in Sources */,
 				6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */,
 				08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */,
+				08079F232CA4A1F4004EDF98 /* RequestDocumentsView.swift in Sources */,
 				3BD40B6F2C6E76EC004048FA /* ClientListView.swift in Sources */,
 				3BB9A34A2C84F36800AD1E30 /* TagViewComponentV2.swift in Sources */,
 				E9E323E22C7FB6F3000BA6FD /* ClientMoreInfoView.swift in Sources */,
@@ -805,6 +847,7 @@
 				3B04F11D2C7FB9B600991746 /* ClientInfoView.swift in Sources */,
 				3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */,
 				3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */,
+				08079F262CA5EFCB004EDF98 /* MailMessageEnum.swift in Sources */,
 				E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */,
 				E9E323E42C80EA12000BA6FD /* DetailedLawSuitView.swift in Sources */,
 				DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */,
@@ -832,7 +875,6 @@
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
 				08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */,
 				6AC0BB8D2C92318B00FAF3E6 /* DocumentListView.swift in Sources */,
-				6AC0BB912C938BCA00FAF3E6 /* FolderIconListView.swift in Sources */,
 				3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */,
 				3B0A7AD12C7D16AA005A5946 /* NetworkMonitorViewModel.swift in Sources */,
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,
@@ -854,6 +896,7 @@
 				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
 				E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */,
 				08E8D2002C87ACDA008F3859 /* LawsuitCellComponent.swift in Sources */,
+				08079F282CA744BE004EDF98 /* PathViewComponent.swift in Sources */,
 				08A2B0DA2C935AE200719571 /* String+.swift in Sources */,
 				3BD40B382C6D454B004048FA /* ClientView.swift in Sources */,
 				6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */,
@@ -861,12 +904,12 @@
 				3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */,
 				E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
-				6ABD796F2C6E97AD00A98BA3 /* RequestDocumentsView.swift in Sources */,
 				DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
 				08E8D2022C87AF11008F3859 /* LawsuitListView.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
 				3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */,
+				FD7EBBB52CA5C84600C44ECA /* VisualEffects.swift in Sources */,
 				3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1094,7 +1137,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 543L4H35A3;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -1113,7 +1156,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 543L4H35A3;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -1131,7 +1174,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuitUITests;
@@ -1148,7 +1191,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TFS.LawSuitUITests;

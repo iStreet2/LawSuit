@@ -12,11 +12,12 @@ struct NetworkingManager {
     static var shared = NetworkingManager()
     
     func removeCharactersFromLawsuitNumber(lawsuitNumber: String) -> String {
-        var lawsuitNumberWithoutSpecialCharacters = lawsuitNumber.replacingOccurrences(of: ".-", with: "")
-        return lawsuitNumberWithoutSpecialCharacters
+        let lawsuitNumberFiltered = lawsuitNumber.filter { "0123456789".contains($0) }
+        return lawsuitNumberFiltered
     }
     
-    func obterJusticaETribunalDoProcesso(lawsuitNumber: String) throws -> (justicaRes: String, tribu: String)  {
+    func obterJusticaETribunalDoProcesso(lawsuitNumber: inout String) throws -> (justicaRes: String, tribu: String)  {
+        lawsuitNumber = removeCharactersFromLawsuitNumber(lawsuitNumber: lawsuitNumber)
         
         guard lawsuitNumber.count == 20 else {
             throw LawsuitNumberError.invalidLawsuitNumber

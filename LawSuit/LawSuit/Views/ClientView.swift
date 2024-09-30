@@ -52,9 +52,9 @@ struct ClientView: View {
                     ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
                     Divider()
                     HStack {
-                        SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
+                        CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
                             .padding(5)
-                            .frame(width: 190, alignment: .leading)
+                           
                         Spacer()
                         if selectedOption == "Processos" {
                             Button(action: {
@@ -82,8 +82,8 @@ struct ClientView: View {
                         DocumentView()
                             .onAppear {
                                 navigationViewModel.selectedClient = client
-                                folderViewModel.resetFolderStack()
-                                folderViewModel.openFolder(folder: client.rootFolder)
+                                folderViewModel.resetFolderStack() //caminho fica sem nada
+                                folderViewModel.openFolder(folder: client.rootFolder) //abre a root folder do cliente que estou selecionado
                                 navigationViewModel.dismissLawsuitView.toggle()
                             }
                             .padding()

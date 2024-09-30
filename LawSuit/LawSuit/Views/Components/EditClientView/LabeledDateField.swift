@@ -23,9 +23,3 @@ struct LabeledDateField: View {
         }
     }
 }
-
-#Preview {
-    @State var data: Date = Date()
-    
-    return LabeledDateField(selectedDate: $data, label: "Data de Nascimento")
-}

@@ -22,6 +22,7 @@ struct EditClientView: View {
     @State var invalidInformation: InvalidInformation?
     @State var userInfoType = 0
     @State var clientName: String = ""
+    @State var clientSocialName: String = ""
     @State var clientOccupation: String = ""
     @State var clientRg: String = ""
     @State var clientCpf: String = ""
@@ -40,6 +41,9 @@ struct EditClientView: View {
     @State var clientTelephone: String = ""
     @State var clientCellphone: String = ""
     
+    @State var selectedOption = "Informações Pessoais"
+    var infos = ["Informações Pessoais", "Endereço", "Contato"]
+    
     let textLimit = 50
     let maritalStatusLimit = 10
     
@@ -50,6 +54,7 @@ struct EditClientView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+    
     
     
     var body: some View {
@@ -68,22 +73,23 @@ struct EditClientView: View {
                     .padding(.top, 2)
                 }
             }
-            Picker(selection: $userInfoType, label: Text("picker")) {
-                Text("Informações Pessoais").tag(0)
-                Text("Endereço").tag(1)
-                Text("Contato").tag(2)
-                Text("Outros").tag(3)
-            }
-            .padding(.top, 10)
-            .padding(.trailing, 100)
-            .pickerStyle(.segmented)
-            .labelsHidden()
+            CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
+//            Picker(selection: $userInfoType, label: Text("picker")) {
+//                Text("Informações Pessoais").tag(0)
+//                Text("Endereço").tag(1)
+//                Text("Contato").tag(2)
+//                Text("Outros").tag(3)
+//            }
+//            .padding(.top, 10)
+//            .padding(.trailing, 100)
+//            .pickerStyle(.segmented)
+//            .labelsHidden()
             
-            if userInfoType == 0 {
+            if selectedOption == "Informações Pessoais" {
                 EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
-            } else if userInfoType == 1 {
+            } else if selectedOption == "Endereço" {
                 EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
-            } else if userInfoType == 2 {
+            } else if selectedOption == "Contato" {
                 EditClientViewFormsFields(formType: .contact, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
             }
             Spacer()
@@ -96,7 +102,7 @@ struct EditClientView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
                 .alert(isPresented: $deleteAlert, content: {
-                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir seu cliente irá apagar todos os dados relacionados a ele, incluindo seus processos!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
                             for lawsuit in lawsuits {
                                 dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
@@ -111,7 +117,6 @@ struct EditClientView: View {
                         }
                         
                     }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
-                        dismiss()
                     }))
                 })
                 Spacer()
@@ -145,7 +150,7 @@ struct EditClientView: View {
                         invalidInformation = .missingCellphoneNumber
                         
                     } else {
-                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                         dismiss()
                         
                         return
@@ -229,7 +234,7 @@ struct EditClientView: View {
             !clientAddressNumber.isEmpty &&
             !clientNeighborhood.isEmpty &&
             !clientState.isEmpty &&
-            !clientCity.isEmpty
+            !clientCity.isEmpty &&
             !clientEmail.isEmpty &&
             !clientTelephone.isEmpty &&
             !clientCellphone.isEmpty

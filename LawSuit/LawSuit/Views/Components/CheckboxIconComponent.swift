@@ -9,19 +9,13 @@ import SwiftUI
 
 struct CheckboxIconComponent: View {
     
-    @State var isPresented: Bool = false
-    var files: String
+    @Binding var isChecked: Bool
+    var text: String
     
     var body: some View {
-        HStack{
-            Toggle(isOn: $isPresented) {
-                Text(files)
-            }
+        Toggle(isOn: $isChecked) {
+            Text(text)
         }
-        .padding(30)
+        .toggleStyle(.checkbox)
     }
 }
-
-//#Preview {
-//    CheckboxIconComponent(.c)
-//}

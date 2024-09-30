@@ -18,7 +18,9 @@ struct ClientInfoView: View {
     @State var editClient = false
     @State var imageData: Data?
     @Binding var deleted: Bool
-    var mailManager: MailManager 
+    @State var requestDocument = false
+    var mailManager: MailManager
+
 
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -29,46 +31,17 @@ struct ClientInfoView: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            //Foto do cliente
-//            if let photoData = client.photo,
-//               let nsImage = NSImage(data: photoData) {
-//                Image(nsImage: nsImage)
-//                    .resizable()
-//                    .frame(width: 80, height: 80)
-//                    .onTapGesture(count: 2) {
-//                        withAnimation() {
-//                            folderViewModel.importPhoto { data in
-//                                if let data = data {
-//                                    imageData = data
-//                                    dataViewModel.coreDataManager.clientManager.addPhotoOnClient(client: client, photo: data)
-//                                    client.photo = data
-//                                }
-//                            }
-//                        }
-//                    }
-//            } else {
-//                ZStack {
-//                    Rectangle()
-//                        .foregroundColor(.gray)
-//                        .frame(width: 80, height: 80)
-//                    Image(systemName: "square.and.arrow.down")
-//                }
-//                .onTapGesture(count: 2) {
-//                    withAnimation {
-//                        folderViewModel.importPhoto { data in
-//                            if let data = data {
-//                                imageData = data
-//                                dataViewModel.coreDataManager.clientManager.addPhotoOnClient(client: client, photo: data)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             VStack(alignment: .leading) {
                 HStack {
-                    Text(client.name)
-                        .font(.title)
-                        .bold()
+                    if let socialName = client.socialName {
+                        Text(socialName)
+                            .font(.title)
+                            .bold()
+                    } else {
+                        Text(client.name)
+                            .font(.title)
+                            .bold()
+                    }
                     Button {
                         // Ação para editar o cliente
                         editClient.toggle()
@@ -81,13 +54,17 @@ struct ClientInfoView: View {
                 
                 HStack {
                     Text("Celular")
+                        .font(.body)
                         .bold()
                         .foregroundStyle(Color(.gray))
                     Text(client.cellphone)
+                        .font(.body)
                     Text("E-mail")
+                        .font(.body)
                         .bold()
                         .foregroundStyle(Color(.gray))
                     Text(client.email)
+                        .font(.body)
                 }
                 .font(.footnote)
                 
@@ -96,31 +73,40 @@ struct ClientInfoView: View {
 
                 } label: {
                     Text("Mais informações")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
+                        .font(.body)
+                        .foregroundColor(.wine)
+                        .underline()
+                        .bold()
                 }
                 .buttonStyle(PlainButtonStyle())
                 
-                Button {
-                    mailManager.showMailComposer()
-                } label: {
-                    Text("Enviar e-mail")
+                HStack {
+                    Button {
+                        mailManager.sendMail(emailSubject: "Arqion", message: "")
+                    } label: {
+                        Text("Enviar e-mail")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                    Button {
+                        requestDocument.toggle()
+                    } label: {
+                        Text("Solicitar documentos")
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
             }
             Spacer()
         }
         .onChange(of: deleted) { change in
             dismiss()
         }
+        .sheet(isPresented: $requestDocument, content: {
+            RequestDocumentsView(client: client, mailManager: mailManager)
+        })
         .sheet(isPresented: $editClient, content: {
             EditClientView(client: client, deleted: $deleted)
         })
         .padding()
     }
 }
-
-
-//#Preview {
-//    ClientInfoView()
-//}

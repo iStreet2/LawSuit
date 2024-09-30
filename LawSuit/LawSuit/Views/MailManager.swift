@@ -16,14 +16,17 @@ class MailManager {
         self.client = client
     }
 
-    func showMailComposer() {
-        let service = NSSharingService(named: NSSharingService.Name.composeEmail)
+    func sendMail(emailSubject: String, message: String) {
+        let service = NSSharingService(named: .composeEmail)
         service?.recipients = [client.email]
-        service?.subject = "Arqion: Aviso de movimentação de processo"
-        service?.perform(withItems: ["Test Mail body"])
+        service?.subject = emailSubject
+        
+        //convert String to NSAttributedString
+        let data = message.data(using: .utf8)
+        if let data = data {
+            let attributedString = NSAttributedString(html: data, documentAttributes: nil)
+            service?.perform(withItems: [attributedString as Any])
+        }
     }
-  
-//    func makeEmailBody() -> String {
-//        //
-//    }
+
 }
