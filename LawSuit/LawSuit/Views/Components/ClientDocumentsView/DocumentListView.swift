@@ -27,7 +27,7 @@ struct DocumentListView: View {
     let itemWidth: CGFloat = 90
     
     //MARK: Variáveis
-//    @State var showingGridView = false
+    //    @State var showingGridView = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -41,11 +41,10 @@ struct DocumentListView: View {
                 .buttonStyle(PlainButtonStyle())
                 .font(.title2)
                 .padding(.bottom)
-                
             }
-        
+            
             GeometryReader { geometry in
-                VStack(alignment: .leading){
+                VStack{
                     HStack {
                         Text("Nome e Número")
                             .frame(width: geometry.size.width * 0.60, alignment: .leading)
@@ -80,10 +79,8 @@ struct DocumentListView: View {
                                 .foregroundStyle(.gray)
                         }
                     }
-                    .frame(maxWidth: .infinity)
-                    .border(.blue)
-
-               }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .onChange(of: openFolder) { _ in
                 dragAndDropViewModel.updateFramesFolder(folders: folders)

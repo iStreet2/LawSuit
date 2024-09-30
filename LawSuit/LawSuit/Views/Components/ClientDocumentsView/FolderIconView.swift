@@ -35,7 +35,6 @@ struct FolderIconView: View {
         if folderViewModel.showingGridView {
             VStack {
                 Image("folder")
-                
                 if isEditing {
                     TextField("", text: $folderName, onEditingChanged: { _ in
                     }, onCommit: {
@@ -85,29 +84,44 @@ struct FolderIconView: View {
                 }
             }
         } else {
-            HStack {
-                Image("folder")
-                    .resizable()
-                    .frame(width: 18,height: 14)
-                
-                if isEditing {
-                    TextField("", text: $folderName, onEditingChanged: { _ in
-                    }, onCommit: {
-                        saveChanges()
-                    })
-                    .onExitCommand(perform: cancelChanges)
-                    .lineLimit(2)
-                    .frame(width: 40, height: 12)
-                }
-                else {
-                    Text(folder.name ?? "Sem nome")
-                        .lineLimit(1)
-                        .onTapGesture(count: 2) {
-                            folderViewModel.openFolder(folder: folder)
-                        }
-                        .onLongPressGesture(perform: {
-                            isEditing = true
+            GeometryReader { geometry in
+                HStack {
+                    Image("folder")
+                        .resizable()
+                        .frame(width: 18,height: 14)
+                    
+                    if isEditing {
+                        TextField("", text: $folderName, onEditingChanged: { _ in
+                        }, onCommit: {
+                            saveChanges()
                         })
+                        .frame(width: geometry.size.width * 0.47, height: 47, alignment: .leading)
+                        .onExitCommand(perform: cancelChanges)
+                        .lineLimit(2)
+
+                    }
+                    else {
+                        Text(folder.name ?? "Sem nome")
+                            .frame(width: geometry.size.width * 0.47, height: 47, alignment: .leading)
+                            .lineLimit(1)
+                            .onTapGesture(count: 2) {
+                                folderViewModel.openFolder(folder: folder)
+                            }
+                            .onLongPressGesture(perform: {
+                                isEditing = true
+                            })
+                    }
+                    
+                    Spacer()
+                    Text("--")
+                        .frame(width: geometry.size.width * 0.027, height: 10, alignment: .leading)
+                        .border(.green)
+
+                    Spacer()
+                    Text("Pasta")
+                        .frame(width: geometry.size.width * 0.27, height: 10, alignment: .leading)
+                        .border(.green)
+
                 }
             }
             .onDisappear {

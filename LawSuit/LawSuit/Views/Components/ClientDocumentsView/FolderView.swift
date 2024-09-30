@@ -48,7 +48,6 @@ struct FolderView: View {
                 .onTapGesture(count: 2) {
                     folderViewModel.openFolder(folder: folder)
                 }
-                .border(.red)
 //                .padding(.leading)
                 .offset(x: dragAndDropViewModel.folderOffsets[folder.id!]?.width ?? 0, y: dragAndDropViewModel.folderOffsets[folder.id!]?.height ?? 0)
                 .gesture(
