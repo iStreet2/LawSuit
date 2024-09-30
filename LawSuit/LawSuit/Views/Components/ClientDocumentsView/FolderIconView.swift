@@ -75,8 +75,11 @@ struct FolderIconView: View {
                         Text(folder.name ?? "Sem nome")
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                isEditing = true
+                                folderViewModel.openFolder(folder: folder)
                             }
+                            .onLongPressGesture(perform: {
+                                isEditing = true
+                            })
                     }
                 }
             }

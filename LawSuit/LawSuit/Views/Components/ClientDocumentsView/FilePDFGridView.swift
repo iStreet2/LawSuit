@@ -12,12 +12,15 @@ struct FilePDFGridView: View {
     
     //MARK: Variáveis
     @ObservedObject var parentFolder: Folder
+
     @State var selectedFilePDF: FilePDF?
     @State var showPDF = false
     var geometry: GeometryProxy
     
     //MARK: ViewModels
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
+    @EnvironmentObject var folderViewModel: FolderViewModel
+
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -43,7 +46,7 @@ struct FilePDFGridView: View {
                     selectedFilePDF = file
                     showPDF.toggle()
                 }
-                .padding(.leading)
+                .frame(maxWidth: .infinity, alignment: folderViewModel.showingGridView ? .center : .leading)
                 .offset(x: dragAndDropViewModel.filePDFOffsets[file.id!]?.width ?? 0, y: dragAndDropViewModel.filePDFOffsets[file.id!]?.height ?? 0)
                 .gesture(
                     DragGesture()
