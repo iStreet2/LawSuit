@@ -36,7 +36,8 @@ struct EditLawSuitView: View {
     var body: some View {
         VStack {
             LabeledTextField(label: "Nº do Processo", placeholder: "", textfieldText: $lawsuitNumber)
-                .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber) }
+                .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
+                }
             LabeledTextField(label: "Vara", placeholder: "", textfieldText: $lawsuitCourt)
             HStack(alignment: .top, spacing: 70) {
                 VStack(alignment: .leading) {

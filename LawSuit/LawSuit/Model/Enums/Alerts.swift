@@ -24,7 +24,10 @@ enum InvalidInformation: Error, Identifiable {
             return "missingCellphoneNumber"
         case .invalidLawSuitNumber:
             return "invalidLawSuitNumber"
+//        case .lawsuitAlreadyExists:
+//            return "lawsuitAlreadyExists"
         }
+        
     }
     case missingInformation
     case invalidCPF
@@ -33,4 +36,5 @@ enum InvalidInformation: Error, Identifiable {
     case missingTelephoneNumber
     case missingCellphoneNumber
     case invalidLawSuitNumber
+//    case lawsuitAlreadyExists
 }

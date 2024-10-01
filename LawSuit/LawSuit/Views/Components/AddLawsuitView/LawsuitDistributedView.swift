@@ -29,6 +29,7 @@ struct LawsuitDistributedView: View {
     
     @State var attributedAuthor = false
     @State var attributedDefendant = false
+    @State var doesLawsuitExist = false
     
     let textLimit = 50
     
@@ -40,6 +41,7 @@ struct LawsuitDistributedView: View {
         VStack{
             LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
                 .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
+                    doesLawsuitExist = textFieldDataViewModel.doesLawsuitExist(lawsuitNumber: lawsuitNumber)
                 }
             LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
         }
@@ -75,8 +77,8 @@ struct LawsuitDistributedView: View {
                 Text("Área")
                     .padding(.top)
                     .bold()
-					TagViewPickerComponentV1(currentTag: $tagType)
-
+                TagViewPickerComponentV1(currentTag: $tagType)
+                
             }
             Spacer()
             VStack(alignment: .leading){
@@ -84,7 +86,7 @@ struct LawsuitDistributedView: View {
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
-                            
+                        
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
@@ -130,36 +132,42 @@ struct LawsuitDistributedView: View {
                     invalidInformation = .invalidLawSuitNumber
                     return
                 }
-                    //MARK: Se o cliente foi atribuido ao autor
-                    if attributedAuthor {
-                        if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                            var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-
-                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                          
-                            dismiss()
-                        } else {
-                            print("Client not found")
-                        }
-                    }
-                    //MARK: Se o cliente foi atribuido ao réu
-                    else if attributedDefendant {
-                        if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                            let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                
+//                if doesLawsuitExist {
+//                    invalidInformation = .lawsuitAlreadyExists
+//                    return
+//                }
+                
+                //MARK: Se o cliente foi atribuido ao autor
+                if attributedAuthor {
+                    if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                        let category = TagTypeString.string(from: tagType)
+                        let lawyer = lawyers[0]
+                        let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
                         
-                                dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-  
-                            dismiss()
-                        } else {
-                            print("Client not found")
-                        }
+                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                        
+                        dismiss()
+                    } else {
+                        print("Client not found")
                     }
+                }
+                //MARK: Se o cliente foi atribuido ao réu
+                else if attributedDefendant {
+                    if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
+                        let category = TagTypeString.string(from: tagType)
+                        let lawyer = lawyers[0]
+                        let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
+                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        
+                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                        
+                        dismiss()
+                    } else {
+                        print("Client not found")
+                    }
+                }
                 
             } label: {
                 Text("Criar")
@@ -194,11 +202,15 @@ struct LawsuitDistributedView: View {
                                  dismissButton: .default(Text("Ok")))
                 case .invalidLawSuitNumber:
                     return Alert(title: Text("Número do processo inválido"),
-                    message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                    dismissButton: .default(Text("Ok")))
+                                 message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
+//                case .lawsuitAlreadyExists:
+//                    return Alert(title: Text("Um processo com esse número já existe"),
+//                                 message: Text("Por favor, insira um número de processo válido antes de continuar"),
+//                                 dismissButton: .default(Text("Ok")))
                 }
             }
-
+            
         }
     }
     func areFieldsFilled() -> Bool {

@@ -12,12 +12,19 @@ struct PathViewComponent: View {
     
     var body: some View {
         if folderViewModel.getPath().getItens().count != 1 {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 Divider()
-                Text(folderViewModel.getFolderPath())
-                    .font(.headline)
-                    .foregroundStyle(Color(.gray))
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(folderViewModel.getFolderPath())
+                        .font(.footnote)
+                        .bold()
+                        .foregroundStyle(Color(.gray))
+                        .padding(.vertical, 5.5)
+                }
+                .padding(.horizontal, 20)
+                
             }
+            .background(.quaternary.opacity(0.5))
         }
     }
 }

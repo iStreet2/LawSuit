@@ -14,9 +14,8 @@ struct DetailedLawSuitView: View {
     @Environment(\.dismiss) var dismiss
     
     //MARK: ViewModels
-    @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
-    
+    @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
     
@@ -39,60 +38,45 @@ struct DetailedLawSuitView: View {
     
     var body: some View {
         
-        VStack {
-            if !deleted {
-                HStack(alignment: .top, spacing: 22) {
-                    mainBlock
-                    //                        .frame(maxHeight: .infinity)
-                    
-                    VStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 0) {
+                if !deleted {
+                    HStack(alignment: .top, spacing: 22) {
+                        mainBlock
                         
-                        movimentationBlock
-                            .frame(maxHeight: .infinity)
-                        
+                        VStack(spacing: 10) {
+                            MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
+                                .frame(maxHeight: .infinity)
+                        }
+                        .frame(maxHeight: .infinity)
+                        .fixedSize(horizontal: false, vertical: true)
                     }
-                    .frame(maxHeight: .infinity)
                     .fixedSize(horizontal: false, vertical: true)
-                }
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(minHeight: 150, maxHeight: 190)
-                .frame(minWidth: 620)
-                Divider()
-                    .padding(.top, 8)
-                VStack {
-                    HStack {
-                        
-                        Button {
-                            folderViewModel.closeFolder()
-                        } label: {
-                            Image(systemName: "chevron.left")
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .font(.title2)
-                        .disabled(folderViewModel.getPath().count() == 1)
-                        
-                        Text((folderViewModel.getPath().count() == 1 ? "Arquivos do Processo" : folderViewModel.getOpenFolder()?.name) ?? "Sem nome")
-                            .font(.title3)
-                            .bold()
-                        Spacer()
-                        if let openFolder = folderViewModel.getOpenFolder(){
-                            DocumentActionButtonsView(folder: openFolder )
-                        }
-                        
-                    }
-                    .padding(.vertical, 5)
+                    .frame(minHeight: 150, maxHeight: 190)
+                    .frame(minWidth: 620)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 13)
+                    
+                    Divider()
+                    
+                    LawsuitFoldersHeaderComponent()
+                        .padding(.vertical, 10)
+                    
+                    Divider()
+                    
                     // MARK: - View/Grid de Pastas
                     DocumentView()
+                                        
+                    PathViewComponent()
                 }
-                Spacer()
             }
-        }
+            
+   
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
             EditLawSuitView(lawsuit: lawsuit, deleted: $deleted)
                 .frame(minWidth: 495)
         })
-        .padding()
         .onAppear {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
@@ -111,6 +95,7 @@ struct DetailedLawSuitView: View {
             navigationViewModel.dismissLawsuitView.toggle()
             dismiss()
         }
+        .border(Color.green)
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
     
@@ -185,7 +170,6 @@ extension DetailedLawSuitView {
                     .bold()
                 //                Text(dateFormatter.string(from: lawsuit.actionDate))
                 Text("\(lawsuit.actionDate, formatter: dateFormatter)")
-                //                					.padding(.bottom, 30)
                 
                 Spacer()
                 
@@ -213,44 +197,6 @@ extension DetailedLawSuitView {
                     }
                     Spacer()
                 }
-            }
-        }
-    }
-    
-    private var movimentationBlock: some View {
-        BoxView {
-            VStack(alignment: .leading) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Última Movimentação")
-                            .font(.title2)
-                            .bold()
-                        Text(dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() ?? "Sem movimentações")
-                            .font(.title3)
-                            .bold()
-                        HStack {
-                            Button(action: {
-                                
-                            }, label: {
-                                Text("Acessar JusBrasil")
-                            })
-                        }
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Movimentações Anteriores")
-                                .font(.headline)
-                                .foregroundStyle(Color(.secondaryLabelColor))
-                            
-                            ForEach(dataViewModel.coreDataManager.updateManager.sortUpdates(lawsuit: lawsuit).prefix(3)) { update in
-                                Text(update.date?.convertToString() ?? "Sem movimentações")
-                                    .font(.subheadline)
-                                    .foregroundStyle(Color(.secondaryLabelColor))
-                            }
-                        }.padding(.top, 10)
-                    }
-                    
-                    Spacer()
-                }
-                .padding(.bottom, 3)
             }
         }
     }

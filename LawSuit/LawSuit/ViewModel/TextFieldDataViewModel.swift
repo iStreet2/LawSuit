@@ -10,6 +10,7 @@ import SwiftUI
 import Combine
 
 class TextFieldDataViewModel: ObservableObject {
+    @Environment(\.managedObjectContext) var context
     
     func limitText(text: inout String, upper: Int) {
         
@@ -100,20 +101,35 @@ class TextFieldDataViewModel: ObservableObject {
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailPredicate.evaluate(with: email)
     }
+    
+    func lawSuitNumberValidation(_ lawsuit: String) -> String {
+        let numbers = lawsuit.filter {"0987654321".contains($0)}
+        var formatLawsuit = ""
         
-        func lawSuitNumberValidation(_ lawsuit: String) -> String {
-            let numbers = lawsuit.filter {"0987654321".contains($0)}
-            var formatLawsuit = ""
-            
-            for (index, character) in numbers.prefix(20).enumerated() {
-                if index == 9 || index == 13 || index == 14 || index == 16 {
-                    formatLawsuit.append(".")
-                }
-                if index == 7 {
-                    formatLawsuit.append("-")
-                }
-                formatLawsuit.append(character)
+        for (index, character) in numbers.prefix(20).enumerated() {
+            if index == 9 || index == 13 || index == 14 || index == 16 {
+                formatLawsuit.append(".")
             }
-            return formatLawsuit
+            if index == 7 {
+                formatLawsuit.append("-")
+            }
+            formatLawsuit.append(character)
         }
+        return formatLawsuit
     }
+    
+    func doesLawsuitExist(lawsuitNumber: String) -> Bool {
+        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "number == %@", lawsuitNumber)
+        
+        do {
+            let existingLawsuits = try context.fetch(fetchRequest)
+            return !existingLawsuits.isEmpty // Retorna true se houver processos com o mesmo número
+        } catch {
+            print("Erro ao buscar processos: \(error)")
+            return false // Em caso de erro, consideramos que o processo não existe
+        }
+        
+    }
+    
+}
