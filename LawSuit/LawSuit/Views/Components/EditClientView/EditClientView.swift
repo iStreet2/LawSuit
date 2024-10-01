@@ -177,10 +177,6 @@ struct EditClientView: View {
                         invalidInformation = .invalidEmail
                         return
                     }
-                    if clientTelephone.count < 14 {
-                        invalidInformation = .missingTelephoneNumber
-                        return
-                    }
                     if clientCellphone.count < 15 {
                         invalidInformation = .missingCellphoneNumber
                         
@@ -213,10 +209,6 @@ struct EditClientView: View {
                     case .invalidEmail:
                         return Alert(title: Text("E-mail inválido"),
                                      message: Text("Por favor, insira um e-mail válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .missingTelephoneNumber:
-                        return Alert(title: Text("Número de telefone inválido"),
-                                     message: Text("Por favor, insira um número de telefone válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
                     case .missingCellphoneNumber:
                         return Alert(title: Text("Número de celular inválido"),
@@ -273,7 +265,6 @@ struct EditClientView: View {
             !clientState.isEmpty &&
             !clientCity.isEmpty &&
             !clientEmail.isEmpty &&
-            !clientTelephone.isEmpty &&
             !clientCellphone.isEmpty
         }
         return true

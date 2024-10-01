@@ -184,10 +184,6 @@ struct LawsuitDistributedView: View {
                     return Alert(title: Text("E-mail inválido"),
                                  message: Text("Por favor, insira um e-mail válido antes de continuar"),
                                  dismissButton: .default(Text("Ok")))
-                case .missingTelephoneNumber:
-                    return Alert(title: Text("Número de telefone inválido"),
-                                 message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
                 case .missingCellphoneNumber:
                     return Alert(title: Text("Número de celular inválido"),
                                  message: Text("Por favor, insira um número de celular válido antes de continuar"),
