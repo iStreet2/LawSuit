@@ -5,34 +5,12 @@
 //  Created by Giovanna Micher on 23/08/24.
 //
 
-//import SwiftUI
-//
-//struct LabeledTextField: View {
-//    let label: String
-//    let placeholder: String
-//    @Binding var textfieldText: String
-//
-//
-//
-//
-//    var body: some View {
-//
-//        VStack(alignment: .leading, spacing: 4) {
-//            Text(label)
-//                .bold()
-//                .font(.body)
-//                .foregroundStyle(Color.black)
-//            TextField(placeholder, text: $textfieldText)
-//                .textFieldStyle(.roundedBorder)
-//        }
-//    }
-//}
-
 import SwiftUI
 
 struct LabeledTextField: View {
     let label: String
     let placeholder: String
+    var mandatory: Bool = false
     @Binding var textfieldText: String
     
     @State private var width = CGFloat.zero
@@ -40,10 +18,21 @@ struct LabeledTextField: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(label)
-                .bold()
-                .font(.body)
-                .foregroundStyle(Color.black)
+            if mandatory {
+                HStack(alignment: .top, spacing: 1) {
+                    Text(label)
+                        .bold()
+                        .font(.body)
+                        .foregroundStyle(Color.black)
+                    Text("*")
+                        .foregroundStyle(.wine)
+                }
+            } else {
+                Text(label)
+                    .bold()
+                    .font(.body)
+                    .foregroundStyle(Color.black)
+            }
             HStack {
                 TextField(placeholder, text: $textfieldText)
                     .textFieldStyle(.plain)
@@ -66,12 +55,10 @@ struct LabeledTextField: View {
                     RoundedRectangle(cornerRadius: 5)
                         .trim(from: 0, to: 0.55)
                         .stroke(.wineOpacity, lineWidth: 1.5)
-//                        .shadow(color: .black, radius: 5)
                     
                     RoundedRectangle(cornerRadius: 5)
                         .trim(from: 0.55 + (0.44 * (labelWidth / width)), to: 1)
                         .stroke(.wineOpacity,lineWidth: 1.5)
-//                        .shadow(color: .black, radius: 5)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }

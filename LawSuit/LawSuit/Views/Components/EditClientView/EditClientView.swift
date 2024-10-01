@@ -58,22 +58,43 @@ struct EditClientView: View {
     
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $clientName)
-                        .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
-                    HStack {
-                        LabeledDateField(selectedDate: $clientBirthDate, label: "Data de nascimento")
-                        LabeledTextField(label: "Profissão", placeholder: "Profissão", textfieldText: $clientOccupation)
-                            .onReceive(Just(clientOccupation)) { _ in textFieldDataViewModel.limitText(text: &clientOccupation, upper: textLimit) }
-                            .frame(maxWidth: .infinity)
-                            .padding(.leading, 30)
+        VStack(spacing: 0) {
+            HStack(alignment: .top, spacing: 0) {
+                    Button{
+                        print("foto")
+                    } label: {
+                        RoundedRectangle(cornerRadius: 19)
+                            .stroke(Color.black, lineWidth: 1)
+                            .frame(width: 134, height: 134)
+                            .overlay {
+                                Image(systemName: "person.crop.rectangle.badge.plus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 40, height: 29.49)
+                                    .foregroundColor(.secondary)
+                            }
                     }
-                    .padding(.top, 2)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 15)
+                    .buttonStyle(.plain)
+                
+                VStack(alignment: .leading) {
+                    LabeledTextField(label: "Nome Civil", placeholder: "Insira o Nome Civil do Cliente", textfieldText: $clientName)
+                        .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
+                    
                 }
+                
+                .padding()
+               
             }
-            CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
+            HStack {
+                CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
+                    .padding(.horizontal, 15)
+                
+                Spacer()
+                
+            }
+            Spacer()
 //            Picker(selection: $userInfoType, label: Text("picker")) {
 //                Text("Informações Pessoais").tag(0)
 //                Text("Endereço").tag(1)
@@ -84,15 +105,29 @@ struct EditClientView: View {
 //            .padding(.trailing, 100)
 //            .pickerStyle(.segmented)
 //            .labelsHidden()
-            
-            if selectedOption == "Informações Pessoais" {
-                EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
-            } else if selectedOption == "Endereço" {
-                EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
-            } else if selectedOption == "Contato" {
-                EditClientViewFormsFields(formType: .contact, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
+            Divider()
+            Group {
+                VStack(spacing: 0) {
+                    if selectedOption == "Informações Pessoais" {
+                        
+                        EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, socialName: $clientSocialName, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, Occupation: $clientOccupation, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone)
+                        
+                        
+                    } else if selectedOption == "Endereço" {
+                        EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, socialName: $clientSocialName, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, Occupation: $clientOccupation, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone)
+                            .background(Color("ScrollBackground"))
+                    } else if selectedOption == "Contato" {
+                        EditClientViewFormsFields(formType: .contact, addressViewModel: addressViewModel, rg: $clientRg, socialName: $clientSocialName, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, Occupation: $clientOccupation, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone)
+                            .background(Color("ScrollBackground"))
+                    }
+                }
+                .padding()
+                .background(Color("ScrollBackground"))
+                Divider()
             }
+            
             Spacer()
+            
             HStack {
                 Button {
                     deleteAlert.toggle()
@@ -193,13 +228,15 @@ struct EditClientView: View {
                         dismissButton: .default(Text("")))
                     }
                 }
-                
             }
+            .padding(.vertical, 7)
+            .padding(.horizontal, 10)
         }
-        .frame(minHeight: 250)
-        .padding()
+        .frame(width: 515, height: 500)
+        .padding(.vertical, 5)
         .onAppear {
             clientName = client.name
+            clientSocialName = client.socialName ?? ""
             clientOccupation = client.occupation
             clientRg = client.rg
             clientCpf = client.cpf
