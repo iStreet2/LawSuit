@@ -109,6 +109,12 @@ struct AddClientView: View {
                         invalidInformation = .invalidRG
                         return
                     }
+                    if stage == 2 {
+                        if cep.count < 8 {
+                            invalidInformation = .invalidCEP
+                            return
+                        }
+                    }
                     if stage == 3 {
                         if !textFieldDataViewModel.isValidEmail(email) {
                             invalidInformation = .invalidEmail
@@ -165,6 +171,10 @@ struct AddClientView: View {
                         return Alert(title: Text(""),
                                      message: Text(""),
                                      dismissButton: .default(Text("")))
+                    case .invalidCEP:
+                        return Alert(title: Text("Número de CEP inválido"),
+                                     message: Text("Por favor, insira um número de CEP válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
                         
                     }
                 }
@@ -183,7 +193,6 @@ struct AddClientView: View {
             !rg.isEmpty &&
             !affiliation.isEmpty &&
             !nationality.isEmpty &&
-            !occupation.isEmpty &&
             !maritalStatus.isEmpty &&
             !birthDate.description.isEmpty
         } else if stage == 2 {

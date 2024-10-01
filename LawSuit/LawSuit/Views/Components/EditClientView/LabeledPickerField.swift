@@ -31,7 +31,4 @@ struct LabeledPickerField: View {
     }
 }
 
-#Preview {
-    @State var selectedOption: String = ""
-    return LabeledPickerField(selectedOption: $selectedOption, arrayInfo: ["MG","SP"], label: "Estado")
-}
+

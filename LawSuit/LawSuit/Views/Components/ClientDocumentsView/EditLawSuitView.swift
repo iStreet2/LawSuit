@@ -209,6 +209,10 @@ struct EditLawSuitView: View {
                             return Alert(title: Text("Número do processo inválido"),
                                          message: Text("Por favor, insira um número de processo válido antes de continuar"),
                                          dismissButton: .default(Text("Ok")))
+                        case .invalidCEP:
+                            return Alert(title: Text("Número do processo inválido"),
+                            message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                            dismissButton: .default(Text("Ok")))
                         }
                     }
                 }

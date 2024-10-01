@@ -79,7 +79,7 @@ struct EditClientView: View {
                     .buttonStyle(.plain)
                 
                 VStack(alignment: .leading) {
-                    LabeledTextField(label: "Nome Civil", placeholder: "Insira o Nome Civil do Cliente", textfieldText: $clientName)
+                    LabeledTextField(label: "Nome Civil", placeholder: "Insira o Nome Civil do Cliente", mandatory: true, textfieldText: $clientName)
                         .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
                     
                 }
@@ -218,6 +218,10 @@ struct EditClientView: View {
                         return Alert(title: Text(""),
                         message: Text(""),
                         dismissButton: .default(Text("")))
+                    case .invalidCEP:
+                        return Alert(title: Text("Número do processo inválido"),
+                        message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                        dismissButton: .default(Text("Ok")))
                     }
                 }
             }
