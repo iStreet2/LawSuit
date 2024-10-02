@@ -85,8 +85,10 @@ struct ClientInfoView: View {
                         mailManager.sendMail(emailSubject: "Arqion", message: "")
                     } label: {
                         Text("Enviar e-mail")
+                            .foregroundStyle(Color(.white))
                     }
                     .buttonStyle(.borderedProminent)
+                    .tint(.black)
                     
                     Button {
                         requestDocument.toggle()
@@ -94,9 +96,10 @@ struct ClientInfoView: View {
                         Text("Solicitar documentos")
                     }
                     .buttonStyle(.borderedProminent)
+                    .tint(.black)
+
                 }
             }
-            Spacer()
         }
         .onChange(of: deleted) { change in
             dismiss()
@@ -107,6 +110,7 @@ struct ClientInfoView: View {
         .sheet(isPresented: $editClient, content: {
             EditClientView(client: client, deleted: $deleted)
         })
-        .padding()
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
     }
 }

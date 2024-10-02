@@ -48,12 +48,13 @@ struct ClientView: View {
                 Text("Selecione um cliente")
                     .foregroundColor(.gray)
             } else {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
                     Divider()
                     HStack {
                         CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
-                            .padding(5)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
                            
                         Spacer()
                         if selectedOption == "Processos" {
