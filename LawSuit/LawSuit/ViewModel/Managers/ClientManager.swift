@@ -85,7 +85,7 @@ class ClientManager {
     
     func fetchFromName(name: String) -> Client? {
         let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = NSPredicate(format: "name ==[c] %@ OR socialName ==[c] %@", name, name)
         do {
             let fetchedClients = try context.fetch(fetchRequest)
             if let client = fetchedClients.first {

@@ -172,7 +172,7 @@ struct AddClientView: View {
                                      message: Text(""),
                                      dismissButton: .default(Text("")))
                     case .invalidCEP:
-                        return Alert(title: Text("Número de CEP inválido"),
+                        return Alert(title: Text("Número de CEP não encontrado"),
                                      message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
                         

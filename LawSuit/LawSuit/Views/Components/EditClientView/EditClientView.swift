@@ -81,7 +81,10 @@ struct EditClientView: View {
                 VStack(alignment: .leading) {
                     LabeledTextField(label: "Nome Civil", placeholder: "Insira o Nome Civil do Cliente", mandatory: true, textfieldText: $clientName)
                         .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
-                    
+                    LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $clientBirthDate)
+                        .onReceive(Just(clientBirthDate)) { _ in
+                            clientBirthDate = textFieldDataViewModel.dateValidation(clientBirthDate)
+                        }
                 }
                 
                 .padding()
@@ -95,16 +98,6 @@ struct EditClientView: View {
                 
             }
             Spacer()
-//            Picker(selection: $userInfoType, label: Text("picker")) {
-//                Text("Informações Pessoais").tag(0)
-//                Text("Endereço").tag(1)
-//                Text("Contato").tag(2)
-//                Text("Outros").tag(3)
-//            }
-//            .padding(.top, 10)
-//            .padding(.trailing, 100)
-//            .pickerStyle(.segmented)
-//            .labelsHidden()
             Divider()
             Group {
                 VStack(spacing: 0) {
@@ -255,7 +248,6 @@ struct EditClientView: View {
     func areFieldsFilled() -> Bool {
         if userInfoType >= 0 {
             return !clientName.isEmpty &&
-            !clientOccupation.isEmpty &&
             !clientBirthDate.description.isEmpty &&
             !clientRg.isEmpty &&
             !clientCpf.isEmpty &&

@@ -74,7 +74,7 @@ struct ClientInfoView: View {
                 } label: {
                     Text("Mais informações")
                         .font(.body)
-                        .foregroundColor(.wine)
+                        .foregroundStyle(.wine)
                         .underline()
                         .bold()
                 }

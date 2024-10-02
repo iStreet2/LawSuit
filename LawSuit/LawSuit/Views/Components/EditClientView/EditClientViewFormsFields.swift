@@ -116,8 +116,8 @@ struct EditClientViewFormsFields: View {
             VStack(spacing: 15) {
                 VStack(alignment: .leading, spacing: 4) {
                     LabeledTextField(label: "E-mail", placeholder: "Insira o e-mail do Cliente", mandatory: true, textfieldText: $email)
-                        .onChange(of: email) { newValue in
-                            isEmailValid = textFieldDataViewModel.isValidEmail(newValue)
+                        .onChange(of: email) { _ in
+                            isEmailValid = textFieldDataViewModel.isValidEmail(email)
                         }
                         .foregroundColor(isEmailValid ? .black : .red)
                 }
