@@ -29,7 +29,7 @@ struct EditClientView: View {
     @State var clientAffiliation: String = ""
     @State var clientMaritalStatus: String = ""
     @State var clientNationality: String = ""
-    @State var clientBirthDate: Date = Date()
+    @State var clientBirthDate: String = ""
     @State var clientCep: String = ""
     @State var clientAddress: String = ""
     @State var clientAddressNumber: String = ""
@@ -181,7 +181,7 @@ struct EditClientView: View {
                         invalidInformation = .missingCellphoneNumber
                         
                     } else {
-                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                         dismiss()
                         
                         return
@@ -239,7 +239,7 @@ struct EditClientView: View {
             clientAffiliation = client.affiliation
             clientMaritalStatus = client.maritalStatus
             clientNationality = client.nationality
-            clientBirthDate = client.birthDate
+            clientBirthDate = client.birthDate.convertBirthDateToString()
             clientCep = client.cep
             clientAddress = client.address
             clientAddressNumber = client.addressNumber

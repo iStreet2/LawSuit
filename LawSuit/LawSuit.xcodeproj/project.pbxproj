@@ -1244,7 +1244,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		089B8A9D2CA1F5B100FEBCAB /* HotKey */ = {
+		6A2B87742CAB148D009F7507 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HotKey;
 		};
