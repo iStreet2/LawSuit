@@ -23,7 +23,7 @@ struct LawsuitNotDistributedView: View {
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
     @Binding var lawsuitDefendantName: String
-    @Binding var lawsuitActionDate: Date
+    @Binding var lawsuitActionDate: String
     let textLimit = 100
     
     //MARK: CoreData
@@ -75,7 +75,7 @@ struct LawsuitNotDistributedView: View {
                                     let category = TagTypeString.string(from: tagType)
                                     let lawyer = lawyers[0]
                                     let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                                    var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                    var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
 //                                    Task {
                                         /*await*/ dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
 //                                    }
@@ -108,9 +108,9 @@ struct LawsuitNotDistributedView: View {
         !lawsuitDefendantName.isEmpty
     }
 }
-
-#Preview {
-	LawsuitNotDistributedView(lawsuitNumber: .constant("34567898765"), lawsuitCourt: .constant("fghcvnbjgyutfgh"), lawsuitAuthorName: .constant("AuTHOR NAAAME"), lawsuitDefendantName: .constant("Defendant Name Here"), lawsuitActionDate: .constant(Date.now))
-
-		.environmentObject(DataViewModel())
-}
+//
+//#Preview {
+//	LawsuitNotDistributedView(lawsuitNumber: .constant("34567898765"), lawsuitCourt: .constant("fghcvnbjgyutfgh"), lawsuitAuthorName: .constant("AuTHOR NAAAME"), lawsuitDefendantName: .constant("Defendant Name Here"), lawsuitActionDate: .constant(Date.now))
+//
+//		.environmentObject(DataViewModel())
+//}
