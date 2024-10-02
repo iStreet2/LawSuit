@@ -22,7 +22,7 @@ struct AddLawsuitView: View {
     @State var lawsuitCourt = ""
     @State var lawsuitAuthorName = ""
     @State var lawsuitDefandentName = ""
-    @State var lawsuitActionDate = Date()
+    @State var lawsuitActionDate = ""
 
     
     //MARK: ViewModels

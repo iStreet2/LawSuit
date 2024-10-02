@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		08079F232CA4A1F4004EDF98 /* RequestDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */; };
 		08079F262CA5EFCB004EDF98 /* MailMessageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */; };
-		08079F282CA744BE004EDF98 /* PathViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F272CA744BE004EDF98 /* PathViewComponent.swift */; };
 		0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0897CB392C8BA21D00B488A9 /* MailManager.swift */; };
 		0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */; };
 		089B8A9C2C9E312D00FEBCAB /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */; };
-		089B8A9E2CA1F5B100FEBCAB /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 089B8A9D2CA1F5B100FEBCAB /* HotKey */; };
 		08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */; };
 		08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */; };
 		08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */; };
@@ -82,6 +80,7 @@
 		3BD40B6F2C6E76EC004048FA /* ClientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B6E2C6E76EC004048FA /* ClientListView.swift */; };
 		3BDEFFCD2C8A4A6A00990528 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCB2C8A4A6A00990528 /* Entity.swift */; };
 		3BDEFFD02C8A4C5500990528 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */; };
+		6A2B87752CAB148D009F7507 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 6A2B87742CAB148D009F7507 /* HotKey */; };
 		6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */; };
 		6ABD796D2C6E962800A98BA3 /* CheckboxIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */; };
 		6ABD79712C6E990F00A98BA3 /* SelectClientComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABD79702C6E990F00A98BA3 /* SelectClientComponent.swift */; };
@@ -300,7 +299,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				089B8A9E2CA1F5B100FEBCAB /* HotKey in Frameworks */,
+				6A2B87752CAB148D009F7507 /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,7 +672,7 @@
 			);
 			name = LawSuit;
 			packageProductDependencies = (
-				089B8A9D2CA1F5B100FEBCAB /* HotKey */,
+				6A2B87742CAB148D009F7507 /* HotKey */,
 			);
 			productName = LawSuit;
 			productReference = 084D404F2C8A4AAE00C96111 /* LawSuit.app */;
@@ -895,7 +894,6 @@
 				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
 				E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */,
 				08E8D2002C87ACDA008F3859 /* LawsuitCellComponent.swift in Sources */,
-				08079F282CA744BE004EDF98 /* PathViewComponent.swift in Sources */,
 				08A2B0DA2C935AE200719571 /* String+.swift in Sources */,
 				3BD40B382C6D454B004048FA /* ClientView.swift in Sources */,
 				6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */,
@@ -1077,7 +1075,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6KVP348U3Q;
+				DEVELOPMENT_TEAM = JPTYDVK6TT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1089,7 +1087,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.emily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1108,7 +1106,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6KVP348U3Q;
+				DEVELOPMENT_TEAM = JPTYDVK6TT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1120,7 +1118,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.emily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1254,7 +1252,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		089B8A9D2CA1F5B100FEBCAB /* HotKey */ = {
+		6A2B87742CAB148D009F7507 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HotKey;
 		};
