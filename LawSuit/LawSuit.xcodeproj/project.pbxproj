@@ -12,7 +12,7 @@
 		0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0897CB392C8BA21D00B488A9 /* MailManager.swift */; };
 		0898CE4B2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */; };
 		089B8A9C2C9E312D00FEBCAB /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */; };
-		089B8A9E2CA1F5B100FEBCAB /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 089B8A9D2CA1F5B100FEBCAB /* HotKey */; };
+		089B8A9E2CA1F5B100FEBCAB /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C42C8F752000719571 /* LawsuitNetworkingService.swift */; };
 		08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0C62C8F760F00719571 /* SegmentosDoJudiciario.swift */; };
 		08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0CA2C8F963B00719571 /* SegmentosEnums.swift */; };
@@ -106,6 +106,7 @@
 		DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */; };
 		DC2851E52CA74B200038A2E4 /* PathViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2851E42CA74B200038A2E4 /* PathViewComponent.swift */; };
 		DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC401F9C2C931FE3006FC949 /* Alerts.swift */; };
+		DCA955F02CADBF0900B3BC74 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = DCA955EF2CADBF0900B3BC74 /* HotKey */; };
 		DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD2F2C77B23900000195 /* AddClientView.swift */; };
 		DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */; };
 		DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDB963F2C7E61C400817814 /* AddClientForm.swift */; };
@@ -298,7 +299,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				089B8A9E2CA1F5B100FEBCAB /* HotKey in Frameworks */,
+				DCA955F02CADBF0900B3BC74 /* HotKey in Frameworks */,
+				089B8A9E2CA1F5B100FEBCAB /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,7 +664,7 @@
 			);
 			name = LawSuit;
 			packageProductDependencies = (
-				089B8A9D2CA1F5B100FEBCAB /* HotKey */,
+				DCA955EF2CADBF0900B3BC74 /* HotKey */,
 			);
 			productName = LawSuit;
 			productReference = 084D404F2C8A4AAE00C96111 /* LawSuit.app */;
@@ -1244,8 +1246,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6A2B87742CAB148D009F7507 /* HotKey */ = {
+		DCA955EF2CADBF0900B3BC74 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */;
 			productName = HotKey;
 		};
 /* End XCSwiftPackageProductDependency section */
