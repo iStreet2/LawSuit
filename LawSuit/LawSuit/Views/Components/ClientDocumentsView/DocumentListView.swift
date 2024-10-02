@@ -27,7 +27,7 @@ struct DocumentListView: View {
     let itemWidth: CGFloat = 90
     
     //MARK: Variáveis
-//    @State var showingGridView = false
+    //    @State var showingGridView = false
     
     var body: some View {
         GeometryReader { geometry in

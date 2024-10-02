@@ -28,7 +28,7 @@ struct FilePDFIconView: View {
     
     var body: some View {
         Group {
-            if folderViewModel.showingGridView == true {
+            if folderViewModel.showingGridView {
                 VStack {
                     Image(systemName: "doc")
                         .font(.system(size: 55))

@@ -162,7 +162,7 @@ struct AddClientForm: View {
     @Binding var affiliation: String
     @Binding var maritalStatus: String
     @Binding var nationality: String
-    @Binding var birthDate: Date
+    @Binding var birthDate: String
     @Binding var cep: String
     @Binding var address: String
     @Binding var addressNumber: String
@@ -174,6 +174,7 @@ struct AddClientForm: View {
     @Binding var telephone: String
     @Binding var cellphone: String
     
+    @State var dateText: String = ""
     @State var addressApi = AddressAPI()
     @State var isEmailValid = true
     
@@ -193,10 +194,11 @@ struct AddClientForm: View {
 //                            VStack(alignment: .leading){
                                 LabeledTextField(label: "Nome Civil", placeholder: "Insira o nome civil do Cliente", textfieldText: $name)
                                     .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
-                                LabeledDateField(selectedDate: $birthDate, label: "Data de Nascimento")
-                                
-//                            }
-//                        }
+                        
+                        LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento", textfieldText: $birthDate)
+                            .onReceive(Just(birthDate)) { newValue in birthDate = textFieldDataViewModel.dateValidation(newValue)}
+                                            
+                        
                         LabeledTextField(label: "Nome Social", placeholder: "Insira o nome social do Cliente", textfieldText: $socialName)
                             .onReceive(Just(socialName)) { _ in textFieldDataViewModel.limitText(text: &socialName, upper: textLimit) }
                             .padding(.horizontal, 2)
