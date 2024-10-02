@@ -15,7 +15,7 @@ struct LawsuitFoldersHeaderComponent: View {
     }
     
     var buttonColor: Color {
-        return isFirstFolderOpen ? Color(NSColor.quaternaryLabelColor) : Color(.black)
+        return isFirstFolderOpen ? Color(NSColor.tertiaryLabelColor) : Color(.black)
     }
     
     var body: some View {

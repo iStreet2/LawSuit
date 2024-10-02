@@ -41,6 +41,7 @@ struct LawsuitListViewHeaderContent: View {
             }
             .frame(minWidth: 777)
             .frame(height: 13)
+            .padding(.bottom, 5)
             .font(.footnote)
             .bold()
             .foregroundStyle(Color(.gray))

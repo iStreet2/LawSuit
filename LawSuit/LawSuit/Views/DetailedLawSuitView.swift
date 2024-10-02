@@ -63,13 +63,10 @@ struct DetailedLawSuitView: View {
                     
                     LawsuitFoldersHeaderComponent()
                         .padding(.vertical, 10)
-                    
-                    Divider()
-                    
+                                        
                     // MARK: - View/Grid de Pastas
                     DocumentView()
                     
-                    PathViewComponent()
                 }
             }
             

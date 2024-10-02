@@ -20,10 +20,13 @@ struct DocumentView: View{
     var body: some View{
         
         if let openFolder = folderViewModel.getOpenFolder(){
-            if  folderViewModel.showingGridView  {
+            if folderViewModel.showingGridView  {
+                Divider()
                 DocumentGridView(openFolder: openFolder)
+                PathViewComponent(folderViewModel: _folderViewModel)
             } else {
                 DocumentListView(openFolder: openFolder)
+                PathViewComponent(folderViewModel: _folderViewModel)
             }
             
         }

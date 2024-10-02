@@ -30,38 +30,41 @@ struct DocumentListView: View {
     //    @State var showingGridView = false
     
     var body: some View {
+        
         GeometryReader { geometry in
             VStack(alignment: .leading){
                 HStack {
                     Text("Nome e Número")
-                        .frame(width: geometry.size.width * 0.64, alignment: .leading)
-                    //                        .border(Color.black)
+                        .frame(width: geometry.size.width * 0.63, alignment: .leading)
                     
                     Text("Tamanho")
                         .frame(width: geometry.size.width * 0.09, alignment: .leading)
-                    //                        .border(Color.black)
                     
                     Text("Tipo")
                         .frame(width: geometry.size.width * 0.08, alignment: .leading)
-                    //                        .border(Color.black)
                     
                     Text("Data de criação")
-                        .frame(width: geometry.size.width * 0.10, alignment: .leading)
+                        .frame(width: geometry.size.width * 0.12, alignment: .leading)
+
                 }
-                .padding(.leading, 20)
-                .frame(minWidth: 777)
                 .frame(height: 13)
+                .padding(.leading, 20)
                 .font(.footnote)
                 .bold()
                 .foregroundStyle(Color(.gray))
                 
-                VStack {
+                VStack(alignment: .leading) {
                     Divider()
                     
                     if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
-                        Text("Sem pastas ou arquivos")
-                            .foregroundStyle(.gray)
-                            .frame(height: geometry.size.height / 2)
+                        HStack {
+                            Spacer()
+                            Text("Sem pastas ou arquivos")
+                                .foregroundStyle(.gray)
+                                .frame(height: geometry.size.height / 2)
+                            Spacer()
+                        }
+                        
                     }
                     
                     ScrollView {
@@ -75,7 +78,9 @@ struct DocumentListView: View {
                             
                         }
                         .padding(.leading, 10)
+                        
                     }
+                    
                 }
                 .background(.black.opacity(0.01))
                 
@@ -102,6 +107,7 @@ struct DocumentListView: View {
                 }
             }
         }
+        .frame(minWidth: 777)
     }
 }
 
