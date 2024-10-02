@@ -151,11 +151,11 @@ struct AddClientForm: View {
                         }
                     })
                 if cep.count > 0 && cep.count < 8 {
-                    Text("CEP inválido")
+                    Text("CEP não encontrado")
                         .foregroundStyle(.red)
                         .font(.caption)
-                        .padding(.vertical, -5)
-                        .padding(.horizontal, 5)
+//                        .padding(.vertical, -5)
+//                        .padding(.horizontal, 5)
                 }
                 LabeledTextField(label: "Endereço", placeholder: "Insira o endereço do Cliente", mandatory: true, textfieldText: $address)
                 HStack(spacing: 10) {
