@@ -132,7 +132,6 @@ struct LawsuitDistributedView: View {
                 }
 
                 if dataViewModel.coreDataManager.lawsuitManager.doesLawsuitExist(lawsuitNumber: lawsuitNumber) {
-                    print("processo já existe")
                     invalidInformation = .lawsuitAlreadyExists
                     return
                 }

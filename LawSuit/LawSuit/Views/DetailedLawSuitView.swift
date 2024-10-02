@@ -18,7 +18,9 @@ struct DetailedLawSuitView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
+    //    private let pasteboard = NSPasteboard.general
     
+    @State var isCopied = false
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
@@ -37,7 +39,7 @@ struct DetailedLawSuitView: View {
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
-        
+        ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 if !deleted {
                     HStack(alignment: .top, spacing: 22) {
@@ -66,12 +68,28 @@ struct DetailedLawSuitView: View {
                     
                     // MARK: - View/Grid de Pastas
                     DocumentView()
-                                        
+                    
                     PathViewComponent()
                 }
             }
             
-   
+            if isCopied {
+                Text("Copiado para área de transferência!")
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 7))
+                    .transition(.opacity)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation {
+                                isCopied = false
+                            }
+                        }
+                    }
+            }
+        }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
             EditLawSuitView(lawsuit: lawsuit, deleted: $deleted)
@@ -95,7 +113,6 @@ struct DetailedLawSuitView: View {
             navigationViewModel.dismissLawsuitView.toggle()
             dismiss()
         }
-        .border(Color.green)
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
     
@@ -143,7 +160,9 @@ extension DetailedLawSuitView {
                 .font(.title3)
                 .bold()
             Button {
-                // copiar o número para o clipboard
+                lawsuit.number.copy()
+                isCopied = true
+                print("foi copiado? \(isCopied)")
             } label: {
                 Image(systemName: "rectangle.portrait.on.rectangle.portrait")
                     .resizable()
@@ -154,6 +173,12 @@ extension DetailedLawSuitView {
             .buttonStyle(PlainButtonStyle())
         }
     }
+    
+    //    func copyToClipboard() {
+    //        pasteboard.clearContents()
+    //        pasteboard.setString(lawsuit.number, forType: .string)
+    //        isCopied.toggle()
+    //    }
     
     private var mainBlock: some View {
         BoxView {
