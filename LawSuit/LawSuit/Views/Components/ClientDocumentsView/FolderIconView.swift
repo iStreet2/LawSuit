@@ -55,6 +55,7 @@ struct FolderIconView: View {
                                 isEditing = true
                             }
                     }
+                    //lalallala teste
                 }
             } else {
                 HStack {
@@ -73,6 +74,7 @@ struct FolderIconView: View {
                     }
                     else {
                         Text(folder.name ?? "Sem nome")
+                            .border(.red)
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
                                 folderViewModel.openFolder(folder: folder)
