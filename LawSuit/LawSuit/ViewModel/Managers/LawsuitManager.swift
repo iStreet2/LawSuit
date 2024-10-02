@@ -113,4 +113,21 @@ class LawsuitManager {
         }
     }
     
+    func doesLawsuitExist(lawsuitNumber: String) -> Bool {
+        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+        let lawsuitNumberFormatted = NetworkingManager.shared.removeCharactersFromLawsuitNumber(lawsuitNumber: lawsuitNumber)
+        fetchRequest.predicate = NSPredicate(format: "number == %@", lawsuitNumberFormatted)
+        
+        do {
+            let existingLawsuits = try context.fetch(fetchRequest)
+            print(lawsuitNumber)
+            print("numero de lawsuits com esse nro existentes: \(existingLawsuits.count)")
+            return !existingLawsuits.isEmpty //true se tiver processos com o mesmo número
+        } catch {
+            print("Erro ao buscar processos: \(error)")
+            return false //em caso de erro, é pq o processo não existe
+        }
+        
+    }
+    
 }

@@ -19,7 +19,7 @@ struct LawsuitDistributedView: View {
     @State var selectTag = false
     
     //MARK: Variáveis de estado
-    @State var invalidInformation: InvalidInformation?
+    @State var invalidInformation: LawsuitInvalidInformation?
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
@@ -29,7 +29,6 @@ struct LawsuitDistributedView: View {
     
     @State var attributedAuthor = false
     @State var attributedDefendant = false
-    @State var doesLawsuitExist = false
     
     let textLimit = 50
     
@@ -41,7 +40,6 @@ struct LawsuitDistributedView: View {
         VStack{
             LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
                 .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
-                    doesLawsuitExist = textFieldDataViewModel.doesLawsuitExist(lawsuitNumber: lawsuitNumber)
                 }
             LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
         }
@@ -129,14 +127,15 @@ struct LawsuitDistributedView: View {
                     return
                 }
                 if lawsuitNumber.count < 25 {
-                    invalidInformation = .invalidLawSuitNumber
+                    invalidInformation = .invalidLawsuitNumber
                     return
                 }
-                
-//                if doesLawsuitExist {
-//                    invalidInformation = .lawsuitAlreadyExists
-//                    return
-//                }
+
+                if dataViewModel.coreDataManager.lawsuitManager.doesLawsuitExist(lawsuitNumber: lawsuitNumber) {
+                    print("processo já existe")
+                    invalidInformation = .lawsuitAlreadyExists
+                    return
+                }
                 
                 //MARK: Se o cliente foi atribuido ao autor
                 if attributedAuthor {
@@ -179,35 +178,14 @@ struct LawsuitDistributedView: View {
                     return Alert(title: Text("Informações Faltando"),
                                  message: Text("Por favor, preencha todos os campos antes de continuar."),
                                  dismissButton: .default(Text("Ok")))
-                case .invalidCPF:
-                    return Alert(title: Text("CPF inválido"),
-                                 message: Text("Por favor, insira um CPF válido antes de continuar."),
-                                 dismissButton: .default(Text("Ok")))
-                    
-                case .invalidRG:
-                    return Alert(title: Text("RG inválido"),
-                                 message: Text("Por favor, insira um RG válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
-                case .invalidEmail:
-                    return Alert(title: Text("E-mail inválido"),
-                                 message: Text("Por favor, insira um e-mail válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
-                case .missingTelephoneNumber:
-                    return Alert(title: Text("Número de telefone inválido"),
-                                 message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
-                case .missingCellphoneNumber:
-                    return Alert(title: Text("Número de celular inválido"),
-                                 message: Text("Por favor, insira um número de celular válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
-                case .invalidLawSuitNumber:
+                case .invalidLawsuitNumber:
                     return Alert(title: Text("Número do processo inválido"),
                                  message: Text("Por favor, insira um número de processo válido antes de continuar"),
                                  dismissButton: .default(Text("Ok")))
-//                case .lawsuitAlreadyExists:
-//                    return Alert(title: Text("Um processo com esse número já existe"),
-//                                 message: Text("Por favor, insira um número de processo válido antes de continuar"),
-//                                 dismissButton: .default(Text("Ok")))
+                case .lawsuitAlreadyExists:
+                    return Alert(title: Text("Este número de processo já existe"),
+                                 message: Text("Por favor, insira um número de processo diferente antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
                 }
             }
             

@@ -10,8 +10,7 @@ import SwiftUI
 import Combine
 
 class TextFieldDataViewModel: ObservableObject {
-    @Environment(\.managedObjectContext) var context
-    
+
     func limitText(text: inout String, upper: Int) {
         
         text = text.filter { $0.isLetter || $0 == " " }
@@ -116,20 +115,6 @@ class TextFieldDataViewModel: ObservableObject {
             formatLawsuit.append(character)
         }
         return formatLawsuit
-    }
-    
-    func doesLawsuitExist(lawsuitNumber: String) -> Bool {
-        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "number == %@", lawsuitNumber)
-        
-        do {
-            let existingLawsuits = try context.fetch(fetchRequest)
-            return !existingLawsuits.isEmpty // Retorna true se houver processos com o mesmo número
-        } catch {
-            print("Erro ao buscar processos: \(error)")
-            return false // Em caso de erro, consideramos que o processo não existe
-        }
-        
     }
     
 }

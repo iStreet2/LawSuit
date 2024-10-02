@@ -24,8 +24,6 @@ enum InvalidInformation: Error, Identifiable {
             return "missingCellphoneNumber"
         case .invalidLawSuitNumber:
             return "invalidLawSuitNumber"
-//        case .lawsuitAlreadyExists:
-//            return "lawsuitAlreadyExists"
         }
         
     }
@@ -36,5 +34,21 @@ enum InvalidInformation: Error, Identifiable {
     case missingTelephoneNumber
     case missingCellphoneNumber
     case invalidLawSuitNumber
-//    case lawsuitAlreadyExists
+}
+
+enum LawsuitInvalidInformation: String, Identifiable {
+    var id: String {
+        switch self {
+        case .missingInformation:
+            return "missingInformation"
+        case .lawsuitAlreadyExists:
+            return "lawsuitAlreadyExists"
+        case .invalidLawsuitNumber:
+            return "invalidLawsuitNumber"
+        }
+    }
+    
+    case missingInformation = "missingInformation"
+    case lawsuitAlreadyExists = "lawsuitAlreadyExists"
+    case invalidLawsuitNumber = "invalidLawsuitNumber"
 }

@@ -159,6 +159,7 @@ struct EditLawSuitView: View {
                             invalidInformation = .invalidLawSuitNumber
                             return
                         }
+
                         if attributedAuthor {
                             if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                                 let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)

@@ -171,11 +171,6 @@ struct AddClientView: View {
                         return Alert(title: Text(""),
                                      message: Text(""),
                                      dismissButton: .default(Text("")))
-                        
-//                    case .lawsuitAlreadyExists:
-//                        return Alert(title: Text("Um processo com esse número já existe"),
-//                                     message: Text("Por favor, insira um número de processo válido antes de continuar"),
-//                                     dismissButton: .default(Text("Ok")))
                     }
                 }
             }
