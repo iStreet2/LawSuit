@@ -73,10 +73,17 @@ extension ClientMoreInfoView {
     private var info: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                Text(client.name)
-                    .font(.largeTitle)
-                    .bold()
-                    .padding(0)
+                if client.socialName != nil {
+                    Text(client.socialName!)
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(0)
+                } else {
+                    Text(client.name)
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(0)
+                }
                 Button {
                     
                 } label: {

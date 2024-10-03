@@ -114,6 +114,30 @@ struct DetailedLawSuitView: View {
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
     
+//    func updateNames() {
+//        // Se o cliente do processo estiver no autor
+//        if lawsuit.authorID.hasPrefix("client:") {
+//            if let authorEntity = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
+//               let author = authorEntity as? Client {
+//                lawsuitAuthorName = author.socialName?.isEmpty == false ? author.socialName! : author.name
+//            }
+//            
+//            if let defendantEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID),
+//               let defendant = defendantEntity as? Client {
+//                lawsuitDefendantName = defendant.socialName?.isEmpty == false ? defendant.socialName! : defendant.name
+//            }
+//        } else {
+//            if let defendantEntity = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
+//               let defendant = defendantEntity as? Client {
+//                lawsuitDefendantName = defendant.socialName?.isEmpty == false ? defendant.socialName! : defendant.name
+//            }
+//
+//            if let authorEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID),
+//               let author = authorEntity as? Client {
+//                lawsuitAuthorName = author.socialName?.isEmpty == false ? author.socialName! : author.name
+//            }
+//        }
+//    }
     func updateNames() {
         //Se o cliente do processo estiver no autor
         if lawsuit.authorID.hasPrefix("client:") {
@@ -132,6 +156,7 @@ struct DetailedLawSuitView: View {
         }
     }
 }
+
 
 extension DetailedLawSuitView {
     private var mainBlockHeader: some View {
@@ -196,9 +221,12 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Text(lawsuitAuthorName)
-                            .font(.subheadline)
-                            .bold()
+                       
+//                        if !lawsuitAuthorName.isEmpty {
+                                                Text(lawsuitAuthorName)
+                                                    .font(.subheadline)
+                                                    .bold()
+//                                            }
                     }
                     Spacer()
                     VStack(alignment: .leading) {
@@ -207,9 +235,11 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Text(lawsuitDefendantName)
-                            .font(.subheadline)
-                            .bold()
+//                        if !lawsuitDefendantName.isEmpty {
+                                                Text(lawsuitDefendantName)
+                                                    .font(.subheadline)
+                                                    .bold()
+//                                            }
                     }
                     Spacer()
                 }

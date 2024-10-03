@@ -57,9 +57,7 @@ struct LawsuitDistributedView: View {
                 HStack {
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
-        
                             Text("\(lawsuitAuthorName)")
-                        
                         Button {
                             withAnimation {
                                 //Retirar esse cliente e retirar o estado de autor selecionado
