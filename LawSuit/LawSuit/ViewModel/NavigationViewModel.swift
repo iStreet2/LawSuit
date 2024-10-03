@@ -12,6 +12,5 @@ class NavigationViewModel: ObservableObject {
     
     @Published var selectedClient: Client? = nil
     @Published var isClientSelected: Bool = false
-    @Published var dismissLawsuitView = false
-    
+    @Published var isShowingDetailedLawsuitView = false
 }

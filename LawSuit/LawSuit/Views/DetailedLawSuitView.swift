@@ -87,6 +87,9 @@ struct DetailedLawSuitView: View {
                     }
             }
         }
+        .onDisappear {
+            navigationViewModel.isShowingDetailedLawsuitView = false
+        }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
             EditLawSuitView(lawsuit: lawsuit, deleted: $deleted)
@@ -96,6 +99,7 @@ struct DetailedLawSuitView: View {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
             updateNames()
+            navigationViewModel.isShowingDetailedLawsuitView = true
         }
         .onChange(of: lawsuit.authorID) { _ in
             updateNames()
@@ -106,10 +110,11 @@ struct DetailedLawSuitView: View {
         .onChange(of: deleted) { _ in
             dismiss()
         }
-        .onChange(of: navigationViewModel.dismissLawsuitView) { _ in
-            navigationViewModel.dismissLawsuitView.toggle()
-            dismiss()
-        }
+        .onChange(of: navigationViewModel.isShowingDetailedLawsuitView, perform: { newValue in
+            if !newValue {
+                dismiss()
+            }
+        })
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
     

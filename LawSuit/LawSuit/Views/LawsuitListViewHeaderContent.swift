@@ -12,6 +12,7 @@ struct LawsuitListViewHeaderContent: View {
     //MARK: Variáveis de estado
     @State var lawsuitClient: Client?
     var lawsuits: FetchedResults<Lawsuit>
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -53,6 +54,7 @@ struct LawsuitListViewHeaderContent: View {
                     ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
                         NavigationLink {
                             DetailedLawSuitView(lawsuit: lawsuit)
+                                
                         } label: {
                             if let lawsuitClient = self.lawsuitClient {
                                 LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)

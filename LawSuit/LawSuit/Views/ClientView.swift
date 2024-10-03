@@ -50,71 +50,70 @@ struct ClientView: View {
     }
     
     var body: some View {
-        VStack {
-            if deleted {
-                Text("Selecione um cliente")
-                    .foregroundColor(.gray)
-            } else {
-                VStack(alignment: .leading, spacing: 0) {
-                    ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
-                    Divider()
-                    HStack {
-                        CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                           
-                        Spacer()
-                        if selectedOption == "Processos" {
-                            Button(action: {
-                                createLawsuit.toggle()
-                            }, label: {
-                                Image(systemName: "plus")
-                                    .font(.title2)
-                                    .foregroundStyle(Color(.gray))
-                            })
-                            .padding(.trailing)
-                            .buttonStyle(PlainButtonStyle())
-                        } else {
-                            if let openFolder = folderViewModel.getOpenFolder(){
-                                DocumentActionButtonsView(folder: openFolder)
-                                    .padding(.trailing, 20)
+        NavigationStack {
+            VStack {
+                if deleted {
+                    Text("Selecione um cliente")
+                        .foregroundColor(.gray)
+                } else {
+                    VStack(alignment: .leading, spacing: 0) {
+                        ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
+                        Divider()
+                        HStack {
+                            CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                            
+                            Spacer()
+                            if selectedOption == "Processos" {
+                                Button(action: {
+                                    createLawsuit.toggle()
+                                }, label: {
+                                    Image(systemName: "plus")
+                                        .font(.title2)
+                                        .foregroundStyle(Color(.gray))
+                                })
+                                .padding(.trailing)
+                                .buttonStyle(PlainButtonStyle())
+                            } else {
+                                if let openFolder = folderViewModel.getOpenFolder(){
+                                    DocumentActionButtonsView(folder: openFolder)
+                                        .padding(.trailing, 20)
+                                }
                             }
                         }
                     }
-                }
-                VStack(alignment: .leading, spacing: 0) {
-                    if selectedOption == "Processos" {
-                        NavigationStack {
+                    VStack(alignment: .leading, spacing: 0) {
+                        if selectedOption == "Processos" {
                             LawsuitListViewHeaderContent(lawsuits: lawsuits)
-                        }
-                    } else {
-                        HStack(spacing: 0) {
-                            Button {
-                                folderViewModel.closeFolder()
-                            } label: {
-                                Image(systemName: "chevron.left")
+                        } else {
+                            HStack(spacing: 0) {
+                                Button {
+                                    folderViewModel.closeFolder()
+                                } label: {
+                                    Image(systemName: "chevron.left")
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .foregroundColor(buttonColor)
+                                .font(.title2)
+                                .disabled(folderViewModel.getPath().count() == 1)
+                                .padding(.horizontal, 20)
+                                
+                                Text((folderViewModel.getPath().count() == 1 ? "" : folderViewModel.getOpenFolder()?.name) ?? "Sem nome")
+                                    .font(.title3)
+                                    .bold()
+                                    .frame(height: 24)
                             }
-                            .buttonStyle(PlainButtonStyle())
-                            .foregroundColor(buttonColor)
-                            .font(.title2)
-                            .disabled(folderViewModel.getPath().count() == 1)
-                            .padding(.horizontal, 20)
+                            .padding(.bottom, 10)
                             
-                            Text((folderViewModel.getPath().count() == 1 ? "" : folderViewModel.getOpenFolder()?.name) ?? "Sem nome")
-                                .font(.title3)
-                                .bold()
-                                .frame(height: 24)
+                            DocumentView()
+                            //                            .border(Color.blue)
+                                .onAppear {
+                                    navigationViewModel.selectedClient = client
+                                    folderViewModel.resetFolderStack() //caminho fica sem nada
+                                    folderViewModel.openFolder(folder: client.rootFolder) //abre a root folder do cliente que estou selecionado
+                                }
                         }
-                        .padding(.bottom, 10)
-                        
-                        DocumentView()
-//                            .border(Color.blue)
-                            .onAppear {
-                                navigationViewModel.selectedClient = client
-                                folderViewModel.resetFolderStack() //caminho fica sem nada
-                                folderViewModel.openFolder(folder: client.rootFolder) //abre a root folder do cliente que estou selecionado
-                                navigationViewModel.dismissLawsuitView.toggle()
-                            }
                     }
                 }
             }

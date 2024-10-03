@@ -19,14 +19,14 @@ struct LawSuitApp: App {
     @StateObject var clientDataViewModel = TextFieldDataViewModel()
     @StateObject var addressViewModel = AddressViewModel()
     @StateObject var eventManager = EventManager()
-
-	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-	
-	 let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
+    
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
     
     var body: some Scene {
-        WindowGroup {   
-			  ContentView()
+        WindowGroup {
+            ContentView()
                 .environment(\.managedObjectContext, dataViewModel.coreDataContainer.viewContext)
                 .environmentObject(dataViewModel)
                 .environmentObject(folderViewModel)
@@ -37,25 +37,25 @@ struct LawSuitApp: App {
                 .environmentObject(addressViewModel)
                 .preferredColorScheme(.light)
                 .frame(minHeight: 530)
-					 .onAppear {
-						 hotkey.keyDownHandler = eventManager.hotkeyDownHandler
-					 }
-					 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
-						 SpotlightSearchbarView()
-							 .environmentObject(dataViewModel)
-							 .environmentObject(navigationViewModel)
-					 }
-                     .background(MaterialWindow().ignoresSafeArea())
-                     .toolbar(){
-                         ToolbarItem(placement: .primaryAction){
-                             Button(action: {
-                                 self.eventManager.spotlightBarIsPresented.toggle()
-                             }){
-                                 Image(systemName: "magnifyingglass")
-                             }
-                         }
-                     }
+                .onAppear {
+                    hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+                }
+                .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
+                    SpotlightSearchbarView()
+                        .environmentObject(dataViewModel)
+                        .environmentObject(navigationViewModel)
+                }
+                .background(MaterialWindow().ignoresSafeArea())
+                .toolbar(){
+                    ToolbarItem(placement: .primaryAction){
+                        Button(action: {
+                            self.eventManager.spotlightBarIsPresented.toggle()
+                        }){
+                            Image(systemName: "magnifyingglass")
+                        }
+                    }
+                }
         }
-   
+        
     }
 }

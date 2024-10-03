@@ -30,77 +30,78 @@ struct ClientInfoView: View {
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading) {
-                HStack {
-                    if let socialName = client.socialName {
-                        Text(socialName)
-                            .font(.title)
-                            .bold()
-                    } else {
-                        Text(client.name)
-                            .font(.title)
-                            .bold()
+        
+            HStack(alignment: .top) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        if let socialName = client.socialName {
+                            Text(socialName)
+                                .font(.title)
+                                .bold()
+                        } else {
+                            Text(client.name)
+                                .font(.title)
+                                .bold()
+                        }
+                        Button {
+                            // Ação para editar o cliente
+                            editClient.toggle()
+                        } label: {
+                            Image(systemName: "square.and.pencil")
+                                .font(.system(size: 18))
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    Button {
-                        // Ação para editar o cliente
-                        editClient.toggle()
+                    
+                    HStack {
+                        Text("Celular")
+                            .font(.body)
+                            .bold()
+                            .foregroundStyle(Color(.gray))
+                        Text(client.cellphone)
+                            .font(.body)
+                        Text("E-mail")
+                            .font(.body)
+                            .bold()
+                            .foregroundStyle(Color(.gray))
+                        Text(client.email)
+                            .font(.body)
+                    }
+                    .font(.footnote)
+                    
+                    NavigationLink {
+                        ClientMoreInfoView(client: client)
+                        
                     } label: {
-                        Image(systemName: "square.and.pencil")
-                            .font(.system(size: 18))
+                        Text("Mais informações")
+                            .font(.body)
+                            .foregroundColor(.wine)
+                            .underline()
+                            .bold()
                     }
                     .buttonStyle(PlainButtonStyle())
-                }
-                
-                HStack {
-                    Text("Celular")
-                        .font(.body)
-                        .bold()
-                        .foregroundStyle(Color(.gray))
-                    Text(client.cellphone)
-                        .font(.body)
-                    Text("E-mail")
-                        .font(.body)
-                        .bold()
-                        .foregroundStyle(Color(.gray))
-                    Text(client.email)
-                        .font(.body)
-                }
-                .font(.footnote)
-                
-                NavigationLink {
-                    ClientMoreInfoView(client: client)
-
-                } label: {
-                    Text("Mais informações")
-                        .font(.body)
-                        .foregroundColor(.wine)
-                        .underline()
-                        .bold()
-                }
-                .buttonStyle(PlainButtonStyle())
-                
-                HStack {
-                    Button {
-                        mailManager.sendMail(emailSubject: "Arqion", message: "")
-                    } label: {
-                        Text("Enviar e-mail")
-                            .foregroundStyle(Color(.white))
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.black)
                     
-                    Button {
-                        requestDocument.toggle()
-                    } label: {
-                        Text("Solicitar documentos")
+                    HStack {
+                        Button {
+                            mailManager.sendMail(emailSubject: "Arqion", message: "")
+                        } label: {
+                            Text("Enviar e-mail")
+                                .foregroundStyle(Color(.white))
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.black)
+                        
+                        Button {
+                            requestDocument.toggle()
+                        } label: {
+                            Text("Solicitar documentos")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.black)
+                        
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.black)
-
                 }
             }
-        }
         .onChange(of: deleted) { change in
             dismiss()
         }

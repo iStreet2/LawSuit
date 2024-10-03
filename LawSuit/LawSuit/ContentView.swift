@@ -38,9 +38,9 @@ struct ContentView: View {
     
     var body: some View {
         HStack (spacing: 0){
+            
             SideBarView(selectedView: $selectedView)
-//            switch selectedView {
-//            case .clients:
+            
             ZStack{
                 Color.white
                 NavigationSplitView(columnVisibility: isLawsuit ? .constant(.detailOnly) : $navigationVisibility) {
@@ -51,34 +51,31 @@ struct ContentView: View {
                     } else {
                         ClientListView(addClient: $addClient, deleted: $deleted)
                             .frame(minWidth: 170)
-                            
-                    }
                         
-                    } detail: {
-                        switch selectedView {
-                        case .clients:
-                            if let selectedClient = navigationViewModel.selectedClient {
-                                ClientView(client: selectedClient, deleted: $deleted)
-                                    .background(.white)
-                    
-                            } else {
-                                VStack{
-                                    Text("Selecione um cliente")
-                                        .padding()
-                                        .foregroundColor(.gray)
-                                }
-                                .background(.white)
-                            }
-                        case .lawsuits:
-                         
-                                LawsuitListView()
-                                    .background(.white)
-                           
-                        }
                     }
+                    
+                } detail: {
+                    switch selectedView {
+                    case .clients:
+                        if let selectedClient = navigationViewModel.selectedClient {
+                            ClientView(client: selectedClient, deleted: $deleted)
+                                .background(.white)
+                            
+                        } else {
+                            VStack{
+                                Text("Selecione um cliente")
+                                    .padding()
+                                    .foregroundColor(.gray)
+                            }
+                            .background(.white)
+                        }
+                        
+                    case .lawsuits:
+                        LawsuitListView()
+                            .background(.white)
+                    }
+                }
             }
-              
- 
         }
         .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {
