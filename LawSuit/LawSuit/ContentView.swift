@@ -25,7 +25,9 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
-    @State var navigationVisibility: NavigationSplitViewVisibility = .automatic
+    @State var navigationVisibility: NavigationSplitViewVisibility = .all
+
+//    @State var isLawsuit: Bool = false
     
     var isLawsuit: Bool {
         switch selectedView {
@@ -35,7 +37,7 @@ struct ContentView: View {
             true
         }
     }
-    
+        
     var body: some View {
         HStack (spacing: 0){
             
@@ -48,10 +50,11 @@ struct ContentView: View {
                         ClientListView(addClient: $addClient, deleted: $deleted)
                             .frame(minWidth: 170)
                             .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
+//                            .transition(.opacity)
                     } else {
                         ClientListView(addClient: $addClient, deleted: $deleted)
                             .frame(minWidth: 170)
-                        
+//                            .transition(.opacity)
                     }
                     
                 } detail: {
@@ -77,6 +80,19 @@ struct ContentView: View {
                 }
             }
         }
+//        .onAppear {
+//            if selectedView == .clients {
+//                navigationVisibility = .all
+//            }
+//        }
+//        .onChange(of: selectedView, perform: { newValue in
+//            if newValue == .lawsuits {
+//                isLawsuit = true
+//            } else {
+//                isLawsuit = false
+//                navigationVisibility = .automatic
+//            }
+//        })
         .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {
             AddClientView()

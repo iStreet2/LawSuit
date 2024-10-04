@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovimentationBlock: View {
     @EnvironmentObject var dataViewModel: DataViewModel
+    @Environment(\.openURL) var openLink
     @ObservedObject var lawsuit: Lawsuit
     
     var body: some View {
@@ -25,7 +26,7 @@ struct MovimentationBlock: View {
                                 .bold()
                             HStack {
                                 Button(action: {
-                                    
+                                    openLink(URL(string: "https://www.jusbrasil.com.br/consulta-processual/")!)
                                 }, label: {
                                     Text("Acessar JusBrasil")
                                 })

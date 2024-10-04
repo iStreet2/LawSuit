@@ -18,7 +18,6 @@ struct DetailedLawSuitView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
-    //    private let pasteboard = NSPasteboard.general
     
     @State var isCopied = false
     @State var deleted = false
