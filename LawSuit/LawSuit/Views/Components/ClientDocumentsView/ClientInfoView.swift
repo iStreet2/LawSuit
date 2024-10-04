@@ -69,7 +69,7 @@ struct ClientInfoView: View {
                 .font(.footnote)
                 
                 NavigationLink {
-                    ClientMoreInfoView(client: client)
+                    ClientMoreInfoView(client: client, deleted: $deleted)
 
                 } label: {
                     Text("Mais informações")

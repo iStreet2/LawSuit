@@ -23,7 +23,7 @@ struct DetailedLawSuitView: View {
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
-    @State var lawsuitAuthorName = ""
+    @State var lawsuitAuthorSocialName = ""
     @State var lawsuitDefendantName = ""
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -114,45 +114,30 @@ struct DetailedLawSuitView: View {
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
     
-//    func updateNames() {
-//        // Se o cliente do processo estiver no autor
-//        if lawsuit.authorID.hasPrefix("client:") {
-//            if let authorEntity = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
-//               let author = authorEntity as? Client {
-//                lawsuitAuthorName = author.socialName?.isEmpty == false ? author.socialName! : author.name
-//            }
-//            
-//            if let defendantEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID),
-//               let defendant = defendantEntity as? Client {
-//                lawsuitDefendantName = defendant.socialName?.isEmpty == false ? defendant.socialName! : defendant.name
-//            }
-//        } else {
-//            if let defendantEntity = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
-//               let defendant = defendantEntity as? Client {
-//                lawsuitDefendantName = defendant.socialName?.isEmpty == false ? defendant.socialName! : defendant.name
-//            }
-//
-//            if let authorEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID),
-//               let author = authorEntity as? Client {
-//                lawsuitAuthorName = author.socialName?.isEmpty == false ? author.socialName! : author.name
-//            }
-//        }
-//    }
     func updateNames() {
         //Se o cliente do processo estiver no autor
         if lawsuit.authorID.hasPrefix("client:") {
             if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
                let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                lawsuitAuthorName = author.name
+                lawsuitAuthorSocialName = author.socialName ?? "Sem nome"
                 lawsuitDefendantName = defendant.name
             }
             //Se o cliente do processo estiver no reu
         } else {
             if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
-               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                lawsuitAuthorName = author.name
+               let authorEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID),
+            
+            let author = authorEntity as? Client {
+                
+                lawsuitAuthorSocialName = author.socialName ?? author.name
                 lawsuitDefendantName = defendant.name
             }
+            
+            
+            //               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+            //                lawsuitAuthorSocialName = author.socialName as! Client.socialName
+            //                lawsuitDefendantName = defendant.name
+            //            }
         }
     }
 }
@@ -221,12 +206,10 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                       
-//                        if !lawsuitAuthorName.isEmpty {
-                                                Text(lawsuitAuthorName)
-                                                    .font(.subheadline)
-                                                    .bold()
-//                                            }
+                        
+                        Text(lawsuitAuthorSocialName)
+                            .font(.subheadline)
+                            .bold()
                     }
                     Spacer()
                     VStack(alignment: .leading) {
@@ -235,11 +218,11 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-//                        if !lawsuitDefendantName.isEmpty {
-                                                Text(lawsuitDefendantName)
-                                                    .font(.subheadline)
-                                                    .bold()
-//                                            }
+                        //                        if !lawsuitDefendantName.isEmpty {
+                        Text(lawsuitDefendantName)
+                            .font(.subheadline)
+                            .bold()
+                        //                                            }
                     }
                     Spacer()
                 }
