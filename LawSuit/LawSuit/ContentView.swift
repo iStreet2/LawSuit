@@ -25,10 +25,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
-    @State var navigationVisibility: NavigationSplitViewVisibility = .all
-    @State var sideBarWasClosedManually = false
-
-//    @State var isLawsuit: Bool = false
+    @State var navigationVisibility: NavigationSplitViewVisibility = .automatic
     
     var isLawsuit: Bool {
         switch selectedView {
@@ -51,18 +48,9 @@ struct ContentView: View {
                         ClientListView(addClient: $addClient, deleted: $deleted)
                             .frame(minWidth: 170)
                             .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
-                            .onChange(of: navigationVisibility) { newValue in
-                                if newValue == .detailOnly { //detecta qnd o usuario fecha manualmente a barra lateral
-                                    sideBarWasClosedManually = true
-                                } else if newValue == .all {
-                                    sideBarWasClosedManually = false
-                                }
-                            }
-//                            .transition(.opacity)
                     } else {
                         ClientListView(addClient: $addClient, deleted: $deleted)
                             .frame(minWidth: 170)
-//                            .transition(.opacity)
                     }
                     
                 } detail: {
@@ -87,22 +75,6 @@ struct ContentView: View {
                 }
             }
         }
-        .onAppear {
-            if selectedView == .clients {
-                navigationVisibility = .all
-            }
-        }
-        .onChange(of: selectedView, perform: { newValue in
-            if newValue == .lawsuits {
-                navigationVisibility = .detailOnly
-            } else {
-                if sideBarWasClosedManually {
-                    navigationVisibility = .detailOnly
-                } else {
-                    navigationVisibility = .all
-                }
-            }
-        })
         .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {
             AddClientView()
