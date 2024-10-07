@@ -4,7 +4,7 @@
 //
 //  Created by Emily Morimoto on 11/09/24.
 //
-//visualização dos documentos em lista
+// Visualização dos documentos em lista
 
 import Foundation
 import SwiftUI
@@ -26,13 +26,10 @@ struct DocumentListView: View {
     let spacing: CGFloat = 10
     let itemWidth: CGFloat = 90
     
-    //MARK: Variáveis
-    //    @State var showingGridView = false
-    
     var body: some View {
         
         GeometryReader { geometry in
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 HStack {
                     Text("Nome e Número")
                         .frame(width: geometry.size.width * 0.63, alignment: .leading)
@@ -45,7 +42,6 @@ struct DocumentListView: View {
                     
                     Text("Data de criação")
                         .frame(width: geometry.size.width * 0.12, alignment: .leading)
-
                 }
                 .frame(height: 13)
                 .padding(.leading, 20)
@@ -56,7 +52,7 @@ struct DocumentListView: View {
                 VStack(alignment: .leading) {
                     Divider()
                     
-                    if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
+                    if openFolder.folders?.count == 0 && openFolder.files?.count == 0 {
                         HStack {
                             Spacer()
                             Text("Sem pastas ou arquivos")
@@ -64,26 +60,20 @@ struct DocumentListView: View {
                                 .frame(height: geometry.size.height / 2)
                             Spacer()
                         }
-                        
                     }
                     
                     ScrollView {
-                        
                         VStack(alignment: .leading) {
                             FolderView(parentFolder: openFolder, geometry: geometry)
                                 .onTapGesture(count: 2) {
                                     folderViewModel.openFolder(folder: openFolder)
                                 }
                             FilePDFGridView(parentFolder: openFolder, geometry: geometry)
-                            
                         }
                         .padding(.leading, 10)
-                        
                     }
-                    
                 }
-                .background(.black.opacity(0.01))
-                
+                .background(Color.black.opacity(0.01))
             }
             .padding(.top, 11)
             .onChange(of: openFolder) { _ in
@@ -106,9 +96,8 @@ struct DocumentListView: View {
                 } label: {
                     Text("Nova Pasta")
                     Image(systemName: "folder")
-                        .resizable()
-                    
-                })
+                }
+                
                 Button {
                     //MARK: CoreData - Criar
                     folderViewModel.importAndReturnPDF(parentFolder: openFolder, dataViewModel: dataViewModel) { filePDF in
@@ -120,11 +109,10 @@ struct DocumentListView: View {
                         Task {
                             do {
                                 try await dataViewModel.cloudManager.recordManager.saveObject(object: &mutableFilePDF, relationshipsToSave: [])
+                                try await dataViewModel.cloudManager.recordManager.addReference(from: openFolder, to: mutableFilePDF, referenceKey: "files")
                             } catch {
                                 print(error.localizedDescription)
                             }
-                            
-                            try await dataViewModel.cloudManager.recordManager.addReference(from: openFolder, to: mutableFilePDF, referenceKey: "files")
                         }
                     }
                 } label: {

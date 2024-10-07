@@ -186,7 +186,7 @@ struct EditLawSuitView: View {
                                     //MARK: CoreData - Editar
                                     dataViewModel.coreDataManager.entityManager.editEntity(entity: defendant, name: lawsuitDefendantName)
                                     let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
                                     
                                     //MARK: CloudKit - Editar
                                     let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]
@@ -207,7 +207,7 @@ struct EditLawSuitView: View {
                                     //MARK: CoreData - Editar
                                     dataViewModel.coreDataManager.entityManager.editEntity(entity: author, name: lawsuitAuthorName)
                                     let category = TagTypeString.string(from: tagType)
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
                                     
                                     //MARK: CloudKit - Editar
                                     let propertyNames = ["name","number","court","category","defendantID","authorID","actionDate"]

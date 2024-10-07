@@ -115,7 +115,7 @@ class LawsuitManager {
         }
     }
     
-    func oesLawsuitExist(lawsuitNumber: String) -> Bool {
+    func doesLawsuitExist(lawsuitNumber: String) -> Bool {
         let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
         let lawsuitNumberFormatted = NetworkingManager.shared.removeCharactersFromLawsuitNumber(lawsuitNumber: lawsuitNumber)
         fetchRequest.predicate = NSPredicate(format: "number == %@", lawsuitNumberFormatted)
@@ -130,7 +130,7 @@ class LawsuitManager {
             return false //em caso de erro, é pq o processo não existe
         }
         
-    }d
+    }
 
     func saveContext() {
         do {

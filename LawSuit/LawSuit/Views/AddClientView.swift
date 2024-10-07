@@ -128,7 +128,7 @@ struct AddClientView: View {
 																	 // MARK: Teoricamente continua funcionando, já que é o lawyers[0] rs
 																	 // MARK: Não está sendo usado mais...
                             
-                            var client = dataViewModel.coreDataManager.clientManager.createAndReturnClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone) // -> Não possui rootFolder ainda
+                            var client = dataViewModel.coreDataManager.clientManager.createAndReturnClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone) // -> Não possui rootFolder ainda
                             
 									// MARK: To tentando bonito, eu juro
 //									var client = Client(context: context)

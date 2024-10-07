@@ -209,7 +209,7 @@ struct EditClientView: View {
                         
                     } else {
                         //MARK: CoreData - Editar
-                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate, cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: client.socialName == "" ? nil : client.socialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
                         
                         //MARK: CloudKit - Editar
                         let propertyNames = ["name", "occupation", "rg", "cpf", "affiliation", "maritalStatus", "nationality", "birthDate", "cep", "address", "addressNumber", "neighborhood", "complement", "state", "city", "email", "telephone", "cellphone"]
