@@ -17,61 +17,86 @@ public class Client: NSManagedObject, Identifiable, Recordable {
         return NSFetchRequest<Client>(entityName: "Client")
     }
 	
-	convenience init?(_ record: CKRecord, context: NSManagedObjectContext) {
-		guard let entity = NSEntityDescription.entity(forEntityName: "Client", in: context) else { return nil }
+	convenience init?(_ record: CKRecord, context: NSManagedObjectContext) async {
+		guard let entity = NSEntityDescription.entity(forEntityName: "Client", in: context) else { print("Error Client(): entity"); return nil }
 		
 		self.init(entity: entity, insertInto: context)
 		
-		guard
-			let age = record[ClientFields.age.rawValue] as? Int64,
-			let address = record[ClientFields.address.rawValue] as? String,
-			let addressNumber = record[ClientFields.addressNumber.rawValue] as? String,
-			let affiliation = record[ClientFields.affiliation.rawValue] as? String,
-			let birthDate = record[ClientFields.birthDate.rawValue] as? Date,
-			let cellphone = record[ClientFields.cellphone.rawValue] as? String,
-			let cep = record[ClientFields.cep.rawValue] as? String,
-			let city = record[ClientFields.city.rawValue] as? String,
-			let complement = record[ClientFields.complement.rawValue] as? String,
-			let cpf = record[ClientFields.cpf.rawValue] as? String,
-			let createdAt = record[ClientFields.createdAt.rawValue] as? Date,
-			let email = record[ClientFields.email.rawValue] as? String,
-			let id = record[ClientFields.id.rawValue] as? String,
-			let maritalStatus = record[ClientFields.maritalStatus.rawValue] as? String,
-			let name = record[ClientFields.name.rawValue] as? String,
-			let nationality = record[ClientFields.nationality.rawValue] as? String,
-			let occupation = record[ClientFields.occupation.rawValue] as? String,
-			let rg = record[ClientFields.rg.rawValue] as? String,
-			let rootFolder = record[ClientFields.rootFolder.rawValue] as? CKRecord.Reference,
-			let state = record[ClientFields.state.rawValue] as? String,
-			let telephone = record[ClientFields.telephone.rawValue] as? String
-		else { return nil }
-		
-		self.age = age
-		self.address = address
-		self.addressNumber = addressNumber
-		self.affiliation = affiliation
-		self.birthDate = birthDate
-		self.cellphone = cellphone
-		self.cep = cep
-		self.city = city
-		self.complement = complement
-		self.cpf = cpf
-		self.email = email
-		self.id = id
-		self.maritalStatus = maritalStatus
-		self.name = name
-		self.nationality = nationality
-		self.occupation = occupation
-		self.rg = rg
-		
-		CloudManager.getRecordFromReference(rootFolder, completion: { record, error in
-			if let record = record {
-				self.rootFolder = Folder(record, context: context)
+		if let age = record[ClientFields.age.rawValue] as? Int64 {
+			self.age = age
+		} else { print("age") }
+		if let address = record[ClientFields.address.rawValue] as? String {
+			self.address = address
+		} else { print("address") }
+		if let addressNumber = record[ClientFields.addressNumber.rawValue] as? String {
+			self.addressNumber = addressNumber
+		} else { print("adressNumber") }
+		if let affiliation = record[ClientFields.affiliation.rawValue] as? String {
+			self.affiliation = affiliation
+		} else { print("affiliation") }
+		if let birthDate = record[ClientFields.birthDate.rawValue] as? Date {
+			self.birthDate = birthDate
+		} else { print("birthDate") }
+		if let cellphone = record[ClientFields.cellphone.rawValue] as? String {
+			self.cellphone = cellphone
+		} else { print("cellphone") }
+		if let cep = record[ClientFields.cep.rawValue] as? String {
+			self.cep = cep
+		} else { print("cep") }
+		if let city = record[ClientFields.city.rawValue] as? String {
+			self.city = city
+		} else { print("city") }
+		if let complement = record[ClientFields.complement.rawValue] as? String {
+			self.complement = complement
+		} else { print("complement") }
+		if let cpf = record[ClientFields.cpf.rawValue] as? String {
+			self.cpf = cpf
+		} else { print("cpf") }
+		if let createdAt = record[ClientFields.createdAt.rawValue] as? Date {
+//			self.createdAt = createdAt  // MARK: Não possui
+		} else { print("ClientRecord não possui createdAt") }
+		if let email = record[ClientFields.email.rawValue] as? String {
+			self.email = email
+		} else { print("email") }
+		if let id = record[ClientFields.id.rawValue] as? String {
+			self.id = id
+		} else { print("id") }
+		if let maritalStatus = record[ClientFields.maritalStatus.rawValue] as? String {
+			self.maritalStatus = maritalStatus
+		} else { print("maritalStatus") }
+		if let name = record[ClientFields.name.rawValue] as? String {
+			self.name = name
+		} else { print("name") }
+		if let nationality = record[ClientFields.nationality.rawValue] as? String {
+			self.nationality = nationality
+		} else { print("nationality") }
+		if let occupation = record[ClientFields.occupation.rawValue] as? String {
+			self.occupation = occupation
+		} else { print("occupation") }
+		if let rg = record[ClientFields.rg.rawValue] as? String {
+			self.rg = rg
+		} else { print("rg") }
+		if let rootFolder = record[ClientFields.rootFolder.rawValue] as? CKRecord.Reference {
+			do {
+				if let rootFolderRecord = try await CloudManager.getRecordFromReference(rootFolder) {
+					if let folderObject = await Folder(rootFolderRecord, context: context) {
+						self.rootFolder = folderObject
+					}
+				}
+			} catch {
+				print("Erro pegando rootFolderRecord em init do cliente")
 			}
-		})
+		} else { print("rootFolder") }
+		if let state = record[ClientFields.state.rawValue] as? String {
+			self.state = state
+		} else { print("state") }
+		if let telephone = record[ClientFields.telephone.rawValue] as? String {
+			self.telephone = telephone
+		} else { print("telephone") }
+		if let recordName = record[ClientFields.recordName.rawValue] as? String {
+			self.recordName = recordName
+		} else { print("recordName") }
 
-		self.state = state
-		self.telephone = telephone
 	}
 
     @NSManaged public var age: Int64
@@ -91,7 +116,7 @@ public class Client: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var cep: String
     @NSManaged public var address: String
     @NSManaged public var addressNumber: String
-    @NSManaged public var neighborhood: String
+    @NSManaged public var neighborhood: String?
     @NSManaged public var complement: String
     @NSManaged public var state: String
     @NSManaged public var city: String

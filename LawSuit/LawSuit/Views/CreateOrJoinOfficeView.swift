@@ -24,7 +24,7 @@ struct CreateOrJoinOfficeView: View {
 				
 				VStack(alignment: .leading, spacing: 20) {
 					
-					Text("Olá, \(dataViewModel.authenticationManager.getUserUsername() ?? "")!")
+					Text("Olá, \(dataViewModel.user?.username ?? "")!")
 						.font(.largeTitle)
 						.bold()
 					
@@ -37,7 +37,7 @@ struct CreateOrJoinOfficeView: View {
 						Button {
 							let pasteboard = NSPasteboard.general
 							pasteboard.clearContents()
-							pasteboard.setString(dataViewModel.authenticationManager.getUserEmail() ?? "", forType: .string)
+							pasteboard.setString(dataViewModel.user?.email ?? "", forType: .string)
 							
 							withAnimation(.bouncy(duration: 1)) {
 								didCopyEmail = true
@@ -50,7 +50,7 @@ struct CreateOrJoinOfficeView: View {
 							}
 						} label: {
 							HStack {
-								Text(dataViewModel.authenticationManager.getUserEmail() ?? "")
+								Text(dataViewModel.user?.email ?? "")
 								Image(systemName: didCopyEmail ? "checkmark.circle" : "rectangle.portrait.on.rectangle.portrait")
 							}
 							.font(.title3)

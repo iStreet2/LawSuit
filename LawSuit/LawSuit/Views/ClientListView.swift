@@ -20,7 +20,7 @@ struct ClientListView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
+    //@FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     
     var body: some View {
@@ -40,7 +40,7 @@ struct ClientListView: View {
                 .buttonStyle(PlainButtonStyle())
             }
             .padding()
-            List(clients, id: \.id) { client in
+			  List(dataViewModel.office?.clients ?? [], id: \.id) { client in // MARK: Utilizava o fetchResults<Clients>
                 Button(action: {
                     navigationViewModel.selectedClient = client
                     folderViewModel.resetFolderStack()

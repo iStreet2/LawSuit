@@ -17,50 +17,43 @@ public class Folder: NSManagedObject, Identifiable, Recordable {
         return NSFetchRequest<Folder>(entityName: "Folder")
     }
 	
-	convenience init?(_ record: CKRecord, context: NSManagedObjectContext) {
+	convenience init?(_ record: CKRecord, context: NSManagedObjectContext) async {
 		guard let entity = NSEntityDescription.entity(forEntityName: "Folder", in: context) else { return nil }
 		
 		self.init(entity: entity, insertInto: context)
 		
-		guard
-			let files = record[FolderFields.files.rawValue] as? [CKRecord.Reference],
-			let folders = record[FolderFields.folders.rawValue] as? [CKRecord.Reference],
-			let name = record[FolderFields.name.rawValue] as? String,
-			let id = record[FolderFields.id.rawValue] as? String
-		else { print("Error initializing Folder from CKRecord"); return nil }
-		
-		self.id = id
-		self.name = name
-		
-		for file in files {
-			CloudManager.getRecordFromReference(file) { record, error in
-				if let record = record {
-					// MARK: INICIALIZADOR DE FILE POR CKRecord
-					if let fileObject = FilePDF(record, context: context) {
-						self.addToFiles(fileObject)
-					} else {
-						print("fileObject could not be created")
+		if let files = record[FolderFields.files.rawValue] as? [CKRecord.Reference] {
+			for file in files {
+				do {
+					if let fileRecord = try await CloudManager.getRecordFromReference(file) {
+						if let fileObject = FilePDF(fileRecord, context: context) {
+							self.addToFiles(fileObject)
+						}
 					}
-				} else {
-					print("Error getting file record from reference: \(error!)")
+				} catch {
+					print("Error")
 				}
 			}
-		}
-		
-		for folder in folders {
-			CloudManager.getRecordFromReference(folder) { record, error in
-				if let record = record {
-					// MARK: INICIALIZADOR DE FOLDER POR CKRecord
-					if let folderObject = Folder(record, context: context) {
-						self.addToFolders(folderObject)
-					} else {
-						print("folderObject could not be created")
+		} else { print("FOLDER__INIT__() files") }
+		if let folders = record[FolderFields.folders.rawValue] as? [CKRecord.Reference] {
+			for folder in folders {
+				do {
+					if let folderRecord = try await CloudManager.getRecordFromReference(folder) {
+						if let folderObject = await Folder(folderRecord, context: context) {
+							self.addToFolders(folderObject)
+						}
 					}
-				} else {
-					print("Error getting folder from reference: \(error!)")
+				} catch {
+					print("Error")
 				}
 			}
-		}
+		} else { print("FOLDER__INIT__() folders") }
+		if let name = record[FolderFields.name.rawValue] as? String {
+			self.name = name
+		} else { print("FOLDER__INIT__() name") }
+		if let id = record[FolderFields.id.rawValue] as? String {
+			self.id = id
+		} else { print("FOLDER__INIT__() id") }
 		
 	}
 

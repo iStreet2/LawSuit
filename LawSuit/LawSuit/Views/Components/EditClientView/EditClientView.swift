@@ -247,7 +247,7 @@ struct EditClientView: View {
             clientCep = client.cep
             clientAddress = client.address
             clientAddressNumber = client.addressNumber
-            clientNeighborhood = client.neighborhood
+			  clientNeighborhood = client.neighborhood ?? ""
             clientComplement = client.complement
             clientState = client.state
             clientCity = client.city

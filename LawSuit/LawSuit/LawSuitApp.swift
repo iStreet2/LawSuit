@@ -37,6 +37,9 @@ struct LawSuitApp: App {
                 .frame(minHeight: 530)
 					 .onAppear {
 						 hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+						 Task {
+							 dataViewModel.office = await dataViewModel.getUserOffice()
+						 }
 					 }
 					 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
 						 SpotlightSearchbarView()

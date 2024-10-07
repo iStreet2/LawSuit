@@ -37,7 +37,7 @@ struct SignInWithAppleAuthenticationView: View {
 				} onCompletion: { result in
 					switch result {
 					case .success(let authorization):
-						dataViewModel.authenticationManager.handleSuccessfullLogin(with: authorization)
+						dataViewModel.handleSuccessfullLogin(with: authorization)
 						authenticationStatus = true
 						
 						authenticationViewIsPresented = false
@@ -54,6 +54,13 @@ struct SignInWithAppleAuthenticationView: View {
 				}
 				.frame(width: 130) // MARK: FRAME OPCIONAL
 				.offset(y: shouldAnimate ? (NSScreen.main?.visibleFrame.height)! + 100 : 0)
+				.onChange(of: authenticationViewIsPresented) { newValue in
+					if newValue {
+						shouldAnimate = false
+					} else {
+						shouldAnimate = true
+					}
+				}
 				
 				
 				// MARK: - confirmação visual do sign in with apple dentro do APP
@@ -73,6 +80,8 @@ struct SignInWithAppleAuthenticationView: View {
 				//				}
 				
 			}
+			.scaleEffect(1 + shouldAnimate.double)
+			.opacity(1 - (2 * shouldAnimate.double))
 //			.frame(width: 700, height: 600)
 //			.background(
 //				ZStack {
@@ -90,4 +99,20 @@ struct SignInWithAppleAuthenticationView: View {
 
 #Preview {
 	SignInWithAppleAuthenticationView(authenticationViewIsPresented: .constant(true))
+}
+
+extension Bool {
+	var int: Int {
+		if self {
+			return 1
+		}
+		return 0
+	}
+	
+	var double: Double {
+		if self {
+			return 1.0
+		}
+		return 0.0
+	}
 }

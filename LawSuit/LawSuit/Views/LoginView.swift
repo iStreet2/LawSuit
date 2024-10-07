@@ -24,44 +24,41 @@ struct LoginView: View {
 	
 	@State var office: Office? = nil
 	
+//	@State var currentPresentedView: screenStates = .loginView
+	
 	var body: some View {
 		NavigationStack(path: $navigationPath) {
 			
+			if let user = dataViewModel.user {
+				Text("\(user.name)")
+				Text("\(user.username)")
+				Text("\(user.email)")
+				Text("\(user.officeID)")
+			}
+			
 			ZStack {
 				
-				
-				if let result = dataViewModel.authenticationManager.userIsFirstTimeLoggingIn() {
-					if result == true && userHasAUsername == false {  // Primeira vez loggando no app
-						CreateAccountView(authenticationViewIsPresented: $authenticationViewIsPresented, userHasAUsername: $userHasAUsername) // atribui nome ao usuário
-					}
+				if !userHasAUsername && dataViewModel.user?.username == nil { // usuário ainda não possui username
+					CreateAccountView(authenticationViewIsPresented: $authenticationViewIsPresented, userHasAUsername: $userHasAUsername)
+				} else { // usuário possui username / já criou sua conta
 					
-					else {  // Usuário já está loggado no app
-						
-						if !dataViewModel.userDidJoinOffice() {
-							// MARK: Se o usuário não fizer parte de nenhum escritório:
-							CreateOrJoinOfficeView(authenticationViewIsPresented: $authenticationViewIsPresented)
-							// cria o office e atribui o officeID ao usuário.officeID
-						} else {
-							
-							// TODO: Se fizer
-							// MARK: ContentView(office) ?????? -> Ir para o APP normal
-							ContentView()
-								.onAppear {
-									Task {
-										self.office = await dataViewModel.getUserOffice()
-									}
-								}
+					if dataViewModel.user?.officeID == nil { // usuário não está em nenhum escritório
+						CreateOrJoinOfficeView(authenticationViewIsPresented: $authenticationViewIsPresented)
+					} else { // está em um escritório
+						if let office = office {
+							ContentView(office: office)
 						}
 					}
 					
 				}
-				else {  // Usuário não foi criado -> não deve entrar nisso nunca
-					
-				}
-					
+				
 				SignInWithAppleAuthenticationView(authenticationViewIsPresented: $authenticationViewIsPresented) // cria o usuário caso ele não exista
-					.scaleEffect(1 + transitionProgress)
-					.opacity(1 - (2 * transitionProgress))
+					.opacity(1 - (transitionProgress))
+					.onAppear {
+						Task {
+							self.office = await dataViewModel.getUserOffice()
+						}
+					}
 				
 			}
 			
@@ -98,5 +95,24 @@ struct CheckShape: Shape {
 			path.addLine(to: CGPoint(x: rect.origin.x + 20, y: rect.origin.y + 20))
 			path.addLine(to: CGPoint(x: rect.origin.x + 50, y: rect.origin.y - 10))
 		}
+	}
+}
+
+enum screenStates {
+	case loginView
+	case creatingProfileView
+	case createOrJoinOfficeView
+	case createOfficeView
+}
+
+extension LoginView {
+	private var loginViewBackground: some View {
+		Image("Login_Background")
+			.resizable()
+	}
+	
+	private var creatingProfileView: some View {
+		Image("Login_Background")
+			.resizable()
 	}
 }

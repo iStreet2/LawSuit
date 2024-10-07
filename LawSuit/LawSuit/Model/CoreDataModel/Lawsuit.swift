@@ -17,7 +17,7 @@ public class Lawsuit: NSManagedObject, Identifiable, Recordable {
         return NSFetchRequest<Lawsuit>(entityName: "Lawsuit")
     }
 	
-	convenience init?(_ record: CKRecord, context: NSManagedObjectContext) {
+	convenience init?(_ record: CKRecord, context: NSManagedObjectContext) async {
 		guard let entity = NSEntityDescription.entity(forEntityName: "Lawsuit", in: context) else { return nil }
 		
 		self.init(entity: entity, insertInto: context)
@@ -43,14 +43,14 @@ public class Lawsuit: NSManagedObject, Identifiable, Recordable {
 		self.name = name
 		self.number = number
 		
-		CloudManager.getRecordFromReference(rootFolder) { record, error in
-			if let record = record {
-				if let rootFolderObject = Folder(record, context: context) {
+		do {
+			if let rootFolderRecord = try await CloudManager.getRecordFromReference(rootFolder) {
+				if let rootFolderObject = await Folder(rootFolderRecord, context: context) {
 					self.rootFolder = rootFolderObject
 				}
-			} else {
-				print("Could not retrieve rootFolder record from reference")
 			}
+		} catch {
+			print("Error")
 		}
 		
 	}

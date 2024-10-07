@@ -28,7 +28,7 @@ class Office: Identifiable {
 		self.context = context
 	}
 	
-	init?(_ record: CKRecord, context: NSManagedObjectContext) {
+	init?(_ record: CKRecord, context: NSManagedObjectContext) async {
 		guard
 			let name = record[OfficeFields.name.rawValue] as? String
 				//			let clients = record[OfficeFields.clients.rawValue] as? [CKRecord.Reference],
@@ -43,14 +43,16 @@ class Office: Identifiable {
 		// Fetch clients asynchronously
 		if let clients = record[OfficeFields.clients.rawValue] as? [CKRecord.Reference] {
 			for client in clients {
-				CloudManager.getRecordFromReference(client) { record, error in
-					if let record = record {
-						if let clientObject = Client(record, context: context) {
+				do {
+					if let record = try await CloudManager.getRecordFromReference(client) {
+						if let clientObject = await Client(record, context: context) {
 							self.clients.append(clientObject)
+						} else {
+							print("Error making client from record inside office init()")
 						}
-					} else {
-						print("Could not retrieve client record from reference")
 					}
+				} catch {
+					print("Office.__INIT?()__ error getting client record from reference")
 				}
 			}
 		} else {
@@ -62,15 +64,22 @@ class Office: Identifiable {
 		// Fetch lawsuits asynchronously
 		if let lawsuits = record[OfficeFields.lawsuits.rawValue] as? [CKRecord.Reference] {
 			for lawsuit in lawsuits {
-				CloudManager.getRecordFromReference(lawsuit) { record, error in
-					if let record = record {
-						if let lawsuitObject = Lawsuit(record, context: context) {
+				do {
+					if let record = try await CloudManager.getRecordFromReference(lawsuit) {
+						if let lawsuitObject = await Lawsuit(record, context: context) {
 							self.lawsuits.append(lawsuitObject)
 						}
-					} else {
-						print("Could not retrieve lawsuit record from reference")
 					}
+				} catch {
+					print("Office.__INIT?()__ error getting lawsuit record from reference")
 				}
+//				CloudManager.getRecordFromReference(lawsuit) { record, error in
+//					if let record = record {
+//						
+//					} else {
+//						print("Could not retrieve lawsuit record from reference")
+//					}
+//				}
 			}
 		} else {
 			print("ERRO lawsuits Office(): \(record[OfficeFields.lawsuits.rawValue])")
@@ -88,16 +97,16 @@ class Office: Identifiable {
 		
 		// Fetch owner asynchronously
 		if let owner = record[OfficeFields.owner.rawValue] as? CKRecord.Reference {
-			CloudManager.getRecordFromReference(owner) { record, error in
-				if let record = record {
+			do {
+				if let ownerRecord = try await CloudManager.getRecordFromReference(owner) {
 					if let ownerObject = Lawyer(record, context: context) {
 						self.owner = ownerObject
 					} else {
 						print("Could not make Lawyer() from owner")
 					}
-				} else {
-					print("Could not retrieve owner record from reference")
 				}
+			} catch {
+				print("Office.__INIT?()__ error getting owner record from reference")
 			}
 		} else {
 			print("ERRO owner Office(): \(record[OfficeFields.owner.rawValue])")

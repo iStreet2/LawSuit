@@ -30,4 +30,5 @@ enum ClientFields: String {
 	case rootFolder
 	case state
 	case telephone
+	case recordName
 }

@@ -99,7 +99,8 @@ struct CreateAccountView: View {
 							}
 							
 							Button {
-								dataViewModel.authenticationManager.setUserUsername(username: nameValue)
+								dataViewModel.user?.username = nameValue
+								try? dataViewModel.context.save()
 								userHasAUsername = true
 							} label: {
 								Text("Criar")

@@ -32,7 +32,7 @@ struct CreateOfficeView: View {
 			
 			HStack {  // TODO: PEGAR IMAGEM E COLOCAR NO COREDATA
 				// Imagem do mano
-				Text(dataViewModel.authenticationManager.getUserName()!)
+				Text(dataViewModel.user?.name ?? "SEU NOME")
 			}
 			
 			HStack {
@@ -45,10 +45,12 @@ struct CreateOfficeView: View {
 				Button {
 					// TODO: CRIAR O ESCRITÓRIO COM O NOME E O OWNER SENDO A PESSOA DO COREDATA
 					Task {
-						await dataViewModel.createOffice(
+						_ = await dataViewModel.createOffice(
 							name: officeName,
-							lawyer: dataViewModel.authenticationManager.fetchUser()!
+							lawyer: dataViewModel.user!
 						)
+						_ = await dataViewModel.getUserOffice()
+						dismiss()
 					}
 				} label: {
 					Text("Criar")
