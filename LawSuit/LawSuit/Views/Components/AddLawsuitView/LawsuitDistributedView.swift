@@ -114,7 +114,6 @@ struct LawsuitDistributedView: View {
             }
         }
         Spacer()
-        Spacer()
         HStack {
             Spacer()
             Button {
@@ -143,23 +142,10 @@ struct LawsuitDistributedView: View {
                             invalidInformation = .lawsuitAlreadyExists
                             return
                         }
+                        
+                        dismiss()
                     }
-                    
-                    //MARK: Se o cliente foi atribuido ao autor
-                    if attributedAuthor {
-                        if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
-                            let category = TagTypeString.string(from: tagType)
-                            let lawyer = lawyers[0]
-                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                            let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertToDate())
-                            
-                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                            
-                            dismiss()
-                        } else {
-                            print("Client not found")
-                        }
-                    }
+
                     //MARK: Se o cliente foi atribuido ao réu
                 } else if attributedDefendant {
                     if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {

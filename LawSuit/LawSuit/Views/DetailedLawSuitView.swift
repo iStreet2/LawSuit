@@ -18,13 +18,12 @@ struct DetailedLawSuitView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
-    
-    @State var isCopied = false
+    @ObservedObject var client: Client
+    @ObservedObject var entity: Entity
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
-    @State var lawsuitAuthorSocialName = ""
-    @State var lawsuitDefendantName = ""
+    @State var isCopied = false
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
@@ -97,14 +96,6 @@ struct DetailedLawSuitView: View {
         .onAppear {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
-            updateNames()
-            navigationViewModel.isShowingDetailedLawsuitView = true
-        }
-        .onChange(of: lawsuit.authorID) { _ in
-            updateNames()
-        }
-        .onChange(of: lawsuit.defendantID) { _ in
-            updateNames()
         }
         .onChange(of: deleted) { _ in
             dismiss()
@@ -116,33 +107,6 @@ struct DetailedLawSuitView: View {
         })
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
-    
-    func updateNames() {
-        //Se o cliente do processo estiver no autor
-        if lawsuit.authorID.hasPrefix("client:") {
-            if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
-               let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                lawsuitAuthorSocialName = author.socialName ?? "Sem nome"
-                lawsuitDefendantName = defendant.name
-            }
-            //Se o cliente do processo estiver no reu
-        } else {
-            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
-               let authorEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID),
-            
-            let author = authorEntity as? Client {
-                
-                lawsuitAuthorSocialName = author.socialName ?? author.name
-                lawsuitDefendantName = defendant.name
-            }
-            
-            
-            //               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-            //                lawsuitAuthorSocialName = author.socialName as! Client.socialName
-            //                lawsuitDefendantName = defendant.name
-            //            }
-        }
-    }
 }
 
 
@@ -151,17 +115,18 @@ extension DetailedLawSuitView {
         HStack {
             TagViewComponent(tagType: TagType(s: lawsuit.category) ?? .trabalhista)
             Spacer()
-            Button {
-                // editar
-                editLawSuit.toggle()
-            } label: {
-                Image(systemName: "square.and.pencil")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 21)
-                    .foregroundStyle(.secondary)
+            HStack {
+                Button {
+                    editLawSuit.toggle()
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 21)
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(PlainButtonStyle())
             }
-            .buttonStyle(PlainButtonStyle())
         }
     }
     
@@ -208,7 +173,7 @@ extension DetailedLawSuitView {
                 Text("\(lawsuit.actionDate, formatter: dateFormatter)")
                 
                 Spacer()
-                
+                //Aqui vc faz suas paradas para mostrar social name :D
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Autor")
@@ -217,7 +182,8 @@ extension DetailedLawSuitView {
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
                         
-                        Text(lawsuitAuthorSocialName)
+                        Text(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.name)
+                        // Text(lawsuitAuthorSocialName)
                             .font(.subheadline)
                             .bold()
                     }
@@ -229,7 +195,8 @@ extension DetailedLawSuitView {
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
                         //                        if !lawsuitDefendantName.isEmpty {
-                        Text(lawsuitDefendantName)
+                        Text(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? client.name : entity.name)
+                        // Text(lawsuitDefendantName)
                             .font(.subheadline)
                             .bold()
                         //                                            }
@@ -240,3 +207,12 @@ extension DetailedLawSuitView {
         }
     }
 }
+
+
+
+
+
+
+
+
+

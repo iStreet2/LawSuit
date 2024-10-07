@@ -107,7 +107,6 @@ struct ClientView: View {
                             .padding(.bottom, 10)
                             
                             DocumentView()
-                            //                            .border(Color.blue)
                                 .onAppear {
                                     navigationViewModel.selectedClient = client
                                     folderViewModel.resetFolderStack() //caminho fica sem nada
