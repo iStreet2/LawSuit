@@ -32,6 +32,7 @@ struct EditLawSuitView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
         VStack {
@@ -53,6 +54,7 @@ struct EditLawSuitView: View {
                     HStack {
                         //MARK: Caso o usuário tenha adicionado um cliente no autor
                         if attributedAuthor {
+                        
                             Text("\(lawsuitAuthorName)")
                             Button {
                                 withAnimation {
@@ -109,7 +111,7 @@ struct EditLawSuitView: View {
                 Spacer()
                 VStack(alignment: .leading) {
                     LabeledTextField(label: "Data de distribuição", placeholder: "", textfieldText: $lawsuitActionDate)
-                        .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateValidation(newValue)}
+                        .onReceive(Just(lawsuitActionDate)) { _ in lawsuitActionDate = textFieldDataViewModel.dateValidation(lawsuitActionDate)}
                         .padding(.top)
                         .frame(width: 200, alignment: .leading)
                     
@@ -202,10 +204,6 @@ struct EditLawSuitView: View {
                             return Alert(title: Text("E-mail inválido"),
                                          message: Text("Por favor, insira um e-mail válido antes de continuar"),
                                          dismissButton: .default(Text("Ok")))
-                        case .missingTelephoneNumber:
-                            return Alert(title: Text("Número de telefone inválido"),
-                                         message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                         dismissButton: .default(Text("Ok")))
                         case .missingCellphoneNumber:
                             return Alert(title: Text("Número de celular inválido"),
                                          message: Text("Por favor, insira um número de celular válido antes de continuar"),
@@ -214,6 +212,10 @@ struct EditLawSuitView: View {
                             return Alert(title: Text("Número do processo inválido"),
                                          message: Text("Por favor, insira um número de processo válido antes de continuar"),
                                          dismissButton: .default(Text("Ok")))
+                        case .invalidCEP:
+                            return Alert(title: Text("Número do processo inválido"),
+                            message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                            dismissButton: .default(Text("Ok")))
                         }
                     }
                 }

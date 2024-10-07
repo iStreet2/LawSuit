@@ -18,19 +18,19 @@ enum InvalidInformation: Error, Identifiable {
             return "invalidRG"
         case .invalidEmail:
             return "invalidEmail"
-        case .missingTelephoneNumber:
-            return "missingTelephoneNumber"
         case .missingCellphoneNumber:
             return "missingCellphoneNumber"
         case .invalidLawSuitNumber:
             return "invalidLawSuitNumber"
+        case .invalidCEP:
+            return "invalidCEP"
         }
     }
     case missingInformation
     case invalidCPF
     case invalidRG
     case invalidEmail
-    case missingTelephoneNumber
     case missingCellphoneNumber
     case invalidLawSuitNumber
+    case invalidCEP
 }

@@ -57,7 +57,7 @@ struct LawsuitDistributedView: View {
                 HStack {
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
-                        Text("\(lawsuitAuthorName)")
+                            Text("\(lawsuitAuthorName)")
                         Button {
                             withAnimation {
                                 //Retirar esse cliente e retirar o estado de autor selecionado
@@ -137,7 +137,7 @@ struct LawsuitDistributedView: View {
                             let category = TagTypeString.string(from: tagType)
                             let lawyer = lawyers[0]
                             let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                            var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
+                            let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
 
                             dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                           
@@ -185,15 +185,15 @@ struct LawsuitDistributedView: View {
                     return Alert(title: Text("E-mail inválido"),
                                  message: Text("Por favor, insira um e-mail válido antes de continuar"),
                                  dismissButton: .default(Text("Ok")))
-                case .missingTelephoneNumber:
-                    return Alert(title: Text("Número de telefone inválido"),
-                                 message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
                 case .missingCellphoneNumber:
                     return Alert(title: Text("Número de celular inválido"),
                                  message: Text("Por favor, insira um número de celular válido antes de continuar"),
                                  dismissButton: .default(Text("Ok")))
                 case .invalidLawSuitNumber:
+                    return Alert(title: Text("Número do processo inválido"),
+                    message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                    dismissButton: .default(Text("Ok")))
+                case .invalidCEP:
                     return Alert(title: Text("Número do processo inválido"),
                     message: Text("Por favor, insira um número de processo válido antes de continuar"),
                     dismissButton: .default(Text("Ok")))

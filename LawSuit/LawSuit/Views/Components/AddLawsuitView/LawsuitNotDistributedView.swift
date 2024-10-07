@@ -68,7 +68,7 @@ struct LawsuitNotDistributedView: View {
                     Button {
                         if areFieldsFilled() {
                             let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                            fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
+                            fetchRequest.predicate = NSPredicate(format: "name ==[c] %@ OR socialName ==[c] %@", lawsuitAuthorName, lawsuitAuthorName)
                             do {
                                 let fetchedClients = try context.fetch(fetchRequest)
                                 if let author = fetchedClients.first {

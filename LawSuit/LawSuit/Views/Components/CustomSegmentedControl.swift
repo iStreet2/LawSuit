@@ -20,12 +20,12 @@ struct CustomSegmentedControl: View {
                 if selectedOption == infos[index] {
                     Text(infos[index])
                         .font(.body)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.wine)
                         .fontWeight(.semibold)
                         .padding(.horizontal, 10)
                         .background{
                             RoundedRectangle(cornerRadius: 3)
-                                .foregroundStyle(.red.opacity(0.3))
+                                .foregroundStyle(.wine.opacity(0.3))
                                 
                         }
                         .overlay {
