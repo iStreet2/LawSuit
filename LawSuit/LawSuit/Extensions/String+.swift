@@ -19,7 +19,9 @@ extension String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.date(from: self) ?? Date()
-  
+        
+    }
+    
     func copy() {
         //            #if os(macOS)
         let pasteboard = NSPasteboard.general
