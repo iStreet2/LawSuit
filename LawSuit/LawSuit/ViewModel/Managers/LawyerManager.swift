@@ -58,11 +58,11 @@ class LawyerManager {
     }
     
     func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving context on lawyer")
-        }
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error while saving context on lawyer")
+//        }
     }
     
 }

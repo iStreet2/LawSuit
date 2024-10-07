@@ -57,12 +57,12 @@ class FilePDFManager {
     }
     
     func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving context on file")
-        }
-        
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error while saving context on file")
+//        }
+//        
     }
     
 }

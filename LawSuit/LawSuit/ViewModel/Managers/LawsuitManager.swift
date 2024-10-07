@@ -115,11 +115,11 @@ class LawsuitManager {
     }
     
     func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error while saving context on lawsuit \(error)")
-        }
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error while saving context on lawsuit \(error)")
+//        }
     }
     
 }

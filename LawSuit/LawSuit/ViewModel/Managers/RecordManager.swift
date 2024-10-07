@@ -31,11 +31,11 @@ class RecordManager {
     }
     
     func saveContext() {
-        do {
-            try self.context.save()
-        } catch {
-            print("Error saving context on RecordManager: \(error)")
-        }
+//        do {
+//            try self.context.save()
+//        } catch {
+//            print("Error saving context on RecordManager: \(error)")
+//        }
     }
     
     // MARK: - Fetch

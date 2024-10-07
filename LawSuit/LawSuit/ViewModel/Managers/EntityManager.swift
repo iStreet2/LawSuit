@@ -90,10 +90,10 @@ class EntityManager {
     }
     
     func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving entity: \(error)")
-        }
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error saving entity: \(error)")
+//        }
     }
 }
