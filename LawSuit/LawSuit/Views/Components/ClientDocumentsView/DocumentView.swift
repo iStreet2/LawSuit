@@ -15,18 +15,22 @@ struct DocumentView: View{
     @EnvironmentObject var dataViewModel: DataViewModel
     
     //MARK: Variáveis
-//    @Binding var showingGridView: Bool
+    //    @Binding var showingGridView: Bool
     
     var body: some View{
+        
         if let openFolder = folderViewModel.getOpenFolder(){
-    
-                //ele chama os dois document grid e list view
-            if  folderViewModel.showingGridView  {
-                    DocumentGridView(openFolder: openFolder)
-                } else {
-                    DocumentListView(openFolder: openFolder)
+            if folderViewModel.showingGridView  {
+                Divider()
+                DocumentGridView(openFolder: openFolder)
+                PathViewComponent(folderViewModel: _folderViewModel)
+            } else {
+                DocumentListView(openFolder: openFolder)
+                PathViewComponent(folderViewModel: _folderViewModel)
             }
+            
         }
+        
     }
 }
 

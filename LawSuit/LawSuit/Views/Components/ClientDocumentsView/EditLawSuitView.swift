@@ -20,7 +20,7 @@ struct EditLawSuitView: View {
     @State var lawsuitCourt = ""
     @State var lawsuitAuthorName = ""
     @State var lawsuitDefendantName = ""
-    @State var lawsuitActionDate = Date()
+    @State var lawsuitActionDate = ""
     @State var selectTag = false
     @State var tagType: TagType = .trabalhista
     @ObservedObject var lawsuit: Lawsuit
@@ -34,11 +34,13 @@ struct EditLawSuitView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
         VStack {
             LabeledTextField(label: "Nº do Processo", placeholder: "", textfieldText: $lawsuitNumber)
-                .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber) }
+                .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
+                }
             LabeledTextField(label: "Vara", placeholder: "", textfieldText: $lawsuitCourt)
             HStack(alignment: .top, spacing: 70) {
                 VStack(alignment: .leading) {
@@ -55,6 +57,7 @@ struct EditLawSuitView: View {
                     HStack {
                         //MARK: Caso o usuário tenha adicionado um cliente no autor
                         if attributedAuthor {
+                        
                             Text("\(lawsuitAuthorName)")
                             Button {
                                 withAnimation {
@@ -110,7 +113,8 @@ struct EditLawSuitView: View {
                 }
                 Spacer()
                 VStack(alignment: .leading) {
-                    LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
+                    LabeledTextField(label: "Data de distribuição", placeholder: "", textfieldText: $lawsuitActionDate)
+                        .onReceive(Just(lawsuitActionDate)) { _ in lawsuitActionDate = textFieldDataViewModel.dateValidation(lawsuitActionDate)}
                         .padding(.top)
                         .frame(width: 200, alignment: .leading)
                     
@@ -175,6 +179,7 @@ struct EditLawSuitView: View {
                             invalidInformation = .invalidLawSuitNumber
                             return
                         }
+
                         if attributedAuthor {
                             if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                                 if let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: entityID) {
@@ -228,14 +233,31 @@ struct EditLawSuitView: View {
                             return Alert(title: Text("Informações Faltando"),
                                          message: Text("Por favor, preencha todos os campos antes de continuar."),
                                          dismissButton: .default(Text("Ok")))
+                        case .invalidCPF:
+                            return Alert(title: Text("CPF inválido"),
+                                         message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                            
+                        case .invalidRG:
+                            return Alert(title: Text("RG inválido"),
+                                         message: Text("Por favor, insira um RG válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidEmail:
+                            return Alert(title: Text("E-mail inválido"),
+                                         message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .missingCellphoneNumber:
+                            return Alert(title: Text("Número de celular inválido"),
+                                         message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
                         case .invalidLawSuitNumber:
                             return Alert(title: Text("Número do processo inválido"),
                                          message: Text("Por favor, insira um número de processo válido antes de continuar"),
                                          dismissButton: .default(Text("Ok")))
-                        default:
+                        case .invalidCEP:
                             return Alert(title: Text("Número do processo inválido"),
-                                         message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                                         dismissButton: .default(Text("Ok")))
+                            message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                            dismissButton: .default(Text("Ok")))
                         }
                     }
                 }
@@ -282,7 +304,7 @@ struct EditLawSuitView: View {
             }
             lawsuitNumber = lawsuit.number
             lawsuitCourt = lawsuit.court
-            lawsuitActionDate = lawsuit.actionDate
+            lawsuitActionDate = lawsuit.actionDate.convertBirthDateToString()
             tagType = TagType(s: lawsuit.category)!
         }
         .padding()

@@ -30,7 +30,9 @@ struct BoxView<Content: View>: View {
 struct ClientMoreInfoView: View {
     
     @ObservedObject var client: Client
+    @State var editClient = false
     @Environment(\.dismiss) var dismiss
+    @Binding var deleted: Bool
     
     //Arrumar essa coisa
     private var dateFormatter: DateFormatter {
@@ -64,21 +66,33 @@ struct ClientMoreInfoView: View {
             .frame(minHeight: 222)
             Spacer()
         }
+        .sheet(isPresented: $editClient, content: {
+            EditClientView(client: client, deleted: $deleted)
+        })
         .frame(maxWidth: .infinity, minHeight: 450, maxHeight: .infinity)  // MARK: Frame da View inteira
         .padding()
     }
 }
 
 extension ClientMoreInfoView {
+   
     private var info: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                Text(client.name)
-                    .font(.largeTitle)
-                    .bold()
-                    .padding(0)
+                if client.socialName != nil {
+                    Text(client.socialName!)
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(0)
+                } else {
+                    Text(client.name)
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(0)
+                }
                 Button {
-                    
+                    editClient.toggle()
+//                    EditClientView(client: client, deleted: false , isPresented: $isPresented)
                 } label: {
                     Image(systemName: "square.and.pencil")
                         .resizable()
@@ -141,6 +155,9 @@ extension ClientMoreInfoView {
                 }
             }
             
+        }
+        .onChange(of: deleted) { change in
+            dismiss()
         }
     }
     

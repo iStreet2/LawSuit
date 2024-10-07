@@ -19,12 +19,12 @@ struct LawsuitDistributedView: View {
     @State var selectTag = false
     
     //MARK: Variáveis de estado
-    @State var invalidInformation: InvalidInformation?
+    @State var invalidInformation: LawsuitInvalidInformation?
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
     @Binding var lawsuitDefendantName: String
-    @Binding var lawsuitActionDate: Date
+    @Binding var lawsuitActionDate: String
     @EnvironmentObject var dataViewModel: DataViewModel
     
     @State var attributedAuthor = false
@@ -75,8 +75,8 @@ struct LawsuitDistributedView: View {
                 Text("Área")
                     .padding(.top)
                     .bold()
-					TagViewPickerComponentV1(currentTag: $tagType)
-
+                TagViewPickerComponentV1(currentTag: $tagType)
+                
             }
             Spacer()
             VStack(alignment: .leading){
@@ -84,7 +84,7 @@ struct LawsuitDistributedView: View {
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
-                            
+                        
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
@@ -108,7 +108,8 @@ struct LawsuitDistributedView: View {
                     }
                     .frame(width: 200, alignment: .leading)
                 }
-                LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
+                LabeledTextField(label: "Data de distribuição", placeholder: "", textfieldText: $lawsuitActionDate)
+                    .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateValidation(newValue)}
                     .padding(.top)
             }
         }
@@ -127,7 +128,7 @@ struct LawsuitDistributedView: View {
                     return
                 }
                 if lawsuitNumber.count < 25 {
-                    invalidInformation = .invalidLawSuitNumber
+                    invalidInformation = .invalidLawsuitNumber
                     return
                 }
                 //MARK: Se o cliente foi atribuido ao autor
@@ -138,6 +139,11 @@ struct LawsuitDistributedView: View {
                         let lawyer = lawyers[0]
                         var defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
                         var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        if dataViewModel.coreDataManager.lawsuitManager.doesLawsuitExist(lawsuitNumber: lawsuitNumber) {
+                            invalidInformation = .lawsuitAlreadyExists
+                            return
+                        }
+                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                         //MARK: CloudKit - Criar
                         Task {
                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["folders","files"])
@@ -157,6 +163,7 @@ struct LawsuitDistributedView: View {
                         let lawyer = lawyers[0]
                         var author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
                         var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
+                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                         //MARK: CloudKit - Criar
                         Task {
                             try await dataViewModel.cloudManager.recordManager.saveObject(object: &lawsuit.rootFolder!, relationshipsToSave: ["folders","files"])
@@ -167,7 +174,7 @@ struct LawsuitDistributedView: View {
                     } else {
                         print("Client not found")
                     }
-                    }
+                }
                 
             } label: {
                 Text("Criar")
@@ -179,42 +186,27 @@ struct LawsuitDistributedView: View {
                     return Alert(title: Text("Informações Faltando"),
                                  message: Text("Por favor, preencha todos os campos antes de continuar."),
                                  dismissButton: .default(Text("Ok")))
-                case .invalidCPF:
-                    return Alert(title: Text("CPF inválido"),
-                                 message: Text("Por favor, insira um CPF válido antes de continuar."),
-                                 dismissButton: .default(Text("Ok")))
-                    
-                case .invalidRG:
-                    return Alert(title: Text("RG inválido"),
-                                 message: Text("Por favor, insira um RG válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
-                case .invalidEmail:
-                    return Alert(title: Text("E-mail inválido"),
-                                 message: Text("Por favor, insira um e-mail válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
-                case .missingTelephoneNumber:
-                    return Alert(title: Text("Número de telefone inválido"),
-                                 message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
-                case .missingCellphoneNumber:
-                    return Alert(title: Text("Número de celular inválido"),
-                                 message: Text("Por favor, insira um número de celular válido antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
-                case .invalidLawSuitNumber:
+                case .invalidLawsuitNumber:
                     return Alert(title: Text("Número do processo inválido"),
-                    message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                    dismissButton: .default(Text("Ok")))
+                                 message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
+                case .lawsuitAlreadyExists:
+                    return Alert(title: Text("Este número de processo já existe"),
+                                 message: Text("Por favor, insira um número de processo diferente antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
                 }
             }
-
+            
+            
         }
     }
-    func areFieldsFilled() -> Bool {
-        return !lawsuitNumber.isEmpty &&
-        !lawsuitCourt.isEmpty &&
-        !lawsuitActionDate.description.isEmpty &&
-        !lawsuitAuthorName.isEmpty &&
-        !lawsuitDefendantName.isEmpty
-        
+    
+        func areFieldsFilled() -> Bool {
+            return !lawsuitNumber.isEmpty &&
+            !lawsuitCourt.isEmpty &&
+            !lawsuitActionDate.description.isEmpty &&
+            !lawsuitAuthorName.isEmpty &&
+            !lawsuitDefendantName.isEmpty  
     }
 }
+

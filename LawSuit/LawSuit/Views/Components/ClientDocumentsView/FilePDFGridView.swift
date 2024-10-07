@@ -12,12 +12,15 @@ struct FilePDFGridView: View {
     
     //MARK: Variáveis
     @ObservedObject var parentFolder: Folder
+
     @State var selectedFilePDF: FilePDF?
     @State var showPDF = false
     var geometry: GeometryProxy
     
     //MARK: ViewModels
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
+    @EnvironmentObject var folderViewModel: FolderViewModel
+
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -36,13 +39,14 @@ struct FilePDFGridView: View {
     }
     
     var body: some View {
-        ForEach(filesPDF, id: \.self) { file in
+        ForEach(Array(filesPDF.enumerated()), id: \.offset) { index, file in
             FilePDFIconView(filePDF: file, parentFolder: parentFolder)
+                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
                 .onTapGesture(count: 2) {
                     selectedFilePDF = file
                     showPDF.toggle()
                 }
-                .padding(.leading)
+                .frame(maxWidth: .infinity, alignment: folderViewModel.showingGridView ? .center : .leading)
                 .offset(x: dragAndDropViewModel.filePDFOffsets[file.id!]?.width ?? 0, y: dragAndDropViewModel.filePDFOffsets[file.id!]?.height ?? 0)
                 .gesture(
                     DragGesture()

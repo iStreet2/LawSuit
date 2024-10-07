@@ -29,6 +29,7 @@ class LawsuitManager {
     }
     
     func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date) -> Lawsuit {
+        
         let lawsuit = Lawsuit(context: context)
         lawsuit.name = name
         lawsuit.category = category
@@ -114,12 +115,29 @@ class LawsuitManager {
         }
     }
     
+    func oesLawsuitExist(lawsuitNumber: String) -> Bool {
+        let fetchRequest: NSFetchRequest<Lawsuit> = Lawsuit.fetchRequest()
+        let lawsuitNumberFormatted = NetworkingManager.shared.removeCharactersFromLawsuitNumber(lawsuitNumber: lawsuitNumber)
+        fetchRequest.predicate = NSPredicate(format: "number == %@", lawsuitNumberFormatted)
+        
+        do {
+            let existingLawsuits = try context.fetch(fetchRequest)
+            print(lawsuitNumber)
+            print("numero de lawsuits com esse nro existentes: \(existingLawsuits.count)")
+            return !existingLawsuits.isEmpty //true se tiver processos com o mesmo número
+        } catch {
+            print("Erro ao buscar processos: \(error)")
+            return false //em caso de erro, é pq o processo não existe
+        }
+        
+    }d
+
     func saveContext() {
-//        do {
-//            try context.save()
-//        } catch {
-//            print("Error while saving context on lawsuit \(error)")
-//        }
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
 }

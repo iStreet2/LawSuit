@@ -22,7 +22,7 @@ struct AddLawsuitView: View {
     @State var lawsuitCourt = ""
     @State var lawsuitAuthorName = ""
     @State var lawsuitDefandentName = ""
-    @State var lawsuitActionDate = Date()
+    @State var lawsuitActionDate = ""
 
     
     //MARK: ViewModels
@@ -38,10 +38,8 @@ struct AddLawsuitView: View {
                 .bold()
                 .font(.title)
             VStack(alignment: .leading) {
-                SegmentedControlComponent(
+                CustomSegmentedControl(
                     selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
-                .frame(width: 150)
-                .padding(.leading)
             }
             if lawsuitType == .distributed {
                 LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)

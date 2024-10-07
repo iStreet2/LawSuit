@@ -33,6 +33,13 @@ struct ClientView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
+    var isFirstFolderOpen: Bool {
+        return folderViewModel.getPath().count() == 1
+    }
+    
+    var buttonColor: Color {
+        return isFirstFolderOpen ? Color(NSColor.tertiaryLabelColor) : Color(.black)
+    }
     
     init(client: Client, deleted: Binding<Bool>) {
         self.client = client
@@ -45,50 +52,70 @@ struct ClientView: View {
     }
     
     var body: some View {
-        VStack {
-            if deleted {
-                Text("Selecione um cliente")
-                    .foregroundColor(.gray)
-            } else {
-                VStack(alignment: .leading) {
-                    ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
-                    Divider()
-                    HStack {
-                        SegmentedControlComponent(selectedOption: $selectedOption, infos: infos)
-                            .padding(5)
-                            .frame(width: 190, alignment: .leading)
-                        Spacer()
-                        if selectedOption == "Processos" {
-                            Button(action: {
-                                createLawsuit.toggle()
-                            }, label: {
-                                Image(systemName: "plus")
-                                    .font(.title2)
-                                    .foregroundStyle(Color(.gray))
-                            })
-                            .padding(.trailing)
-                            .buttonStyle(PlainButtonStyle())
-                        } else {
-                            if let openFolder = folderViewModel.getOpenFolder(){
-                                DocumentActionButtonsView(folder: openFolder )
+        NavigationStack {
+            VStack {
+                if deleted {
+                    Text("Selecione um cliente")
+                        .foregroundColor(.gray)
+                } else {
+                    VStack(alignment: .leading, spacing: 0) {
+                        ClientInfoView(client: client, deleted: $deleted, mailManager: MailManager(client: client))
+                        Divider()
+                        HStack {
+                            CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                            
+                            Spacer()
+                            if selectedOption == "Processos" {
+                                Button(action: {
+                                    createLawsuit.toggle()
+                                }, label: {
+                                    Image(systemName: "plus")
+                                        .font(.title2)
+                                        .foregroundStyle(Color(.gray))
+                                })
+                                .padding(.trailing)
+                                .buttonStyle(PlainButtonStyle())
+                            } else {
+                                if let openFolder = folderViewModel.getOpenFolder(){
+                                    DocumentActionButtonsView(folder: openFolder)
+                                        .padding(.trailing, 20)
+                                }
                             }
                         }
                     }
-                }
-                VStack {
-                    if selectedOption == "Processos" {
-                        NavigationStack {
+                    VStack(alignment: .leading, spacing: 0) {
+                        if selectedOption == "Processos" {
                             LawsuitListViewHeaderContent(lawsuits: lawsuits)
-                        }
-                    } else {
-                        DocumentView()
-                            .onAppear {
-                                navigationViewModel.selectedClient = client
-                                folderViewModel.resetFolderStack()
-                                folderViewModel.openFolder(folder: client.rootFolder)
-                                navigationViewModel.dismissLawsuitView.toggle()
+                        } else {
+                            HStack(spacing: 0) {
+                                Button {
+                                    folderViewModel.closeFolder()
+                                } label: {
+                                    Image(systemName: "chevron.left")
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .foregroundColor(buttonColor)
+                                .font(.title2)
+                                .disabled(folderViewModel.getPath().count() == 1)
+                                .padding(.horizontal, 20)
+                                
+                                Text((folderViewModel.getPath().count() == 1 ? "" : folderViewModel.getOpenFolder()?.name) ?? "Sem nome")
+                                    .font(.title3)
+                                    .bold()
+                                    .frame(height: 24)
                             }
-                            .padding()
+                            .padding(.bottom, 10)
+                            
+                            DocumentView()
+                            //                            .border(Color.blue)
+                                .onAppear {
+                                    navigationViewModel.selectedClient = client
+                                    folderViewModel.resetFolderStack() //caminho fica sem nada
+                                    folderViewModel.openFolder(folder: client.rootFolder) //abre a root folder do cliente que estou selecionado
+                                }
+                        }
                     }
                 }
             }

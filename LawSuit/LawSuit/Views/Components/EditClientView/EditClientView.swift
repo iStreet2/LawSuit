@@ -23,13 +23,14 @@ struct EditClientView: View {
     @State var invalidInformation: InvalidInformation?
     @State var userInfoType = 0
     @State var clientName: String = ""
+    @State var clientSocialName: String = ""
     @State var clientOccupation: String = ""
     @State var clientRg: String = ""
     @State var clientCpf: String = ""
     @State var clientAffiliation: String = ""
     @State var clientMaritalStatus: String = ""
     @State var clientNationality: String = ""
-    @State var clientBirthDate: Date = Date()
+    @State var clientBirthDate: String = ""
     @State var clientCep: String = ""
     @State var clientAddress: String = ""
     @State var clientAddressNumber: String = ""
@@ -40,6 +41,9 @@ struct EditClientView: View {
     @State var clientEmail: String = ""
     @State var clientTelephone: String = ""
     @State var clientCellphone: String = ""
+    
+    @State var selectedOption = "Informações Pessoais"
+    var infos = ["Informações Pessoais", "Endereço", "Contato"]
     
     let textLimit = 50
     let maritalStatusLimit = 10
@@ -53,41 +57,71 @@ struct EditClientView: View {
     @Environment(\.managedObjectContext) var context
     
     
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    LabeledTextField(label: "Nome Completo", placeholder: "Nome Completo", textfieldText: $clientName)
-                        .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
-                    HStack {
-                        LabeledDateField(selectedDate: $clientBirthDate, label: "Data de nascimento")
-                        LabeledTextField(label: "Profissão", placeholder: "Profissão", textfieldText: $clientOccupation)
-                            .onReceive(Just(clientOccupation)) { _ in textFieldDataViewModel.limitText(text: &clientOccupation, upper: textLimit) }
-                            .frame(maxWidth: .infinity)
-                            .padding(.leading, 30)
+        VStack(spacing: 0) {
+            HStack(alignment: .top, spacing: 0) {
+                    Button{
+                        print("foto")
+                    } label: {
+                        RoundedRectangle(cornerRadius: 19)
+                            .stroke(Color.black, lineWidth: 1)
+                            .frame(width: 134, height: 134)
+                            .overlay {
+                                Image(systemName: "person.crop.rectangle.badge.plus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 40, height: 29.49)
+                                    .foregroundColor(.secondary)
+                            }
                     }
-                    .padding(.top, 2)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 15)
+                    .buttonStyle(.plain)
+                
+                VStack(alignment: .leading) {
+                    LabeledTextField(label: "Nome Civil", placeholder: "Insira o Nome Civil do Cliente", mandatory: true, textfieldText: $clientName)
+                        .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
+                    LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $clientBirthDate)
+                        .onReceive(Just(clientBirthDate)) { _ in
+                            clientBirthDate = textFieldDataViewModel.dateValidation(clientBirthDate)
+                        }
                 }
+                
+                .padding()
+               
             }
-            Picker(selection: $userInfoType, label: Text("picker")) {
-                Text("Informações Pessoais").tag(0)
-                Text("Endereço").tag(1)
-                Text("Contato").tag(2)
-                Text("Outros").tag(3)
-            }
-            .padding(.top, 10)
-            .padding(.trailing, 100)
-            .pickerStyle(.segmented)
-            .labelsHidden()
-            
-            if userInfoType == 0 {
-                EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
-            } else if userInfoType == 1 {
-                EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
-            } else if userInfoType == 2 {
-                EditClientViewFormsFields(formType: .contact, addressViewModel: addressViewModel, rg: $clientRg, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone).padding(.vertical, 5)
+            HStack {
+                CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
+                    .padding(.horizontal, 15)
+                
+                Spacer()
+                
             }
             Spacer()
+            Divider()
+            Group {
+                VStack(spacing: 0) {
+                    if selectedOption == "Informações Pessoais" {
+                        
+                        EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, socialName: $clientSocialName, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, Occupation: $clientOccupation, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone)
+                        
+                        
+                    } else if selectedOption == "Endereço" {
+                        EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, socialName: $clientSocialName, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, Occupation: $clientOccupation, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone)
+                            .background(Color("ScrollBackground"))
+                    } else if selectedOption == "Contato" {
+                        EditClientViewFormsFields(formType: .contact, addressViewModel: addressViewModel, rg: $clientRg, socialName: $clientSocialName, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, Occupation: $clientOccupation, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone)
+                            .background(Color("ScrollBackground"))
+                    }
+                }
+                .padding()
+                .background(Color("ScrollBackground"))
+                Divider()
+            }
+            
+            Spacer()
+            
             HStack {
                 Button {
                     deleteAlert.toggle()
@@ -97,7 +131,7 @@ struct EditClientView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
                 .alert(isPresented: $deleteAlert, content: {
-                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir seu cliente irá apagar todos os dados desse cliente e todos os processos relacionados com esse cliente!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
+                    Alert(title: Text("Você tem certeza?"), message: Text("Excluir seu cliente irá apagar todos os dados relacionados a ele, incluindo seus processos!"), primaryButton: Alert.Button.destructive(Text("Apagar"), action: {
                         if let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: client) {
                             //MARK: CoreData - Excluir Processo
                             let clientRecordName = client.recordName
@@ -145,7 +179,6 @@ struct EditClientView: View {
                         }
                         
                     }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
-                        dismiss()
                     }))
                 })
                 Spacer()
@@ -169,10 +202,6 @@ struct EditClientView: View {
                     }
                     if !textFieldDataViewModel.isValidEmail(clientEmail) {
                         invalidInformation = .invalidEmail
-                        return
-                    }
-                    if clientTelephone.count < 14 {
-                        invalidInformation = .missingTelephoneNumber
                         return
                     }
                     if clientCellphone.count < 15 {
@@ -216,10 +245,6 @@ struct EditClientView: View {
                         return Alert(title: Text("E-mail inválido"),
                                      message: Text("Por favor, insira um e-mail válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
-                    case .missingTelephoneNumber:
-                        return Alert(title: Text("Número de telefone inválido"),
-                                     message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
                     case .missingCellphoneNumber:
                         return Alert(title: Text("Número de celular inválido"),
                                      message: Text("Por favor, insira um número de celular válido antes de continuar"),
@@ -228,22 +253,28 @@ struct EditClientView: View {
                         return Alert(title: Text(""),
                         message: Text(""),
                         dismissButton: .default(Text("")))
+                    case .invalidCEP:
+                        return Alert(title: Text("Número do processo inválido"),
+                        message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                        dismissButton: .default(Text("Ok")))
                     }
                 }
-                
             }
+            .padding(.vertical, 7)
+            .padding(.horizontal, 10)
         }
-        .frame(minHeight: 250)
-        .padding()
+        .frame(width: 515, height: 500)
+        .padding(.vertical, 5)
         .onAppear {
             clientName = client.name
+            clientSocialName = client.socialName ?? ""
             clientOccupation = client.occupation
             clientRg = client.rg
             clientCpf = client.cpf
             clientAffiliation = client.affiliation
             clientMaritalStatus = client.maritalStatus
             clientNationality = client.nationality
-            clientBirthDate = client.birthDate
+            clientBirthDate = client.birthDate.convertBirthDateToString()
             clientCep = client.cep
             clientAddress = client.address
             clientAddressNumber = client.addressNumber
@@ -259,7 +290,6 @@ struct EditClientView: View {
     func areFieldsFilled() -> Bool {
         if userInfoType >= 0 {
             return !clientName.isEmpty &&
-            !clientOccupation.isEmpty &&
             !clientBirthDate.description.isEmpty &&
             !clientRg.isEmpty &&
             !clientCpf.isEmpty &&
@@ -273,7 +303,6 @@ struct EditClientView: View {
             !clientState.isEmpty &&
             !clientCity.isEmpty &&
             !clientEmail.isEmpty &&
-            !clientTelephone.isEmpty &&
             !clientCellphone.isEmpty
         }
         return true

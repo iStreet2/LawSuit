@@ -102,6 +102,7 @@ public class Client: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var age: Int64
     @NSManaged public var id: String
     @NSManaged public var name: String
+    @NSManaged public var socialName: String?
     @NSManaged public var photo: Data?
     @NSManaged public var recordName: String?
     @NSManaged public var parentLawyer: Lawyer? //Ignorar para o CloudKit

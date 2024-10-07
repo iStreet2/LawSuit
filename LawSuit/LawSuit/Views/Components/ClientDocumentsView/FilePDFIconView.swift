@@ -27,148 +27,95 @@ struct FilePDFIconView: View {
     }
     
     var body: some View {
-        if folderViewModel.showingGridView == true {
-            VStack {
-                Image(systemName: "doc")
-                    .font(.system(size: 55))
-                if isEditing {
-                    TextField("", text: $fileName, onEditingChanged: { _ in
-                        isEditing = true
-                    }, onCommit: {
-                        saveChanges()
-                    })
-                    .onExitCommand(perform: cancelChanges)
-                    .lineLimit(1)
-                    .frame(height: 4)
-                }
-                else {
-                    Text(filePDF.name ?? "Sem nome")
-                        .lineLimit(1)
-                        .onTapGesture(count: 2) {
-                            isEditing = true
-                        }
-                }
-            }
-            .onDisappear {
-                isEditing = false
-            }
-            .onAppear {
-                if fileName == "Novo Arquivo" {
-                    isEditing = true
-                }
-            }
-            .contextMenu {
-                Button(action: {
-                    //MARK: Fazer a view de visualizar um pdf ainda
-                    
-                }) {
-                    Text("Abrir Arquivo")
+        Group {
+            if folderViewModel.showingGridView {
+                VStack {
                     Image(systemName: "doc")
-                }
-                Button(action: {
-                    isEditing = true
-                }) {
-                    Text("Renomear")
-                    Image(systemName: "pencil")
-                }
-                Button(action: {
-                    Task {
-                        //MARK: CoreData - Deletar
-                        let filePDFRecordName = filePDF.recordName
-                        let parentFolderRecordName = parentFolder.recordName
-                        
-                        withAnimation(.easeIn) {
-                            dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
-                        }
-                        
-                        //MARK: CloudKit - Deletar
-                        do {
-                            if let filePDFRecordName = filePDFRecordName, let parentFolderRecordName = parentFolderRecordName {
-                                try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolderRecordName, to: filePDFRecordName, referenceKey: "files")
-                                try await dataViewModel.cloudManager.recordManager.deleteObjectWithRecordName(recordName: filePDFRecordName)
-                            }
-                        } catch {
-                            print("Error deleting FilePDF on CloudKit: \(error.localizedDescription)")
-                        }
+                        .font(.system(size: 55))
+                    if isEditing {
+                        TextField("", text: $fileName, onEditingChanged: { _ in
+                            isEditing = true
+                        }, onCommit: {
+                            saveChanges()
+                        })
+                        .onExitCommand(perform: cancelChanges)
+                        .lineLimit(1)
+                        .frame(height: 4)
                     }
-                }) {
-                    Text("Excluir")
-                    Image(systemName: "trash")
+                    else {
+                        Text(filePDF.name ?? "Sem nome")
+                            .lineLimit(1)
+                            .onTapGesture(count: 2) {
+                                isEditing = true
+                            }
+                    }
                 }
-            }
-        } else {
-            
-            HStack {
-                Image(systemName: "doc")
-                    .resizable()
-                    .frame(width: 15,height: 18)
-                    .font(.system(size: 55))
+                .onDisappear {
+                    isEditing = false
+                }
+                .onAppear {
+                    if fileName == "Novo Arquivo" {
+                        isEditing = true
+                    }
+                }
+            } else {
                 
-                if isEditing {
-                    TextField("", text: $fileName, onEditingChanged: { _ in
-                        isEditing = true
-                    }, onCommit: {
-                        saveChanges()
-                    })
-                    .onExitCommand(perform: cancelChanges)
-                    .lineLimit(1)
-                    .frame(height: 4)
-                }
-                else {
-                    Text(filePDF.name ?? "Sem nome")
-                        .lineLimit(1)
-                        .onTapGesture(count: 2) {
-                            isEditing = true
-                        }
-                }
-            }
-            .onDisappear {
-                isEditing = false
-            }
-            .onAppear {
-                if fileName == "Novo Arquivo" {
-                    isEditing = true
-                }
-            }
-            
-            .contextMenu {
-                Button(action: {
-                    //MARK: Fazer a view de visualizar um pdf ainda
-                    
-                }) {
-                    Text("Abrir Arquivo")
+                HStack {
                     Image(systemName: "doc")
-                }
-                Button(action: {
-                    isEditing = true
-                }) {
-                    Text("Renomear")
-                    Image(systemName: "pencil")
-                }
-                Button(action: {
-                    Task {
-                        //MARK: CoreData - Deletar
-                        let filePDFRecordName = filePDF.recordName
-                        let parentFolderRecordName = parentFolder.recordName
-                        
-                        withAnimation(.easeIn) {
-                            dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
-                        }
-                        
-                        //MARK: CloudKit - Deletar
-                        do {
-                            if let filePDFRecordName = filePDFRecordName, let parentFolderRecordName = parentFolderRecordName {
-                                try await dataViewModel.cloudManager.recordManager.removeReference(from: parentFolderRecordName, to: filePDFRecordName, referenceKey: "files")
-                                try await dataViewModel.cloudManager.recordManager.deleteObjectWithRecordName(recordName: filePDFRecordName)
-                            }
-                        } catch {
-                            print("Error deleting FilePDF on CloudKit: \(error.localizedDescription)")
-                        }
+                        .resizable()
+                        .frame(width: 15,height: 18)
+                        .font(.system(size: 55))
+                    
+                    if isEditing {
+                        TextField("", text: $fileName, onEditingChanged: { _ in
+                            isEditing = true
+                        }, onCommit: {
+                            saveChanges()
+                        })
+                        .onExitCommand(perform: cancelChanges)
+                        .lineLimit(1)
+                        .frame(height: 4)
                     }
-                }) {
-                    Text("Excluir")
-                    Image(systemName: "trash")
+                    else {
+                        Text(filePDF.name ?? "Sem nome")
+                            .lineLimit(1)
+                            .onTapGesture(count: 2) {
+                                isEditing = true
+                            }
+                    }
                 }
+            }
+        }
+        .onDisappear {
+            isEditing = false
+        }
+        .onAppear {
+            if fileName == "Novo Arquivo" {
+                isEditing = true
+            }
+        }
+        .contextMenu {
+            Button(action: {
+                //MARK: Fazer a view de visualizar um pdf ainda
+                
+            }) {
+                Text("Abrir Arquivo")
+                Image(systemName: "doc")
+            }
+            Button(action: {
+                isEditing = true
+            }) {
+                Text("Renomear")
+                Image(systemName: "pencil")
+            }
+            Button(action: {
+                // Ação para excluir a pasta
+                withAnimation(.easeIn) {
+                    dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
+                }
+            }) {
+                Text("Excluir")
+                Image(systemName: "trash")
             }
         }
 //        .onDrag {

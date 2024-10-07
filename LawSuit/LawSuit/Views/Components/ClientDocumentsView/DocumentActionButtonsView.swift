@@ -96,9 +96,7 @@ struct DocumentActionButtonsView: View {
             .buttonStyle(PlainButtonStyle())
         }
         .font(.title2)
-        .foregroundStyle(Color(.gray))
-        .padding(.trailing)
-        
+        .foregroundStyle(Color(.gray))        
     }
 }
 

@@ -17,7 +17,7 @@ class ClientManager {
         self.context = context
     }
     
-    func createAndReturnClient(name: String, occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String = "", complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) -> Client {
+    func createClient(name: String, socialName: String?, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) -> Client {
         let client = Client(context: context)
         let folder = Folder(context: context)
         folder.name = "\(name)"
@@ -25,6 +25,7 @@ class ClientManager {
         client.rootFolder = folder
         folder.parentClient = client
         client.name = name
+        client.socialName = socialName
         client.id = "client:\(UUID().uuidString)"
         client.occupation = occupation
         client.rg = rg
@@ -69,8 +70,9 @@ class ClientManager {
 //        lawyer.removeFromClients(client)
     }
     
-    func editClient(client: Client, name: String, occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
+    func editClient(client: Client, name: String, socialName: String?, occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) {
         client.name = name
+        client.socialName = socialName
         client.occupation = occupation
         client.rg = rg
         client.cpf = cpf
@@ -99,7 +101,7 @@ class ClientManager {
     
     func fetchFromName(name: String) -> Client? {
         let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = NSPredicate(format: "name ==[c] %@ OR socialName ==[c] %@", name, name)
         do {
             let fetchedClients = try context.fetch(fetchRequest)
             if let client = fetchedClients.first {

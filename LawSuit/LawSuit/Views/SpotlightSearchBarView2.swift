@@ -123,7 +123,7 @@ struct SpotlightSearchbarView: View {
 						}
 					}
 					.listRowSeparator(.hidden)
-					.listRowBackground(VisualEffect())
+                    .listRowBackground(VisualEffect().ignoresSafeArea())
 					.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
 					
 				}
@@ -134,7 +134,7 @@ struct SpotlightSearchbarView: View {
 			}
 			
 		}
-		.background(VisualEffect())
+        .background(VisualEffect().ignoresSafeArea())
 		
 	}
 }
@@ -145,10 +145,7 @@ struct SpotlightSearchbarView: View {
 
 
 
-struct VisualEffect: NSViewRepresentable {
-	func makeNSView(context: Context) -> some NSView { return NSVisualEffectView() }
-	func updateNSView(_ nsView: NSViewType, context: Context) { }
-}
+
 
 extension String {
 	

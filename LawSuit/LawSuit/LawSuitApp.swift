@@ -17,11 +17,11 @@ struct LawSuitApp: App {
     @StateObject var navigationViewModel = NavigationViewModel()
     @StateObject var clientDataViewModel = TextFieldDataViewModel()
     @StateObject var addressViewModel = AddressViewModel()
-	 @StateObject var eventManager = EventManager()
-
-	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-	
-	 let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
+    @StateObject var eventManager = EventManager()
+    
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
     
     var body: some Scene {
         WindowGroup {   
@@ -35,24 +35,31 @@ struct LawSuitApp: App {
                 .environmentObject(addressViewModel)
                 .preferredColorScheme(.light)
                 .frame(minHeight: 530)
-					 .onAppear {
-						 hotkey.keyDownHandler = eventManager.hotkeyDownHandler
-						 Task {
+                .onAppear {
+                    hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+                    Task {
 							 dataViewModel.office = await dataViewModel.getUserOffice()
 						 }
-					 }
-					 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
-						 SpotlightSearchbarView()
-							 .environmentObject(dataViewModel)
-							 .environmentObject(navigationViewModel)
-							 .environmentObject(eventManager)
-					 }
-					 .sheet(isPresented: $eventManager.filePreviewIsPresented) {
+                }
+                .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
+                    SpotlightSearchbarView()
+                        .environmentObject(dataViewModel)
+                        .environmentObject(navigationViewModel)
+                }
+                .sheet(isPresented: $eventManager.filePreviewIsPresented) {
 						 OpenFilePDFView(selectedFile: $eventManager.fileToPreview)
 					 }
-//					 .sheet(isPresented: $dataViewModel.authenticationManager.userShouldAuthenticate) {
-//						 <#code#>
-//					 }
+                .background(MaterialWindow().ignoresSafeArea())
+                .toolbar(){
+                    ToolbarItem(placement: .primaryAction){
+                        Button(action: {
+                            self.eventManager.spotlightBarIsPresented.toggle()
+                        }){
+                            Image(systemName: "magnifyingglass")
+                        }
+                    }
+                }
         }
+        
     }
 }

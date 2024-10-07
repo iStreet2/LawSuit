@@ -65,8 +65,10 @@ public class Lawsuit: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var authorID: String
     @NSManaged public var parentLawyer: Lawyer? //Ignorar para o CloudKit
     @NSManaged public var rootFolder: Folder? //Reference
-    @NSManaged public var updates: NSSet?
+    @NSManaged public var updates: NSSet? //Reference
+    @NSManaged public var isLoading: Bool
     @NSManaged public var recordName: String?
+    
 
 }
 

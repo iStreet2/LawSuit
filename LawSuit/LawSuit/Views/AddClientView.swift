@@ -18,13 +18,14 @@ struct AddClientView: View {
     @State var stage: Int = 1
     @State var invalidInformation: InvalidInformation?
     @State var name: String = ""
+    @State var socialName: String = ""
     @State var occupation: String = ""
     @State var rg: String = ""
     @State var cpf: String = ""
     @State var affiliation: String = ""
     @State var maritalStatus: String = ""
     @State var nationality: String = ""
-    @State var birthDate: Date = Date()
+    @State var birthDate: String = ""
     @State var cep: String = ""
     @State var address: String = ""
     @State var addressNumber: String = ""
@@ -44,21 +45,37 @@ struct AddClientView: View {
     
     
     var body: some View {
-        VStack() {
-            HStack {
-                Text("Novo Cliente")
-                    .font(.title)
-                    .bold()
-                    .padding(.leading, 2)
-                Spacer()
+        VStack(spacing: 0) {
+            VStack {
+                HStack {
+                    Text("Novo Cliente")
+                        .font(.title)
+                        .bold()
+                        .padding(.horizontal, 15)
+                    Spacer()
+                }
+                //MARK: ProgressBar
+                AddClientProgressView(stage: $stage)
             }
-            //MARK: ProgressBar
-            AddClientProgressView(stage: $stage)
+            .padding(.vertical, 7)
             Spacer()
-            AddClientForm(stage: $stage, name: $name, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone)
+            Divider()
+            VStack(spacing: 0) {
+                AddClientForm(stage: $stage, name: $name, socialName: $socialName, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone)
+            }
+            .padding()
+            .background(Color("ScrollBackground"))
+            Divider()
+            
             Spacer()
             //MARK: Botões
             HStack {
+//                Button(action: {
+//                    
+//                }, label: {
+//                    Text("Importar Dados")
+//                        .foregroundStyle(.wine)
+//                })
                 Spacer()
                 Button(action: {
                     if stage == 1 {
@@ -93,11 +110,15 @@ struct AddClientView: View {
                         invalidInformation = .invalidRG
                         return
                     }
+                    if stage == 2 {
+                        if cep.count < 8 {
+                            invalidInformation = .invalidCEP
+                            return
+                        }
+                    }
                     if stage == 3 {
                         if !textFieldDataViewModel.isValidEmail(email) {
                             invalidInformation = .invalidEmail
-                        } else if telephone.count < 14 {
-                            invalidInformation = .missingTelephoneNumber
                         } else if cellphone.count < 15 {
                             invalidInformation = .missingCellphoneNumber
                         }
@@ -107,7 +128,7 @@ struct AddClientView: View {
 																	 // MARK: Teoricamente continua funcionando, já que é o lawyers[0] rs
 																	 // MARK: Não está sendo usado mais...
                             
-                            var client = dataViewModel.coreDataManager.clientManager.createAndReturnClient(name: name, occupation: occupation, rg: rg, cpf: cpf, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone) // -> Não possui rootFolder ainda
+                            var client = dataViewModel.coreDataManager.clientManager.createAndReturnClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone) // -> Não possui rootFolder ainda
                             
 									// MARK: To tentando bonito, eu juro
 //									var client = Client(context: context)
@@ -174,25 +195,27 @@ struct AddClientView: View {
                         return Alert(title: Text("E-mail inválido"),
                                      message: Text("Por favor, insira um e-mail válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
-                    case .missingTelephoneNumber:
-                        return Alert(title: Text("Número de telefone inválido"),
-                                     message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
                     case .missingCellphoneNumber:
                         return Alert(title: Text("Número de celular inválido"),
                                      message: Text("Por favor, insira um número de celular válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
                     case .invalidLawSuitNumber:
                         return Alert(title: Text(""),
-                        message: Text(""),
-                        dismissButton: .default(Text("")))
-                   
+                                     message: Text(""),
+                                     dismissButton: .default(Text("")))
+                    case .invalidCEP:
+                        return Alert(title: Text("Número de CEP não encontrado"),
+                                     message: Text("Por favor, insira um número de CEP válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                        
                     }
                 }
             }
+            .padding(.vertical, 7)
+            .padding(.horizontal, 10)
         }
-        .padding()
-        .frame(width: 500)
+        .padding(.vertical, 5)
+        .frame(width: 515, height: 500)
     }
     
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage
@@ -202,7 +225,6 @@ struct AddClientView: View {
             !rg.isEmpty &&
             !affiliation.isEmpty &&
             !nationality.isEmpty &&
-            !occupation.isEmpty &&
             !maritalStatus.isEmpty &&
             !birthDate.description.isEmpty
         } else if stage == 2 {
@@ -214,7 +236,6 @@ struct AddClientView: View {
             !state.isEmpty
         } else if stage == 3 {
             return !email.isEmpty &&
-            !telephone.isEmpty &&
             !cellphone.isEmpty
         }
         return true
