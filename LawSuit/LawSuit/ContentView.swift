@@ -26,6 +26,7 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     @State var navigationVisibility: NavigationSplitViewVisibility = .all
+    @State var sideBarWasClosedManually = false
 
 //    @State var isLawsuit: Bool = false
     
@@ -50,6 +51,13 @@ struct ContentView: View {
                         ClientListView(addClient: $addClient, deleted: $deleted)
                             .frame(minWidth: 170)
                             .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
+                            .onChange(of: navigationVisibility) { newValue in
+                                if newValue == .detailOnly { //detecta qnd o usuario fecha manualmente a barra lateral
+                                    sideBarWasClosedManually = true
+                                } else if newValue == .all {
+                                    sideBarWasClosedManually = false
+                                }
+                            }
 //                            .transition(.opacity)
                     } else {
                         ClientListView(addClient: $addClient, deleted: $deleted)
@@ -63,7 +71,6 @@ struct ContentView: View {
                         if let selectedClient = navigationViewModel.selectedClient {
                             ClientView(client: selectedClient, deleted: $deleted)
                                 .background(.white)
-                            
                         } else {
                             VStack{
                                 Text("Selecione um cliente")
@@ -80,19 +87,22 @@ struct ContentView: View {
                 }
             }
         }
-//        .onAppear {
-//            if selectedView == .clients {
-//                navigationVisibility = .all
-//            }
-//        }
-//        .onChange(of: selectedView, perform: { newValue in
-//            if newValue == .lawsuits {
-//                isLawsuit = true
-//            } else {
-//                isLawsuit = false
-//                navigationVisibility = .automatic
-//            }
-//        })
+        .onAppear {
+            if selectedView == .clients {
+                navigationVisibility = .all
+            }
+        }
+        .onChange(of: selectedView, perform: { newValue in
+            if newValue == .lawsuits {
+                navigationVisibility = .detailOnly
+            } else {
+                if sideBarWasClosedManually {
+                    navigationVisibility = .detailOnly
+                } else {
+                    navigationVisibility = .all
+                }
+            }
+        })
         .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {
             AddClientView()
@@ -104,3 +114,4 @@ enum SelectedView: String {
     case clients = "clients"
     case lawsuits = "lawsuits"
 }
+
