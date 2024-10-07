@@ -104,7 +104,7 @@ struct EditLawSuitView: View {
                     Text("Área")
                         .padding(.top)
                         .bold()
-                    TagViewComponent(tagType: tagType)
+                    TagViewComponent(tagViewStyle: .picker)
                         .onTapGesture {
                             selectTag.toggle()
                         }
@@ -166,7 +166,7 @@ struct EditLawSuitView: View {
                         if attributedAuthor {
                             if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                                 let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                                let category = TagTypeString.string(from: tagType)
+                                let category = tagType.tagText
                                 dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
                                 dismiss()
                             } else {
@@ -175,7 +175,7 @@ struct EditLawSuitView: View {
                         } else if attributedDefendant {
                             if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
                                 let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                                let category = TagTypeString.string(from: tagType)
+                                let category = tagType.tagText
                                 dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
                                 dismiss()
                             } else {
@@ -227,7 +227,7 @@ struct EditLawSuitView: View {
         .sheet(isPresented: $selectTag, content: {
             VStack {
                 Spacer()
-                TagViewPickerComponentV1(currentTag: $tagType)
+                TagViewComponent(tagViewStyle: .picker)
                 Spacer()
                 HStack {
                     Spacer()
@@ -263,7 +263,7 @@ struct EditLawSuitView: View {
             lawsuitNumber = lawsuit.number
             lawsuitCourt = lawsuit.court
             lawsuitActionDate = lawsuit.actionDate.convertBirthDateToString()
-            tagType = TagType(s: lawsuit.category)!
+//            tagType = TagType(s: lawsuit.category)!
         }
         .padding()
     }
