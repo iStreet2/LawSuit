@@ -25,6 +25,9 @@
 		08A2B0E42C9486CA00719571 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E32C9486CA00719571 /* Date+.swift */; };
 		08A2B0E72C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E62C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift */; };
 		08A2B0E92C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A2B0E82C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift */; };
+		08B381A82CAB1B31002F2041 /* LawsuitFoldersHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B381A72CAB1B31002F2041 /* LawsuitFoldersHeaderComponent.swift */; };
+		08B381AA2CAB389D002F2041 /* MovimentationBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B381A92CAB389D002F2041 /* MovimentationBlock.swift */; };
+		08B3820B2CB44FDA002F2041 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 08B3820A2CB44FDA002F2041 /* HotKey */; };
 		08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572A2C7909FF00313FCB /* EditClientView.swift */; };
 		08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572C2C790B5B00313FCB /* LabeledTextField.swift */; };
 		08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */; };
@@ -106,7 +109,6 @@
 		DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572C02C73E30F007815E1 /* PendentClientDocumentView.swift */; };
 		DC2851E52CA74B200038A2E4 /* PathViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2851E42CA74B200038A2E4 /* PathViewComponent.swift */; };
 		DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC401F9C2C931FE3006FC949 /* Alerts.swift */; };
-		DCA955F02CADBF0900B3BC74 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = DCA955EF2CADBF0900B3BC74 /* HotKey */; };
 		DCC1BD302C77B23900000195 /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD2F2C77B23900000195 /* AddClientView.swift */; };
 		DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC1BD312C77BAF700000195 /* AddClientProgressView.swift */; };
 		DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDB963F2C7E61C400817814 /* AddClientForm.swift */; };
@@ -185,6 +187,9 @@
 		08A2B0E32C9486CA00719571 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		08A2B0E62C99ED8D00719571 /* LawsuitNetworkingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingServiceTests.swift; sourceTree = "<group>"; };
 		08A2B0E82C9E1C8A00719571 /* LawsuitNetworkingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNetworkingViewModelTests.swift; sourceTree = "<group>"; };
+		08B381A72CAB1B31002F2041 /* LawsuitFoldersHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitFoldersHeaderComponent.swift; sourceTree = "<group>"; };
+		08B381A92CAB389D002F2041 /* MovimentationBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovimentationBlock.swift; sourceTree = "<group>"; };
+		08B382072CB44F98002F2041 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08E6572A2C7909FF00313FCB /* EditClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientView.swift; sourceTree = "<group>"; };
 		08E6572C2C790B5B00313FCB /* LabeledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledTextField.swift; sourceTree = "<group>"; };
 		08E6572F2C792A1200313FCB /* EditClientViewFormsFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClientViewFormsFields.swift; sourceTree = "<group>"; };
@@ -299,7 +304,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCA955F02CADBF0900B3BC74 /* HotKey in Frameworks */,
+				08B3820B2CB44FDA002F2041 /* HotKey in Frameworks */,
 				089B8A9E2CA1F5B100FEBCAB /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,6 +459,7 @@
 		3B98F10A2C668B1000C45121 /* LawSuit */ = {
 			isa = PBXGroup;
 			children = (
+				08B382072CB44F98002F2041 /* Info.plist */,
 				08079F242CA5EFB0004EDF98 /* Mail */,
 				6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */,
 				08A2B0D82C935ADA00719571 /* Extensions */,
@@ -616,6 +622,8 @@
 				6ABD797A2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift */,
 				08E6573A2C7E60F900313FCB /* CustomSegmentedControl.swift */,
 				FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */,
+				08B381A72CAB1B31002F2041 /* LawsuitFoldersHeaderComponent.swift */,
+				08B381A92CAB389D002F2041 /* MovimentationBlock.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -664,7 +672,7 @@
 			);
 			name = LawSuit;
 			packageProductDependencies = (
-				DCA955EF2CADBF0900B3BC74 /* HotKey */,
+				08B3820A2CB44FDA002F2041 /* HotKey */,
 			);
 			productName = LawSuit;
 			productReference = 084D404F2C8A4AAE00C96111 /* LawSuit.app */;
@@ -826,6 +834,7 @@
 				08E6573B2C7E60F900313FCB /* CustomSegmentedControl.swift in Sources */,
 				6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */,
 				08E8D2042C88981F008F3859 /* LawsuitListViewHeaderContent.swift in Sources */,
+				08B381AA2CAB389D002F2041 /* MovimentationBlock.swift in Sources */,
 				DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */,
 				E94C01682CA1E2D800F6316F /* AppDelegate2.swift in Sources */,
 				3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */,
@@ -879,6 +888,7 @@
 				08A2B0C52C8F752000719571 /* LawsuitNetworkingService.swift in Sources */,
 				E93BCFA72C77D3DE007CF206 /* CloudManager.swift in Sources */,
 				3BD313E42C88FD56001CE5E7 /* DataViewModel.swift in Sources */,
+				08B381A82CAB1B31002F2041 /* LawsuitFoldersHeaderComponent.swift in Sources */,
 				E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */,
 				E9F3A4262C87755800595150 /* QueryEnumerator.swift in Sources */,
 				E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */,
@@ -1068,10 +1078,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = Z2Y94548LY;
+				DEVELOPMENT_TEAM = 543L4H35A3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LawSuit/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1080,7 +1091,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21.br;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21.micher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1100,10 +1111,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = Z2Y94548LY;
+				DEVELOPMENT_TEAM = 543L4H35A3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LawSuit/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1112,7 +1124,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21.br;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.dev21.micher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1127,8 +1139,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = Z2Y94548LY;
+				DEVELOPMENT_TEAM = 543L4H35A3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -1146,8 +1157,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = Z2Y94548LY;
+				DEVELOPMENT_TEAM = 543L4H35A3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
@@ -1246,9 +1256,8 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DCA955EF2CADBF0900B3BC74 /* HotKey */ = {
+		08B3820A2CB44FDA002F2041 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E93FFB122C9A037E004F96FC /* XCRemoteSwiftPackageReference "HotKey" */;
 			productName = HotKey;
 		};
 /* End XCSwiftPackageProductDependency section */

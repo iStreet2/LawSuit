@@ -25,6 +25,7 @@ enum InvalidInformation: Error, Identifiable {
         case .invalidCEP:
             return "invalidCEP"
         }
+        
     }
     case missingInformation
     case invalidCPF
@@ -33,4 +34,21 @@ enum InvalidInformation: Error, Identifiable {
     case missingCellphoneNumber
     case invalidLawSuitNumber
     case invalidCEP
+}
+
+enum LawsuitInvalidInformation: String, Identifiable {
+    var id: String {
+        switch self {
+        case .missingInformation:
+            return "missingInformation"
+        case .lawsuitAlreadyExists:
+            return "lawsuitAlreadyExists"
+        case .invalidLawsuitNumber:
+            return "invalidLawsuitNumber"
+        }
+    }
+    
+    case missingInformation = "missingInformation"
+    case lawsuitAlreadyExists = "lawsuitAlreadyExists"
+    case invalidLawsuitNumber = "invalidLawsuitNumber"
 }

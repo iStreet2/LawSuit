@@ -74,7 +74,6 @@ struct FolderIconView: View {
                     }
                     else {
                         Text(folder.name ?? "Sem nome")
-                            .border(.red)
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
                                 folderViewModel.openFolder(folder: folder)

@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 class TextFieldDataViewModel: ObservableObject {
-    
+
     func limitText(text: inout String, upper: Int) {
         
         text = text.filter { $0.isLetter || $0 == " " }

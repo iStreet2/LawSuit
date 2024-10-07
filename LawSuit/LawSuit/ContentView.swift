@@ -35,12 +35,12 @@ struct ContentView: View {
             true
         }
     }
-    
+        
     var body: some View {
         HStack (spacing: 0){
+            
             SideBarView(selectedView: $selectedView)
-//            switch selectedView {
-//            case .clients:
+            
             ZStack{
                 Color.white
                 NavigationSplitView(columnVisibility: isLawsuit ? .constant(.detailOnly) : $navigationVisibility) {
@@ -51,34 +51,29 @@ struct ContentView: View {
                     } else {
                         ClientListView(addClient: $addClient, deleted: $deleted)
                             .frame(minWidth: 170)
-                            
                     }
-                        
-                    } detail: {
-                        switch selectedView {
-                        case .clients:
-                            if let selectedClient = navigationViewModel.selectedClient {
-                                ClientView(client: selectedClient, deleted: $deleted)
-                                    .background(.white)
                     
-                            } else {
-                                VStack{
-                                    Text("Selecione um cliente")
-                                        .padding()
-                                        .foregroundColor(.gray)
-                                }
+                } detail: {
+                    switch selectedView {
+                    case .clients:
+                        if let selectedClient = navigationViewModel.selectedClient {
+                            ClientView(client: selectedClient, deleted: $deleted)
                                 .background(.white)
+                        } else {
+                            VStack{
+                                Text("Selecione um cliente")
+                                    .padding()
+                                    .foregroundColor(.gray)
                             }
-                        case .lawsuits:
-                         
-                                LawsuitListView()
-                                    .background(.white)
-                           
+                            .background(.white)
                         }
+                        
+                    case .lawsuits:
+                        LawsuitListView()
+                            .background(.white)
                     }
+                }
             }
-              
- 
         }
         .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {
@@ -91,3 +86,4 @@ enum SelectedView: String {
     case clients = "clients"
     case lawsuits = "lawsuits"
 }
+
