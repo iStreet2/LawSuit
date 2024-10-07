@@ -15,6 +15,10 @@ extension String {
         return dateFormatter.date(from: self) ?? Date()
     }
     
+    func convertBirthDateToDate() -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return dateFormatter.date(from: self) ?? Date()
   
     func copy() {
         //            #if os(macOS)

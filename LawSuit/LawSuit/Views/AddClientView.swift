@@ -25,7 +25,7 @@ struct AddClientView: View {
     @State var affiliation: String = ""
     @State var maritalStatus: String = ""
     @State var nationality: String = ""
-    @State var birthDate: Date = Date()
+    @State var birthDate: String = ""
     @State var cep: String = ""
     @State var address: String = ""
     @State var addressNumber: String = ""
@@ -109,18 +109,22 @@ struct AddClientView: View {
                         invalidInformation = .invalidRG
                         return
                     }
+                    if stage == 2 {
+                        if cep.count < 8 {
+                            invalidInformation = .invalidCEP
+                            return
+                        }
+                    }
                     if stage == 3 {
                         if !textFieldDataViewModel.isValidEmail(email) {
                             invalidInformation = .invalidEmail
-                        } else if telephone.count < 14 {
-                            invalidInformation = .missingTelephoneNumber
                         } else if cellphone.count < 15 {
                             invalidInformation = .missingCellphoneNumber
                         }
                         else {
                             //MARK: Advogado temporário
                             let lawyer = lawyers[0]
-                            dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                            dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
                             dismiss()
                         }
                         return
@@ -159,10 +163,6 @@ struct AddClientView: View {
                         return Alert(title: Text("E-mail inválido"),
                                      message: Text("Por favor, insira um e-mail válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
-                    case .missingTelephoneNumber:
-                        return Alert(title: Text("Número de telefone inválido"),
-                                     message: Text("Por favor, insira um número de telefone válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
                     case .missingCellphoneNumber:
                         return Alert(title: Text("Número de celular inválido"),
                                      message: Text("Por favor, insira um número de celular válido antes de continuar"),
@@ -171,6 +171,11 @@ struct AddClientView: View {
                         return Alert(title: Text(""),
                                      message: Text(""),
                                      dismissButton: .default(Text("")))
+                    case .invalidCEP:
+                        return Alert(title: Text("Número de CEP não encontrado"),
+                                     message: Text("Por favor, insira um número de CEP válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                        
                     }
                 }
             }
@@ -188,7 +193,6 @@ struct AddClientView: View {
             !rg.isEmpty &&
             !affiliation.isEmpty &&
             !nationality.isEmpty &&
-            !occupation.isEmpty &&
             !maritalStatus.isEmpty &&
             !birthDate.description.isEmpty
         } else if stage == 2 {
@@ -200,7 +204,6 @@ struct AddClientView: View {
             !state.isEmpty
         } else if stage == 3 {
             return !email.isEmpty &&
-            !telephone.isEmpty &&
             !cellphone.isEmpty
         }
         return true

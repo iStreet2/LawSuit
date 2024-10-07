@@ -35,7 +35,7 @@ struct FolderIconView: View {
         Group {
             if folderViewModel.showingGridView {
                 VStack {
-                    Image("PastaLight")
+                    Image("Pasta")
                         .resizable()
                         .frame(width: 73, height: 58)
 
@@ -55,10 +55,11 @@ struct FolderIconView: View {
                                 isEditing = true
                             }
                     }
+                    //lalallala teste
                 }
             } else {
                 HStack {
-                    Image("PastaLight")
+                    Image("Pasta")
                         .resizable()
                         .frame(width: 18,height: 14)
                     
@@ -73,10 +74,14 @@ struct FolderIconView: View {
                     }
                     else {
                         Text(folder.name ?? "Sem nome")
+                            .border(.red)
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                isEditing = true
+                                folderViewModel.openFolder(folder: folder)
                             }
+                            .onLongPressGesture(perform: {
+                                isEditing = true
+                            })
                     }
                 }
             }

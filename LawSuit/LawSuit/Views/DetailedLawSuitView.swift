@@ -23,7 +23,7 @@ struct DetailedLawSuitView: View {
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
-    @State var lawsuitAuthorName = ""
+    @State var lawsuitAuthorSocialName = ""
     @State var lawsuitDefendantName = ""
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -122,19 +122,29 @@ struct DetailedLawSuitView: View {
         if lawsuit.authorID.hasPrefix("client:") {
             if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
                let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                lawsuitAuthorName = author.name
+                lawsuitAuthorSocialName = author.socialName ?? "Sem nome"
                 lawsuitDefendantName = defendant.name
             }
             //Se o cliente do processo estiver no reu
         } else {
             if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
-               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                lawsuitAuthorName = author.name
+               let authorEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID),
+            
+            let author = authorEntity as? Client {
+                
+                lawsuitAuthorSocialName = author.socialName ?? author.name
                 lawsuitDefendantName = defendant.name
             }
+            
+            
+            //               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+            //                lawsuitAuthorSocialName = author.socialName as! Client.socialName
+            //                lawsuitDefendantName = defendant.name
+            //            }
         }
     }
 }
+
 
 extension DetailedLawSuitView {
     private var mainBlockHeader: some View {
@@ -206,7 +216,8 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Text(lawsuitAuthorName)
+                        
+                        Text(lawsuitAuthorSocialName)
                             .font(.subheadline)
                             .bold()
                     }
@@ -217,9 +228,11 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
+                        //                        if !lawsuitDefendantName.isEmpty {
                         Text(lawsuitDefendantName)
                             .font(.subheadline)
                             .bold()
+                        //                                            }
                     }
                     Spacer()
                 }

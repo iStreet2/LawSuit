@@ -24,7 +24,7 @@ struct LawsuitDistributedView: View {
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
     @Binding var lawsuitDefendantName: String
-    @Binding var lawsuitActionDate: Date
+    @Binding var lawsuitActionDate: String
     @EnvironmentObject var dataViewModel: DataViewModel
     
     @State var attributedAuthor = false
@@ -57,7 +57,7 @@ struct LawsuitDistributedView: View {
                 HStack {
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
-                        Text("\(lawsuitAuthorName)")
+                            Text("\(lawsuitAuthorName)")
                         Button {
                             withAnimation {
                                 //Retirar esse cliente e retirar o estado de autor selecionado
@@ -108,7 +108,8 @@ struct LawsuitDistributedView: View {
                     }
                     .frame(width: 200, alignment: .leading)
                 }
-                LabeledDateField(selectedDate: $lawsuitActionDate, label: "Data da distribuição")
+                LabeledTextField(label: "Data de distribuição", placeholder: "", textfieldText: $lawsuitActionDate)
+                    .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateValidation(newValue)}
                     .padding(.top)
             }
         }
@@ -130,6 +131,13 @@ struct LawsuitDistributedView: View {
                     invalidInformation = .invalidLawsuitNumber
                     return
                 }
+                    //MARK: Se o cliente foi atribuido ao autor
+                    if attributedAuthor {
+                        if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
+                            let category = TagTypeString.string(from: tagType)
+                            let lawyer = lawyers[0]
+                            let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
+                            let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
 
                 if dataViewModel.coreDataManager.lawsuitManager.doesLawsuitExist(lawsuitNumber: lawsuitNumber) {
                     invalidInformation = .lawsuitAlreadyExists

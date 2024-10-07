@@ -23,7 +23,7 @@ struct LawsuitNotDistributedView: View {
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
     @Binding var lawsuitDefendantName: String
-    @Binding var lawsuitActionDate: Date
+    @Binding var lawsuitActionDate: String
     let textLimit = 100
     
     //MARK: CoreData
@@ -68,17 +68,17 @@ struct LawsuitNotDistributedView: View {
                     Button {
                         if areFieldsFilled() {
                             let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                            fetchRequest.predicate = NSPredicate(format: "name == %@", lawsuitAuthorName)
+                            fetchRequest.predicate = NSPredicate(format: "name ==[c] %@ OR socialName ==[c] %@", lawsuitAuthorName, lawsuitAuthorName)
                             do {
                                 let fetchedClients = try context.fetch(fetchRequest)
                                 if let author = fetchedClients.first {
                                     let category = TagTypeString.string(from: tagType)
                                     let lawyer = lawyers[0]
                                     let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                                    var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate)
-
-                                         dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-
+                                    var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuitNonDistribuited(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
+//                                    Task {
+                                        /*await*/ dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+//                                    }
                                     dismiss()
                                 } else {
                                     print("Cliente não encontrado")
@@ -108,9 +108,9 @@ struct LawsuitNotDistributedView: View {
         !lawsuitDefendantName.isEmpty
     }
 }
-
-#Preview {
-	LawsuitNotDistributedView(lawsuitNumber: .constant("34567898765"), lawsuitCourt: .constant("fghcvnbjgyutfgh"), lawsuitAuthorName: .constant("AuTHOR NAAAME"), lawsuitDefendantName: .constant("Defendant Name Here"), lawsuitActionDate: .constant(Date.now))
-
-		.environmentObject(DataViewModel())
-}
+//
+//#Preview {
+//	LawsuitNotDistributedView(lawsuitNumber: .constant("34567898765"), lawsuitCourt: .constant("fghcvnbjgyutfgh"), lawsuitAuthorName: .constant("AuTHOR NAAAME"), lawsuitDefendantName: .constant("Defendant Name Here"), lawsuitActionDate: .constant(Date.now))
+//
+//		.environmentObject(DataViewModel())
+//}
