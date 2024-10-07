@@ -17,7 +17,7 @@ class ClientManager {
         self.context = context
     }
     
-    func createAndReturnClient(name: String, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) -> Client {
+    func createAndReturnClient(name: String, occupation: String, rg: String, cpf: String, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String = "", complement: String, state: String, city: String, email: String, telephone: String, cellphone: String) -> Client {
         let client = Client(context: context)
         let folder = Folder(context: context)
         folder.name = "\(name)"
@@ -44,7 +44,7 @@ class ClientManager {
         client.email = email
         client.telephone = telephone
         client.cellphone = cellphone
-        saveContext()
+//        saveContext()
         return client
     }
     
@@ -182,11 +182,11 @@ class ClientManager {
 
     
     func saveContext() {
-//        do {
-//            try context.save()
-//        } catch {
-//            print("Error while saving context on client (\(error)")
-//        }
+        do {
+            try context.save()
+        } catch {
+            print("Error while saving context on client (É aqui mesmo!!!!!!!) (\(error)")
+        }
     }
     
     

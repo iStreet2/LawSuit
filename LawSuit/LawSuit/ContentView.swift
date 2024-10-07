@@ -23,6 +23,8 @@ struct ContentView: View {
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
+	
+	 var office: Office
     
     var body: some View {
         HStack {
@@ -32,6 +34,9 @@ struct ContentView: View {
                 NavigationSplitView {
                     ClientListView(addClient: $addClient, deleted: $deleted)
                         .frame(minWidth: 170)
+								.onAppear {
+									print("dataViewModel.office.clients: ", dataViewModel.office?.clients)
+								}
                 } detail: {
                     if let selectedClient = navigationViewModel.selectedClient {
                         ClientView(client: selectedClient, deleted: $deleted)

@@ -15,3 +15,7 @@ class NavigationViewModel: ObservableObject {
     @Published var dismissLawsuitView = false
     
 }
+
+//enum Route: Hashable {
+//	case
+//}

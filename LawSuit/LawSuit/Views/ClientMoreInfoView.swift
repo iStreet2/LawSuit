@@ -205,7 +205,7 @@ extension ClientMoreInfoView {
                         .font(.body)
                         .foregroundStyle(.secondary)
                         .bold()
-                    Text(client.neighborhood)
+						 Text(client.neighborhood ?? "")
                         .padding(.bottom, 7)
                     
                     Text("Cidade")

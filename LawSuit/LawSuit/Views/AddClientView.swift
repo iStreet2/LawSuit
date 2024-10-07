@@ -103,15 +103,38 @@ struct AddClientView: View {
                         }
                         else {
                             //MARK: Advogado temporário
-                            let lawyer = lawyers[0]
+                            let lawyer = lawyers[0] // TODO: TROCAR PARA ADVOGADO USER
+																	 // MARK: Teoricamente continua funcionando, já que é o lawyers[0] rs
+																	 // MARK: Não está sendo usado mais...
                             
-                            var client = dataViewModel.coreDataManager.clientManager.createAndReturnClient(name: name, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                            var client = dataViewModel.coreDataManager.clientManager.createAndReturnClient(name: name, occupation: occupation, rg: rg, cpf: cpf, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate, cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone) // -> Não possui rootFolder ainda
                             
+									// MARK: To tentando bonito, eu juro
+//									var client = Client(context: context)
+//									client.name = name
+//									client.occupation = occupation
+//									client.rg = rg
+//									client.cpf = cpf
+//									client.affiliation = affiliation
+//									client.maritalStatus = maritalStatus
+//									client.nationality = nationality
+//									client.birthDate = birthDate
+//									client.cep = cep
+//									client.address = address
+//									client.addressNumber = addressNumber
+//									client.neighborhood = neighborhood
+//									client.complement = complement
+//									client.state = state
+//									client.city = city
+//									client.email = email
+//									client.telephone = telephone
+//									client.cellphone = cellphone
                             //MARK: CloudKit - Criar
                             //Para adicionar o cliente, primeiro eu coloco a rootFolder no cloudKit, depois eu coloco o client
                             Task {
-                                try await dataViewModel.cloudManager.recordManager.saveObject(object: &client.rootFolder!, relationshipsToSave: ["folders","files"])
-                                try await dataViewModel.cloudManager.recordManager.saveObject(object: &client, relationshipsToSave: ["rootFolder"])
+                                _ = try await dataViewModel.cloudManager.recordManager.saveObject(object: &client.rootFolder!, relationshipsToSave: ["folders","files"])
+										 guard let clientRecord = try await dataViewModel.cloudManager.recordManager.saveObject(object: &client, relationshipsToSave: ["rootFolder"]) else { return }
+										 await dataViewModel.addClientToOffice(client: clientRecord)
                             }
                             dismiss()
                         }

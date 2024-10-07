@@ -25,7 +25,7 @@ struct LawSuitApp: App {
     
     var body: some Scene {
         WindowGroup {   
-			  ContentView()
+			  LoginView()
                 .environment(\.managedObjectContext, dataViewModel.coreDataContainer.viewContext)
                 .environmentObject(dataViewModel)
                 .environmentObject(folderViewModel)
@@ -37,6 +37,9 @@ struct LawSuitApp: App {
                 .frame(minHeight: 530)
 					 .onAppear {
 						 hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+						 Task {
+							 dataViewModel.office = await dataViewModel.getUserOffice()
+						 }
 					 }
 					 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
 						 SpotlightSearchbarView()
@@ -47,6 +50,9 @@ struct LawSuitApp: App {
 					 .sheet(isPresented: $eventManager.filePreviewIsPresented) {
 						 OpenFilePDFView(selectedFile: $eventManager.fileToPreview)
 					 }
+//					 .sheet(isPresented: $dataViewModel.authenticationManager.userShouldAuthenticate) {
+//						 <#code#>
+//					 }
         }
     }
 }

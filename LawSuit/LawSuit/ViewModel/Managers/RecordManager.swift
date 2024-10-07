@@ -53,7 +53,7 @@ class RecordManager {
     }
     
     //MARK: - Create: Nessa função basta passar o objeto e um vetor com strings escrito o nome dos relationShips que você quer salvar
-    func saveObject<T: Recordable>(object: inout T, relationshipsToSave: Set<String>) async throws {
+	func saveObject<T: Recordable>(object: inout T, relationshipsToSave: Set<String>) async throws -> CKRecord? {
         let className = String(describing: type(of: object))
         let record = CKRecord(recordType: className)
         
@@ -90,7 +90,8 @@ class RecordManager {
         do {
             let savedRecord = try await plublicDataBase.save(record)
             object.recordName = savedRecord.recordID.recordName
-            saveContext()
+			  return savedRecord
+//            saveContext()
         } catch {
             throw error
         }
