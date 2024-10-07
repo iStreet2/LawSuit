@@ -136,7 +136,7 @@ struct DetailedLawSuitView: View {
 extension DetailedLawSuitView {
     private var mainBlockHeader: some View {
         HStack {
-            TagViewComponent(tagType: TagType(s: lawsuit.category) ?? .trabalhista)
+            TagViewComponent(tagViewStyle: .bullet)
             Spacer()
             Button {
                 // editar
