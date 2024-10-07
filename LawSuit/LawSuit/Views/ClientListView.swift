@@ -20,7 +20,13 @@ struct ClientListView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Client.name, ascending: true)]) var clients: FetchedResults<Client>
+    
+    var sortedClients: [Client] {
+        clients.sorted {
+            ($0.socialName ?? $0.name) < ($1.socialName ?? $1.name)
+        }
+    }
     
     
     var body: some View {
@@ -40,7 +46,7 @@ struct ClientListView: View {
                 .buttonStyle(PlainButtonStyle())
             }
             .padding()
-            List(clients, id: \.id) { client in
+            List(sortedClients, id: \.id) { client in
                 Button(action: {
                     navigationViewModel.selectedClient = client
                     folderViewModel.resetFolderStack()
