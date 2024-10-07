@@ -49,7 +49,7 @@ struct AddLawsuitView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .frame(height: 500)
+        .frame(height: 300)
         .padding()
         .onAppear {
             lawsuitTypeString = lawsuitType.rawValue

@@ -144,7 +144,7 @@ struct AddClientForm: View {
                             .onReceive(Just(cep)) { _ in cep = textFieldDataViewModel.formatNumber(cep, limit: 8) }
                             .onChange(of: cep, perform: { _ in
                                 Task{
-                                    if cep.count == 8{
+                                    if cep.count == 8 {
                                         if let addressApi = await addressViewModel.fetch(for: cep) {
                                             cep = addressApi.cep
                                             address = addressApi.logradouro
