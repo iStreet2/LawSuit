@@ -93,7 +93,7 @@ class Lawsuit: Identifiable {
         if let rootFolderReference = record[LawsuitFields.rootFolder.rawValue] as? CKRecord.Reference {
             do {
                 if let folderRecord = try await CloudManager.getRecordFromReference(rootFolderReference) {
-                    folderObject = Folder(folderRecord)
+						 let folderObject = await Folder(folderRecord)
                     self.rootFolder = folderObject
                 }
             } catch {

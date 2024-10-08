@@ -193,6 +193,7 @@ class Client {
 		} else {
 			print("Missing required field: rootFolder")
 			// Como rootFolder é obrigatório, defina um valor default, ou outro tratamento
+			self.rootFolder = Folder(createdAt: Date.now, name: "Error")
 			fatalError("Root folder is required")
 		}
 		
