@@ -27,7 +27,7 @@ class DataViewModel: ObservableObject {
 	var spotlightManager: SpotlightManager
 	var authenticationManager: AuthenticationManager
 	
-	var user: Lawyer?
+	var user: User?
 	var office: Office?
 	    
 	init() {
@@ -44,7 +44,7 @@ class DataViewModel: ObservableObject {
 		self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
 		 self.authenticationManager = AuthenticationManager(context: self.context)
 		 
-		 let request = NSFetchRequest<Lawyer>(entityName: "Lawyer")
+		 let request = NSFetchRequest<User>(entityName: "User")
 		 do {
 			 let result = try context.fetch(request)
 			 if let fetchedUser = result.first {
