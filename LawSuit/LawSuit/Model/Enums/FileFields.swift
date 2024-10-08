@@ -9,5 +9,7 @@ import Foundation
 
 enum FileFields: String {
 	case name
-	case data
+	case content
+	case id
+	case createdAt
 }

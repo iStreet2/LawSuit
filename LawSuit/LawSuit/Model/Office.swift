@@ -45,11 +45,8 @@ class Office: Identifiable {
 			for client in clients {
 				do {
 					if let record = try await CloudManager.getRecordFromReference(client) {
-						if let clientObject = await Client(record, context: context) {
-							self.clients.append(clientObject)
-						} else {
-							print("Error making client from record inside office init()")
-						}
+						let clientObject = await Client(record)
+						self.clients.append(clientObject)
 					}
 				} catch {
 					print("Office.__INIT?()__ error getting client record from reference")
