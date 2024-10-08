@@ -8,8 +8,9 @@
 import Foundation
 import CloudKit
 
-class File: Identifiable {
-	var id: String
+class FilePDF: Identifiable {
+	
+    var id: String
 	var name: String
 	var content: Data?
 	var createdAt: Date

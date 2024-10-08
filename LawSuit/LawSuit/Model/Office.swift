@@ -16,19 +16,17 @@ class Office: Identifiable {
     var name: String
     var owner: Lawyer?
     var record: CKRecord?
-    var context: NSManagedObjectContext
     
-    init(clients: [Client] = [], lawsuits: [Lawsuit] = [], lawyers: [String], name: String, owner: Lawyer, record: CKRecord? = nil, context: NSManagedObjectContext) {
+    init(clients: [Client] = [], lawsuits: [Lawsuit] = [], lawyers: [String], name: String, owner: Lawyer, record: CKRecord? = nil) {
         self.clients = clients
         self.lawsuits = lawsuits
         self.lawyers = lawyers
         self.name = name
         self.owner = owner
         self.record = record
-        self.context = context
     }
     
-    init?(_ record: CKRecord, context: NSManagedObjectContext) async {
+    init?(_ record: CKRecord) async {
         guard
             let name = record[OfficeFields.name.rawValue] as? String
                 //            let clients = record[OfficeFields.clients.rawValue] as? [CKRecord.Reference],
@@ -38,7 +36,6 @@ class Office: Identifiable {
         else { print("Failed getting NAME initializing Office from record"); return nil }
         
         self.name = name
-        self.context = context
         
         // Fetch clients asynchronously
         if let clients = record[OfficeFields.clients.rawValue] as? [CKRecord.Reference] {
@@ -53,7 +50,7 @@ class Office: Identifiable {
                 }
             }
         } else {
-            print("ERRO clients Office(): \(record[OfficeFields.clients.rawValue])")
+            print("ERRO clients Office(): \(record[OfficeFields.clients.rawValue] ?? "")")
             self.clients = []
         }
         
@@ -71,7 +68,7 @@ class Office: Identifiable {
                 }
             }
         } else {
-            print("ERRO lawsuits Office(): \(record[OfficeFields.lawsuits.rawValue])")
+            print("ERRO lawsuits Office(): \(record[OfficeFields.lawsuits.rawValue] ?? "")")
             self.lawsuits = []
         }
         
@@ -80,7 +77,7 @@ class Office: Identifiable {
         if let lawyers = record[OfficeFields.lawyers.rawValue] as? [String] {
             self.lawyers = lawyers
         } else {
-            print("ERRO lawyers Office(): \(record[OfficeFields.lawyers.rawValue])")
+            print("ERRO lawyers Office(): \(record[OfficeFields.lawyers.rawValue] ?? "")")
             self.lawyers = []
         }
         
@@ -95,7 +92,7 @@ class Office: Identifiable {
                 print("Office.__INIT?()__ error getting owner record from reference")
             }
         } else {
-            print("ERRO owner Office(): \(record[OfficeFields.owner.rawValue])")
+            print("ERRO owner Office(): \(record[OfficeFields.owner.rawValue] ?? "")")
             
         }
     }

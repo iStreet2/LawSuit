@@ -11,11 +11,9 @@ import SwiftUI
 class LawsuitNetworkingViewModel: ObservableObject {
     
     private let lawsuitService: LawsuitNetworkingServiceProtocol
-    private let lawsuitManager: LawsuitManager
     
-    init(lawsuitService: LawsuitNetworkingServiceProtocol, lawsuitManager: LawsuitManager) {
+    init(lawsuitService: LawsuitNetworkingServiceProtocol) {
         self.lawsuitService = lawsuitService
-        self.lawsuitManager = lawsuitManager
     }
     
     func fetchAndSaveUpdatesFromAPI(fromLawsuit lawsuit: Lawsuit) {
@@ -69,7 +67,7 @@ class LawsuitNetworkingViewModel: ObservableObject {
         }
     }
     
-    func getLatestUpdateDate(fromLawsuit lawsuit: Lawsuit, updateManager: UpdateManager) -> Date? {
+    func getLatestUpdateDate(fromLawsuit lawsuit: Lawsuit) -> Date? {
         return updateManager.getLatestUpdateDate(lawsuit: lawsuit)
     }
 }

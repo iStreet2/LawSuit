@@ -17,6 +17,7 @@ class Lawsuit: Identifiable {
     var defendantID: String
     var name: String
     var number: String
+    var isLoading: Bool = false
     var rootFolder: Folder
     
     var recordName: String? //MARK: Importante

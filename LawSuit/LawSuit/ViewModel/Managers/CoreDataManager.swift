@@ -14,26 +14,12 @@ class CoreDataManager: ObservableObject {
     @Published var objects: [Any] = []
     
     var context: NSManagedObjectContext
-    var folderManager: FolderManager
-    var filePDFManager: FilePDFManager
-    var lawyerManager: LawyerManager
-    var lawsuitManager: LawsuitManager
-    var clientManager: ClientManager
-    var updateManager: UpdateManager
     var lawsuitNetworkingViewModel: LawsuitNetworkingViewModel
-    var entityManager: EntityManager
     
     init(context: NSManagedObjectContext) {
         self.context = context
         self.context.automaticallyMergesChangesFromParent = true
-        self.folderManager = FolderManager(context: context)
-        self.filePDFManager = FilePDFManager(context: context)
-        self.lawyerManager = LawyerManager(context: context)
-        self.lawsuitManager = LawsuitManager(context: context)
-        self.clientManager = ClientManager(context: context)
-        self.updateManager = UpdateManager(context: context)
         self.lawsuitNetworkingViewModel = LawsuitNetworkingViewModel(lawsuitService: LawsuitNetworkingService(updateManager: self.updateManager), lawsuitManager: self.lawsuitManager)
-        self.entityManager = EntityManager(context: context)
     }
     
     func deleteAllData() {
@@ -57,18 +43,18 @@ class CoreDataManager: ObservableObject {
         }
     }
     
-    func getClientAndEntity(for lawsuit: Lawsuit) -> (client: Client?, entity: Entity?) {
-           if lawsuit.authorID.hasPrefix("client:") {
-               if let author = clientManager.fetchFromId(id: lawsuit.authorID),
-                  let defendant = entityManager.fetchFromID(id: lawsuit.defendantID) {
-                   return (client: author, entity: defendant)
-               }
-           } else {
-               if let defendant = clientManager.fetchFromId(id: lawsuit.defendantID),
-                  let author = entityManager.fetchFromID(id: lawsuit.authorID) {
-                   return (client: defendant, entity: author)
-               }
-           }
-           return (client: nil, entity: nil)
-       }
+//    func getClientAndEntity(for lawsuit: Lawsuit) -> (client: Client?, entity: Entity?) {
+//           if lawsuit.authorID.hasPrefix("client:") {
+//               if let author = clientManager.fetchFromId(id: lawsuit.authorID),
+//                  let defendant = entityManager.fetchFromID(id: lawsuit.defendantID) {
+//                   return (client: author, entity: defendant)
+//               }
+//           } else {
+//               if let defendant = clientManager.fetchFromId(id: lawsuit.defendantID),
+//                  let author = entityManager.fetchFromID(id: lawsuit.authorID) {
+//                   return (client: defendant, entity: author)
+//               }
+//           }
+//           return (client: nil, entity: nil)
+//       }
 }
