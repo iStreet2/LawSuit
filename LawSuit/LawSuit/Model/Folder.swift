@@ -16,11 +16,11 @@ class Folder {
 	var name: String
 	
 	// MARK: - Init para dentro do código
-	init(createdAt: Date, files: [File] = [], folders: [Folder] = [], id: String, name: String) {
+	init(createdAt: Date, files: [File] = [], folders: [Folder] = [], name: String) {
 		self.createdAt = createdAt
 		self.files = files
 		self.folders = folders
-		self.id = id
+		self.id = UUID().uuidString
 		self.name = name
 	}
 	

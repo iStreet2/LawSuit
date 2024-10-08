@@ -28,13 +28,13 @@ class Client {
 	var neighborhood: String
 	var occupation: String
 	var rg: String
-	var rootFolder: CKRecord.Reference
+	var rootFolder: Folder
 	var state: String
 	var telephone: String
 	
 	var recordName: String? // MARK: IMPORTANTE
 	
-	init(address: String, addressNumber: String, affiliation: String, age: Int64, birthDate: Date, cellphone: String, cep: String, city: String, complement: String, cpf: String, createdAt: Date, email: String, id: String, maritalStatus: String, name: String, nationality: String, neighborhood: String, occupation: String, rg: String, rootFolder: CKRecord.Reference, state: String, telephone: String) {
+	init(address: String, addressNumber: String, affiliation: String, age: Int64, birthDate: Date, cellphone: String, cep: String, city: String, complement: String, cpf: String, createdAt: Date, email: String, id: String, maritalStatus: String, name: String, nationality: String, neighborhood: String, occupation: String, rg: String, state: String, telephone: String) {
 		self.address = address
 		self.addressNumber = addressNumber
 		self.affiliation = affiliation
@@ -54,13 +54,13 @@ class Client {
 		self.neighborhood = neighborhood
 		self.occupation = occupation
 		self.rg = rg
-		self.rootFolder = rootFolder
+		self.rootFolder = Folder(createdAt: Date.now, name: "root\(name)")
 		self.state = state
 		self.telephone = telephone
 		self.recordName = nil
 	}
 	
-	init(_ record: CKRecord) {
+	init(_ record: CKRecord) async {
 		// Valores obrigatórios com fallback (valores padrões)
 		if let address = record[ClientFields.address.rawValue] as? String {
 			self.address = address
@@ -182,7 +182,14 @@ class Client {
 		}
 		
 		if let rootFolder = record[ClientFields.rootFolder.rawValue] as? CKRecord.Reference {
-			self.rootFolder = rootFolder
+			do {
+				if let folderRecord = try await CloudManager.getRecordFromReference(rootFolder) {
+					let folderObject = await Folder(folderRecord)
+					self.rootFolder = folderObject
+				}
+			} catch {
+				print("Root folder could not be converted to a Folder object")
+			}
 		} else {
 			print("Missing required field: rootFolder")
 			// Como rootFolder é obrigatório, defina um valor default, ou outro tratamento
