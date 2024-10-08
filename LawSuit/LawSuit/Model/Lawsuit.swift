@@ -32,76 +32,67 @@ class Lawsuit: Identifiable {
         self.number = number
         self.rootFolder = Folder(createdAt: Date.now, name: "root\(name)")
     }
-    
-    init(_ record: CKRecord) async {
+
+    convenience init(_ record: CKRecord) async {
+        // Chama o init principal com valores padrão
+        self.init(
+            actionDate: "Unknown Date",
+            authorID: "Unknown Author",
+            category: "Unknown Category",
+            court: "Unknown Court",
+            defendantID: "Unknown Defendant",
+            name: "Unknown Name",
+            number: "Unknown Number"
+        )
+
+        // Agora sobreescreve os valores com os do CKRecord
+
         if let actionDate = record[LawsuitFields.actionDate.rawValue] as? String {
             self.actionDate = actionDate
-        } else {
-            print("Missing required field: actionDate")
-            self.actionDate = "Unknown Date"
         }
 
         if let authorID = record[LawsuitFields.authorID.rawValue] as? String {
             self.authorID = authorID
-        } else {
-            print("Missing required field: authorID")
-            self.authorID = "Unknown Author"
         }
 
         if let category = record[LawsuitFields.category.rawValue] as? String {
             self.category = category
-        } else {
-            print("Missing required field: category")
-            self.category = "Unknown Category"
         }
 
         if let court = record[LawsuitFields.court.rawValue] as? String {
             self.court = court
-        } else {
-            print("Missing required field: court")
-            self.court = "Unknown Court"
         }
 
         if let defendantID = record[LawsuitFields.defendantID.rawValue] as? String {
             self.defendantID = defendantID
-        } else {
-            print("Missing required field: defendantID")
-            self.defendantID = "Unknown Defendant"
         }
 
         if let id = record[LawsuitFields.id.rawValue] as? String {
             self.id = id
-        } else {
-            print("Missing required field: id")
-            self.id = UUID().uuidString
         }
 
         if let name = record[LawsuitFields.name.rawValue] as? String {
             self.name = name
-        } else {
-            print("Missing required field: name")
-            self.name = "Unknown Name"
         }
 
         if let number = record[LawsuitFields.number.rawValue] as? String {
             self.number = number
-        } else {
-            print("Missing required field: number")
-            self.number = "Unknown Number"
         }
 
         if let rootFolderReference = record[LawsuitFields.rootFolder.rawValue] as? CKRecord.Reference {
             do {
                 if let folderRecord = try await CloudManager.getRecordFromReference(rootFolderReference) {
-                    folderObject = Folder(folderRecord)
+                    let folderObject = await Folder(folderRecord)
                     self.rootFolder = folderObject
                 }
             } catch {
-                print("Root folder could not me converted to a Folder object")
+                self.rootFolder = Folder(createdAt: Date.now, name: "Error")
+                print("Root folder could not be converted to a Folder object")
             }
         } else {
+            self.rootFolder = Folder(createdAt: Date.now, name: "Error")
             print("Missing required field: rootFolder")
-            // Defina um tratamento adequado caso o rootFolder seja obrigatório
+            fatalError("Root folder is required")
         }
 
         self.recordName = record.recordID.recordName
