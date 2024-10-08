@@ -18,5 +18,4 @@ public class User: NSManagedObject, Identifiable {
 	
 	@NSManaged public var lawyerID: String?
 	@NSManaged public var officeID: String?
-	
 }
