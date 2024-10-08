@@ -69,6 +69,7 @@
 		3BB9A3502C84F38000AD1E30 /* TagViewComponentV5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB9A34F2C84F38000AD1E30 /* TagViewComponentV5.swift */; };
 		3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC731012C6A997E00923BB2 /* FolderManager.swift */; };
 		3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC731032C6A9A9200923BB2 /* FilePDFManager.swift */; };
+		3BCE49B82CB59BE600AC0607 /* Lawsuit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCE49B72CB59BE600AC0607 /* Lawsuit.swift */; };
 		3BD313E42C88FD56001CE5E7 /* DataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD313E32C88FD56001CE5E7 /* DataViewModel.swift */; };
 		3BD40B2F2C6D3FB8004048FA /* ClientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B2E2C6D3FB8004048FA /* ClientManager.swift */; };
 		3BD40B312C6D40FE004048FA /* LawyerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B302C6D40FE004048FA /* LawyerManager.swift */; };
@@ -238,6 +239,7 @@
 		3BB9A34F2C84F38000AD1E30 /* TagViewComponentV5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewComponentV5.swift; sourceTree = "<group>"; };
 		3BC731012C6A997E00923BB2 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		3BC731032C6A9A9200923BB2 /* FilePDFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFManager.swift; sourceTree = "<group>"; };
+		3BCE49B72CB59BE600AC0607 /* Lawsuit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lawsuit.swift; sourceTree = "<group>"; };
 		3BD313E32C88FD56001CE5E7 /* DataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewModel.swift; sourceTree = "<group>"; };
 		3BD40B2E2C6D3FB8004048FA /* ClientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientManager.swift; sourceTree = "<group>"; };
 		3BD40B302C6D40FE004048FA /* LawyerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawyerManager.swift; sourceTree = "<group>"; };
@@ -447,6 +449,7 @@
 			children = (
 				E94C015D2C9B70F400F6316F /* EntityWrappers.swift */,
 				3B014AD02CB4827000C7747B /* Office.swift */,
+				3BCE49B72CB59BE600AC0607 /* Lawsuit.swift */,
 				3BD40B412C6E5E16004048FA /* FolderStack.swift */,
 				6AC0BB692C8F8B9600FAF3E6 /* AddressAPI.swift */,
 				3B6168012C7E45CE00260585 /* Sections.swift */,
@@ -862,6 +865,7 @@
 				3B04F11D2C7FB9B600991746 /* ClientInfoView.swift in Sources */,
 				3BC731022C6A997E00923BB2 /* FolderManager.swift in Sources */,
 				3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */,
+				3BCE49B82CB59BE600AC0607 /* Lawsuit.swift in Sources */,
 				08079F262CA5EFCB004EDF98 /* MailMessageEnum.swift in Sources */,
 				E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */,
 				E9E323E42C80EA12000BA6FD /* DetailedLawSuitView.swift in Sources */,
