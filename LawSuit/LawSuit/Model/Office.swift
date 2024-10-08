@@ -63,20 +63,12 @@ class Office: Identifiable {
 			for lawsuit in lawsuits {
 				do {
 					if let record = try await CloudManager.getRecordFromReference(lawsuit) {
-						if let lawsuitObject = await Lawsuit(record, context: context) {
-							self.lawsuits.append(lawsuitObject)
-						}
+						let lawsuitObject = await Lawsuit(record)
+						self.lawsuits.append(lawsuitObject)
 					}
 				} catch {
 					print("Office.__INIT?()__ error getting lawsuit record from reference")
 				}
-//				CloudManager.getRecordFromReference(lawsuit) { record, error in
-//					if let record = record {
-//						
-//					} else {
-//						print("Could not retrieve lawsuit record from reference")
-//					}
-//				}
 			}
 		} else {
 			print("ERRO lawsuits Office(): \(record[OfficeFields.lawsuits.rawValue])")
@@ -96,11 +88,8 @@ class Office: Identifiable {
 		if let owner = record[OfficeFields.owner.rawValue] as? CKRecord.Reference {
 			do {
 				if let ownerRecord = try await CloudManager.getRecordFromReference(owner) {
-					if let ownerObject = Lawyer(record, context: context) {
-						self.owner = ownerObject
-					} else {
-						print("Could not make Lawyer() from owner")
-					}
+					let ownerObject = Lawyer(ownerRecord)
+					self.owner = ownerObject
 				}
 			} catch {
 				print("Office.__INIT?()__ error getting owner record from reference")

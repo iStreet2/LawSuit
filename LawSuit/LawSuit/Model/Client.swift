@@ -60,7 +60,32 @@ class Client {
 		self.recordName = nil
 	}
 	
-	init(_ record: CKRecord) async {
+	 convenience init(_ record: CKRecord) async {
+		  
+		  self.init(
+				address: "Unknown Address",
+				addressNumber: "Unknown Number",
+				affiliation: "No Affiliation",
+				age: 0,
+				birthDate: Date(),
+				cellphone: "Unknown Cellphone",
+				cep: "00000-000",
+				city: "Unknown City",
+				complement: "",
+				cpf: "000.000.000-00",
+				createdAt: Date(),
+				email: "unknown@email.com",
+				id: UUID().uuidString,
+				maritalStatus: "Unknown",
+				name: "Unknown Name",
+				nationality: "Unknown Nationality",
+				neighborhood: "Unknown Neighborhood",
+				occupation: "Unemployed",
+				rg: "Unknown RG",
+				state: "Unknown State",
+				telephone: "Unknown Telephone"
+		  )
+		  
 		// Valores obrigatórios com fallback (valores padrões)
 		if let address = record[ClientFields.address.rawValue] as? String {
 			self.address = address
@@ -191,9 +216,8 @@ class Client {
 				print("Root folder could not be converted to a Folder object")
 			}
 		} else {
+				self.rootFolder = Folder(createdAt: Date.now, name: "Error")
 			print("Missing required field: rootFolder")
-			// Como rootFolder é obrigatório, defina um valor default, ou outro tratamento
-			self.rootFolder = Folder(createdAt: Date.now, name: "Error")
 			fatalError("Root folder is required")
 		}
 		
