@@ -16,6 +16,7 @@ struct AddClientForm: View {
     //MARK: ViewModels
     @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     @EnvironmentObject var addressViewModel: AddressViewModel
+    @EnvironmentObject var folderViewModel: FolderViewModel
     
     @Binding var stage: Int
     
@@ -38,6 +39,7 @@ struct AddClientForm: View {
     @Binding var email: String
     @Binding var telephone: String
     @Binding var cellphone: String
+    @Binding var photo: Data?
     
     @State var addressApi = AddressAPI()
     @State var isEmailValid = true
@@ -56,21 +58,25 @@ struct AddClientForm: View {
                                 RoundedRectangle(cornerRadius: 19)
                                     .frame(width: 134, height: 134)
                                     .foregroundStyle(.white)
-                                Button{
-                                    print("foto")
-                                } label: {
-                                    RoundedRectangle(cornerRadius: 19)
-                                        .stroke(Color.black, lineWidth: 1)
+                                if let photo = photo, let nsImage = NSImage(data: photo) {
+                                    Image(nsImage: nsImage)
+                                        .resizable()
+                                        .scaledToFill()
                                         .frame(width: 134, height: 134)
-                                        .overlay {
-                                            Image(systemName: "person.crop.rectangle.badge.plus")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 40, height: 29.49)
-                                                .foregroundColor(.secondary)
+                                        .cornerRadius(10)
+                                } else {
+                                    Button{
+                                        //Adicionar foto ao cliente
+                                        folderViewModel.importPhoto { data in
+                                            if let data = data {
+                                                self.photo = data
+                                            }
                                         }
+                                    } label: {
+                                        AddPhotoButton()
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
                             }
                             VStack(alignment: .leading){
                                 LabeledTextField(label: "Nome Civil", placeholder: "Insira o nome civil do Cliente", mandatory: true, textfieldText: $name)
