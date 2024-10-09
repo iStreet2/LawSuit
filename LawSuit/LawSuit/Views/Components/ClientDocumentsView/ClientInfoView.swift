@@ -30,8 +30,35 @@ struct ClientInfoView: View {
     @Environment(\.managedObjectContext) var context
     
     var body: some View {
-        
             HStack(alignment: .top) {
+                
+                //Aqui tinha a foto po
+                
+                if let photo = client.photo, let nsImage = NSImage(data: photo) {
+                    Image(nsImage: nsImage)
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(10)
+                } else {
+                    Button{
+                        //Adicionar foto ao cliente
+                        
+                    } label: {
+                        RoundedRectangle(cornerRadius: 19)
+                            .stroke(Color.black, lineWidth: 1)
+                            .frame(width: 134, height: 134)
+                            .overlay {
+                                Image(systemName: "person.crop.rectangle.badge.plus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 40, height: 29.49)
+                                    .foregroundColor(.secondary)
+                            }
+                    }
+                    .buttonStyle(.plain)
+                }
+            
+                
                 VStack(alignment: .leading) {
                     HStack {
                         if let socialName = client.socialName {
