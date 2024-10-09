@@ -8,18 +8,20 @@ import Foundation
 import CloudKit
 import CoreData
 
-class Office: Identifiable {
+class Office: Identifiable, ObservableObject {
     let id = UUID()
-    var clients: [Client] = []
-    var lawsuits: [Lawsuit] = []
-    var lawyers: [String] = []
-    var name: String
-    var owner: Lawyer?
-    var record: CKRecord?
+    @Published var clients: [Client] = []
+    @Published var lawsuits: [Lawsuit] = []
+    @Published var entitys: [Entity] = []
+    @Published var lawyers: [Lawyer] = []
+    @Published var name: String
+    @Published var owner: Lawyer?
+    @Published var record: CKRecord?
     
-    init(clients: [Client] = [], lawsuits: [Lawsuit] = [], lawyers: [String], name: String, owner: Lawyer, record: CKRecord? = nil) {
+    init(clients: [Client] = [], lawsuits: [Lawsuit] = [], entitys: [Entity] = [], lawyers: [Lawyer] = [], name: String, owner: Lawyer, record: CKRecord? = nil) {
         self.clients = clients
         self.lawsuits = lawsuits
+        self.entitys = entitys
         self.lawyers = lawyers
         self.name = name
         self.owner = owner
@@ -72,10 +74,35 @@ class Office: Identifiable {
             self.lawsuits = []
         }
         
+        if let entitys = record[OfficeFields.entitys.rawValue] as? [CKRecord.Reference] {
+            for entity in entitys {
+                do {
+                    if let record = try await CloudManager.getRecordFromReference(entity) {
+                        let entityObject = Entity(record)
+                        self.entitys.append(entityObject)
+                    }
+                } catch {
+                    print("Office.++INIT?()__ erroe getting entity record from reference")
+                }
+            }
+        } else {
+            print("ERRO entitys Office(): \(record[OfficeFields.entitys.rawValue] ?? "")")
+            self.entitys = []
+        }
+        
         
         // Fetch lawyers asynchronously
-        if let lawyers = record[OfficeFields.lawyers.rawValue] as? [String] {
-            self.lawyers = lawyers
+        if let lawyers = record[OfficeFields.lawyers.rawValue] as? [CKRecord.Reference]{
+            for lawyer in lawyers {
+                do {
+                    if let lawyerRecord = try await CloudManager.getRecordFromReference(lawyer) {
+                        let lawyerObject = Lawyer(lawyerRecord)
+                        self.lawyers.append(lawyerObject)
+                    }
+                } catch {
+                    print("Office.__INIT?()__ error getting lawyer record from reference")
+                }
+            }
         } else {
             print("ERRO lawyers Office(): \(record[OfficeFields.lawyers.rawValue] ?? "")")
             self.lawyers = []

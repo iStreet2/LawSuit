@@ -23,6 +23,7 @@ enum ClientFields: String {
 	case id
 	case maritalStatus
 	case name
+    case socialName
 	case nationality
 	case neighborhood
 	case occupation
@@ -31,4 +32,5 @@ enum ClientFields: String {
 	case state
 	case telephone
 	case recordName
+    case photo
 }

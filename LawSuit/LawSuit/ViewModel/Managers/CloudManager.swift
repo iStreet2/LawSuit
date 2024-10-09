@@ -119,9 +119,7 @@ class CloudManager: ObservableObject {
 	func getUserOfficeFrom(officeID: String) async -> Office? {  // MARK: Quero que este officeID seja o CKRecord.RecordID do office
 		do {
 			let officeRecord = try await CloudManager.publicDataBase.record(for: CKRecord.ID(recordName: officeID))
-			let officeObj = await Office(officeRecord, context: context)
-			
-			self.office = officeObj
+			let officeObj = await Office(officeRecord)
 			return officeObj
 		} catch {
 			print("No office with ID \(officeID) found: \(error)")
@@ -129,7 +127,7 @@ class CloudManager: ObservableObject {
 		}
 	}	
 	
-	func getUserOfficeFromUserOfficeIDAsCKRecord(user: Lawyer) async -> CKRecord? {
+	func getUserOfficeFromUserOfficeIDAsCKRecord(user: User) async -> CKRecord? {
 		do {
 			if let officeID = user.officeID {
 				let officeRecord = try await CloudManager.publicDataBase.record(for: CKRecord.ID(recordName: officeID))
@@ -164,7 +162,7 @@ class CloudManager: ObservableObject {
 		return record
 	}
 	
-	func addClientToOffice(client: CKRecord, user: Lawyer) async -> Office {
+	func addClientToOffice(client: CKRecord, user: User) async -> Office {
 		
 		/* MARK: Fluxo
 		 1. Obtém record de cliente e rootFolder
@@ -210,9 +208,115 @@ class CloudManager: ObservableObject {
 		}
 		
 	}
-	
-	
+    
+    //MARK: CRUD CloudKit
+    
+    
+    //MARK: Create
+    func create<T: Recordable>(object: T, parentRecordName: String?, parentKey: String?) async throws -> CKRecord {
+        let record = CKRecord(recordType: String(describing: type(of: object)), recordID: CKRecord.ID(recordName: object.id))
+        
+        let mirror = Mirror(reflecting: object)
+        
+        for child in mirror.children {
+            if let propertyName = child.label, let value = child.value as? CKRecordValue {
+                record[propertyName] = value
+            }
+        }
+        
+        // Salva o objeto no CloudKit
+        let savedRecord = try await CloudManager.publicDataBase.save(record)
+        
+        // Se houver um objeto pai, adicione a referência do novo objeto a ele
+        if let parentRecordName = parentRecordName, let parentKey = parentKey {
+            try await addReferenceToParent(recordID: savedRecord.recordID, parentRecordName: parentRecordName, parentKey: parentKey)
+        }
+        
+        return savedRecord
+    }
+    
+    // Adiciona uma referência do objeto criado ao vetor de referências do pai
+    private func addReferenceToParent(recordID: CKRecord.ID, parentRecordName: String, parentKey: String) async throws {
+        let parentRecordID = CKRecord.ID(recordName: parentRecordName)
+        let parentRecord = try await CloudManager.publicDataBase.record(for: parentRecordID)
+        
+        var references = parentRecord[parentKey] as? [CKRecord.Reference] ?? []
+        let newReference = CKRecord.Reference(recordID: recordID, action: .none)
+        references.append(newReference)
+        
+        parentRecord[parentKey] = references as CKRecordValue
+        
+        // Salva o pai atualizado no CloudKit
+        try await CloudManager.publicDataBase.save(parentRecord)
+    }
+    
+    //MARK: Edit
+    func edit<T: Recordable>(_ object: T) async throws {
+        guard let recordName = object.recordName else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "RecordName is missing"])
+        }
+        
+        // Extrai o nome da classe como recordType
+        let recordType = String(describing: type(of: object))
+        
+        let recordID = CKRecord.ID(recordName: recordName)
+        
+        // Busca o CKRecord existente com base no recordName
+        do {
+            let existingRecord = try await CloudManager.publicDataBase.record(for: recordID)
+            
+            // Usa o Mirror para refletir sobre as propriedades do objeto
+            let mirror = Mirror(reflecting: object)
+            
+            for child in mirror.children {
+                if let propertyName = child.label, let value = child.value as? CKRecordValue {
+                    existingRecord[propertyName] = value
+                }
+            }
+            
+            // Salva o CKRecord atualizado no CloudKit
+            try await CloudManager.publicDataBase.save(existingRecord)
+            print("Successfully updated record for \(recordType) with recordName: \(recordName)")
+            
+        } catch {
+            print("Error fetching or updating record: \(error)")
+            throw error
+        }
+    }
+    
+    //MARK: Delete
+    
+    func delete<T: Recordable>(object: T, parentRecordName: String?, parentKey: String?) async throws {
+        guard let recordName = object.recordName else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "RecordName is missing"])
+        }
+        
+        let recordID = CKRecord.ID(recordName: recordName)
+        
+        // Remove o CKRecord do CloudKit
+        try await CloudManager.publicDataBase.deleteRecord(withID: recordID)
+        
+        // Se houver um pai, remova a referência
+        if let parentRecordName = parentRecordName, let parentKey = parentKey {
+            try await removeReferenceFromParent(recordID: recordID, parentRecordName: parentRecordName, parentKey: parentKey)
+        }
+    }
+    
+    private func removeReferenceFromParent(recordID: CKRecord.ID, parentRecordName: String, parentKey: String) async throws {
+        let parentRecordID = CKRecord.ID(recordName: parentRecordName)
+        let parentRecord = try await CloudManager.publicDataBase.record(for: parentRecordID)
+        
+        var references = parentRecord[parentKey] as? [CKRecord.Reference] ?? []
+        references.removeAll { $0.recordID == recordID }
+        
+        parentRecord[parentKey] = references as CKRecordValue
+        
+        // Salva o pai atualizado no CloudKit
+        try await CloudManager.publicDataBase.save(parentRecord)
+    }
 }
 
-
-
+protocol Recordable {
+    var id: String { get set }
+    var recordName: String? { get set }
+}

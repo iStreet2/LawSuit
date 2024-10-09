@@ -8,7 +8,7 @@
 import Foundation
 import CloudKit
 
-class Lawyer {
+class Lawyer: Recordable, Identifiable {
 	var email: String
 	var id: String
 	var name: String

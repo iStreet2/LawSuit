@@ -8,12 +8,13 @@
 import Foundation
 import CloudKit
 
-class FilePDF: Identifiable {
+class FilePDF: Recordable, Identifiable {
 	
     var id: String
 	var name: String
 	var content: Data?
 	var createdAt: Date
+    var recordName: String?
 	
 	init(name: String, content: Data, createdAt: Date = Date.now) {
 		self.id = UUID().uuidString
@@ -57,5 +58,7 @@ class FilePDF: Identifiable {
 			print("File missing required field: createdAt")
 			self.createdAt = Date.now
 		}
+        
+        self.recordName = record.recordID.recordName
 	}
 }

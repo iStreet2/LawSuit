@@ -13,6 +13,8 @@ enum LawsuitFields: String {
 	case category
 	case court
 	case defendantID
+    case defendantName
+    case authorName
 	case id
 	case name
 	case number

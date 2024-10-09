@@ -7,20 +7,21 @@
 
 import Foundation
 
-class Update: Identifiable{
+class Update: Recordable, Hashable, Identifiable {
     
     var date: String
-    var dsc: String
+    var dsc: String?
     var name: String
-    var file: FilePDF
-    var recordName: String
+    var file: FilePDF?
+    var id: String
+    var recordName: String?
     
-    init(date: String, dsc: String, name: String, file: FilePDF, recordName: String) {
+    init(name: String, date: String) {
+        self.id = UUID().uuidString
         self.date = date
         self.dsc = dsc
         self.name = name
         self.file = file
-        self.recordName = recordName
     }
     
 }

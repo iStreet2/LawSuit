@@ -120,10 +120,9 @@ class LawsuitNetworkingService: LawsuitNetworkingServiceProtocol {
                     throw LawsuitRequestError.couldNotGetMovementInfo
                 }
                 
-                let dataHora = dataHoraString.convertToDate()
                 
                 //Cria uma nova movimentação para cada movimento na API e salva no core data
-                let update = updateManager.createUpdate(name: nomeMovimento, date: dataHora)
+                let update = Update(name: nomeMovimento, date: dataHoraString)
                 updates.append(update)
             }
         

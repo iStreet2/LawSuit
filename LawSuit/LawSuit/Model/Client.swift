@@ -8,7 +8,7 @@
 import Foundation
 import CloudKit
 
-class Client {
+class Client: Recordable, Identifiable {
 	var address: String
 	var addressNumber: String
 	var affiliation: String
@@ -24,6 +24,7 @@ class Client {
 	var id: String
 	var maritalStatus: String
 	var name: String
+    var socialName: String?
 	var nationality: String
 	var neighborhood: String
 	var occupation: String
@@ -31,10 +32,11 @@ class Client {
 	var rootFolder: Folder
 	var state: String
 	var telephone: String
+    var photo: Data?
 	
 	var recordName: String? // MARK: IMPORTANTE
 	
-	init(address: String, addressNumber: String, affiliation: String, age: Int64, birthDate: Date, cellphone: String, cep: String, city: String, complement: String, cpf: String, createdAt: Date, email: String, id: String, maritalStatus: String, name: String, nationality: String, neighborhood: String, occupation: String, rg: String, state: String, telephone: String) {
+    init(address: String, addressNumber: String, affiliation: String, age: Int64, birthDate: Date, cellphone: String, cep: String, city: String, complement: String, cpf: String, createdAt: Date, email: String, id: String, maritalStatus: String, name: String, socialName: String?, nationality: String, neighborhood: String, occupation: String, rg: String, state: String, telephone: String) {
 		self.address = address
 		self.addressNumber = addressNumber
 		self.affiliation = affiliation
@@ -50,6 +52,7 @@ class Client {
 		self.id = id
 		self.maritalStatus = maritalStatus
 		self.name = name
+        self.socialName = socialName
 		self.nationality = nationality
 		self.neighborhood = neighborhood
 		self.occupation = occupation
@@ -78,6 +81,7 @@ class Client {
             id: UUID().uuidString,
             maritalStatus: "Unknown",
             name: "Unknown Name",
+            socialName: "Unknown Name",
             nationality: "Unknown Nationality",
             neighborhood: "Unknown Neighborhood",
             occupation: "Unemployed",
@@ -185,6 +189,13 @@ class Client {
 			self.name = "Unknown Name"
 		}
 		
+        if let socialName = record[ClientFields.socialName.rawValue] as? String {
+            self.socialName = socialName
+        } else {
+            print("Missing required field: socialName")
+            self.socialName = "Unknown Social Name"
+        }
+        
 		if let nationality = record[ClientFields.nationality.rawValue] as? String {
 			self.nationality = nationality
 		} else {
@@ -248,6 +259,11 @@ class Client {
 			print("Missing required field: neighborhood")
 			self.neighborhood = "Unknown neighborhood"
 		}
+        
+        //MARK: Fazer a conversão de CKAsset para Data :D
+        if let photo = record[ClientFields.photo.rawValue] as? String {
+            
+        }
 		
 		self.recordName = record.recordID.recordName
 	}

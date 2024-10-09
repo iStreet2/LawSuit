@@ -10,6 +10,7 @@ import Foundation
 enum OfficeFields: String {
 	case clients
 	case lawsuits
+    case entitys
 	case lawyers
 	case name
 	case owner

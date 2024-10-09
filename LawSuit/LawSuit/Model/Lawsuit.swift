@@ -8,29 +8,35 @@
 import Foundation
 import CloudKit
 
-class Lawsuit: Identifiable {
+class Lawsuit: Recordable, Identifiable {
     var id: String
     var actionDate: String
     var authorID: String
     var category: String
     var court: String
     var defendantID: String
+    var defendantName: String
+    var authorName: String
     var name: String
     var number: String
+    var updates: [Update] //Não precisa de tratamento no CloudKit, pois pega da API
     var isLoading: Bool = false
     var rootFolder: Folder
     
     var recordName: String? //MARK: Importante
 
-    init(actionDate: String, authorID: String, category: String, court: String, defendantID: String, name: String, number: String) {
+    init(actionDate: String, authorID: String, category: String, court: String, defendantID: String, defendantName: String, authorName: String, name: String, number: String) {
         self.actionDate = actionDate
         self.authorID = authorID
         self.category = category
         self.court = court
         self.defendantID = defendantID
+        self.defendantName = defendantName
+        self.authorName = authorName
         self.id = UUID().uuidString
         self.name = name
         self.number = number
+        self.updates = []
         self.rootFolder = Folder(createdAt: Date.now, name: "root\(name)")
     }
 
@@ -42,6 +48,8 @@ class Lawsuit: Identifiable {
             category: "Unknown Category",
             court: "Unknown Court",
             defendantID: "Unknown Defendant",
+            defendantName: "Unknown Name",
+            authorName: "UnknownName",
             name: "Unknown Name",
             number: "Unknown Number"
         )
@@ -66,6 +74,14 @@ class Lawsuit: Identifiable {
 
         if let defendantID = record[LawsuitFields.defendantID.rawValue] as? String {
             self.defendantID = defendantID
+        }
+        
+        if let defendantName = record[LawsuitFields.defendantName.rawValue] as? String {
+            self.defendantName = defendantName
+        }
+        
+        if let authorName = record[LawsuitFields.authorName.rawValue] as? String {
+            self.authorName = authorName
         }
 
         if let id = record[LawsuitFields.id.rawValue] as? String {

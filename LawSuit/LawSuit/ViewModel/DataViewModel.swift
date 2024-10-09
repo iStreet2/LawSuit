@@ -12,6 +12,7 @@ import CoreSpotlight
 import CoreServices
 import AuthenticationServices
 
+
 class DataViewModel: ObservableObject {
     
     //Aqui instancio apenas uma vez o container do CoreData e do CloudKit
@@ -22,11 +23,12 @@ class DataViewModel: ObservableObject {
     
     var coreDataManager: CoreDataManager
     var cloudManager: CloudManager
+    var clientManager: ClientManager
     var spotlightManager: SpotlightManager
     var authenticationManager: AuthenticationManager
     
+    @Published var office: Office?
     var user: User?
-    var office: Office?
     
     init() {
         self.coreDataContainer.loadPersistentStores { descricao, error in
@@ -36,6 +38,7 @@ class DataViewModel: ObservableObject {
         }
         self.context = coreDataContainer.viewContext
         self.coreDataManager = CoreDataManager(context: context)
+        self.clientManager = ClientManager()
         self.cloudManager = CloudManager(container: cloudContainer)
         self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
         self.authenticationManager = AuthenticationManager(context: self.context)
@@ -93,7 +96,7 @@ class DataViewModel: ObservableObject {
             print("DataViewModel.createOffice() -> Office record to be saved: \(officeRecord)")
             let officeSavedRecord = try await cloudContainer.publicCloudDatabase.save(officeRecord)
             
-            let newOffice = await Office(officeSavedRecord, context: context)
+            let newOffice = await Office(officeSavedRecord)
             self.office = newOffice
             
             lawyer.officeID = officeSavedRecord.recordID.recordName
@@ -162,6 +165,60 @@ class DataViewModel: ObservableObject {
         guard let user = self.user else { return }
         await self.cloudManager.addClientToOffice(client: client, user: user)
     }
+    
+    //MARK: Funções que vou trazer dos managers que precisam de Office
+    
+    //MARK: Client
+    
+    func fetchClientWithID(id: String) -> Client? {
+        // Verifica se há um Office disponível
+        guard let office = self.office else {
+            print("No office found")
+            return nil
+        }
+        
+        // Busca o cliente dentro da lista de clientes do Office
+        if let client = office.clients.first(where: { $0.id == id }) {
+            return client
+        } else {
+            print("No client found with id: \(id)")
+            return nil
+        }
+    }
+    
+    func fetchClientFromName(name: String) -> Client? {
+        // Verifica se há um Office disponível
+        guard let office = self.office else {
+            print("No office found")
+            return nil
+        }
+        
+        // Busca o cliente dentro da lista de clientes do Office
+        if let client = office.clients.first(where: {
+            $0.name.caseInsensitiveCompare(name) == .orderedSame ||
+            ($0.socialName?.caseInsensitiveCompare(name) == .orderedSame)
+        }) {
+            return client
+        } else {
+            print("No client found with name: \(name)")
+            return nil
+        }
+    }
+    
+    func fetchAllClients() -> [Client] {
+        // Verifica se há um Office disponível
+        guard let office = self.office else {
+            print("No office found")
+            return []
+        }
+        
+        // Retorna todos os clientes do Office
+        return office.clients
+    }
+    
+    //MARK: Entity
+    
+    
     
 }
 

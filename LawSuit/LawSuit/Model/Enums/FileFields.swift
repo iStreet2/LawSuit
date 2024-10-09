@@ -12,4 +12,5 @@ enum FileFields: String {
 	case content
 	case id
 	case createdAt
+    case recordName
 }
