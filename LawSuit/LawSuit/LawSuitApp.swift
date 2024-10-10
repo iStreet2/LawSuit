@@ -20,7 +20,7 @@ struct LawSuitApp: App {
     @StateObject var clientDataViewModel = TextFieldDataViewModel()
     @StateObject var addressViewModel = AddressViewModel()
     @StateObject var eventManager = EventManager()
-    
+    @StateObject var lawsuitViewModel = LawsuitViewModel()
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
@@ -36,6 +36,7 @@ struct LawSuitApp: App {
                 .environmentObject(navigationViewModel)
                 .environmentObject(clientDataViewModel)
                 .environmentObject(addressViewModel)
+                .environmentObject(lawsuitViewModel)
                 .preferredColorScheme(.light)
                 .frame(minHeight: 530)
                 .onAppear {

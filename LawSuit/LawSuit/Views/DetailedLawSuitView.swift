@@ -18,13 +18,12 @@ struct DetailedLawSuitView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
-    
-    @State var isCopied = false
     @State var deleted = false
     @State var editLawSuit = false
-    @State var lawsuitCategory: TagType? = nil
-    @State var lawsuitAuthorSocialName = ""
-    @State var lawsuitDefendantName = ""
+    @State var lawsuitCategory: TagType
+    @State var lawsuitAuthorName: String = ""
+    @State var lawsuitDefendantName: String = ""
+    @State var isCopied = false
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
@@ -91,7 +90,8 @@ struct DetailedLawSuitView: View {
         }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
-            EditLawSuitView(lawsuit: lawsuit, deleted: $deleted)
+            EditLawSuitView(tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted)
+//            EditLawSuitView( tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted, authorRowState: lawsuitAuthorName, defendantRowState: lawsuitDefendantName)
                 .frame(minWidth: 495)
         })
         .onAppear {
@@ -142,6 +142,7 @@ struct DetailedLawSuitView: View {
             //                lawsuitDefendantName = defendant.name
             //            }
         }
+        print("author: \(lawsuitAuthorName), reu: \(lawsuitDefendantName)")
     }
 }
 
@@ -149,7 +150,7 @@ struct DetailedLawSuitView: View {
 extension DetailedLawSuitView {
     private var mainBlockHeader: some View {
         HStack {
-            TagViewComponent(tagType: TagType(s: lawsuit.category) ?? .trabalhista)
+            TagViewComponent(tagType: TagType(s: lawsuit.category) ?? TagType.ambiental)
             Spacer()
             Button {
                 // editar
