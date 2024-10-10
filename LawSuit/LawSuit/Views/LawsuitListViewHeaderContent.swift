@@ -72,6 +72,7 @@ struct LawsuitListViewHeaderContent: View {
                                             self.lawsuitClient = defendant
                                         }
                                         }
+                                        }
                                     }
                             }
                         }

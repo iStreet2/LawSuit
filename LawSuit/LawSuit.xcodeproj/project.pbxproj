@@ -138,6 +138,8 @@
 		E9F3A4282C8775CB00595150 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4272C8775CB00595150 /* TextRecognizer.swift */; };
 		E9F3A42A2C87795000595150 /* OCRTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A4292C87795000595150 /* OCRTestingView.swift */; };
 		E9F3A4302C87AF6000595150 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F3A42F2C87AF6000595150 /* ContactsManager.swift */; };
+		E9F94A802CB8513A00FB3C83 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F94A7F2CB8513A00FB3C83 /* AuthenticationView.swift */; };
+		E9F94A822CB86A2600FB3C83 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F94A812CB86A2600FB3C83 /* MainView.swift */; };
 		FD7EBBB52CA5C84600C44ECA /* VisualEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */; };
 /* End PBXBuildFile section */
 
@@ -306,6 +308,8 @@
 		E9F3A4272C8775CB00595150 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		E9F3A4292C87795000595150 /* OCRTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTestingView.swift; sourceTree = "<group>"; };
 		E9F3A42F2C87AF6000595150 /* ContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		E9F94A7F2CB8513A00FB3C83 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		E9F94A812CB86A2600FB3C83 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -609,6 +613,8 @@
 				E94C01612CA1E28300F6316F /* SpotlightSearchBarView2.swift */,
 				0897CB392C8BA21D00B488A9 /* MailManager.swift */,
 				08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */,
+				E9F94A7F2CB8513A00FB3C83 /* AuthenticationView.swift */,
+				E9F94A812CB86A2600FB3C83 /* MainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -808,6 +814,7 @@
 			files = (
 				E94C015C2C9B6F7200F6316F /* SpotlightManager.swift in Sources */,
 				DC2851E52CA74B200038A2E4 /* PathViewComponent.swift in Sources */,
+				E9F94A802CB8513A00FB3C83 /* AuthenticationView.swift in Sources */,
 				6AC0BB0D2C7FB54800FAF3E6 /* SizeEnumerator.swift in Sources */,
 				08A2B0C72C8F760F00719571 /* SegmentosDoJudiciario.swift in Sources */,
 				08079F232CA4A1F4004EDF98 /* RequestDocumentsView.swift in Sources */,
@@ -923,6 +930,7 @@
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
+				E9F94A822CB86A2600FB3C83 /* MainView.swift in Sources */,
 				08E8D2022C87AF11008F3859 /* LawsuitListView.swift in Sources */,
 				08E6572D2C790B5B00313FCB /* LabeledTextField.swift in Sources */,
 				3BAF94D02C73DC0F001FCA45 /* OpenFilePDFView.swift in Sources */,
@@ -1098,7 +1106,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1131,7 +1139,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = 6S6995TY46;
+				DEVELOPMENT_TEAM = Z2Y94548LY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -87,7 +87,6 @@ struct LawsuitDistributedView: View {
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
-
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
@@ -104,7 +103,6 @@ struct LawsuitDistributedView: View {
                                     attributedDefendant = false
                                 }
                             }
-
                     }
                 }
             }
@@ -112,4 +110,3 @@ struct LawsuitDistributedView: View {
         }
     }
 }
-

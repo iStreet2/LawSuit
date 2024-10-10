@@ -27,7 +27,7 @@ struct LawSuitApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+			  MainView()
                 .environment(\.managedObjectContext, dataViewModel.coreDataContainer.viewContext)
                 .environmentObject(dataViewModel)
                 .environmentObject(folderViewModel)
@@ -36,9 +36,10 @@ struct LawSuitApp: App {
                 .environmentObject(navigationViewModel)
                 .environmentObject(clientDataViewModel)
                 .environmentObject(addressViewModel)
+					      .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
                 .preferredColorScheme(.light)
-                .frame(minHeight: 530)
+					 .frame(/*minWidth: 750, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
                     hotkey.keyDownHandler = eventManager.hotkeyDownHandler
                 }
@@ -50,16 +51,7 @@ struct LawSuitApp: App {
 					 .sheet(isPresented: $dataViewModel.spotlightManager.shouldShowFilePreview) {
 						 OpenFilePDFView(selectedFile: $dataViewModel.spotlightManager.fileToShow)
 					 }
-                .background(MaterialWindow().ignoresSafeArea())
-                .toolbar(){
-                    ToolbarItem(placement: .primaryAction){
-                        Button(action: {
-                            self.eventManager.spotlightBarIsPresented.toggle()
-                        }){
-                            Image(systemName: "magnifyingglass")
-                        }
-                    }
-                }
+                
         }
 		 WindowGroup(id: "FileWindow", for: Data.self) { fileData in
 			 if let data = fileData.wrappedValue {
