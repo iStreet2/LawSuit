@@ -95,11 +95,11 @@ class TextFieldDataViewModel: ObservableObject {
         }
         return format
     }
-    func isValidEmail(_ email: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return emailPredicate.evaluate(with: email)
-    }
+	func isValidEmail(_ email: String) -> Bool {
+		let emailRegex = "^[A-Z0-9a-z](?:[A-Z0-9a-z._%+-]{0,63}[A-Z0-9a-z])?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+		let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+		return emailPredicate.evaluate(with: email)
+	}
     
     func lawSuitNumberValidation(_ lawsuit: String) -> String {
         let numbers = lawsuit.filter {"0987654321".contains($0)}

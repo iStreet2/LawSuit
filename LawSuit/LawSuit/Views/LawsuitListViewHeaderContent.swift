@@ -20,7 +20,6 @@ struct LawsuitListViewHeaderContent: View {
   
     var body: some View {
         
-        VStack(spacing: 0) {
             GeometryReader { geo in
                 HStack {
                     Text("Nome e Número")
@@ -40,40 +39,38 @@ struct LawsuitListViewHeaderContent: View {
                 }
                 .padding(.horizontal, 20)
             }
-            .frame(minWidth: 777)
-            .frame(height: 13)
-            .padding(.bottom, 5)
-            .font(.footnote)
-            .bold()
-            .foregroundStyle(Color(.gray))
-            
-            Divider()
-            
-            ScrollView {
-                VStack(spacing: 0) {
-                    ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
-                        NavigationLink {
-                            DetailedLawSuitView(lawsuit: lawsuit)
-                                
-                        } label: {
-                            if let lawsuitClient = self.lawsuitClient {
-                                LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-                                    .background(Color(index % 2 == 0 ? .gray : .black).opacity(index % 2 == 0 ? 0.1 : 0.01))
+        .frame(minWidth: 777)
+        .frame(height: 13)
+        .font(.footnote)
+        .bold()
+        .foregroundStyle(Color(.gray))
+        
+        Divider()
+        
+        ScrollView {
+            VStack(spacing: 0) {
+                ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
+                    NavigationLink {
+                        DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
 
-                            }
-                            else {
-                                Text("Carregando")
-                                    .onAppear {
-                                        //Se o cliente do processo estiver no autor
-                                        if lawsuit.authorID.hasPrefix("client:") {
-                                            if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID) {
-                                                self.lawsuitClient = author
-                                            }
-                                            //Se o cliente do processo estiver no reu
-                                        } else {
-                                            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID){
-                                                self.lawsuitClient = defendant
-                                            }
+                    } label: {
+                        if let lawsuitClient = self.lawsuitClient {
+                            LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                        }
+                        else {
+                            Text("Carregando")
+                                .onAppear {
+                                    //Se o cliente do processo estiver no autor
+                                    if lawsuit.authorID.hasPrefix("client:") {
+                                        if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID) {
+                                            self.lawsuitClient = author
+                                        }
+                                    //Se o cliente do processo estiver no reu
+                                    } else {
+                                        if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID){
+                                            self.lawsuitClient = defendant
+                                        }
                                         }
                                     }
                             }
@@ -84,4 +81,4 @@ struct LawsuitListViewHeaderContent: View {
             }
         }
     }
-}
+

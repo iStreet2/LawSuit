@@ -13,6 +13,7 @@ struct LawsuitCellComponent: View {
     @ObservedObject var lawyer: Lawyer
     @ObservedObject var lawsuit: Lawsuit
     @EnvironmentObject var dataViewModel: DataViewModel
+    @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -34,7 +35,7 @@ struct LawsuitCellComponent: View {
                 .frame(width: geo.size.width * 0.27, height: 47, alignment: .leading)
                 
                 Spacer()
-                TagViewComponent(tagType: TagType(s: lawsuit.category)!)
+                TagViewComponent(tagType: TagType(s: lawsuit.category) ?? TagType.ambiental)
                     .frame(width: geo.size.width * 0.12, height: 47, alignment: .leading)
                 Spacer()
                 
