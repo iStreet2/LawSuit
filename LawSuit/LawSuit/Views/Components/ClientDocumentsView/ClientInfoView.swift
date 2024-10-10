@@ -16,30 +16,29 @@ struct ClientInfoView: View {
     //MARK: Variáveis de estado:
     @ObservedObject var client: Client
     @State var editClient = false
-    @State var imageData: Data?
+    @State var imageData: NSImage?
     @Binding var deleted: Bool
     @State var requestDocument = false
     var mailManager: MailManager
-
-
+    
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+
     
     var body: some View {
             HStack(alignment: .top) {
-                if let photo = client.photo, let nsImage = NSImage(data: photo) {
-                    Image(nsImage: nsImage)
+                if let imageData {
+                    Image(nsImage: imageData)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 90, height: 90)
                         .cornerRadius(10)
                 } else {
                     Button{
-                        //Adicionar foto ao cliente
                         folderViewModel.importPhoto { data in
                             if let data = data {
                                 dataViewModel.coreDataManager.clientManager.addPhotoOnClient(client: client, photo: data)
@@ -119,6 +118,9 @@ struct ClientInfoView: View {
                         
                     }
                 }
+            }
+            .onAppear {
+                imageData = NSImage(data: client.photo ?? Data())
             }
         .onChange(of: deleted) { change in
             dismiss()
