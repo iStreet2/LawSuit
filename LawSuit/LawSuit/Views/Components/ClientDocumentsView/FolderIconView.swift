@@ -20,7 +20,6 @@ struct FolderIconView: View {
     @ObservedObject var parentFolder: Folder
     @State var isEditing = false
     @State var folderName: String
-    @State var isSelected: Bool = false
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -36,9 +35,14 @@ struct FolderIconView: View {
         Group {
             if folderViewModel.showingGridView {
                 VStack {
-                    Image("Pasta")
-                        .resizable()
-                        .frame(width: 73, height: 58)
+                    ZStack {
+                        Image("Pasta")
+                            .resizable()
+                            .frame(width: 73, height: 58)
+                    }
+                    .frame(width: 85, height: 73)
+                    .background(folder.isSelected ? Color.gray.opacity(0.2) : Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
                     
                     if isEditing {
                         TextField("", text: $folderName, onEditingChanged: { _ in
@@ -57,9 +61,7 @@ struct FolderIconView: View {
                             }
                     }
                 }
-//                .padding(isSelected ? 10 : 0)
-//                .background(isSelected ? Color.blue : Color.clear)
-//                .cornerRadius(8)
+                
                 
             } else {
                 HStack {
@@ -89,6 +91,7 @@ struct FolderIconView: View {
                 }
             }
         }
+        //.border(.black)
         .onDisappear {
             isEditing = false
         }

@@ -39,6 +39,7 @@ struct RequestDocumentsView: View {
             
             Text("Certifique-se de que sua preferência de e-mail é um provedor válido (Mail -> Ajustes -> Geral -> App de e-mail padrão). Isso garantirá que o envio de mensagens ocorra corretamente")
                 .font(.footnote)
+                .foregroundStyle(.secondary)
                 .frame(height: 50)
             
             HStack {

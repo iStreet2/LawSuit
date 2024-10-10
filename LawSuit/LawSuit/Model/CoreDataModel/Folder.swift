@@ -24,6 +24,7 @@ public class Folder: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var parentLawsuit: Lawsuit? //Ignorar pro CloudKit
     @NSManaged public var parentFolder: Folder? //Ignorar pro ClouKit
     @NSManaged public var recordName: String?
+    @NSManaged public var isSelected: Bool
 
 }
 
