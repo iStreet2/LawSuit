@@ -22,6 +22,7 @@ struct DetailedLawSuitView: View {
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType
     @State var lawsuitAuthorName: String = ""
+    @State var lawsuitAuthorSocialName: String = ""
     @State var lawsuitDefendantName: String = ""
     @State var isCopied = false
     private var dateFormatter: DateFormatter {

@@ -20,7 +20,6 @@ struct LawsuitListViewHeaderContent: View {
   
     var body: some View {
         
-        VStack(spacing: 0) {
             GeometryReader { geo in
                 HStack {
                     Text("Nome e Número")
@@ -72,6 +71,7 @@ struct LawsuitListViewHeaderContent: View {
                                         if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID){
                                             self.lawsuitClient = defendant
                                         }
+                                        }
                                     }
                             }
                         }
@@ -81,4 +81,4 @@ struct LawsuitListViewHeaderContent: View {
             }
         }
     }
-}
+

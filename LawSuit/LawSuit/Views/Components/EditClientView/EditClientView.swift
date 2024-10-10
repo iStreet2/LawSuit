@@ -114,7 +114,7 @@ struct EditClientView: View {
                             .background(Color("ScrollBackground"))
                     }
                 }
-                .padding()
+                .padding(.horizontal)
                 .background(Color("ScrollBackground"))
                 Divider()
             }
