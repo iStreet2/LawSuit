@@ -24,6 +24,7 @@ struct LawsuitNotDistributedView: View {
     @Binding var lawsuitAuthorName: String
     @Binding var lawsuitDefendantName: String
     @Binding var lawsuitActionDate: String
+    @State var authorRowState: ClientRowStateEnum = .notSelected
     let textLimit = 100
     
     //MARK: CoreData
@@ -32,33 +33,30 @@ struct LawsuitNotDistributedView: View {
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
     var body: some View {
-        VStack(alignment: .leading){
-            Text("Área")
-                .bold()
-            TagViewComponent(tagViewStyle: .picker)
-            HStack(spacing: 70) {
-                VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
-                    HStack {
-                        Text(lawsuitAuthorName)
-                        if attributedAuthor {
-                            Button {
-                                //Retirar esse cliente e retirar o estado de autor selecionado
-                                attributedAuthor = false
-                                lawsuitAuthorName = ""
-                            } label: {
-                                Image(systemName: "minus")
+            VStack(alignment: .leading){
+                Text("Área")
+                    .bold()
+                TagViewPickerComponent(tagType: $tagType, tagViewStyle: .picker)
+                HStack(alignment: .top, spacing: 70) {
+                    VStack(alignment: .leading) {
+                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
+                        
+                        ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
+                            .onChange(of: lawsuitAuthorName) { newValue in
+                                if !newValue.isEmpty {
+                                    authorRowState = .selected
+                                } else {
+                                    authorRowState = .notSelected
+                                    attributedAuthor = false
+                                }
                             }
-                            .padding(.leading,2)
-                        }
                     }
+                    LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
+                        .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                 }
-                LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
-                    .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
+              
             }
-        
-        }
-
+            .border(.red)
+        Spacer()
     }
-
 }

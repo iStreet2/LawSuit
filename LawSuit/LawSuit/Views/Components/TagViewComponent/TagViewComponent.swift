@@ -8,96 +8,74 @@
 import Foundation
 import SwiftUI
 
-//enum TagTypeString {
-//    static func string(from tagType: TagType) -> String {
-//        switch tagType {
-//        case .trabalhista:
-//            return "trabalhista"
-//        case .penal:
-//            return "penal"
-//        case .tributario:
-//            return "tributario"
-//        case .ambiental:
-//            return "ambiental"
-//        case .civel:
-//            return "civel"
-//        case .falencia:
-//            return "falencia"
-//        }
-//    }
-//}
-//
-//enum TagType: CaseIterable, Identifiable {
-//    init?(s: String) {
-//        switch s.lowercased() {
-//		case "trabalhista":
-//			self = .trabalhista
-//		case "tributário":
-//			self = .tributario
-//		case "tributario":
-//			self = .tributario
-//		case "penal":
-//			self = .penal
-//		case "ambiental":
-//			self = .ambiental
-//		case "cível":
-//			self = .civel
-//		case "civel":
-//			self = .civel
-//		case "falência":
-//			self = .falencia
-//		case "falencia":
-//			self = .falencia
-//		default:
-//			self = .trabalhista
-//		}
-//	}
-//
-//	var id: Self {
-//		return self
-//	}
-//	case trabalhista
-//	case penal
-//	case tributario
-//	case ambiental
-//	case civel
-//	case falencia
-//
-//	var tagText: String {
-//		switch self {
-//		case .trabalhista:
-//			return "Trabalhista"
-//		case .penal:
-//			return "Penal"
-//		case .tributario:
-//			return "Tributário"
-//		case .ambiental:
-//			return "Ambiental"
-//		case .civel:
-//			return "Cível"
-//		case .falencia:
-//			return "Falência"
-//		}
-//	}
-
 enum TagViewStyle {
     case picker
     case bullet
 }
 
-enum TagType: String, CaseIterable, Identifiable {
-    case trabalhista, tributario, penal, ambiental, civel, falencia
+enum TagTypeString {
+    static func string(from tagType: TagType) -> String {
+        switch tagType {
+        case .trabalhista:
+            return "trabalhista"
+        case .penal:
+            return "penal"
+        case .tributario:
+            return "tributario"
+        case .ambiental:
+            return "ambiental"
+        case .civel:
+            return "civel"
+        case .falencia:
+            return "falencia"
+        }
+    }
+}
+
+enum TagType: CaseIterable, Identifiable {
+    init?(s: String) {
+        switch s.lowercased() {
+        case "trabalhista":
+            self = .trabalhista
+        case "tributário":
+            self = .tributario
+        case "tributario":
+            self = .tributario
+        case "penal":
+            self = .penal
+        case "ambiental":
+            self = .ambiental
+        case "cível":
+            self = .civel
+        case "civel":
+            self = .civel
+        case "falência":
+            self = .falencia
+        case "falencia":
+            self = .falencia
+        default:
+            self = .trabalhista
+        }
+    }
     
-    var id: String { self.rawValue }
+    var id: Self {
+        return self
+    }
+    case trabalhista
+    case penal
+    case tributario
+    case ambiental
+    case civel
+    case falencia
     
     var tagText: String {
         switch self {
         case .trabalhista:
             return "Trabalhista"
-        case .tributario:
-            return "Tributário"
         case .penal:
             return "Penal"
+        case .tributario:
+            return "Tributário"
         case .ambiental:
             return "Ambiental"
         case .civel:
@@ -145,49 +123,27 @@ enum TagType: String, CaseIterable, Identifiable {
 
 struct TagViewComponent: View {
     
-//    let tagType: TagType
-    let tagViewStyle: TagViewStyle
-    var isPicker: Bool = false
-    var cornerRadius: CGFloat = 45
-    @State var wasTapped: Bool = false
-    @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
-    
+    let tagType: TagType
     
     var body: some View {
-        
-        if tagViewStyle == .bullet {
-            HStack(spacing: 4) {
-                Text(lawsuitViewModel.tagType.tagText)
-                    .font(.callout)
-                    .bold()
-                    .foregroundStyle(lawsuitViewModel.tagType.tagColorForeground)
-                    .fixedSize(horizontal: true, vertical: true)
-                if isPicker {
-                    Image(systemName: "chevron.up.chevron.down")
-                        .foregroundStyle(lawsuitViewModel.tagType.tagColorForeground)
-                }
-            }
-            .padding(.vertical, 1)
-            .padding(.horizontal, (wasTapped && isPicker) ? 30 : 10)
-            .background(
-                lawsuitViewModel.tagType.tagColorBackground
-                    .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-            )
+        HStack(spacing: 4) {
+            Text(tagType.tagText)
+                .font(.callout)
+                .bold()
+                .foregroundStyle(tagType.tagColorForeground)
+                .fixedSize(horizontal: true, vertical: true)
         }
+        .padding(.vertical, 1)
+        .padding(.horizontal, 8)
+        .background(
+            tagType.tagColorBackground
+                .clipShape(RoundedRectangle(cornerRadius: 45))
+        )
         
-        if tagViewStyle == .picker {
-            Picker("", selection: $lawsuitViewModel.tagType) {
-                ForEach(TagType.allCases){ tag in
-                    Text(tag.tagText).tag(tag)
-                }
-            }
-            .border(.red)
-            .frame(width: 130)
-            .pickerStyle(.automatic)
-            
-        }
     }
 }
+
+
 
 extension Color {
     init(hex: String) {
@@ -216,83 +172,3 @@ extension Color {
     }
 }
 
-//struct DropdownPicker: View {
-//	@State private var isExpanded: Bool = false
-//	@State private var buttonPosition: CGRect = CGRect()
-//
-//	var body: some View {
-//		ZStack(alignment: .topLeading) {
-//			VStack {
-//				// Botão em forma de pílula
-//				Button(action: {
-//					withAnimation(.easeInOut) {
-//						isExpanded.toggle()
-//					}
-//				}) {
-//					Text("Select an Option")
-//						.padding()
-//						.background(Capsule().fill(Color.blue))
-//						.foregroundColor(.white)
-//				}
-//				.background(
-//					GeometryReader { geo in
-//						Color.clear.onAppear {
-//							self.buttonPosition = geo.frame(in: .global)
-//						}
-//					}
-//				)
-//			}
-//			.zIndex(1)
-//
-//			// Menu suspenso
-//			if isExpanded {
-//				VStack(spacing: 0) {
-//					Text("Option 1")
-//						.padding()
-//						.frame(maxWidth: .infinity, alignment: .leading)
-//					Divider()
-//					Text("Option 2")
-//						.padding()
-//						.frame(maxWidth: .infinity, alignment: .leading)
-//					Divider()
-//					Text("Option 3")
-//						.padding()
-//						.frame(maxWidth: .infinity, alignment: .leading)
-//				}
-//				.background(RoundedRectangle(cornerRadius: 10).fill(Color.gray.opacity(0.2)))
-//				.frame(width: buttonPosition.width)
-//				.position(x: buttonPosition.midX, y: buttonPosition.maxY + buttonPosition.height / 2)
-//				.transition(.move(edge: .top).combined(with: .opacity))
-//				.zIndex(0)
-//				.clipped()
-//			}
-//		}
-//		.frame(width: 200, height: 300) // Defina o tamanho total da view
-//		.padding()
-//		.background(Color.white)
-//		.cornerRadius(10)
-//		.shadow(radius: 5)
-//	}
-//}
-
-//#Preview {
-//	VStack {
-//		//		TagViewComponent(tagType: .falencia)
-//		Text("Wow!").foregroundStyle(.black)
-//		Text("Wow!").foregroundStyle(.black)
-//		Text("Wow!").foregroundStyle(.black)
-//		Text("Wow!").foregroundStyle(.black)
-//		TagViewPickerComponentV1(currentTag: .constant(.trabalhista))
-//		//		DropdownPicker()
-//		TagViewPickerComponentV2(currentTag: .constant(.tributario))
-//		TagViewPickerComponentV3(currentTag: .constant(.penal))
-//		TagViewPickerComponentV4(currentTag: .constant(.civel))
-//		TagViewPickerComponentV5(currentTag: .constant(.tributario))
-//		Text("Wow!").foregroundStyle(.black)
-//		Text("Wow!").foregroundStyle(.black)
-//		Text("Wow!").foregroundStyle(.black)
-//		Text("Wow!").foregroundStyle(.black)
-//	}
-//	.padding(100)
-//	.background(Color.white)
-//}

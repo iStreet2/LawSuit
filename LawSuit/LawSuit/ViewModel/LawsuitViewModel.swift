@@ -14,6 +14,6 @@ class LawsuitViewModel: ObservableObject {
     
         //Atualiza o Lawsuit
         func updateLawsuitCategory(lawsuit: Lawsuit) {
-            lawsuit.category = tagType.rawValue
+            lawsuit.category = tagType.tagText
         }
 }
