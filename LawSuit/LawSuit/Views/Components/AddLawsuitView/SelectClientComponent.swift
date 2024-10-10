@@ -39,15 +39,18 @@ struct SelectClientComponent: View {
             }
             List {
                 ForEach(filteredClients, id: \.self) { client in
+                    
+                    let displayName = client.socialName ?? client.name
+                    
                     if let socialName = client.socialName {
                         Text(socialName)
                             .onTapGesture {
                                 withAnimation {
                                     if authorOrDefendant == "author" {
-                                        lawsuitAuthorName = client.socialName!
+                                        lawsuitAuthorName = displayName
                                         attributedAuthor = true
                                     } else {
-                                        lawsuitDefendantName = client.socialName!
+                                        lawsuitDefendantName = displayName
                                         attributedDefendant = true
                                     }
                                 }
@@ -55,14 +58,14 @@ struct SelectClientComponent: View {
                             }
                             .background(isEditing ? Color.blue : Color(.white))
                     } else {
-                        Text(client.name)
+                        Text(displayName)
                             .onTapGesture {
                                 withAnimation {
                                     if authorOrDefendant == "author" {
-                                        lawsuitAuthorName = client.name
+                                        lawsuitAuthorName = displayName
                                         attributedAuthor = true
                                     } else {
-                                        lawsuitDefendantName = client.name
+                                        lawsuitDefendantName = displayName
                                         attributedDefendant = true
                                     }
                                 }

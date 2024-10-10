@@ -44,18 +44,20 @@ struct LawsuitDistributedView: View {
             LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
         }
         HStack(alignment: .top){
+            //MARK: - AUTOR
             VStack(alignment: .leading){
                 //MARK: Caso usuário não selecionou nada ainda
+                
                 if !attributedDefendant {
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                    EditLawsuitAuthorComponent(buttonLabel: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                 }
                 //MARK: Caso usuário atribuir cliente para o réu
                 if attributedDefendant {
                     LabeledTextField(label: "Autor", placeholder: "Adicionar autor", textfieldText: $lawsuitAuthorName)
                         .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                 }
+                //MARK: Caso o usuário tenha adicionado um cliente no autor
                 HStack {
-                    //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
                         Text("\(lawsuitAuthorName)")
                         Button {
@@ -79,11 +81,12 @@ struct LawsuitDistributedView: View {
                 
             }
             Spacer()
+            //MARK: - RÉU
             VStack(alignment: .leading){
                 VStack(alignment: .leading){
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
-                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                        EditLawsuitAuthorComponent(buttonLabel: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                         
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
@@ -91,8 +94,8 @@ struct LawsuitDistributedView: View {
                         LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
                             .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                     }
+                    //MARK: Caso o usuário tenha adicionado um cliente no réu
                     HStack {
-                        //MARK: Caso o usuário tenha adicionado um cliente no réu
                         if attributedDefendant {
                             Text(lawsuitDefendantName)
                             Button {
@@ -137,11 +140,14 @@ struct LawsuitDistributedView: View {
                         let lawyer = lawyers[0]
                         let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
                         let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
+//                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: dataViewModel.coreDataManager.lawsuitManager.fetchDefendantName(for: author), number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
                         
                         if dataViewModel.coreDataManager.lawsuitManager.doesLawsuitExist(lawsuitNumber: lawsuitNumber) {
                             invalidInformation = .lawsuitAlreadyExists
                             return
                         }
+                        
+                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                         
                         dismiss()
                     }

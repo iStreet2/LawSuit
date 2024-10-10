@@ -38,7 +38,7 @@ struct LawsuitNotDistributedView: View {
 			  TagViewPickerComponentV1(currentTag: $tagType)
             HStack(spacing: 70) {
                 VStack(alignment: .leading) {
-                    EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
+                    EditLawsuitAuthorComponent(buttonLabel: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
                     HStack {
                         Text(lawsuitAuthorName)
                         if attributedAuthor {

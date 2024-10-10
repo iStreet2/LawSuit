@@ -183,6 +183,7 @@ struct EditClientView: View {
                 }, label: {
                     Text("Salvar")
                 })
+                .tint(.black)
                 .buttonStyle(.borderedProminent)
                 .alert(item: $invalidInformation) { error in
                     switch error {

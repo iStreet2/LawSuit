@@ -8,19 +8,21 @@
 import SwiftUI
 import CoreData
 
-enum LawsuitType: String {
-    case distributed = "Distribuído"
-    case notDistributed = "Não Distribuído"
-}
+//enum LawsuitType: String {
+//    case distributed = "Distribuído"
+//    case notDistributed = "Não Distribuído"
+//}
 
 struct AddLawsuitView: View {
     
     //MARK: Variáveis de estado
-    @State var lawsuitType: LawsuitType = .distributed
     @State var lawsuitTypeString: String = ""
+    @State var lawsuitAuthorName = ""
+    
     @State var lawsuitNumber = ""
     @State var lawsuitCourt = ""
-    @State var lawsuitAuthorName = ""
+//    @State var lawsuitType: LawsuitType = .distributed
+    @State var lawsuitAuthorSocialName: String?
     @State var lawsuitDefandentName = ""
     @State var lawsuitActionDate = ""
 
@@ -37,29 +39,29 @@ struct AddLawsuitView: View {
             Text("Novo Processo")
                 .bold()
                 .font(.title)
-            VStack(alignment: .leading) {
-                CustomSegmentedControl(
-                    selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
-            }
-            if lawsuitType == .distributed {
+//            VStack(alignment: .leading) {
+//                CustomSegmentedControl(
+//                    selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
+//            }
+//            if lawsuitType == .distributed {
                 LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if lawsuitType == .notDistributed {
-                LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
+//            } else if lawsuitType == .notDistributed {
+//                LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefandentName, lawsuitActionDate: $lawsuitActionDate)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            }
         }
         .padding()
-        .frame(minHeight: 400)
-        .onAppear {
-            lawsuitTypeString = lawsuitType.rawValue
-        }
-        .onChange(of: lawsuitTypeString, perform: { newValue in
-            if newValue == "Distribuído" {
-                lawsuitType = .distributed
-            } else {
-                lawsuitType = .notDistributed
-            }
-        })
+        .frame(minHeight: 350)
+//        .onAppear {
+//            lawsuitTypeString = lawsuitType.rawValue
+//        }
+//        .onChange(of: lawsuitTypeString, perform: { newValue in
+//            if newValue == "Distribuído" {
+//                lawsuitType = .distributed
+//            } else {
+//                lawsuitType = .notDistributed
+//            }
+//        })
     }
 }

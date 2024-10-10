@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0801941E2CB84DC80084ADA4 /* SendMailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0801941D2CB84DC80084ADA4 /* SendMailSheet.swift */; };
 		08079F232CA4A1F4004EDF98 /* RequestDocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */; };
 		08079F262CA5EFCB004EDF98 /* MailMessageEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */; };
 		0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0897CB392C8BA21D00B488A9 /* MailManager.swift */; };
@@ -167,6 +168,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0801941D2CB84DC80084ADA4 /* SendMailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMailSheet.swift; sourceTree = "<group>"; };
 		08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
 		08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailMessageEnum.swift; sourceTree = "<group>"; };
 		084D404F2C8A4AAE00C96111 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -624,6 +626,7 @@
 				FD7EBBB42CA5C84600C44ECA /* VisualEffects.swift */,
 				08B381A72CAB1B31002F2041 /* LawsuitFoldersHeaderComponent.swift */,
 				08B381A92CAB389D002F2041 /* MovimentationBlock.swift */,
+				0801941D2CB84DC80084ADA4 /* SendMailSheet.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -871,6 +874,7 @@
 				08A2B0DC2C9380AD00719571 /* NetworkingManager.swift in Sources */,
 				08E6572B2C7909FF00313FCB /* EditClientView.swift in Sources */,
 				08E657322C7D08A800313FCB /* LabeledDateField.swift in Sources */,
+				0801941E2CB84DC80084ADA4 /* SendMailSheet.swift in Sources */,
 				08A2B0D52C92142E00719571 /* LawsuitErrors.swift in Sources */,
 				3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */,
 				3B0A7AD12C7D16AA005A5946 /* NetworkMonitorViewModel.swift in Sources */,

@@ -24,11 +24,6 @@ struct DetailedLawSuitView: View {
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
     @State var isCopied = false
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
-        return formatter
-    }
     @State var showingGridView = true
     
     //MARK: CoreData
@@ -96,6 +91,7 @@ struct DetailedLawSuitView: View {
         .onAppear {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
+            navigationViewModel.isShowingDetailedLawsuitView = true
         }
         .onChange(of: deleted) { _ in
             dismiss()
@@ -150,12 +146,6 @@ extension DetailedLawSuitView {
         }
     }
     
-    //    func copyToClipboard() {
-    //        pasteboard.clearContents()
-    //        pasteboard.setString(lawsuit.number, forType: .string)
-    //        isCopied.toggle()
-    //    }
-    
     private var mainBlock: some View {
         BoxView {
             VStack(alignment: .leading) {
@@ -169,11 +159,10 @@ extension DetailedLawSuitView {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .bold()
-                //                Text(dateFormatter.string(from: lawsuit.actionDate))
-                Text("\(lawsuit.actionDate, formatter: dateFormatter)")
+                Text("\(lawsuit.actionDate.convertBirthDateToString())")
                 
                 Spacer()
-                //Aqui vc faz suas paradas para mostrar social name :D
+
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Autor")
@@ -181,9 +170,7 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        
-                        Text(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.name)
-                        // Text(lawsuitAuthorSocialName)
+                        Text((dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.socialName) ?? client.name)
                             .font(.subheadline)
                             .bold()
                     }
@@ -195,7 +182,7 @@ extension DetailedLawSuitView {
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
                         //                        if !lawsuitDefendantName.isEmpty {
-                        Text(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? client.name : entity.name)
+                        Text(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? client.socialName ?? client.name : entity.name)
                         // Text(lawsuitDefendantName)
                             .font(.subheadline)
                             .bold()

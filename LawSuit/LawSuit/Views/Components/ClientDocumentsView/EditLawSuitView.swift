@@ -44,7 +44,7 @@ struct EditLawSuitView: View {
                 VStack(alignment: .leading) {
                     //MARK: Caso usuário não selecionou nada ainda
                     if !attributedDefendant {
-                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                        EditLawsuitAuthorComponent(buttonLabel: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                     }
                     
                     //MARK: Caso usuário atribuir cliente para o réu
@@ -73,7 +73,7 @@ struct EditLawSuitView: View {
                 .frame(width: 200, alignment: .leading)
                 VStack(alignment: .leading) {
                     if !attributedAuthor {
-                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                        EditLawsuitAuthorComponent(buttonLabel: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
@@ -187,6 +187,7 @@ struct EditLawSuitView: View {
                         Text("Salvar")
                     })
                     .buttonStyle(.borderedProminent)
+                    .tint(.black)
                     .alert(item: $invalidInformation) { error in
                         switch error {
                         case .missingInformation:
@@ -223,7 +224,7 @@ struct EditLawSuitView: View {
                 }
             }
         }
-        .frame(minHeight: 255)
+        .frame(minHeight: 300)
         .sheet(isPresented: $selectTag, content: {
             VStack {
                 Spacer()
@@ -237,6 +238,8 @@ struct EditLawSuitView: View {
                         Text("Salvar")
                     })
                     .buttonStyle(.borderedProminent)
+                    .tint(.black)
+
                     .padding()
                 }
             }
@@ -248,7 +251,7 @@ struct EditLawSuitView: View {
                 attributedAuthor = true
                 if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
                    let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                    lawsuitAuthorName = author.name
+                    lawsuitAuthorName = author.socialName ?? author.name
                     lawsuitDefendantName = defendant.name
                 }
                 //Se o cliente do processo estiver no reu
@@ -257,7 +260,7 @@ struct EditLawSuitView: View {
                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
                    let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
                     lawsuitAuthorName = author.name
-                    lawsuitDefendantName = defendant.name
+                    lawsuitDefendantName = defendant.socialName ?? defendant.name
                 }
             }
             lawsuitNumber = lawsuit.number

@@ -20,6 +20,7 @@ struct FolderIconView: View {
     @ObservedObject var parentFolder: Folder
     @State var isEditing = false
     @State var folderName: String
+    @State var isSelected: Bool = false
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -38,7 +39,7 @@ struct FolderIconView: View {
                     Image("Pasta")
                         .resizable()
                         .frame(width: 73, height: 58)
-
+                    
                     if isEditing {
                         TextField("", text: $folderName, onEditingChanged: { _ in
                         }, onCommit: {
@@ -55,8 +56,11 @@ struct FolderIconView: View {
                                 isEditing = true
                             }
                     }
-                    //lalallala teste
                 }
+//                .padding(isSelected ? 10 : 0)
+//                .background(isSelected ? Color.blue : Color.clear)
+//                .cornerRadius(8)
+                
             } else {
                 HStack {
                     Image("Pasta")
