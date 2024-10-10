@@ -15,6 +15,9 @@ class SpotlightManager {
 	var coreDataContainer: NSPersistentContainer
 	var context: NSManagedObjectContext
 	
+	@Published var shouldShowFilePreview: Bool = false
+	@Published var fileToShow: FilePDF? = nil
+	
 	init(container: NSPersistentContainer, context: NSManagedObjectContext) {
 		self.coreDataContainer = container
 		self.context = context

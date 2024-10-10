@@ -45,7 +45,6 @@ struct ClientListView: View {
                     navigationViewModel.selectedClient = client
                     folderViewModel.resetFolderStack()
                     folderViewModel.openFolder(folder: client.rootFolder)
-                    navigationViewModel.dismissLawsuitView.toggle()
                     deleted = false
                 }, label: {
                     HStack {

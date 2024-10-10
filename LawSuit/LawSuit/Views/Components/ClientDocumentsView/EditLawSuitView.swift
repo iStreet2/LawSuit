@@ -35,6 +35,7 @@ struct EditLawSuitView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -143,7 +144,6 @@ struct EditLawSuitView: View {
                 }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
                 }))
             })
-            
             Spacer()
             
             HStack(spacing: 10) {
@@ -217,6 +217,11 @@ struct EditLawSuitView: View {
                         return Alert(title: Text("Número do processo inválido"),
                                      message: Text("Por favor, insira um número de processo válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
+                    case .invalidCEP:
+                            return Alert(title: Text("Número do processo inválido"),
+                            message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                            dismissButton: .default(Text("Ok")))
+                        }
                     }
                 }
             }

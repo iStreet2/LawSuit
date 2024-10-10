@@ -12,8 +12,7 @@ struct LawsuitListViewHeaderContent: View {
     //MARK: Variáveis de estado
     @State var lawsuitClient: Client?
     var lawsuits: FetchedResults<Lawsuit>
-//    @Binding var authorRowState: ClientRowStateEnum
-//    @Binding var defendantRowState: ClientRowStateEnum
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -21,25 +20,26 @@ struct LawsuitListViewHeaderContent: View {
   
     var body: some View {
         
-        GeometryReader { geo in
-            HStack {
-                Text("Nome e Número")
-                    .frame(width: geo.size.width * 0.27, alignment: .leading)
-                
-                Text("Tipo")
-                    .frame(width: geo.size.width * 0.12, alignment: .leading)
-                
-                Text("Última Movimentação")
-                    .frame(width: geo.size.width * 0.17, alignment: .leading)
-                
-                Text("Cliente")
-                    .frame(width: geo.size.width * 0.17, alignment: .leading)
-                
-                Text("Advogado Responsável")
-                
+        VStack(spacing: 0) {
+            GeometryReader { geo in
+                HStack {
+                    Text("Nome e Número")
+                        .frame(width: geo.size.width * 0.27, alignment: .leading)
+                    
+                    Text("Tipo")
+                        .frame(width: geo.size.width * 0.12, alignment: .leading)
+                    
+                    Text("Última Movimentação")
+                        .frame(width: geo.size.width * 0.17, alignment: .leading)
+                    
+                    Text("Cliente")
+                        .frame(width: geo.size.width * 0.17, alignment: .leading)
+                    
+                    Text("Advogado Responsável")
+                    
+                }
+                .padding(.horizontal, 20)
             }
-            .padding(.horizontal, 20)
-        }
         .frame(minWidth: 777)
         .frame(height: 13)
         .font(.footnote)
@@ -73,16 +73,12 @@ struct LawsuitListViewHeaderContent: View {
                                             self.lawsuitClient = defendant
                                         }
                                     }
-                                }
+                            }
                         }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
             }
         }
     }
 }
-
-//#Preview {
-//    LawsuitListViewHeaderContent()
-//}

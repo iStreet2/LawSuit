@@ -21,7 +21,7 @@ struct LawsuitDistributedView: View {
     //MARK: Variáveis de estado
     @State var authorRowState: ClientRowStateEnum = .notSelected
     @State var defendantRowState: ClientRowStateEnum = .notSelected
-    @State var invalidInformation: InvalidInformation?
+    @State var invalidInformation: LawsuitInvalidInformation?
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
@@ -82,10 +82,12 @@ struct LawsuitDistributedView: View {
                     }
                 }
                 Spacer()
+
                 VStack(alignment: .leading){
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
@@ -102,6 +104,7 @@ struct LawsuitDistributedView: View {
                                     attributedDefendant = false
                                 }
                             }
+
                     }
                 }
             }
@@ -109,3 +112,4 @@ struct LawsuitDistributedView: View {
         }
     }
 }
+

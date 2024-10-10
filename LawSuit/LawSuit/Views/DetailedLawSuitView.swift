@@ -14,9 +14,8 @@ struct DetailedLawSuitView: View {
     @Environment(\.dismiss) var dismiss
     
     //MARK: ViewModels
-    @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
-    
+    @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
     @State var deleted = false
@@ -24,6 +23,7 @@ struct DetailedLawSuitView: View {
     @State var lawsuitCategory: TagType
     @State var lawsuitAuthorName: String = ""
     @State var lawsuitDefendantName: String = ""
+    @State var isCopied = false
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
@@ -37,54 +37,56 @@ struct DetailedLawSuitView: View {
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
-        
-        VStack {
-            if !deleted {
-                HStack(alignment: .top, spacing: 22) {
-                    mainBlock
-                    //                        .frame(maxHeight: .infinity)
-                    
-                    VStack(spacing: 10) {
+        ZStack {
+            VStack(alignment: .leading, spacing: 0) {
+                if !deleted {
+                    HStack(alignment: .top, spacing: 22) {
+                        mainBlock
                         
-                        movimentationBlock
-                            .frame(maxHeight: .infinity)
-                        
+                        VStack(spacing: 10) {
+                            MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
+                                .frame(maxHeight: .infinity)
+                        }
+                        .frame(maxHeight: .infinity)
+                        .fixedSize(horizontal: false, vertical: true)
                     }
-                    .frame(maxHeight: .infinity)
                     .fixedSize(horizontal: false, vertical: true)
-                }
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(minHeight: 150, maxHeight: 190)
-                .frame(minWidth: 620)
-                Divider()
-                    .padding(.top, 8)
-                VStack {
-                    HStack {
-                        
-                        Button {
-                            folderViewModel.closeFolder()
-                        } label: {
-                            Image(systemName: "chevron.left")
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .font(.title2)
-                        .disabled(folderViewModel.getPath().count() == 1)
-                        
-                        Text((folderViewModel.getPath().count() == 1 ? "Arquivos do Processo" : folderViewModel.getOpenFolder()?.name) ?? "Sem nome")
-                            .font(.title3)
-                            .bold()
-                        Spacer()
-                        if let openFolder = folderViewModel.getOpenFolder(){
-                            DocumentActionButtonsView(folder: openFolder )
-                        }
-                        
-                    }
-                    .padding(.vertical, 5)
+                    .frame(minHeight: 150, maxHeight: 190)
+                    .frame(minWidth: 620)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 13)
+                    
+                    Divider()
+                    
+                    LawsuitFoldersHeaderComponent()
+                        .padding(.vertical, 10)
+                                        
                     // MARK: - View/Grid de Pastas
                     DocumentView()
+                    
                 }
-                Spacer()
             }
+            
+            if isCopied {
+                Text("Copiado para área de transferência!")
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 7))
+                    .transition(.opacity)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation {
+                                isCopied = false
+                            }
+                        }
+                    }
+            }
+        }
+        .onDisappear {
+            navigationViewModel.isShowingDetailedLawsuitView = false
         }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
@@ -92,11 +94,11 @@ struct DetailedLawSuitView: View {
 //            EditLawSuitView( tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted, authorRowState: lawsuitAuthorName, defendantRowState: lawsuitDefendantName)
                 .frame(minWidth: 495)
         })
-        .padding()
         .onAppear {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
             updateNames()
+            navigationViewModel.isShowingDetailedLawsuitView = true
         }
         .onChange(of: lawsuit.authorID) { _ in
             updateNames()
@@ -107,10 +109,11 @@ struct DetailedLawSuitView: View {
         .onChange(of: deleted) { _ in
             dismiss()
         }
-        .onChange(of: navigationViewModel.dismissLawsuitView) { _ in
-            navigationViewModel.dismissLawsuitView.toggle()
-            dismiss()
-        }
+        .onChange(of: navigationViewModel.isShowingDetailedLawsuitView, perform: { newValue in
+            if !newValue {
+                dismiss()
+            }
+        })
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
     
@@ -119,20 +122,30 @@ struct DetailedLawSuitView: View {
         if lawsuit.authorID.hasPrefix("client:") {
             if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
                let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                lawsuitAuthorName = author.name
+                lawsuitAuthorSocialName = author.socialName ?? "Sem nome"
                 lawsuitDefendantName = defendant.name
             }
             //Se o cliente do processo estiver no reu
         } else {
             if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
-               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
-                lawsuitAuthorName = author.name
+               let authorEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID),
+            
+            let author = authorEntity as? Client {
+                
+                lawsuitAuthorSocialName = author.socialName ?? author.name
                 lawsuitDefendantName = defendant.name
             }
+            
+            
+            //               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+            //                lawsuitAuthorSocialName = author.socialName as! Client.socialName
+            //                lawsuitDefendantName = defendant.name
+            //            }
         }
         print("author: \(lawsuitAuthorName), reu: \(lawsuitDefendantName)")
     }
 }
+
 
 extension DetailedLawSuitView {
     private var mainBlockHeader: some View {
@@ -159,7 +172,9 @@ extension DetailedLawSuitView {
                 .font(.title3)
                 .bold()
             Button {
-                // copiar o número para o clipboard
+                lawsuit.number.copy()
+                isCopied = true
+                print("foi copiado? \(isCopied)")
             } label: {
                 Image(systemName: "rectangle.portrait.on.rectangle.portrait")
                     .resizable()
@@ -170,6 +185,12 @@ extension DetailedLawSuitView {
             .buttonStyle(PlainButtonStyle())
         }
     }
+    
+    //    func copyToClipboard() {
+    //        pasteboard.clearContents()
+    //        pasteboard.setString(lawsuit.number, forType: .string)
+    //        isCopied.toggle()
+    //    }
     
     private var mainBlock: some View {
         BoxView {
@@ -186,7 +207,6 @@ extension DetailedLawSuitView {
                     .bold()
                 //                Text(dateFormatter.string(from: lawsuit.actionDate))
                 Text("\(lawsuit.actionDate, formatter: dateFormatter)")
-                //                					.padding(.bottom, 30)
                 
                 Spacer()
                 
@@ -197,7 +217,8 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Text(lawsuitAuthorName)
+                        
+                        Text(lawsuitAuthorSocialName)
                             .font(.subheadline)
                             .bold()
                     }
@@ -208,50 +229,14 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
+                        //                        if !lawsuitDefendantName.isEmpty {
                         Text(lawsuitDefendantName)
                             .font(.subheadline)
                             .bold()
+                        //                                            }
                     }
                     Spacer()
                 }
-            }
-        }
-    }
-    
-    private var movimentationBlock: some View {
-        BoxView {
-            VStack(alignment: .leading) {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Última Movimentação")
-                            .font(.title2)
-                            .bold()
-                        Text(dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() ?? "Sem movimentações")
-                            .font(.title3)
-                            .bold()
-                        HStack {
-                            Button(action: {
-                                
-                            }, label: {
-                                Text("Acessar JusBrasil")
-                            })
-                        }
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Movimentações Anteriores")
-                                .font(.headline)
-                                .foregroundStyle(Color(.secondaryLabelColor))
-                            
-                            ForEach(dataViewModel.coreDataManager.updateManager.sortUpdates(lawsuit: lawsuit).prefix(3)) { update in
-                                Text(update.date?.convertToString() ?? "Sem movimentações")
-                                    .font(.subheadline)
-                                    .foregroundStyle(Color(.secondaryLabelColor))
-                            }
-                        }.padding(.top, 10)
-                    }
-                    
-                    Spacer()
-                }
-                .padding(.bottom, 3)
             }
         }
     }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension String {
     func convertToDate() -> Date {
@@ -18,5 +19,16 @@ extension String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.date(from: self) ?? Date()
+        
+    }
+    
+    func copy() {
+        //            #if os(macOS)
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(self, forType: .string)
+        //            #else
+        //            UIPasteboard.general.string = self
+        //            #endif
     }
 }

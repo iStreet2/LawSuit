@@ -53,10 +53,15 @@ struct LawsuitCellComponent: View {
                                 .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
                         }
                     }
-
-                    Text(client.name)
-                        .lineLimit(1)
-                        .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                    if let socialName = client.socialName {
+                        Text(socialName)
+                            .lineLimit(1)
+                            .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                    } else {
+                        Text(client.name)
+                            .lineLimit(1)
+                            .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                    }
                     Text(lawyer.name ?? "Sem nome")
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, minHeight: 47, alignment: .leading)

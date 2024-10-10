@@ -33,6 +33,8 @@ struct SideBarView: View {
             .onTapGesture {
                 withAnimation(.bouncy) {
                     selectedView = .clients
+                    navigationViewModel.isShowingDetailedLawsuitView = false
+                    
                     if let selectedClient = navigationViewModel.selectedClient {
                         folderViewModel.resetFolderStack()
                         folderViewModel.openFolder(folder: selectedClient.rootFolder)
@@ -53,13 +55,14 @@ struct SideBarView: View {
             .onTapGesture {
                 withAnimation(.bouncy) {
                     selectedView = .lawsuits
+                    navigationViewModel.isShowingDetailedLawsuitView = false
                 }
             }
             Spacer()
         }
         .padding()
         .padding(.trailing,5)
-        .background(Color(hex: "932425").blendMode(.darken))
+        .background(Color(hex: "932425").blendMode(.multiply))
     }
 }
 

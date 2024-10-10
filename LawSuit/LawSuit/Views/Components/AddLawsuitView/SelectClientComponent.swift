@@ -39,20 +39,37 @@ struct SelectClientComponent: View {
             }
             List {
                 ForEach(filteredClients, id: \.self) { client in
-                    Text(client.name)
-                        .onTapGesture {
-                            withAnimation {
-                                if authorOrDefendant == "author" {
-                                    lawsuitAuthorName = client.name
-                                    attributedAuthor = true
-                                } else {
-                                    lawsuitDefendantName = client.name
-                                    attributedDefendant = true
+                    if let socialName = client.socialName {
+                        Text(socialName)
+                            .onTapGesture {
+                                withAnimation {
+                                    if authorOrDefendant == "author" {
+                                        lawsuitAuthorName = client.socialName!
+                                        attributedAuthor = true
+                                    } else {
+                                        lawsuitDefendantName = client.socialName!
+                                        attributedDefendant = true
+                                    }
                                 }
+                                dismiss()
                             }
-                            dismiss()
-                        }
-                        .background(isEditing ? Color.blue : Color(.white))
+                            .background(isEditing ? Color.blue : Color(.white))
+                    } else {
+                        Text(client.name)
+                            .onTapGesture {
+                                withAnimation {
+                                    if authorOrDefendant == "author" {
+                                        lawsuitAuthorName = client.name
+                                        attributedAuthor = true
+                                    } else {
+                                        lawsuitDefendantName = client.name
+                                        attributedDefendant = true
+                                    }
+                                }
+                                dismiss()
+                            }
+                            .background(isEditing ? Color.blue : Color(.white))
+                    }
                 }
                 .padding(2)
             }
@@ -71,9 +88,13 @@ struct SelectClientComponent: View {
         if searchQuery.isEmpty {
             return Array(clients)
         } else {
-            return clients.filter { $0.name.localizedCaseInsensitiveContains(searchQuery) == true }
+            return clients.filter {
+                $0.name.localizedCaseInsensitiveContains(searchQuery) ||
+                ($0.socialName?.localizedCaseInsensitiveContains(searchQuery) == true)
+            }
         }
     }
+    
 }
 
 

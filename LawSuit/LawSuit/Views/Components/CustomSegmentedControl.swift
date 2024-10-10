@@ -20,12 +20,12 @@ struct CustomSegmentedControl: View {
                 if selectedOption == infos[index] {
                     Text(infos[index])
                         .font(.body)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.wine)
                         .fontWeight(.semibold)
                         .padding(.horizontal, 10)
                         .background{
                             RoundedRectangle(cornerRadius: 3)
-                                .foregroundStyle(.red.opacity(0.3))
+                                .foregroundStyle(.wine.opacity(0.3))
                                 
                         }
                         .overlay {
@@ -42,7 +42,7 @@ struct CustomSegmentedControl: View {
                             if hoveringIndex == index {
                                 RoundedRectangle(cornerRadius: 3)
                                     .foregroundStyle(.black.opacity(0.05))
-                            } else{
+                            } else {
                                 RoundedRectangle(cornerRadius: 3)
                                     .foregroundStyle(.clear)
                             }
@@ -81,9 +81,6 @@ struct CustomSegmentedControl: View {
             RoundedRectangle(cornerRadius: 6)
                 .stroke(.black.opacity(0.08), lineWidth: 0.5)
         }
-        
-       
-        
     }
 }
 
