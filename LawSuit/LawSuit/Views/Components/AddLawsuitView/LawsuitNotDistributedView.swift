@@ -33,7 +33,7 @@ struct LawsuitNotDistributedView: View {
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
     var body: some View {
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 Text("Área")
                     .bold()
                 TagViewPickerComponent(tagType: $tagType, tagViewStyle: .picker)
@@ -56,7 +56,6 @@ struct LawsuitNotDistributedView: View {
                 }
               
             }
-            .border(.red)
         Spacer()
     }
 }
