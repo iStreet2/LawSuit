@@ -92,7 +92,6 @@ struct ClientInfoView: View {
                             mailManager.sendMail(emailSubject: "Arqion", message: "")
                         } label: {
                             Text("Enviar e-mail")
-                                .foregroundStyle(Color(.white))
                         }
                         .buttonStyle(.borderedProminent)
                         .tint(.black)
