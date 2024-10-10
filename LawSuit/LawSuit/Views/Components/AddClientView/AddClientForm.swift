@@ -43,6 +43,8 @@ struct AddClientForm: View {
     
     @State var addressApi = AddressAPI()
     @State var isEmailValid = true
+    @State var imageData: NSImage?
+    @State var edit: Bool = false
     
     let textLimit = 50
     let maritalStatusLimit = 10
@@ -55,21 +57,47 @@ struct AddClientForm: View {
                     VStack(alignment: .leading, spacing: 15) {
                         HStack(alignment: .top, spacing: 10) {
                             ZStack {
-                                RoundedRectangle(cornerRadius: 19)
-                                    .frame(width: 134, height: 134)
-                                    .foregroundStyle(.white)
-                                if let photo = photo, let nsImage = NSImage(data: photo) {
-                                    Image(nsImage: nsImage)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 134, height: 134)
-                                        .cornerRadius(10)
+                                if let imageData {
+                                    Button {
+                                        //Adicionar foto ao cliente
+                                        folderViewModel.importPhoto { data in
+                                            if let data = data {
+                                                self.photo = data
+                                                self.imageData = NSImage(data: data)
+                                            }
+                                        }
+                                    } label: {
+                                        if edit {
+                                            EditPhotoButton(image: Image(nsImage: imageData))
+                                                .cornerRadius(19)
+                                        } else {
+                                            Image(nsImage: imageData)
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 134, height: 134)
+                                                .cornerRadius(19)
+                                        }
+                                    }
+                                    .buttonStyle(.plain)
+                                    .onHover { hovering in
+                                        if hovering {
+                                            withAnimation(.bouncy) {
+                                                edit = true
+                                            }
+                                        } else {
+                                            withAnimation(.bouncy) {
+                                                edit = false
+                                            }
+                                        }
+                                    }
+                                    
                                 } else {
                                     Button{
                                         //Adicionar foto ao cliente
                                         folderViewModel.importPhoto { data in
                                             if let data = data {
                                                 self.photo = data
+                                                self.imageData = NSImage(data: data)
                                             }
                                         }
                                     } label: {

@@ -16,7 +16,7 @@ struct ClientInfoView: View {
     //MARK: Variáveis de estado:
     @ObservedObject var client: Client
     @State var editClient = false
-    @State var imageData: NSImage?
+    @State var nsImage: NSImage?
     @Binding var deleted: Bool
     @State var requestDocument = false
     var mailManager: MailManager
@@ -31,8 +31,8 @@ struct ClientInfoView: View {
     
     var body: some View {
             HStack(alignment: .top) {
-                if let imageData {
-                    Image(nsImage: imageData)
+                if let nsImage {
+                    Image(nsImage: nsImage)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 90, height: 90)
@@ -87,7 +87,7 @@ struct ClientInfoView: View {
                     .font(.footnote)
                     
                     NavigationLink {
-                        ClientMoreInfoView(client: client, deleted: $deleted)
+                        ClientMoreInfoView(client: client, deleted: $deleted, nsImage: $nsImage)
                         
                     } label: {
                         Text("Mais informações")
@@ -120,16 +120,19 @@ struct ClientInfoView: View {
                 }
             }
             .onAppear {
-                imageData = NSImage(data: client.photo ?? Data())
+                nsImage = NSImage(data: client.photo ?? Data())
             }
-        .onChange(of: deleted) { change in
+            .onChange(of: client) { client in
+                nsImage = NSImage(data: client.photo ?? Data())
+            }
+        .onChange(of: deleted) { _ in
             dismiss()
         }
         .sheet(isPresented: $requestDocument, content: {
             RequestDocumentsView(client: client, mailManager: mailManager)
         })
         .sheet(isPresented: $editClient, content: {
-            EditClientView(client: client, deleted: $deleted)
+            EditClientView(client: client, deleted: $deleted, clientNSImage: $nsImage)
         })
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
