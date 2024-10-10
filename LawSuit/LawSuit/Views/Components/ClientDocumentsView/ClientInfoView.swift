@@ -16,22 +16,28 @@ struct ClientInfoView: View {
     //MARK: Variáveis de estado:
     @ObservedObject var client: Client
     @State var editClient = false
-    @State var imageData: Data?
+    @State var nsImage: NSImage?
     @Binding var deleted: Bool
     @State var requestDocument = false
     var mailManager: MailManager
-
-
+    
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+
     
     var body: some View {
-        
             HStack(alignment: .top) {
+                if let nsImage {
+                    Image(nsImage: nsImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 90, height: 90)
+                        .cornerRadius(10)
+                }
                 VStack(alignment: .leading) {
                     HStack {
                         if let socialName = client.socialName {
@@ -70,7 +76,7 @@ struct ClientInfoView: View {
                     .font(.footnote)
                     
                     NavigationLink {
-                        ClientMoreInfoView(client: client, deleted: $deleted)
+                        ClientMoreInfoView(client: client, deleted: $deleted, nsImage: $nsImage)
                         
                     } label: {
                         Text("Mais informações")
@@ -86,7 +92,6 @@ struct ClientInfoView: View {
                             mailManager.sendMail(emailSubject: "Arqion", message: "")
                         } label: {
                             Text("Enviar e-mail")
-                                .foregroundStyle(Color(.white))
                         }
                         .buttonStyle(.borderedProminent)
                         .tint(.black)
@@ -102,14 +107,20 @@ struct ClientInfoView: View {
                     }
                 }
             }
-        .onChange(of: deleted) { change in
+            .onAppear {
+                nsImage = NSImage(data: client.photo ?? Data())
+            }
+            .onChange(of: client) { client in
+                nsImage = NSImage(data: client.photo ?? Data())
+            }
+        .onChange(of: deleted) { _ in
             dismiss()
         }
         .sheet(isPresented: $requestDocument, content: {
             RequestDocumentsView(client: client, mailManager: mailManager)
         })
         .sheet(isPresented: $editClient, content: {
-            EditClientView(client: client, deleted: $deleted)
+            EditClientView(client: client, deleted: $deleted, clientNSImage: $nsImage)
         })
         .padding(.horizontal, 20)
         .padding(.vertical, 10)

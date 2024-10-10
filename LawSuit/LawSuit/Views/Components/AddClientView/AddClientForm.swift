@@ -16,6 +16,7 @@ struct AddClientForm: View {
     //MARK: ViewModels
     @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     @EnvironmentObject var addressViewModel: AddressViewModel
+    @EnvironmentObject var folderViewModel: FolderViewModel
     
     @Binding var stage: Int
     
@@ -38,9 +39,12 @@ struct AddClientForm: View {
     @Binding var email: String
     @Binding var telephone: String
     @Binding var cellphone: String
+    @Binding var photo: Data?
     
     @State var addressApi = AddressAPI()
     @State var isEmailValid = true
+    @State var imageData: NSImage?
+    @State var edit: Bool = false
     
     let textLimit = 50
     let maritalStatusLimit = 10
@@ -53,24 +57,53 @@ struct AddClientForm: View {
                     VStack(alignment: .leading, spacing: 15) {
                         HStack(alignment: .top, spacing: 10) {
                             ZStack {
-                                RoundedRectangle(cornerRadius: 19)
-                                    .frame(width: 134, height: 134)
-                                    .foregroundStyle(.white)
-                                Button{
-                                    print("foto")
-                                } label: {
-                                    RoundedRectangle(cornerRadius: 19)
-                                        .stroke(Color.black, lineWidth: 1)
-                                        .frame(width: 134, height: 134)
-                                        .overlay {
-                                            Image(systemName: "person.crop.rectangle.badge.plus")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 40, height: 29.49)
-                                                .foregroundColor(.secondary)
+                                if let imageData {
+                                    Button {
+                                        withAnimation(.easeInOut) {
+                                            self.imageData = nil
                                         }
+                                    } label: {
+                                        if edit {
+                                            RemovePhotoButton(image: Image(nsImage: imageData))
+                                                .cornerRadius(19)
+                                        } else {
+                                            Image(nsImage: imageData)
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 134, height: 134)
+                                                .cornerRadius(19)
+                                        }
+                                    }
+                                    .transition(.scale)
+                                    .buttonStyle(.plain)
+                                    .onHover { hovering in
+                                        if hovering {
+                                            withAnimation(.bouncy) {
+                                                edit = true
+                                            }
+                                        } else {
+                                            withAnimation(.bouncy) {
+                                                edit = false
+                                            }
+                                        }
+                                    }
+                                    
+                                } else {
+                                    Button{
+                                        //Adicionar foto ao cliente
+                                        folderViewModel.importPhoto { data in
+                                            if let data = data {
+                                                withAnimation(.bouncy) {
+                                                    self.photo = data
+                                                    self.imageData = NSImage(data: data)
+                                                }
+                                            }
+                                        }
+                                    } label: {
+                                        AddPhotoButton()
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
                             }
                             VStack(alignment: .leading){
                                 LabeledTextField(label: "Nome Civil", placeholder: "Insira o nome civil do Cliente", mandatory: true, textfieldText: $name)

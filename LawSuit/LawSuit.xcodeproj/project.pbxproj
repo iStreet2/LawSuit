@@ -53,6 +53,8 @@
 		3B423E832C80E613005B1B7F /* FolderIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E822C80E613005B1B7F /* FolderIconView.swift */; };
 		3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6167FF2C7E43AC00260585 /* SideBarView.swift */; };
 		3B6168022C7E45CE00260585 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6168012C7E45CE00260585 /* Sections.swift */; };
+		3B6AB54B2CB712D2000C0FF0 /* AddPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6AB54A2CB712D2000C0FF0 /* AddPhotoButton.swift */; };
+		3B7642082CB843B700196914 /* RemovePhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7642072CB843B700196914 /* RemovePhotoButton.swift */; };
 		3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B88A41C2C82369400DA111E /* EditLawSuitView.swift */; };
 		3B98F10C2C668B1000C45121 /* LawSuitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B98F10B2C668B1000C45121 /* LawSuitApp.swift */; };
 		3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B98F10D2C668B1000C45121 /* ContentView.swift */; };
@@ -218,6 +220,8 @@
 		3B423E822C80E613005B1B7F /* FolderIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderIconView.swift; sourceTree = "<group>"; };
 		3B6167FF2C7E43AC00260585 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
 		3B6168012C7E45CE00260585 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
+		3B6AB54A2CB712D2000C0FF0 /* AddPhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoButton.swift; sourceTree = "<group>"; };
+		3B7642072CB843B700196914 /* RemovePhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhotoButton.swift; sourceTree = "<group>"; };
 		3B88A41C2C82369400DA111E /* EditLawSuitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLawSuitView.swift; sourceTree = "<group>"; };
 		3B98F10B2C668B1000C45121 /* LawSuitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitApp.swift; sourceTree = "<group>"; };
 		3B98F10D2C668B1000C45121 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -416,6 +420,8 @@
 				3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
 				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
+				3B6AB54A2CB712D2000C0FF0 /* AddPhotoButton.swift */,
+				3B7642072CB843B700196914 /* RemovePhotoButton.swift */,
 			);
 			path = ClientDocumentsView;
 			sourceTree = "<group>";
@@ -863,6 +869,7 @@
 				DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */,
 				E94C01662CA1E2C100F6316F /* EventMonitorProtocol2.swift in Sources */,
 				3B423E802C80E2E1005B1B7F /* FilePDFGridView.swift in Sources */,
+				3B7642082CB843B700196914 /* RemovePhotoButton.swift in Sources */,
 				3BD40B312C6D40FE004048FA /* LawyerManager.swift in Sources */,
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
 				08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */,
@@ -889,6 +896,7 @@
 				E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */,
 				DCDB96402C7E61C400817814 /* AddClientForm.swift in Sources */,
 				DC1572BF2C73DE70007815E1 /* PendentClientDocumentStyle.swift in Sources */,
+				3B6AB54B2CB712D2000C0FF0 /* AddPhotoButton.swift in Sources */,
 				08A2B0E22C93B01400719571 /* KeychainHelper.swift in Sources */,
 				3BDEFFCD2C8A4A6A00990528 /* Entity.swift in Sources */,
 				3BB9A3502C84F38000AD1E30 /* TagViewComponentV5.swift in Sources */,
@@ -1090,7 +1098,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = Z2Y94548LY;
+				DEVELOPMENT_TEAM = 6S6995TY46;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1103,7 +1111,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.br;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;
@@ -1123,7 +1131,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LawSuit/Preview Content\"";
-				DEVELOPMENT_TEAM = Z2Y94548LY;
+				DEVELOPMENT_TEAM = 6S6995TY46;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1136,7 +1144,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit.br;
+				PRODUCT_BUNDLE_IDENTIFIER = com.UFC.Lawsuit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = macosx;
 				SUPPORTS_MACCATALYST = NO;

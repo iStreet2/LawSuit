@@ -33,6 +33,7 @@ struct ClientMoreInfoView: View {
     @State var editClient = false
     @Environment(\.dismiss) var dismiss
     @Binding var deleted: Bool
+    @Binding var nsImage: NSImage?
     
     //Arrumar essa coisa
     private var dateFormatter: DateFormatter {
@@ -45,10 +46,6 @@ struct ClientMoreInfoView: View {
         VStack(alignment: .leading, spacing: 17) {
             HStack(alignment: .top, spacing: 20) {
                 BoxView {
-                    //						Image(systemName: "person.fill")
-                    //							.resizable()
-                    //							.scaledToFit()
-                    //							.frame(minWidth: 50, maxWidth: 100)
                     info
                 }
                 .frame(maxHeight: .infinity)
@@ -67,7 +64,7 @@ struct ClientMoreInfoView: View {
             Spacer()
         }
         .sheet(isPresented: $editClient, content: {
-            EditClientView(client: client, deleted: $deleted)
+            EditClientView(client: client, deleted: $deleted, clientNSImage: $nsImage)
         })
         .frame(maxWidth: .infinity, minHeight: 450, maxHeight: .infinity)  // MARK: Frame da View inteira
         .padding()
@@ -92,7 +89,6 @@ extension ClientMoreInfoView {
                 }
                 Button {
                     editClient.toggle()
-//                    EditClientView(client: client, deleted: false , isPresented: $isPresented)
                 } label: {
                     Image(systemName: "square.and.pencil")
                         .resizable()
