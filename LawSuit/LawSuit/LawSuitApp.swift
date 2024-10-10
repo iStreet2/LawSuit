@@ -7,6 +7,7 @@
 
 import SwiftUI
 import HotKey
+import PDFKit
 
 @main
 struct LawSuitApp: App {
@@ -19,15 +20,14 @@ struct LawSuitApp: App {
     @StateObject var clientDataViewModel = TextFieldDataViewModel()
     @StateObject var addressViewModel = AddressViewModel()
     @StateObject var eventManager = EventManager()
-    @StateObject var lawsuitViewModel = LawsuitViewModel() 
-
-	@NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-	
-	 let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
+    @StateObject var lawsuitViewModel = LawsuitViewModel()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
     
     var body: some Scene {
-        WindowGroup {   
-			  ContentView()
+        WindowGroup {
+			  MainView()
                 .environment(\.managedObjectContext, dataViewModel.coreDataContainer.viewContext)
                 .environmentObject(dataViewModel)
                 .environmentObject(folderViewModel)
@@ -36,28 +36,31 @@ struct LawSuitApp: App {
                 .environmentObject(navigationViewModel)
                 .environmentObject(clientDataViewModel)
                 .environmentObject(addressViewModel)
+					 .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
                 .preferredColorScheme(.light)
-                .frame(minHeight: 530)
-					 .onAppear {
-						 hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+					 .frame(/*minWidth: 750, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
+                .onAppear {
+                    hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+                }
+                .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
+                    SpotlightSearchbarView()
+                        .environmentObject(dataViewModel)
+                        .environmentObject(navigationViewModel)
+                }
+					 .sheet(isPresented: $dataViewModel.spotlightManager.shouldShowFilePreview) {
+						 OpenFilePDFView(selectedFile: $dataViewModel.spotlightManager.fileToShow)
 					 }
-					 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
-						 SpotlightSearchbarView()
-							 .environmentObject(dataViewModel)
-							 .environmentObject(navigationViewModel)
-					 }
-                     .background(MaterialWindow().ignoresSafeArea())
-                     .toolbar(){
-                         ToolbarItem(placement: .primaryAction){
-                             Button(action: {
-                                 self.eventManager.spotlightBarIsPresented.toggle()
-                             }){
-                                 Image(systemName: "magnifyingglass")
-                             }
-                         }
-                     }
+                
         }
-   
+		 WindowGroup(id: "FileWindow", for: Data.self) { fileData in
+			 if let data = fileData.wrappedValue {
+				 if let filePDF = PDFDocument(data: data) {
+					 PDFKitView(pdfDocument: filePDF)
+						 .frame(minWidth: 300, minHeight: 400)
+				 }
+			 }
+		 }
+        
     }
 }
