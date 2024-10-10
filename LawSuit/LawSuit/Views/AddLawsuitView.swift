@@ -41,8 +41,8 @@ struct AddLawsuitView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 0){
-            VStack(alignment: .leading){
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading) {
                 Text("Novo Processo")
                     .bold()
                     .font(.title)
@@ -53,7 +53,7 @@ struct AddLawsuitView: View {
             Divider()
                 .frame(maxWidth: .infinity)
 
-            VStack(spacing: 0){
+            VStack(spacing: 0) {
                 if lawsuitType == .distributed {
                     LawsuitDistributedView(tagType: $tagType, lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, lawsuitActionDate: $lawsuitActionDate, attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -64,7 +64,6 @@ struct AddLawsuitView: View {
             }
             .padding(.horizontal, 10)
             .background(Color("ScrollBackground"))
-            .border(.red)
 
             Divider()
                 .frame(maxWidth: .infinity)
@@ -128,7 +127,6 @@ struct AddLawsuitView: View {
                         print("Client not found")
                     }
                 }
-                
             } label: {
                 Text("Criar")
             }
