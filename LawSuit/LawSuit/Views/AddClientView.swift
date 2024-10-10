@@ -64,7 +64,7 @@ struct AddClientView: View {
             VStack(spacing: 0) {
                 AddClientForm(stage: $stage, name: $name, socialName: $socialName, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone, photo: $photo)
             }
-            .padding()
+            .padding(.horizontal)
             .background(Color("ScrollBackground"))
             Divider()
             
