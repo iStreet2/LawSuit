@@ -21,7 +21,7 @@ struct LawsuitDistributedView: View {
     //MARK: Variáveis de estado
     @State var authorRowState: ClientRowStateEnum = .notSelected
     @State var defendantRowState: ClientRowStateEnum = .notSelected
-    @State var invalidInformation: InvalidInformation?
+    @State var invalidInformation: LawsuitInvalidInformation?
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
     @Binding var lawsuitAuthorName: String
@@ -82,6 +82,7 @@ struct LawsuitDistributedView: View {
                     }
                 }
                 Spacer()
+
                 VStack(alignment: .leading){
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {

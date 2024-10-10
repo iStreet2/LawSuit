@@ -36,7 +36,7 @@ struct LawSuitApp: App {
                 .environmentObject(navigationViewModel)
                 .environmentObject(clientDataViewModel)
                 .environmentObject(addressViewModel)
-					 .environmentObject(eventManager)
+					      .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
                 .preferredColorScheme(.light)
 					 .frame(/*minWidth: 750, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
