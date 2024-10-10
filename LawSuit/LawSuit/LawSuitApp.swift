@@ -7,6 +7,7 @@
 
 import SwiftUI
 import HotKey
+import PDFKit
 
 @main
 struct LawSuitApp: App {
@@ -45,6 +46,9 @@ struct LawSuitApp: App {
                         .environmentObject(dataViewModel)
                         .environmentObject(navigationViewModel)
                 }
+					 .sheet(isPresented: $dataViewModel.spotlightManager.shouldShowFilePreview) {
+						 OpenFilePDFView(selectedFile: $dataViewModel.spotlightManager.fileToShow)
+					 }
                 .background(MaterialWindow().ignoresSafeArea())
                 .toolbar(){
                     ToolbarItem(placement: .primaryAction){
@@ -56,6 +60,14 @@ struct LawSuitApp: App {
                     }
                 }
         }
+		 WindowGroup(id: "FileWindow", for: Data.self) { fileData in
+			 if let data = fileData.wrappedValue {
+				 if let filePDF = PDFDocument(data: data) {
+					 PDFKitView(pdfDocument: filePDF)
+						 .frame(minWidth: 300, minHeight: 400)
+				 }
+			 }
+		 }
         
     }
 }

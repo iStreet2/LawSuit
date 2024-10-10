@@ -10,6 +10,8 @@ import SwiftUI
 struct SpotlightSearchbarView: View {
 	
 	@Environment(\.dismiss) var dismiss
+	@Environment(\.openWindow) var openWindow
+	
 	@EnvironmentObject var dataViewModel: DataViewModel
 	@EnvironmentObject var navigationViewModel: NavigationViewModel
 	
@@ -27,12 +29,18 @@ struct SpotlightSearchbarView: View {
 		if let clientWrapper = entity as? ClientWrapper {
 			navigationViewModel.selectedClient = clientWrapper.client
 		} else if let lawsuitWrapper = entity as? LawsuitWrapper {
-			for clientWrappers in dataViewModel.getSpotlightList(for: "Clientes", using: searchString) as! [ClientWrapper] {
-				if clientWrappers.client.id == lawsuitWrapper.lawsuit.authorID {
-					navigationViewModel.selectedClient = clientWrappers.client
+			for client in dataViewModel.fetchCoreDataObjects(for: .client) as! [Client] {
+				if client.id == lawsuitWrapper.lawsuit.authorID || client.id == lawsuitWrapper.lawsuit.defendantID {
+					navigationViewModel.selectedClient = client
+					navigationViewModel.isShowingDetailedLawsuitView = true
 					break
 				}
 			}
+		} else if let fileWrapper = entity as? FileWrapper {
+			dismiss()
+			openWindow(value: fileWrapper.file.content!)
+//			dataViewModel.spotlightManager.fileToShow = fileWrapper.file
+//			dataViewModel.spotlightManager.shouldShowFilePreview = true
 		}
 		dismiss()
 	}
@@ -42,14 +50,20 @@ struct SpotlightSearchbarView: View {
 		if let clientWrapper = currentEntity as? ClientWrapper {
 			navigationViewModel.selectedClient = clientWrapper.client
 		} else if let lawsuitWrapper = currentEntity as? LawsuitWrapper {
-			for clientWrappers in dataViewModel.getSpotlightList(for: "Clientes", using: searchString) as! [ClientWrapper] {
-				if clientWrappers.client.id == lawsuitWrapper.lawsuit.authorID {
-					navigationViewModel.selectedClient = clientWrappers.client
+			for client in dataViewModel.fetchCoreDataObjects(for: .client) as! [Client] {
+				if client.id == lawsuitWrapper.lawsuit.authorID || client.id == lawsuitWrapper.lawsuit.defendantID {
+					navigationViewModel.selectedClient = client
+					navigationViewModel.isShowingDetailedLawsuitView = true
 					break
 				}
 			}
+		} else if let fileWrapper = currentEntity as? FileWrapper {
 			dismiss()
+			openWindow(value: fileWrapper.file.content!)
+//			dataViewModel.spotlightManager.fileToShow = fileWrapper.file
+//			dataViewModel.spotlightManager.shouldShowFilePreview = true
 		}
+		dismiss()
 	}
 	
 	
