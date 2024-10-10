@@ -107,11 +107,12 @@ struct ClientView: View {
                             .padding(.bottom, 10)
                             
                             DocumentView()
-                            //                            .border(Color.blue)
                                 .onAppear {
                                     navigationViewModel.selectedClient = client
-                                    folderViewModel.resetFolderStack() //caminho fica sem nada
-                                    folderViewModel.openFolder(folder: client.rootFolder) //abre a root folder do cliente que estou selecionado
+                                    //caminho fica sem nada
+                                    folderViewModel.resetFolderStack()
+                                    //abre a root folder do cliente que estou selecionado
+                                    folderViewModel.openFolder(folder: client.rootFolder)
                                 }
                         }
                     }
@@ -119,7 +120,7 @@ struct ClientView: View {
             }
         }
         .sheet(isPresented: $createLawsuit, content: {
-                AddLawsuitView()
+            AddLawsuitView()
         })
     }
 }

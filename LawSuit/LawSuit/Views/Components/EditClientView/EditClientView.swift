@@ -60,23 +60,23 @@ struct EditClientView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 0) {
-                    Button{
-                        print("foto")
-                    } label: {
-                        RoundedRectangle(cornerRadius: 19)
-                            .stroke(Color.black, lineWidth: 1)
-                            .frame(width: 134, height: 134)
-                            .overlay {
-                                Image(systemName: "person.crop.rectangle.badge.plus")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 40, height: 29.49)
-                                    .foregroundColor(.secondary)
-                            }
-                    }
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 15)
-                    .buttonStyle(.plain)
+                Button{
+                    print("foto")
+                } label: {
+                    RoundedRectangle(cornerRadius: 19)
+                        .stroke(Color.black, lineWidth: 1)
+                        .frame(width: 134, height: 134)
+                        .overlay {
+                            Image(systemName: "person.crop.rectangle.badge.plus")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40, height: 29.49)
+                                .foregroundColor(.secondary)
+                        }
+                }
+                .padding(.vertical, 10)
+                .padding(.horizontal, 15)
+                .buttonStyle(.plain)
                 
                 VStack(alignment: .leading) {
                     LabeledTextField(label: "Nome Civil", placeholder: "Insira o Nome Civil do Cliente", mandatory: true, textfieldText: $clientName)
@@ -88,7 +88,7 @@ struct EditClientView: View {
                 }
                 
                 .padding()
-               
+                
             }
             HStack {
                 CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
@@ -209,12 +209,12 @@ struct EditClientView: View {
                                      dismissButton: .default(Text("Ok")))
                     case .invalidLawSuitNumber:
                         return Alert(title: Text(""),
-                        message: Text(""),
-                        dismissButton: .default(Text("")))
+                                     message: Text(""),
+                                     dismissButton: .default(Text("")))
                     case .invalidCEP:
                         return Alert(title: Text("Número do processo inválido"),
-                        message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                        dismissButton: .default(Text("Ok")))
+                                     message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
                     }
                 }
             }

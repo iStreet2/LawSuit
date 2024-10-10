@@ -10,9 +10,9 @@ import CoreData
 import SwiftUI
 
 class DragAndDropViewModel: ObservableObject {
-                                    //id da pasta : posicao
+    //id da pasta : posicao
     @Published var folderOffsets: [String: CGSize] = [:]
-                                    //id : frame (quadrado invisivel p detectar colisao)
+    //id : frame (quadrado invisivel p detectar colisao)
     @Published var folderFrames: [String: CGRect] = [:]
     @Published var filePDFOffsets: [String: CGSize] = [:]
     @Published var filePDFFrames: [String: CGRect] = [:]
@@ -33,7 +33,7 @@ class DragAndDropViewModel: ObservableObject {
     func onDragEndedFolder(folder: Folder, context: NSManagedObjectContext) -> Folder? {
         var collisionDetected = false
         var destinationFolder: Folder?
-
+        
         let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
         
         do {
@@ -67,7 +67,7 @@ class DragAndDropViewModel: ObservableObject {
     func onDragEndedFilePDF(filePDF: FilePDF, context: NSManagedObjectContext) -> Folder? {
         var collisionDetected = false
         var destinationFolder: Folder?
-
+        
         let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
         
         do {
@@ -97,35 +97,31 @@ class DragAndDropViewModel: ObservableObject {
             return nil
         }
     }
-
     
+    @MainActor
     func updateFramesFolder(folders: FetchedResults<Folder>) {
         folderOffsets.removeAll()
         folderFrames.removeAll()
-
-        DispatchQueue.main.async {
-            for folder in folders {
-                self.folderOffsets[folder.id!] = .zero
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    if let frame = self.folderFrames[folder.id!] {
-                        self.folderFrames[folder.id!] = frame
-                    }
-                }
+        
+        for folder in folders {
+            self.folderOffsets[folder.id!] = .zero
+            if let frame = self.folderFrames[folder.id!] {
+                self.folderFrames[folder.id!] = frame
             }
         }
     }
     
+    @MainActor
     func updateFramesFilePDF(filesPDF: FetchedResults<FilePDF>) {
         filePDFOffsets.removeAll()
         filePDFFrames.removeAll()
         
         for filePDF in filesPDF {
             self.filePDFOffsets[filePDF.id!] = .zero
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                if let frame = self.filePDFFrames[filePDF.id!] {
-                    self.filePDFFrames[filePDF.id!] = frame
-                }
+            if let frame = self.filePDFFrames[filePDF.id!] {
+                self.filePDFFrames[filePDF.id!] = frame
             }
+            
         }
     }
     
@@ -180,7 +176,7 @@ class DragAndDropViewModel: ObservableObject {
             filePDF.name = url.lastPathComponent
             filePDF.content = try? Data(contentsOf: url)
             filePDF.parentFolder = parentFolder
-
+            
             // Adiciona o novo arquivo ao conjunto de arquivos da pasta pai
             parentFolder.addToFiles(filePDF)
             dataViewModel.coreDataManager.filePDFManager.saveContext()
@@ -199,7 +195,7 @@ class DragAndDropViewModel: ObservableObject {
         folder.name = url.lastPathComponent
         folder.parentFolder = parentFolder
         print("processFolder: Nova pasta criada - \(folder.name!)")
-
+        
         if let contents = try? fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil) {
             for item in contents {
                 if item.pathExtension == "pdf" {
