@@ -41,10 +41,10 @@ struct LawsuitDistributedView: View {
     var body: some View {
         VStack{
             HStack{
-                LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
+                LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", mandatory: true, textfieldText: $lawsuitNumber)
                     .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
                     }
-                LabeledTextField(label: "Data de distribuição", placeholder: "Data de distribuição", textfieldText: $lawsuitActionDate)
+                LabeledTextField(label: "Data de distribuição", placeholder: "Data de distribuição", mandatory: true, textfieldText: $lawsuitActionDate)
                     .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateValidation(newValue)}
                     .frame(width: 140)
             }
@@ -67,10 +67,10 @@ struct LawsuitDistributedView: View {
                     }
                     //MARK: Caso usuário atribuir cliente para o réu
                     if attributedDefendant {
-                        LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", textfieldText: $lawsuitAuthorName)
+                        LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", mandatory: true, textfieldText: $lawsuitAuthorName)
                             .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                     } else {
-                        ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
+                        ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorOrDefendantName: $lawsuitAuthorName)
                             .onChange(of: lawsuitAuthorName) { newValue in
                                 if !newValue.isEmpty {
                                     authorRowState = .selected
@@ -82,7 +82,6 @@ struct LawsuitDistributedView: View {
                     }
                 }
                 Spacer()
-
                 VStack(alignment: .leading){
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
@@ -91,11 +90,11 @@ struct LawsuitDistributedView: View {
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
-                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
+                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", mandatory: true ,textfieldText: $lawsuitDefendantName)
                             .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                         
                     } else {
-                        ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorName: $lawsuitDefendantName)
+                        ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorOrDefendantName: $lawsuitDefendantName)
                             .onChange(of: lawsuitDefendantName) { newValue in
                                 if !newValue.isEmpty {
                                     defendantRowState = .selected
