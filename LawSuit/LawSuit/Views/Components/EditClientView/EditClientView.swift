@@ -179,7 +179,9 @@ struct EditClientView: View {
                 })
                 Spacer()
                 Button {
-                    clientNSImage = clientNSImageBakcup
+                    withAnimation {
+                        clientNSImage = clientNSImageBakcup
+                    }
                     dismiss()
                 } label: {
                     Text("Cancelar")
