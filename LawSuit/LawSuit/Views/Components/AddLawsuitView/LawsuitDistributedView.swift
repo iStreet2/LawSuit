@@ -15,12 +15,12 @@ struct LawsuitDistributedView: View {
     @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
     
     @State var textInput = ""
-    @State var tagType: TagType = .civel
+    @Binding var tagType: TagType
     @State var selectTag = false
     
     //MARK: Variáveis de estado
-    @State var authorRowState: ClientRow = .notSelected
-    @State var defendantRowState: ClientRow = .notSelected
+    @State var authorRowState: ClientRowStateEnum = .notSelected
+    @State var defendantRowState: ClientRowStateEnum = .notSelected
     @State var invalidInformation: InvalidInformation?
     @Binding var lawsuitNumber: String
     @Binding var lawsuitCourt: String
@@ -53,8 +53,7 @@ struct LawsuitDistributedView: View {
                 VStack(alignment: .leading){
                     Text("Área")
                         .bold()
-                    
-                    TagViewComponent(tagViewStyle: .picker)
+                    TagViewPickerComponent(tagType: $tagType, tagViewStyle: .picker)
                 }
                 LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
             }
@@ -71,7 +70,7 @@ struct LawsuitDistributedView: View {
                         LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", textfieldText: $lawsuitAuthorName)
                             .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                     } else {
-                        ClientRowView(clientRow: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
+                        ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
                             .onChange(of: lawsuitAuthorName) { newValue in
                                 if !newValue.isEmpty {
                                     authorRowState = .selected
@@ -94,7 +93,7 @@ struct LawsuitDistributedView: View {
                             .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                         
                     } else {
-                        ClientRowView(clientRow: $defendantRowState, lawsuitAuthorName: $lawsuitDefendantName)
+                        ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorName: $lawsuitDefendantName)
                             .onChange(of: lawsuitDefendantName) { newValue in
                                 if !newValue.isEmpty {
                                     defendantRowState = .selected
@@ -105,14 +104,8 @@ struct LawsuitDistributedView: View {
                             }
                     }
                 }
-                
             }
             .background(Color("ScrollBackground"))
-
-//            Spacer()
-            Spacer()
-            
-            
         }
     }
 }

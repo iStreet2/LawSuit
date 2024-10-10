@@ -40,33 +40,36 @@ struct AddLawsuitView: View {
 
     
     var body: some View {
+        
         VStack(alignment: .leading, spacing: 0){
-            Text("Novo Processo")
-                .bold()
-                .font(.title)
-            VStack(alignment: .leading) {
-                CustomSegmentedControl(
-                    selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
+            VStack(alignment: .leading){
+                Text("Novo Processo")
+                    .bold()
+                    .font(.title)
+                    CustomSegmentedControl(
+                        selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
             }
-            Spacer()
-            
+            .padding(10)
             Divider()
                 .frame(maxWidth: .infinity)
 
             VStack(spacing: 0){
                 if lawsuitType == .distributed {
-                    LawsuitDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, lawsuitActionDate: $lawsuitActionDate, attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                    LawsuitDistributedView(tagType: $tagType, lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, lawsuitActionDate: $lawsuitActionDate, attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if lawsuitType == .notDistributed {
                     LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, lawsuitActionDate: $lawsuitActionDate)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 10)
             .background(Color("ScrollBackground"))
+            .border(.red)
 
+            Divider()
+                .frame(maxWidth: .infinity)
         }
-        .frame(width: 500, height: 350)
+        .frame(width: 500, height: 300)
         .onAppear {
             lawsuitTypeString = lawsuitType.rawValue
         }
@@ -77,10 +80,7 @@ struct AddLawsuitView: View {
                 lawsuitType = .notDistributed
             }
         })
-        
-        Divider()
-            .frame(maxWidth: .infinity)
-        
+
         HStack {
             Spacer()
             
@@ -168,6 +168,7 @@ struct AddLawsuitView: View {
             }
             
         }
+        .padding( 10)
      
     }
     func areFieldsFilled() -> Bool {

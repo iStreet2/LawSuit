@@ -12,6 +12,8 @@ struct LawsuitListViewHeaderContent: View {
     //MARK: Variáveis de estado
     @State var lawsuitClient: Client?
     var lawsuits: FetchedResults<Lawsuit>
+//    @Binding var authorRowState: ClientRowStateEnum
+//    @Binding var defendantRowState: ClientRowStateEnum
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -50,7 +52,8 @@ struct LawsuitListViewHeaderContent: View {
             VStack(spacing: 0) {
                 ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
                     NavigationLink {
-                        DetailedLawSuitView(lawsuit: lawsuit)
+                        DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
+
                     } label: {
                         if let lawsuitClient = self.lawsuitClient {
                             LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
