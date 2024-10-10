@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct EditPhotoButton: View {
+struct RemovePhotoButton: View {
     
     @State var image: Image
     
@@ -21,7 +21,7 @@ struct EditPhotoButton: View {
                 ZStack {
                     Color.black
                         .opacity(0.6)
-                    Image(systemName: "pencil")
+                    Image(systemName: "minus.circle.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 40)
@@ -32,7 +32,7 @@ struct EditPhotoButton: View {
 }
 
 #Preview {
-    EditPhotoButton(image: Image("miragna"))
+    RemovePhotoButton(image: Image("miragna"))
 }
 
 

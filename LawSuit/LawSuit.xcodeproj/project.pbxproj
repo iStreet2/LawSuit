@@ -54,7 +54,7 @@
 		3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6167FF2C7E43AC00260585 /* SideBarView.swift */; };
 		3B6168022C7E45CE00260585 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6168012C7E45CE00260585 /* Sections.swift */; };
 		3B6AB54B2CB712D2000C0FF0 /* AddPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6AB54A2CB712D2000C0FF0 /* AddPhotoButton.swift */; };
-		3B7642082CB843B700196914 /* EditPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7642072CB843B700196914 /* EditPhotoButton.swift */; };
+		3B7642082CB843B700196914 /* RemovePhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B7642072CB843B700196914 /* RemovePhotoButton.swift */; };
 		3B88A41D2C82369400DA111E /* EditLawSuitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B88A41C2C82369400DA111E /* EditLawSuitView.swift */; };
 		3B98F10C2C668B1000C45121 /* LawSuitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B98F10B2C668B1000C45121 /* LawSuitApp.swift */; };
 		3B98F10E2C668B1000C45121 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B98F10D2C668B1000C45121 /* ContentView.swift */; };
@@ -218,7 +218,7 @@
 		3B6167FF2C7E43AC00260585 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
 		3B6168012C7E45CE00260585 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
 		3B6AB54A2CB712D2000C0FF0 /* AddPhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoButton.swift; sourceTree = "<group>"; };
-		3B7642072CB843B700196914 /* EditPhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoButton.swift; sourceTree = "<group>"; };
+		3B7642072CB843B700196914 /* RemovePhotoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhotoButton.swift; sourceTree = "<group>"; };
 		3B88A41C2C82369400DA111E /* EditLawSuitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLawSuitView.swift; sourceTree = "<group>"; };
 		3B98F10B2C668B1000C45121 /* LawSuitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitApp.swift; sourceTree = "<group>"; };
 		3B98F10D2C668B1000C45121 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -415,7 +415,7 @@
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
 				3B88A41C2C82369400DA111E /* EditLawSuitView.swift */,
 				3B6AB54A2CB712D2000C0FF0 /* AddPhotoButton.swift */,
-				3B7642072CB843B700196914 /* EditPhotoButton.swift */,
+				3B7642072CB843B700196914 /* RemovePhotoButton.swift */,
 			);
 			path = ClientDocumentsView;
 			sourceTree = "<group>";
@@ -857,7 +857,7 @@
 				DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */,
 				E94C01662CA1E2C100F6316F /* EventMonitorProtocol2.swift in Sources */,
 				3B423E802C80E2E1005B1B7F /* FilePDFGridView.swift in Sources */,
-				3B7642082CB843B700196914 /* EditPhotoButton.swift in Sources */,
+				3B7642082CB843B700196914 /* RemovePhotoButton.swift in Sources */,
 				3BD40B312C6D40FE004048FA /* LawyerManager.swift in Sources */,
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
 				08A2B0CB2C8F963B00719571 /* SegmentosEnums.swift in Sources */,

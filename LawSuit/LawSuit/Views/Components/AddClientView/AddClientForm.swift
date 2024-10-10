@@ -59,16 +59,12 @@ struct AddClientForm: View {
                             ZStack {
                                 if let imageData {
                                     Button {
-                                        //Adicionar foto ao cliente
-                                        folderViewModel.importPhoto { data in
-                                            if let data = data {
-                                                self.photo = data
-                                                self.imageData = NSImage(data: data)
-                                            }
+                                        withAnimation(.easeInOut) {
+                                            self.imageData = nil
                                         }
                                     } label: {
                                         if edit {
-                                            EditPhotoButton(image: Image(nsImage: imageData))
+                                            RemovePhotoButton(image: Image(nsImage: imageData))
                                                 .cornerRadius(19)
                                         } else {
                                             Image(nsImage: imageData)
@@ -78,6 +74,7 @@ struct AddClientForm: View {
                                                 .cornerRadius(19)
                                         }
                                     }
+                                    .transition(.scale)
                                     .buttonStyle(.plain)
                                     .onHover { hovering in
                                         if hovering {
@@ -96,8 +93,10 @@ struct AddClientForm: View {
                                         //Adicionar foto ao cliente
                                         folderViewModel.importPhoto { data in
                                             if let data = data {
-                                                self.photo = data
-                                                self.imageData = NSImage(data: data)
+                                                withAnimation(.bouncy) {
+                                                    self.photo = data
+                                                    self.imageData = NSImage(data: data)
+                                                }
                                             }
                                         }
                                     } label: {

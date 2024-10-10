@@ -50,7 +50,7 @@ struct EditClientView: View {
     let maritalStatusLimit = 10
     
     @State var deleteAlert = false
-    @State var edit = false
+    @State var remove = false
     @ObservedObject var client: Client
     @Binding var deleted: Bool
     @Binding var clientNSImage: NSImage?
@@ -68,16 +68,12 @@ struct EditClientView: View {
                 Group {
                     if let clientNSImage {
                         Button {
-                            //Adicionar foto ao cliente
-                            folderViewModel.importPhoto { data in
-                                if let data = data {
-                                    self.clientImageData = data
-                                    self.clientNSImage = NSImage(data: data)
-                                }
+                            withAnimation {
+                                self.clientNSImage = nil
                             }
                         } label: {
-                            if edit {
-                                EditPhotoButton(image: Image(nsImage: clientNSImage))
+                            if remove {
+                                RemovePhotoButton(image: Image(nsImage: clientNSImage))
                                     .cornerRadius(19)
                             } else {
                                 Image(nsImage: clientNSImage)
@@ -87,15 +83,16 @@ struct EditClientView: View {
                                     .cornerRadius(19)
                             }
                         }
+                        .transition(.scale)
                         .buttonStyle(.plain)
                         .onHover { hovering in
                             if hovering {
                                 withAnimation(.bouncy) {
-                                    edit = true
+                                    remove = true
                                 }
                             } else {
                                 withAnimation(.bouncy) {
-                                    edit = false
+                                    remove = false
                                 }
                             }
                         }
@@ -105,8 +102,10 @@ struct EditClientView: View {
                             //Adicionar foto ao cliente
                             folderViewModel.importPhoto { data in
                                 if let data = data {
-                                    self.clientImageData = data
-                                    self.clientNSImage = NSImage(data: data)
+                                    withAnimation(.bouncy) {
+                                        self.clientImageData = data
+                                        self.clientNSImage = NSImage(data: data)
+                                    }
                                 }
                             }
                         } label: {

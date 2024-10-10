@@ -37,17 +37,6 @@ struct ClientInfoView: View {
                         .scaledToFill()
                         .frame(width: 90, height: 90)
                         .cornerRadius(10)
-                } else {
-                    Button{
-                        folderViewModel.importPhoto { data in
-                            if let data = data {
-                                dataViewModel.coreDataManager.clientManager.addPhotoOnClient(client: client, photo: data)
-                            }
-                        }
-                    } label: {
-                        AddPhotoButton()
-                    }
-                    .buttonStyle(.plain)
                 }
                 VStack(alignment: .leading) {
                     HStack {
