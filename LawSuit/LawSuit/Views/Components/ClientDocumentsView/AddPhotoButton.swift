@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct AddPhotoButton: View {
+    
     var body: some View {
         RoundedRectangle(cornerRadius: 19)
             .stroke(Color.black, lineWidth: 1)
