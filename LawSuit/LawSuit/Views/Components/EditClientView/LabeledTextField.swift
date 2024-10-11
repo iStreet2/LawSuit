@@ -47,7 +47,6 @@ struct LabeledTextField: View {
             }
             .background {
                 ZStack {
-                    
                     RoundedRectangle(cornerRadius: 5)
                         .foregroundStyle(.white)
                         .shadow(color: .black.opacity(0.3), radius: 2.5)
