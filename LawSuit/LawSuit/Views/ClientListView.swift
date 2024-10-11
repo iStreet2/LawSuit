@@ -47,7 +47,7 @@ struct ClientListView: View {
             List(clients, id: \.id) { client in
                 Button(action: {
                     
-                    if NSEvent.modifierFlags.contains(.shift) {
+                    if NSEvent.modifierFlags.contains(.command) {
                         if selectedClients.contains(client) {
                             selectedClients.remove(client)
                         } else {
@@ -113,14 +113,15 @@ struct ClientListView: View {
                         } else {
                             Button {
                                 deleteAlert.toggle()
+                                clientToDelete = client
                             } label: {
-                                Image("trash")
+                                Image(systemName: "trash")
                                 Text("Deletar")
                             }
                             Button {
                                 
                             } label: {
-                                Image("pencil")
+                                Image(systemName: "pencil")
                                 Text("Editar")
                             }
                         }
@@ -147,7 +148,7 @@ struct ClientListView: View {
                             }
                         } else {
                             if let clientToDelete = clientToDelete,
-                               let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: clientToDelete) {
+                            let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchFromClient(client: clientToDelete) {
                                 for lawsuit in lawsuits {
                                     dataViewModel.coreDataManager.lawsuitManager.deleteLawsuit(lawsuit: lawsuit)
                                 }
@@ -155,8 +156,7 @@ struct ClientListView: View {
                                 dataViewModel.coreDataManager.clientManager.deleteClient(client: clientToDelete)
                                 navigationViewModel.selectedClient = nil
                                 deleted.toggle()
-                            } else {
-                                print("Error fetching lawsuits of client")
+                                self.clientToDelete = nil
                             }
                         }
                         deleteAlert = false

@@ -40,7 +40,7 @@ struct SideBarView: View {
                         folderViewModel.resetFolderStack()
                         folderViewModel.openFolder(folder: selectedClient.rootFolder)
                     }
-                    navigationVisibility = .all
+                    navigationVisibility = .automatic
                 }
             }
             ZStack {
