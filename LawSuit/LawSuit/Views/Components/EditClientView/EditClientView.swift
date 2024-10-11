@@ -168,6 +168,9 @@ struct EditClientView: View {
                             }
                             // Após deletar os processos, deletar o cliente
                             dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+									
+									dataViewModel.spotlightManager.removeIndexedObject(client)
+									
                             navigationViewModel.selectedClient = nil
                             deleted.toggle()
                             dismiss()
