@@ -39,35 +39,44 @@ struct LawsuitDistributedView: View {
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
     var body: some View {
-        VStack{
-            HStack{
-                LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", textfieldText: $lawsuitNumber)
+        VStack {
+            HStack {
+                LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", mandatory: true, textfieldText: $lawsuitNumber)
                     .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
                     }
-                LabeledTextField(label: "Data de distribuição", placeholder: "Data de distribuição", textfieldText: $lawsuitActionDate)
-                    .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateValidation(newValue)}
+                LabeledTextField(label: "Data de distribuição", placeholder: "Data de distribuição", mandatory: true, textfieldText: $lawsuitActionDate)
+                    .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateFormat(newValue)}
                     .frame(width: 140)
             }
             
-            HStack{
-                VStack(alignment: .leading){
-                    Text("Área")
-                        .bold()
+            HStack {
+                VStack(alignment: .leading) {
+                    HStack(alignment: .top, spacing: 1) {
+                        Text("Área")
+                            .bold()
+                        Text("*")
+                            .foregroundStyle(.wine)
+                    }
                     TagViewPickerComponent(tagType: $tagType, tagViewStyle: .picker)
                 }
-                LabeledTextField(label: "Vara", placeholder: "Vara", textfieldText: $lawsuitCourt)
+                Spacer()
+
+                LabeledTextField(label: "Vara", placeholder: "Vara", mandatory: true, textfieldText: $lawsuitCourt)
+                    .padding(.top)
+                    .frame(width: 360)
+
             }
             
-            HStack(alignment: .top){
-                VStack(alignment: .leading){
+            HStack(alignment: .top) {
+                VStack(alignment: .leading) {
                     //MARK: Caso usuário não selecionou nada ainda
                     if !attributedDefendant {
-                        EditLawsuitAuthorComponent(button: "Atribuir Cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
-                        
+                        EditLawsuitAuthorComponent(button: "Atribuir Cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant, required: true)
                     }
                     //MARK: Caso usuário atribuir cliente para o réu
                     if attributedDefendant {
                         LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", textfieldText: $lawsuitAuthorName)
+                            .frame(width: 218)
                             .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                     } else {
                         ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
@@ -86,13 +95,15 @@ struct LawsuitDistributedView: View {
                 VStack(alignment: .leading){
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
-                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
+                        EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant, required: true)
 
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
                         LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
+                            .frame(width: 218)
                             .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
+                        
                         
                     } else {
                         ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorName: $lawsuitDefendantName)
@@ -108,6 +119,7 @@ struct LawsuitDistributedView: View {
                     }
                 }
             }
+            .padding(.top)
             .background(Color("ScrollBackground"))
         }
     }

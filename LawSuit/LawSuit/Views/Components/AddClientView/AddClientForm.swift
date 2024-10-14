@@ -110,7 +110,7 @@ struct AddClientForm: View {
                                     .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
                                 LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $birthDate)
                                     .onReceive(Just(birthDate)) { newValue in
-                                        birthDate = textFieldDataViewModel.dateValidation(newValue)
+                                        birthDate = textFieldDataViewModel.dateFormat(newValue)
                                     }
                                 
                             }

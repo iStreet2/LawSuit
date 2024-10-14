@@ -117,7 +117,7 @@ class TextFieldDataViewModel: ObservableObject {
         return formatLawsuit
     }
     
-    func dateValidation(_ date: String) -> String {
+    func dateFormat(_ date: String) -> String {
         let numbers = date.filter { "0987654321".contains($0) } 
         var formatDate = ""
         
@@ -128,6 +128,10 @@ class TextFieldDataViewModel: ObservableObject {
             formatDate.append(character)
         }
         return formatDate
+    }
+    
+    func dateValidation(_ date: String) -> {
+        
     }
   
 }

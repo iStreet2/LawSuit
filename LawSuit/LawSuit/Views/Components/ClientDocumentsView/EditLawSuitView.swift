@@ -44,7 +44,7 @@ struct EditLawSuitView: View {
                     LabeledTextField(label: "Nº do Processo", placeholder: "", textfieldText: $lawsuitNumber)
                         .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber) }
                     LabeledTextField(label: "Data de distribuição", placeholder: "", textfieldText: $lawsuitActionDate)
-                        .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateValidation(newValue)}
+                        .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateFormat(newValue)}
                         .frame(width: 140)
                 }
                 
@@ -54,12 +54,13 @@ struct EditLawSuitView: View {
                             .bold()
                         TagViewPickerComponent(tagType: $tagType, tagViewStyle: .picker)
                     }
+                    Spacer()
                     LabeledTextField(label: "Vara", placeholder: "", textfieldText: $lawsuitCourt)
                         .padding(.top)
-
+                        .frame(width: 330)
                 }
                                 
-                HStack {
+                HStack(alignment: .top) {
                     VStack(alignment: .leading) {
                         //MARK: Caso usuário não selecionou nada ainda
                         if !attributedDefendant {
@@ -68,6 +69,7 @@ struct EditLawSuitView: View {
                         //MARK: Caso usuário atribuir cliente para o réu
                         if attributedDefendant {
                             LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", textfieldText: $lawsuitAuthorName)
+                                .frame(width: 218)
                                 .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                             
                             //MARK: - Caso o usuário atribuir cliente para o autor
@@ -93,6 +95,7 @@ struct EditLawSuitView: View {
                         //MARK: Caso o usuário tenha adicionado um cliente no autor
                         if attributedAuthor {
                             LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
+                                .frame(width: 218)
                                 .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                             
                         } else {
@@ -186,6 +189,7 @@ struct EditLawSuitView: View {
                     Text("Salvar")
                 })
                 .buttonStyle(.borderedProminent)
+                .tint(.black)
                 .alert(item: $invalidInformation) { error in
                     switch error {
                     case .missingInformation:

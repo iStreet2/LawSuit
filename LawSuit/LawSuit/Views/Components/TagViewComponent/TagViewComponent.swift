@@ -89,34 +89,34 @@ enum TagType: CaseIterable, Identifiable {
     var tagColorForeground: Color {
         switch self {
         case .trabalhista:
-            return Color(.trabalhistaOrange)
+            return Color(.trabalhistaForeground)
         case .penal:
-            return Color(.penalPurple)
+            return Color(.penalForeground)
         case .tributario:
-            return Color(.tributarioBlueForeground)
+            return Color(.tributarioForeground)
         case .ambiental:
-            return Color(.ambientalGreen)
+            return Color(.ambientalForeground)
         case .civel:
-            return Color(.civelRed)
+            return Color(.civelForeground)
         case .falencia:
-            return Color(.falenciaYellowForeground)
+            return Color(.falenciaForeground)
         }
     }
     
     var tagColorBackground: Color {
         switch self {
         case .trabalhista:
-            return Color(.trabalhistaOrange).opacity(0.2)
+            return Color(.trabalhistaBackground)
         case .penal:
-            return Color(.penalPurple).opacity(0.2)
+            return Color(.penalBackground)
         case .tributario:
-            return Color(.tributarioBlueBackground).opacity(0.2)
+            return Color(.tributarioBackground)
         case .ambiental:
-            return Color(.ambientalGreen).opacity(0.2)
+            return Color(.ambientalBackground)
         case .civel:
-            return Color(.civelRed).opacity(0.2)
+            return Color(.civelBackground)
         case .falencia:
-            return Color(.falenciaYellowBackground).opacity(0.2)
+            return Color(.falenciaBackground)
         }
     }
 }

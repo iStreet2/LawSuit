@@ -16,10 +16,10 @@ struct ClientRowSelectView: View {
         
         ZStack{
             RoundedRectangle(cornerRadius: 8)
-                .foregroundStyle(.tertiary.opacity(0.05))
+                .foregroundStyle(.tertiary.opacity(0.2))
                .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.secondary.opacity(0.05), lineWidth: 1)
+                .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
         )
 
             
