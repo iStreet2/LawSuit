@@ -54,16 +54,12 @@ struct DocumentGridView: View {
                 .contextMenu {
                     Button(action: {
                         dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
-                        dragAndDropViewModel.updateFramesFolder(folders: folders)
-                        dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                     }, label: {
                         Text("Nova Pasta")
                         Image(systemName: "folder")
                     })
                     Button {
                         folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
-                        dragAndDropViewModel.updateFramesFolder(folders: folders)
-                        dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                     } label: {
                         Text("Importar PDF")
                         Image(systemName: "doc")
