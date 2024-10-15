@@ -46,7 +46,6 @@ struct ClientListView: View {
             .padding()
             List(clients, id: \.id) { client in
                 Button(action: {
-                    
                     if NSEvent.modifierFlags.contains(.command) {
                         if selectedClients.contains(client) {
                             selectedClients.remove(client)
@@ -55,12 +54,12 @@ struct ClientListView: View {
                         }
                     } else {
                         navigationViewModel.selectedClient = client
+                        navigationViewModel.isShowingDetailedLawsuitView = false
                         folderViewModel.resetFolderStack()
                         folderViewModel.openFolder(folder: client.rootFolder)
                         selectedClients.removeAll()
                         deleted = false
                     }
-                    
                 }, label: {
                     HStack {
                         if navigationViewModel.selectedClient == client && selectedClients.isEmpty {

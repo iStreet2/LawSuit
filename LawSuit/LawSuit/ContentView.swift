@@ -54,26 +54,55 @@ struct ContentView: View {
                     }
                     
                 } detail: {
-                    switch selectedView {
-                    case .clients:
-                        if let selectedClient = navigationViewModel.selectedClient {
-                            ClientView(client: selectedClient, deleted: $deleted)
-                                .background(.white)
-                        } else {
-                            VStack{
-                                Text("Selecione um cliente")
-                                    .padding()
-                                    .foregroundColor(.gray)
-                            }
-                            .background(.white)
-                        }
-                        
-                    case .lawsuits:
-                        LawsuitListView()
-                            .background(.white)
-                    }
+
+							 switch selectedView {
+							 case .clients:
+								 if let selectedClient = navigationViewModel.selectedClient {
+									 NavigationStack {
+										 ClientView(client: selectedClient, deleted: $deleted)
+											 .background(.white)
+											 .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
+												 if let lawsuit = navigationViewModel.lawsuitToShow {
+													 DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
+													 //													 .onAppear {
+													 //														 navigationViewModel.clearLawsuitAttributes()
+													 //													 }
+												 }
+											 }
+									 }
+								 } else {
+									 VStack{
+										 Text("Selecione um cliente")
+											 .padding()
+											 .foregroundColor(.gray)
+									 }
+									 .background(.white)
+//									 .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
+//										 if let lawsuit = navigationViewModel.lawsuitToShow {
+//											 DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
+////												 .onAppear {
+////													 navigationViewModel.clearLawsuitAttributes()
+////												 }
+//										 }
+//									 }
+								 }
+								 
+							 case .lawsuits:
+								 LawsuitListView()
+									 .background(.white)
+//									 .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
+//										 if let lawsuit = navigationViewModel.lawsuitToShow {
+//											 DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
+////												 .onAppear {
+////													 navigationViewModel.clearLawsuitAttributes()
+////												 }
+//										 }
+//									 }
+							 }
+							 
+						 }
                 }
-            }
+            
         }
         .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {

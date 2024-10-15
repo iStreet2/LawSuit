@@ -17,7 +17,7 @@ class ClientManager {
         self.context = context
     }
     
-    func createClient(name: String, socialName: String?, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String, photo: Data? = nil) {
+    func createClient(name: String, socialName: String?, occupation: String, rg: String, cpf: String, lawyer: Lawyer, affiliation: String, maritalStatus: String, nationality: String, birthDate: Date, cep: String, address: String, addressNumber: String, neighborhood: String, complement: String, state: String, city: String, email: String, telephone: String, cellphone: String, photo: Data? = nil) -> Client {
         let client = Client(context: context)
         let folder = Folder(context: context)
         folder.name = "\(name)"
@@ -47,6 +47,7 @@ class ClientManager {
         client.cellphone = cellphone
         client.photo = photo
         saveContext()
+		 return client
     }
     
     func deleteClient(client: Client/*, lawyer: Lawyer*/) {
