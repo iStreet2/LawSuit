@@ -16,6 +16,7 @@ struct SideBarView: View {
     
     //MARK: Variáveis de estado
     @Binding var selectedView: SelectedView
+    @Binding var navigationVisibility: NavigationSplitViewVisibility
     
     var body: some View {
         VStack {
@@ -39,6 +40,7 @@ struct SideBarView: View {
                         folderViewModel.resetFolderStack()
                         folderViewModel.openFolder(folder: selectedClient.rootFolder)
                     }
+                    navigationVisibility = .automatic
                 }
             }
             ZStack {

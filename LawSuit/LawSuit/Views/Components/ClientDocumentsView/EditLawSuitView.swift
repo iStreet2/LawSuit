@@ -72,14 +72,16 @@ struct EditLawSuitView: View {
                             
                             //MARK: - Caso o usuário atribuir cliente para o autor
                         } else {
-                            ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
+                            ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorOrDefendantName: $lawsuitAuthorName)
                                 .onChange(of: lawsuitAuthorName) { newValue in
-                                    if !newValue.isEmpty {
-                                        authorRowState = .selected
-                                        defendantRowState = .notSelected
-                                    } else {
-                                        authorRowState = .notSelected
-                                        attributedAuthor = false
+                                    withAnimation {
+                                        if !newValue.isEmpty {
+                                            authorRowState = .selected
+                                            defendantRowState = .notSelected
+                                        } else {
+                                            authorRowState = .notSelected
+                                            attributedAuthor = false
+                                        }
                                     }
                                 }
                         }
@@ -96,14 +98,16 @@ struct EditLawSuitView: View {
                                 .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                             
                         } else {
-                            ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorName: $lawsuitDefendantName)
+                            ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorOrDefendantName: $lawsuitDefendantName)
                                 .onChange(of: lawsuitDefendantName) { newValue in
-                                    if !newValue.isEmpty {
-                                        defendantRowState = .selected
-                                        authorRowState = .notSelected
-                                    } else {
-                                        defendantRowState = .notSelected
-                                        attributedDefendant = false
+                                    withAnimation {
+                                        if !newValue.isEmpty {
+                                            defendantRowState = .selected
+                                            authorRowState = .notSelected
+                                        } else {
+                                            defendantRowState = .notSelected
+                                            attributedDefendant = false
+                                        }
                                     }
                                 }
                         }

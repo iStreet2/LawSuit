@@ -25,7 +25,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
-    @State var navigationVisibility: NavigationSplitViewVisibility = .automatic
+    @State var navigationVisibility: NavigationSplitViewVisibility = .all
     
     var isLawsuit: Bool {
         switch selectedView {
@@ -39,7 +39,7 @@ struct ContentView: View {
     var body: some View {
         HStack (spacing: 0){
             
-            SideBarView(selectedView: $selectedView)
+            SideBarView(selectedView: $selectedView, navigationVisibility: $navigationVisibility)
             
             ZStack{
                 Color.white

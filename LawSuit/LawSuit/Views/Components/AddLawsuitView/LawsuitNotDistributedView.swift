@@ -41,7 +41,7 @@ struct LawsuitNotDistributedView: View {
                     VStack(alignment: .leading) {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Autor", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "author", attributedAuthor: $attributedAuthor, attributedDefendant: .constant(false))
                         
-                        ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
+                        ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorOrDefendantName: $lawsuitAuthorName)
                             .onChange(of: lawsuitAuthorName) { newValue in
                                 if !newValue.isEmpty {
                                     authorRowState = .selected
