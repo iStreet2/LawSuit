@@ -18,7 +18,11 @@ struct FilePDFIconView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) var folders: FetchedResults<Folder>
+    @FetchRequest(sortDescriptors: []) var files: FetchedResults<FilePDF>
+    
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
     
     init(filePDF: FilePDF, parentFolder: Folder) {
         self.filePDF = filePDF
@@ -112,6 +116,8 @@ struct FilePDFIconView: View {
                 // Ação para excluir a pasta
                 withAnimation(.easeIn) {
                     dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
+                    dragAndDropViewModel.updateFramesFolder(folders: folders)
+                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: files)
                 }
             }) {
                 Text("Excluir")

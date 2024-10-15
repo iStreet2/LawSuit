@@ -26,8 +26,28 @@ class FolderManager {
     }
     
     func deleteFolder(parentFolder: Folder, folder: Folder) {
+        // Deletar arquivos na pasta
+        if let files = folder.files as? Set<FilePDF> {
+            for file in files {
+                folder.removeFromFiles(file)
+                context.delete(file) // Deletar arquivo do contexto
+            }
+        }
+
+        // Deletar subpastas recursivamente
+        if let subFolders = folder.folders as? Set<Folder> {
+            for subFolder in subFolders {
+                deleteFolder(parentFolder: folder, folder: subFolder) // Chama recursivamente para subpastas
+            }
+        }
+
+        // Remover a pasta atual do parent e deletar
         parentFolder.removeFromFolders(folder)
+
+        // Deletar a pasta do contexto
         context.delete(folder)
+
+        // Salvar o contexto
         saveContext()
     }
     

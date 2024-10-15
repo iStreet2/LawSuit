@@ -22,6 +22,8 @@ struct FolderIconView: View {
     @State var folderName: String
     
     //MARK: CoreData
+    @FetchRequest(sortDescriptors: []) var folders: FetchedResults<Folder>
+    @FetchRequest(sortDescriptors: []) var files: FetchedResults<FilePDF>
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
@@ -110,6 +112,8 @@ struct FolderIconView: View {
                 // Ação para excluir a pasta
                 withAnimation(.easeIn) {
                     dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                    dragAndDropViewModel.updateFramesFolder(folders: folders)
+                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: files)
                 }
             }) {
                 Text("Excluir")

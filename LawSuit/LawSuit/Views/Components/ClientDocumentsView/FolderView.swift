@@ -56,10 +56,14 @@ struct FolderView: View {
                             if let destinationFolder = dragAndDropViewModel.onDragEndedFolder(folder: folder, context: context) {
                                 withAnimation(.easeIn) {
                                     dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
+                                    dragAndDropViewModel.updateFramesFolder(folders: folders)
+                                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                                     dragAndDropViewModel.folderOffsets[folder.id!] = .zero
                                 }
                             } else {
                                 withAnimation(.bouncy) {
+                                    dragAndDropViewModel.updateFramesFolder(folders: folders)
+                                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                                     dragAndDropViewModel.folderOffsets[folder.id!] = .zero
                                 }
                             }

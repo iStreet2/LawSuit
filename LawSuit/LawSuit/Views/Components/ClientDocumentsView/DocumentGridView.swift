@@ -28,12 +28,8 @@ struct DocumentGridView: View {
     var openFolder: Folder
     
     var body: some View {
-        //senao criaria um openFolder novo e não abriria o nosso
-        //        if let openFolder = folderViewModel.getOpenFolder() {
         GeometryReader { geometry in
-            
             VStack(alignment: .leading, spacing: 0) {
-                
                 let columns = Int(geometry.size.width / (itemWidth + spacing))
                 let gridItems = Array(repeating: GridItem(.flexible(), spacing: spacing), count: max(columns, 1))
                 ScrollView {
@@ -58,12 +54,16 @@ struct DocumentGridView: View {
                 .contextMenu {
                     Button(action: {
                         dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
+                        dragAndDropViewModel.updateFramesFolder(folders: folders)
+                        dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                     }, label: {
                         Text("Nova Pasta")
                         Image(systemName: "folder")
                     })
                     Button {
                         folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
+                        dragAndDropViewModel.updateFramesFolder(folders: folders)
+                        dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                     } label: {
                         Text("Importar PDF")
                         Image(systemName: "doc")
@@ -79,7 +79,6 @@ struct DocumentGridView: View {
             .padding(.leading, 10)
             .background(.black.opacity(0.01))
         }
-        //.border(Color(.quaternaryLabelColor))
         .frame(maxHeight: .infinity)
     }
 }

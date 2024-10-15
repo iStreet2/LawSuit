@@ -57,6 +57,7 @@ struct FilePDFGridView: View {
                             if let destinationFolder = dragAndDropViewModel.onDragEndedFilePDF(filePDF: file, context: context) {
                                 withAnimation(.easeIn) {
                                     dataViewModel.coreDataManager.filePDFManager.moveFilePDF(parentFolder: parentFolder, movingFilePDF: file, destinationFolder: destinationFolder)
+                                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                                     dragAndDropViewModel.filePDFOffsets[file.id!] = .zero
                                 }
                             } else {
