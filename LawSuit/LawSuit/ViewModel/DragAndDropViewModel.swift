@@ -21,12 +21,30 @@ class DragAndDropViewModel: ObservableObject {
         folderOffsets[folder.id!] = gesture.translation //cada pixel q eu ando, pega CGSize da posicao da folder
         let frame = geometry.frame(in: .global).offsetBy(dx: gesture.translation.width, dy: gesture.translation.height)
         folderFrames[folder.id!] = frame
+        
+        
+        //MARK: Código novo
+        folder.width = Double(gesture.translation.width)
+        folder.height = Double(gesture.translation.height)
+        
+        let frame2 = geometry.frame(in: .global).offsetBy(dx: gesture.translation.width, dy: gesture.translation.height)
+        folder.frameX = Double(frame2.minX)
+        folder.frameY = Double(frame2.minY)
     }
     
     func onDragChangedFilePDF(gesture: DragGesture.Value, filePDF: FilePDF, geometry: GeometryProxy) {
         filePDFOffsets[filePDF.id!] = gesture.translation
         let frame = geometry.frame(in: .global).offsetBy(dx: gesture.translation.width, dy: gesture.translation.height)
         filePDFFrames[filePDF.id!] = frame
+        
+        //MARK: Código novo
+        filePDF.width = Double(gesture.translation.width)
+        filePDF.height = Double(gesture.translation.height)
+        
+        let frame2 = geometry.frame(in: .global).offsetBy(dx: gesture.translation.width, dy: gesture.translation.height)
+        filePDF.frameX = Double(frame2.minX)
+        filePDF.frameY = Double(frame2.minY)
+        
     }
     
     
@@ -53,6 +71,42 @@ class DragAndDropViewModel: ObservableObject {
                 }
             }
             
+            if collisionDetected, let destination = destinationFolder {
+                return destination
+            } else {
+                return nil
+            }
+        } catch {
+            print("Erro ao realizar o fetch request: \(error)")
+            return nil
+        }
+    }
+    
+    func newOnDragEndedFolder(movingFolder: Folder, context: NSManagedObjectContext) -> Folder? {
+        var collisionDetected = false
+        var destinationFolder: Folder?
+        
+        let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+        
+        do {
+            let folders = try context.fetch(fetchRequest)
+            
+            let movingFolderFrame = CGRect(x: movingFolder.frameX, y: movingFolder.frameY, width: movingFolder.width, height: movingFolder.height)
+            
+            for folder in folders {
+                if folder.id != movingFolder.id {
+                    let currentFolderFrame = CGRect(x: folder.frameX, y: folder.frameY, width: folder.width, height: folder.height)
+                    if currentFolderFrame.intersects(movingFolderFrame) {
+                        if let destination = folders.first(where: { $0.id == folder.id }) {
+                            destinationFolder = destination
+                        } else {
+                            print("Não encontrou pasta desitno")
+                        }
+                        collisionDetected = true
+                        break
+                    }
+                }
+            }
             if collisionDetected, let destination = destinationFolder {
                 return destination
             } else {
@@ -98,6 +152,40 @@ class DragAndDropViewModel: ObservableObject {
         }
     }
     
+    func newOnDeagEndedFilePDF(movingFilePDF: FilePDF, context: NSManagedObjectContext) -> Folder? {
+        var collisionDetected = false
+        var destinationFolder: Folder?
+        
+        let fetchRequest: NSFetchRequest<Folder> = Folder.fetchRequest()
+        
+        do {
+            let folders = try context.fetch(fetchRequest)
+            
+            let movingFileFrame = CGRect(x: movingFilePDF.frameX, y: movingFilePDF.frameY, width: movingFilePDF.width, height: movingFilePDF.height)
+            
+            for folder in folders {
+                let currentFolderFrame = CGRect(x: folder.frameX, y: folder.frameY, width: folder.width, height: folder.height)
+                if currentFolderFrame.intersects(movingFileFrame) {
+                    if let destination = folders.first(where: { $0.id == folder.id }) {
+                        destinationFolder = destination
+                    } else {
+                        print("Não encontrou pasta desitno")
+                    }
+                    collisionDetected = true
+                    break
+                }
+            }
+            if collisionDetected, let destination = destinationFolder {
+                return destination
+            } else {
+                return nil
+            }
+        } catch {
+            print("Erro ao realizar o fetch request: \(error)")
+            return nil
+        }
+    }
+    
     @MainActor
     func updateFramesFolder(folders: FetchedResults<Folder>) {
         folderOffsets.removeAll()
@@ -108,6 +196,13 @@ class DragAndDropViewModel: ObservableObject {
             if let frame = self.folderFrames[folder.id!] {
                 self.folderFrames[folder.id!] = frame
             }
+        }
+    }
+    
+    func newUpdateFramesFolder(folders: FetchedResults<Folder>) {
+        for folder in folders {
+            folder.width = 0
+            folder.height = 0
         }
     }
     
@@ -122,6 +217,13 @@ class DragAndDropViewModel: ObservableObject {
                 self.filePDFFrames[filePDF.id!] = frame
             }
             
+        }
+    }
+    
+    func newUpdateFramesFilePDF(filesPDF: FetchedResults<FilePDF>) {
+        for filePDF in filesPDF {
+            filePDF.width = 0
+            filePDF.height = 0
         }
     }
     
