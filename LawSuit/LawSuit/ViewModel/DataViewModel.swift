@@ -41,7 +41,7 @@ class DataViewModel: ObservableObject {
 //        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter)
 //        self.lawsuitNetworkService = LawsuitNetworkingService(updateManager: UpdateManager(context: context))
 		 self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
-		 self.authenticationManager = AuthenticationManager()
+		 self.authenticationManager = AuthenticationManager(context: context)
     }
 	
 	func fetchCoreDataObjects<T: NSManagedObject>(for model: CoreDataModelsEnumerator) -> [T] {

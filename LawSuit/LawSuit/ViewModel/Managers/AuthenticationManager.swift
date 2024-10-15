@@ -11,6 +11,11 @@ import AuthenticationServices
 class AuthenticationManager: ObservableObject {
     
     // TODO: Talvez seja necessário declarar um modelo novo para salvar o email do mano após ele se autenticar rs
+	var context: NSManagedObjectContext
+	
+	init(context: NSManagedObjectContext) {
+		self.context = context
+	}
 	
 	func handleSuccessfulLogin(with authentication: ASAuthorization) {
 		if let userCredential = authentication.credential as? ASAuthorizationAppleIDCredential {
@@ -23,6 +28,8 @@ class AuthenticationManager: ObservableObject {
 			if userCredential.authorizedScopes.contains(.email) {
 				print(userCredential.email)
 			}
+			
+			checkForUserCreation(email: userCredential.email ?? "EMAIL NOT PASSED", fullName: userCredential.fullName?.namePrefix ?? "FULL NAME NOT PASSED" , userKey: userCredential.user)
 		}
 	}
 	
@@ -30,5 +37,31 @@ class AuthenticationManager: ObservableObject {
 		print("Error during sign-up: \(error)")
 	}
 	
+	func checkForUserCreation(email: String, fullName: String, userKey: String) {
+		let userFetchRequest: NSFetchRequest<User> = User.fetchRequest()
+		
+		do {
+			let result = try context.fetch(userFetchRequest)
+			
+			if result.isEmpty {
+				createUser(email: email, fullName: fullName, userKey: userKey)
+			}
+		} catch {
+			print("Error fetching users: \(error)")
+		}
+	}
+	
+	func createUser(email: String, fullName: String, userKey: String) {
+		let user = User(context: context)
+		user.email = email
+		user.fullName = fullName
+		user.userKey = userKey
+		
+		do {
+			try context.save()
+		} catch {
+			print("Error saving user: \(error)")
+		}
+	}
 	
 }
