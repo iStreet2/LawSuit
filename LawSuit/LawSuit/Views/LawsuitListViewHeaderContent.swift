@@ -50,9 +50,11 @@ struct LawsuitListViewHeaderContent: View {
 		ScrollView {
 			VStack(spacing: 0) {
 				ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
-					NavigationLink {
+					NavigationLink/*(isActive: $navigationViewModel.isShowingDetailedLawsuitView)*/ {
 						DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
-						
+						// ESTÁ CAUSANDO PROBLEMAS
+						// Um Foreach de um FetchRequest que está sendo iterado,
+						// ainda não entendi o que tem de errado
 					} label: {
 						if let lawsuitClient = self.lawsuitClient {
 							LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
@@ -75,6 +77,9 @@ struct LawsuitListViewHeaderContent: View {
 								}
 						}
 					}
+					.simultaneousGesture(TapGesture().onEnded({
+						navigationViewModel.lawsuitToShow = lawsuit
+					}))
 				}
 				.buttonStyle(PlainButtonStyle())
 			}

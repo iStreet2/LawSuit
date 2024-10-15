@@ -43,6 +43,7 @@ struct ClientListView: View {
             List(clients, id: \.id) { client in
                 Button(action: {
                     navigationViewModel.selectedClient = client
+						 navigationViewModel.isShowingDetailedLawsuitView = false
                     folderViewModel.resetFolderStack()
                     folderViewModel.openFolder(folder: client.rootFolder)
                     deleted = false
