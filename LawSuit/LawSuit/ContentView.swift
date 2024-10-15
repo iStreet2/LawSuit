@@ -25,6 +25,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
+    @State var showContactAlert: Bool = false
     @State var navigationVisibility: NavigationSplitViewVisibility = .automatic
     
     var isLawsuit: Bool {
@@ -35,7 +36,7 @@ struct ContentView: View {
             true
         }
     }
-        
+    
     var body: some View {
         HStack (spacing: 0){
             
@@ -61,9 +62,28 @@ struct ContentView: View {
                                 .background(.white)
                         } else {
                             VStack{
-                                Text("Selecione um cliente")
-                                    .padding()
-                                    .foregroundColor(.gray)
+                                
+                                if showContactAlert {
+                                    Text("Cliente adicionado aos contatos!")
+                                        .font(.body)
+                                        .foregroundStyle(.secondary)
+                                        .padding()
+                                        .background(Color.gray.opacity(0.1))
+                                        .clipShape(RoundedRectangle(cornerRadius: 7))
+                                        .transition(.opacity)
+                                        .onAppear {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                                withAnimation {
+                                                    showContactAlert = false
+                                                }
+                                            }
+                                        }
+                                } else {
+                                    Text("Selecione um cliente")
+                                        .padding()
+                                        .foregroundColor(.gray)
+                                    
+                                }
                             }
                             .background(.white)
                         }
@@ -77,7 +97,7 @@ struct ContentView: View {
         }
         .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {
-            AddClientView()
+            AddClientView(showContactAlert: $showContactAlert, contactsManager: ContactsManager())
         })
     }
 }

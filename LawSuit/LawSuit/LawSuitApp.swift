@@ -45,6 +45,9 @@ struct LawSuitApp: App {
                         .environmentObject(dataViewModel)
                         .environmentObject(navigationViewModel)
                 }
+                .onAppear {
+                    ContactsManager().requestContactsAuthorization()
+                }
                 .background(MaterialWindow().ignoresSafeArea())
                 .toolbar(){
                     ToolbarItem(placement: .primaryAction){

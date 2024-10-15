@@ -25,7 +25,6 @@ struct ClientView: View {
     @State var showingGridView = true
     var infos = ["Processos", "Documentos"]
     
-    
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
@@ -83,6 +82,7 @@ struct ClientView: View {
                             }
                         }
                     }
+                    
                     VStack(alignment: .leading, spacing: 0) {
                         if selectedOption == "Processos" {
                             LawsuitListViewHeaderContent(lawsuits: lawsuits)

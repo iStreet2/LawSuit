@@ -24,6 +24,7 @@ struct SendMailSheet: View {
                     Text("Não mostrar isso novamente")
                 }
                 .toggleStyle(.checkbox)
+                .tint(.black)
                 
                 Button {
                     UserDefaults.standard.set(doNotShowAgain, forKey: "DoNotShowAgainPreference")
