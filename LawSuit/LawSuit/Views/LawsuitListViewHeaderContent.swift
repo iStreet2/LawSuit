@@ -62,8 +62,13 @@ struct LawsuitListViewHeaderContent: View {
                         }
                     }
                     .buttonStyle(PlainButtonStyle())
+                    .simultaneousGesture(TapGesture().onEnded({
+						            navigationViewModel.lawsuitToShow = lawsuit
+					          }))                                                 
                 }
             }
         }
     }
 }
+
+

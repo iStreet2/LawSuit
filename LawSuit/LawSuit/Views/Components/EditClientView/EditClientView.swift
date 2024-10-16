@@ -14,6 +14,7 @@ struct EditClientView: View {
     @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var addressViewModel: AddressViewModel
+    @EnvironmentObject var folderViewModel: FolderViewModel
     
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
@@ -40,6 +41,7 @@ struct EditClientView: View {
     @State var clientEmail: String = ""
     @State var clientTelephone: String = ""
     @State var clientCellphone: String = ""
+    @State var clientImageData: Data?
     
     @State var selectedOption = "Informações Pessoais"
     var infos = ["Informações Pessoais", "Endereço", "Contato"]
@@ -48,8 +50,11 @@ struct EditClientView: View {
     let maritalStatusLimit = 10
     
     @State var deleteAlert = false
+    @State var remove = false
     @ObservedObject var client: Client
     @Binding var deleted: Bool
+    @Binding var clientNSImage: NSImage?
+    @State var clientNSImageBakcup: NSImage?
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -60,23 +65,58 @@ struct EditClientView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 0) {
-                    Button{
-                        print("foto")
-                    } label: {
-                        RoundedRectangle(cornerRadius: 19)
-                            .stroke(Color.black, lineWidth: 1)
-                            .frame(width: 134, height: 134)
-                            .overlay {
-                                Image(systemName: "person.crop.rectangle.badge.plus")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 40, height: 29.49)
-                                    .foregroundColor(.secondary)
+                Group {
+                    if let clientNSImage {
+                        Button {
+                            withAnimation {
+                                self.clientNSImage = nil
                             }
+                        } label: {
+                            if remove {
+                                RemovePhotoButton(image: Image(nsImage: clientNSImage))
+                                    .cornerRadius(19)
+                            } else {
+                                Image(nsImage: clientNSImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 134, height: 134)
+                                    .cornerRadius(19)
+                            }
+                        }
+                        .transition(.scale)
+                        .buttonStyle(.plain)
+                        .onHover { hovering in
+                            if hovering {
+                                withAnimation(.bouncy) {
+                                    remove = true
+                                }
+                            } else {
+                                withAnimation(.bouncy) {
+                                    remove = false
+                                }
+                            }
+                        }
+                        
+                    } else {
+                        Button{
+                            //Adicionar foto ao cliente
+                            folderViewModel.importPhoto { data in
+                                if let data = data {
+                                    withAnimation(.bouncy) {
+                                        self.clientImageData = data
+                                        self.clientNSImage = NSImage(data: data)
+                                    }
+                                }
+                            }
+                        } label: {
+                            AddPhotoButton()
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 15)
-                    .buttonStyle(.plain)
+                }
+                .padding(.vertical, 10)
+                .padding(.horizontal, 15)
+                .buttonStyle(.plain)
                 
                 VStack(alignment: .leading) {
                     LabeledTextField(label: "Nome Civil", placeholder: "Insira o Nome Civil do Cliente", mandatory: true, textfieldText: $clientName)
@@ -86,26 +126,19 @@ struct EditClientView: View {
                             clientBirthDate = textFieldDataViewModel.dateValidation(clientBirthDate)
                         }
                 }
-                
                 .padding()
-               
             }
             HStack {
                 CustomSegmentedControl(selectedOption: $selectedOption, infos: infos)
                     .padding(.horizontal, 15)
-                
                 Spacer()
-                
             }
             Spacer()
             Divider()
             Group {
                 VStack(spacing: 0) {
                     if selectedOption == "Informações Pessoais" {
-                        
                         EditClientViewFormsFields(formType: .personalInfo, addressViewModel: addressViewModel, rg: $clientRg, socialName: $clientSocialName, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, Occupation: $clientOccupation, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone)
-                        
-                        
                     } else if selectedOption == "Endereço" {
                         EditClientViewFormsFields(formType: .address, addressViewModel: addressViewModel, rg: $clientRg, socialName: $clientSocialName, affiliation: $clientAffiliation, nationality: $clientNationality, cpf: $clientCpf, maritalStatus: $clientMaritalStatus, Occupation: $clientOccupation, cep: $clientCep, address: $clientAddress, addressNumber: $clientAddressNumber, neighborhood: $clientNeighborhood, complement: $clientComplement, state: $clientState, city: $clientCity, email: $clientEmail, telephone: $clientTelephone, cellphone: $clientCellphone)
                             .background(Color("ScrollBackground"))
@@ -114,13 +147,11 @@ struct EditClientView: View {
                             .background(Color("ScrollBackground"))
                     }
                 }
-                .padding()
+                .padding(.horizontal)
                 .background(Color("ScrollBackground"))
                 Divider()
             }
-            
             Spacer()
-            
             HStack {
                 Button {
                     deleteAlert.toggle()
@@ -137,18 +168,23 @@ struct EditClientView: View {
                             }
                             // Após deletar os processos, deletar o cliente
                             dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
+									
+									dataViewModel.spotlightManager.removeIndexedObject(client)
+									
                             navigationViewModel.selectedClient = nil
                             deleted.toggle()
                             dismiss()
                         } else {
                             print("Error fetching lawsuits of client: \(client.name)")
                         }
-                        
                     }), secondaryButton: Alert.Button.cancel(Text("Cancelar"), action: {
                     }))
                 })
                 Spacer()
                 Button {
+                    withAnimation {
+                        clientNSImage = clientNSImageBakcup
+                    }
                     dismiss()
                 } label: {
                     Text("Cancelar")
@@ -174,12 +210,10 @@ struct EditClientView: View {
                         invalidInformation = .missingCellphoneNumber
                         
                     } else {
-                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone)
+                        dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone, photo: clientImageData)
                         dismiss()
-                        
                         return
                     }
-                    
                 }, label: {
                     Text("Salvar")
                 })
@@ -210,12 +244,12 @@ struct EditClientView: View {
                                      dismissButton: .default(Text("Ok")))
                     case .invalidLawSuitNumber:
                         return Alert(title: Text(""),
-                        message: Text(""),
-                        dismissButton: .default(Text("")))
+                                     message: Text(""),
+                                     dismissButton: .default(Text("")))
                     case .invalidCEP:
                         return Alert(title: Text("Número do processo inválido"),
-                        message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                        dismissButton: .default(Text("Ok")))
+                                     message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
                     }
                 }
             }
@@ -244,6 +278,8 @@ struct EditClientView: View {
             clientEmail = client.email
             clientTelephone = client.telephone
             clientCellphone = client.cellphone
+            clientImageData = client.photo
+            clientNSImageBakcup = clientNSImage
         }
     }
     func areFieldsFilled() -> Bool {

@@ -39,6 +39,8 @@ struct AddClientView: View {
     @State var isClientContactsToggleOn: Bool = false
     @Binding var showContactAlert: Bool
     var contactsManager: ContactsManager?
+    @State var photo: Data?
+    
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -69,7 +71,6 @@ struct AddClientView: View {
                 .padding()
                 .background(Color("ScrollBackground"))
                 Divider()
-                
                 Spacer()
                 //MARK: Botões
                 HStack {

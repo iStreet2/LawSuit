@@ -23,7 +23,7 @@ struct SpotlightView: View {
 			Text("SpotlightVioew")
 				.font(.largeTitle)
 			
-            if currentRecordable != nil {
+			if currentRecordable != nil {
 				if let client = currentClient {
 					Text(client.name)
 					Text(client.id)
@@ -48,18 +48,13 @@ struct SpotlightView: View {
 			}
 		})
 		.onAppear {
-			do {
-				let clients: [Client] = try vm.fetchCoreDataObjects(for: .client)
-				let files: [FilePDF] = try vm.fetchCoreDataObjects(for: .file)
-				let lawsuits: [Lawsuit] = try vm.fetchCoreDataObjects(for: .lawsuit)
-				
-				vm.indexObjectsToSpotlight(objects: clients, for: .client)
-				vm.indexObjectsToSpotlight(objects: files, for: .file)
-				vm.indexObjectsToSpotlight(objects: lawsuits, for: .lawsuit)
-				
-			} catch {
-				print("Error onAppear: \(error)")
-			}
+			let clients: [Client] =  vm.fetchCoreDataObjects(for: .client)
+			let files: [FilePDF] =  vm.fetchCoreDataObjects(for: .file)
+			let lawsuits: [Lawsuit] =  vm.fetchCoreDataObjects(for: .lawsuit)
+			
+			vm.indexObjectsToSpotlight(objects: clients, for: .client)
+			vm.indexObjectsToSpotlight(objects: files, for: .file)
+			vm.indexObjectsToSpotlight(objects: lawsuits, for: .lawsuit)
 		}
 	}
 }

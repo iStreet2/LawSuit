@@ -18,11 +18,19 @@ struct DetailedLawSuitView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
+    
+    @State var deleted = false
+    @State var editLawSuit = false
+    @State var lawsuitCategory: TagType? = nil
+    @State var isCopied = false
     @ObservedObject var client: Client
     @ObservedObject var entity: Entity
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType? = nil
+    @State var lawsuitAuthorName: String = ""
+    @State var lawsuitAuthorSocialName: String = ""
+    @State var lawsuitDefendantName: String = ""
     @State var isCopied = false
     @State var showingGridView = true
     
@@ -85,7 +93,8 @@ struct DetailedLawSuitView: View {
         }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
-            EditLawSuitView(lawsuit: lawsuit, deleted: $deleted)
+            EditLawSuitView(tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted)
+//            EditLawSuitView( tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted, authorRowState: lawsuitAuthorName, defendantRowState: lawsuitDefendantName)
                 .frame(minWidth: 495)
         })
         .onAppear {
@@ -103,13 +112,41 @@ struct DetailedLawSuitView: View {
         })
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
+
+    func updateNames() {
+        //Se o cliente do processo estiver no autor
+        if lawsuit.authorID.hasPrefix("client:") {
+            if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
+               let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
+                lawsuitAuthorSocialName = author.socialName ?? "Sem nome"
+                lawsuitDefendantName = defendant.name
+            }
+            //Se o cliente do processo estiver no reu
+        } else {
+            if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
+               let authorEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID),
+            
+            let author = authorEntity as? Client {
+                
+                lawsuitAuthorSocialName = author.socialName ?? author.name
+                lawsuitDefendantName = defendant.name
+            }
+            
+            
+            //               let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
+            //                lawsuitAuthorSocialName = author.socialName as! Client.socialName
+            //                lawsuitDefendantName = defendant.name
+            //            }
+        }
+        print("author: \(lawsuitAuthorName), reu: \(lawsuitDefendantName)")
+    }
 }
 
 
 extension DetailedLawSuitView {
     private var mainBlockHeader: some View {
         HStack {
-            TagViewComponent(tagType: TagType(s: lawsuit.category) ?? .trabalhista)
+            TagViewComponent(tagType: TagType(s: lawsuit.category) ?? TagType.ambiental)
             Spacer()
             HStack {
                 Button {

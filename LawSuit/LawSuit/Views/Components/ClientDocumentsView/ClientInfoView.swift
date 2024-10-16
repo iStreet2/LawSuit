@@ -5,32 +5,63 @@ struct ClientInfoView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var client: Client
     @State var editClient = false
-    @State var imageData: Data?
+    @State var nsImage: NSImage?
     @Binding var deleted: Bool
     @State var requestDocument = false
     @State var doNotShowAgainToggle = false
     @State var sendMailSheet = false
     var mailManager: MailManager
-
+  
+    //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
 
+    
     var body: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading) {
-                HStack {
-                    if let socialName = client.socialName {
-                        Text(socialName)
-                            .font(.title)
+            HStack(alignment: .top) {
+                if let nsImage {
+                    Image(nsImage: nsImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 90, height: 90)
+                        .cornerRadius(10)
+                }
+                VStack(alignment: .leading) {
+                    HStack {
+                        if let socialName = client.socialName {
+                            Text(socialName)
+                                .font(.title)
+                                .bold()
+                        } else {
+                            Text(client.name)
+                                .font(.title)
+                                .bold()
+                        }
+                        Button {
+                            // Ação para editar o cliente
+                            editClient.toggle()
+                        } label: {
+                            Image(systemName: "square.and.pencil")
+                                .font(.system(size: 18))
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                    
+                    HStack {
+                        Text("Celular")
+                            .font(.body)
                             .bold()
                     } else {
                         Text(client.name)
                             .font(.title)
                             .bold()
                     }
-                    Button {
-                        editClient.toggle()
+                    .font(.footnote)
+                    
+                    NavigationLink {
+                        ClientMoreInfoView(client: client, deleted: $deleted, nsImage: $nsImage)
+                      
                     } label: {
                         Image(systemName: "square.and.pencil")
                             .font(.system(size: 18))
@@ -88,8 +119,13 @@ struct ClientInfoView: View {
                     .tint(.black)
                 }
             }
-        }
-        .onChange(of: deleted) { change in
+            .onAppear {
+                nsImage = NSImage(data: client.photo ?? Data())
+            }
+            .onChange(of: client) { client in
+                nsImage = NSImage(data: client.photo ?? Data())
+            }
+        .onChange(of: deleted) { _ in
             dismiss()
         }
         .sheet(isPresented: $sendMailSheet, content: {
@@ -99,7 +135,7 @@ struct ClientInfoView: View {
             RequestDocumentsView(client: client, mailManager: mailManager)
         })
         .sheet(isPresented: $editClient, content: {
-            EditClientView(client: client, deleted: $deleted)
+            EditClientView(client: client, deleted: $deleted, clientNSImage: $nsImage)
         })
         .padding(.horizontal, 20)
         .padding(.vertical, 10)

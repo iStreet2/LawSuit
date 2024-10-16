@@ -10,6 +10,8 @@ import SwiftUI
 struct SpotlightSearchbarView: View {
 	
 	@Environment(\.dismiss) var dismiss
+	@Environment(\.openWindow) var openWindow
+	
 	@EnvironmentObject var dataViewModel: DataViewModel
 	@EnvironmentObject var navigationViewModel: NavigationViewModel
 	
@@ -27,12 +29,13 @@ struct SpotlightSearchbarView: View {
 		if let clientWrapper = entity as? ClientWrapper {
 			navigationViewModel.selectedClient = clientWrapper.client
 		} else if let lawsuitWrapper = entity as? LawsuitWrapper {
-			for clientWrappers in dataViewModel.getSpotlightList(for: "Clientes", using: searchString) as! [ClientWrapper] {
-				if clientWrappers.client.id == lawsuitWrapper.lawsuit.authorID {
-					navigationViewModel.selectedClient = clientWrappers.client
-					break
-				}
-			}
+			navigationViewModel.lawsuitToShow = lawsuitWrapper.lawsuit
+			navigationViewModel.isShowingDetailedLawsuitView = true
+		} else if let fileWrapper = entity as? FileWrapper {
+			dismiss()
+			openWindow(value: fileWrapper.file.content!)
+//			dataViewModel.spotlightManager.fileToShow = fileWrapper.file
+//			dataViewModel.spotlightManager.shouldShowFilePreview = true
 		}
 		dismiss()
 	}
@@ -42,14 +45,15 @@ struct SpotlightSearchbarView: View {
 		if let clientWrapper = currentEntity as? ClientWrapper {
 			navigationViewModel.selectedClient = clientWrapper.client
 		} else if let lawsuitWrapper = currentEntity as? LawsuitWrapper {
-			for clientWrappers in dataViewModel.getSpotlightList(for: "Clientes", using: searchString) as! [ClientWrapper] {
-				if clientWrappers.client.id == lawsuitWrapper.lawsuit.authorID {
-					navigationViewModel.selectedClient = clientWrappers.client
-					break
-				}
-			}
+			navigationViewModel.lawsuitToShow = lawsuitWrapper.lawsuit
+			navigationViewModel.isShowingDetailedLawsuitView = true
+		} else if let fileWrapper = currentEntity as? FileWrapper {
 			dismiss()
+			openWindow(value: fileWrapper.file.content!)
+//			dataViewModel.spotlightManager.fileToShow = fileWrapper.file
+//			dataViewModel.spotlightManager.shouldShowFilePreview = true
 		}
+		dismiss()
 	}
 	
 	
@@ -65,7 +69,7 @@ struct SpotlightSearchbarView: View {
 			}
 			.font(.title2)
 			.padding(.leading)
-			.frame(width: 620, height: 42)
+			.frame(width: 620, height: searchString.notEmpty ? 42 : 80) // Frame sem resultado de busca (original: 42H)
 			
 			if searchString.notEmpty {
 				List {
@@ -122,7 +126,7 @@ struct SpotlightSearchbarView: View {
 				}
 				.scrollIndicators(.never)
 				.scrollContentBackground(.hidden)
-				.frame(height: 383)
+				.frame(height: 383) // Frame com resultado de busca
 				
 			}
 			
