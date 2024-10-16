@@ -26,7 +26,7 @@ struct ContentView: View {
 	@FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
 	
 	@State var navigationVisibility: NavigationSplitViewVisibility = .automatic
-  @State var showContactAlert: Bool = false
+    @State var showContactAlert: Bool = false
 	
 	var isLawsuit: Bool {
 		switch selectedView {
@@ -63,7 +63,12 @@ struct ContentView: View {
 									.background(.white)
 									.navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
 										if let lawsuit = navigationViewModel.lawsuitToShow {
-											DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
+                                            let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
+
+                                            if let client = lawsuitData.client, let entity = lawsuitData.entity {
+                                                DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
+                                            }
+                                            
 										}
 									}
 							} else {
@@ -91,21 +96,31 @@ struct ContentView: View {
                                 }
 								}
 								.background(.white)
-								.navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
-									if let lawsuit = navigationViewModel.lawsuitToShow {
-										DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
-									}
-								}
+                                .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
+                                    if let lawsuit = navigationViewModel.lawsuitToShow {
+                                        let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
+
+                                        if let client = lawsuitData.client, let entity = lawsuitData.entity {
+                                            DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
+                                        }
+                                        
+                                    }
+                                }
 							}
 							
 						case .lawsuits:
 							LawsuitListView()
 								.background(.white)
-								.navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
-									if let lawsuit = navigationViewModel.lawsuitToShow {
-										DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
-									}
-								}
+                                .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
+                                    if let lawsuit = navigationViewModel.lawsuitToShow {
+                                        let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
+
+                                        if let client = lawsuitData.client, let entity = lawsuitData.entity {
+                                            DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
+                                        }
+                                        
+                                    }
+                                }
 						}
 						
 					}

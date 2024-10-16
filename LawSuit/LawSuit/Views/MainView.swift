@@ -14,9 +14,6 @@ struct MainView: View {
 	
 	var body: some View {
 		ZStack {
-			
-			
-			
 			if authenticationStatus {
 				ContentView()
 					.background(MaterialWindow().ignoresSafeArea())

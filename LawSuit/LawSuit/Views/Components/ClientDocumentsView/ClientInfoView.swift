@@ -11,57 +11,36 @@ struct ClientInfoView: View {
     @State var doNotShowAgainToggle = false
     @State var sendMailSheet = false
     var mailManager: MailManager
-  
+    
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-
+    
     
     var body: some View {
-            HStack(alignment: .top) {
-                if let nsImage {
-                    Image(nsImage: nsImage)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 90, height: 90)
-                        .cornerRadius(10)
-                }
-                VStack(alignment: .leading) {
-                    HStack {
-                        if let socialName = client.socialName {
-                            Text(socialName)
-                                .font(.title)
-                                .bold()
-                        } else {
-                            Text(client.name)
-                                .font(.title)
-                                .bold()
-                        }
-                        Button {
-                            // Ação para editar o cliente
-                            editClient.toggle()
-                        } label: {
-                            Image(systemName: "square.and.pencil")
-                                .font(.system(size: 18))
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                    
-                    HStack {
-                        Text("Celular")
-                            .font(.body)
+        HStack(alignment: .top) {
+            if let nsImage {
+                Image(nsImage: nsImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 90, height: 90)
+                    .cornerRadius(10)
+            }
+            VStack(alignment: .leading) {
+                HStack {
+                    if let socialName = client.socialName {
+                        Text(socialName)
+                            .font(.title)
                             .bold()
                     } else {
                         Text(client.name)
                             .font(.title)
                             .bold()
                     }
-                    .font(.footnote)
-                    
-                    NavigationLink {
-                        ClientMoreInfoView(client: client, deleted: $deleted, nsImage: $nsImage)
-                      
+                    Button {
+                        // Ação para editar o cliente
+                        editClient.toggle()
                     } label: {
                         Image(systemName: "square.and.pencil")
                             .font(.system(size: 18))
@@ -85,8 +64,10 @@ struct ClientInfoView: View {
                 }
                 .font(.footnote)
                 
+                
                 NavigationLink {
-                    ClientMoreInfoView(client: client, deleted: $deleted)
+                    ClientMoreInfoView(client: client, deleted: $deleted, nsImage: $nsImage)
+                    
                 } label: {
                     Text("Mais informações")
                         .font(.body)
@@ -95,7 +76,7 @@ struct ClientInfoView: View {
                         .bold()
                 }
                 .buttonStyle(PlainButtonStyle())
-
+                
                 HStack {
                     Button {
                         // Verificar se deve mostrar o alerta ou não
@@ -109,7 +90,7 @@ struct ClientInfoView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.black)
-
+                    
                     Button {
                         requestDocument.toggle()
                     } label: {
@@ -119,12 +100,15 @@ struct ClientInfoView: View {
                     .tint(.black)
                 }
             }
-            .onAppear {
-                nsImage = NSImage(data: client.photo ?? Data())
-            }
-            .onChange(of: client) { client in
-                nsImage = NSImage(data: client.photo ?? Data())
-            }
+            
+            
+        }
+        .onAppear {
+            nsImage = NSImage(data: client.photo ?? Data())
+        }
+        .onChange(of: client) { client in
+            nsImage = NSImage(data: client.photo ?? Data())
+        }
         .onChange(of: deleted) { _ in
             dismiss()
         }

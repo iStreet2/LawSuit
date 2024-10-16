@@ -8,10 +8,10 @@
 import SwiftUI
 import CoreData
 
-//enum LawsuitType: String {
-//    case distributed = "Distribuído"
-//    case notDistributed = "Não Distribuído"
-//}
+enum LawsuitType: String {
+    case distributed = "Distribuído"
+    case notDistributed = "Não Distribuído"
+}
 
 struct AddLawsuitView: View {
     
@@ -21,8 +21,8 @@ struct AddLawsuitView: View {
     @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
     
     //MARK: Variáveis de estado
+    @State var lawsuitType: LawsuitType = .distributed
     @State var lawsuitTypeString: String = ""
-    @State var lawsuitAuthorName = ""
     
     @State var lawsuitNumber = ""
     @State var lawsuitCourt = ""

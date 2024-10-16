@@ -27,7 +27,7 @@ struct RequestDocumentsView: View {
                 .font(.title)
                 .bold()
             
-            Text("Cliente: \(client.name)")
+            Text("Cliente: \(client.socialName ?? client.name)")
                 .font(.title2)
             
             HStack(spacing: 50) {

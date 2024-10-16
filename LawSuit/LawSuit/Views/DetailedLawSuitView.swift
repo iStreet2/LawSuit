@@ -21,17 +21,13 @@ struct DetailedLawSuitView: View {
     
     @State var deleted = false
     @State var editLawSuit = false
-    @State var lawsuitCategory: TagType? = nil
+    @State var lawsuitCategory: TagType
     @State var isCopied = false
     @ObservedObject var client: Client
     @ObservedObject var entity: Entity
-    @State var deleted = false
-    @State var editLawSuit = false
-    @State var lawsuitCategory: TagType? = nil
     @State var lawsuitAuthorName: String = ""
     @State var lawsuitAuthorSocialName: String = ""
     @State var lawsuitDefendantName: String = ""
-    @State var isCopied = false
     @State var showingGridView = true
     
     //MARK: CoreData
