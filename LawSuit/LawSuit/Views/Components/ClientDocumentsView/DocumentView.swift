@@ -22,10 +22,10 @@ struct DocumentView: View {
             if folderViewModel.showingGridView  {
                 Divider()
                 DocumentGridView(openFolder: openFolder)
-                PathViewComponent(folderViewModel: _folderViewModel)
+                PathViewComponent()
             } else {
                 DocumentListView(openFolder: openFolder)
-                PathViewComponent(folderViewModel: _folderViewModel)
+                PathViewComponent()
             }
         }
     }

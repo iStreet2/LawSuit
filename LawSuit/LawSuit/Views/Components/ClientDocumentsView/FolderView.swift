@@ -28,7 +28,7 @@ struct FolderView: View {
         self.parentFolder = parentFolder
         
         _folders = FetchRequest<Folder>(
-            sortDescriptors: [NSSortDescriptor(keyPath: \Folder.name, ascending: true)]
+            sortDescriptors: [NSSortDescriptor(keyPath: \Folder.createdAt, ascending: true)]
             ,predicate: NSPredicate(format: "parentFolder == %@", parentFolder)
         )
     }

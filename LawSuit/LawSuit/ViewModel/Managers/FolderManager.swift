@@ -21,6 +21,8 @@ class FolderManager {
             let newFolder = Folder(context: context)
             newFolder.id = UUID().uuidString
             newFolder.name = name
+            newFolder.isEditing = true
+            newFolder.createdAt = Date.now
             newFolder.parentFolder = parentFolder
             parentFolder.addToFolders(newFolder)
             saveContext()
@@ -64,6 +66,18 @@ class FolderManager {
         parentFolder.removeFromFolders(movingFolder)
         movingFolder.parentFolder = destinationFolder
         destinationFolder.addToFolders(movingFolder)
+        saveContext()
+    }
+    
+    // Função para ativar edição
+    func startEditing(folder: Folder) {
+        folder.isEditing = true
+        saveContext()
+    }
+    
+    // Função para parar edição
+    func stopEditing(folder: Folder) {
+        folder.isEditing = false
         saveContext()
     }
     

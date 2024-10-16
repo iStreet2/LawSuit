@@ -18,18 +18,10 @@ struct FolderIconView: View {
     //MARK: Variáveis de estado
     @ObservedObject var folder: Folder
     @ObservedObject var parentFolder: Folder
-    @State var isEditing = false
-    @State var folderName: String
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    
-    init(folder: Folder, parentFolder: Folder) {
-        self.folder = folder
-        self.parentFolder = parentFolder
-        self.folderName = folder.name!
-    }
     
     var body: some View {
         Group {
@@ -39,20 +31,23 @@ struct FolderIconView: View {
                         .resizable()
                         .frame(width: 73, height: 58)
 
-                    if isEditing {
-                        TextField("", text: $folderName, onEditingChanged: { _ in
-                        }, onCommit: {
+                    // Verifica o atributo isEditing
+                    if folder.isEditing {
+                        TextField("", text: Binding(
+                            get: { folder.name ?? "Sem nome" },
+                            set: { newValue in
+                                folder.name = newValue
+                            }
+                        ), onCommit: {
                             saveChanges()
                         })
-                        .onExitCommand(perform: cancelChanges)
                         .lineLimit(2)
                         .frame(height: 12)
-                    }
-                    else {
+                    } else {
                         Text(folder.name ?? "Sem nome")
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                isEditing = true
+                                folder.isEditing = true // Inicia a edição
                             }
                     }
                 }
@@ -60,37 +55,31 @@ struct FolderIconView: View {
                 HStack {
                     Image("Pasta")
                         .resizable()
-                        .frame(width: 18,height: 14)
+                        .frame(width: 18, height: 14)
                     
-                    if isEditing {
-                        TextField("", text: $folderName, onEditingChanged: { _ in
-                        }, onCommit: {
+                    if folder.isEditing {
+                        TextField("", text: Binding(
+                            get: { folder.name ?? "Sem nome" },
+                            set: { newValue in
+                                folder.name = newValue
+                            }
+                        ), onCommit: {
                             saveChanges()
                         })
-                        .onExitCommand(perform: cancelChanges)
                         .lineLimit(2)
                         .frame(height: 12)
-                    }
-                    else {
+                    } else {
                         Text(folder.name ?? "Sem nome")
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                folderViewModel.openFolder(folder: folder)
+                                folder.isEditing = true // Inicia a edição
                             }
-                            .onLongPressGesture(perform: {
-                                isEditing = true
-                            })
                     }
                 }
             }
         }
         .onDisappear {
-            isEditing = false
-        }
-        .onAppear {
-            if folderName == "Nova Pasta" {
-                isEditing = true
-            }
+            folder.isEditing = false // Para edição quando a view desaparecer
         }
         .contextMenu {
             Button(action: {
@@ -100,7 +89,7 @@ struct FolderIconView: View {
                 Image(systemName: "folder")
             }
             Button(action: {
-                isEditing = true
+                folder.isEditing = true // Ativa edição pelo menu de contexto
             }) {
                 Text("Renomear")
                 Image(systemName: "pencil")
@@ -137,14 +126,10 @@ struct FolderIconView: View {
             return NSItemProvider(object: tempFolderURL as NSURL)
         }
     }
-    private func cancelChanges() {
-        folderName = folder.name!
-        isEditing = false
-    }
     
     private func saveChanges() {
-        dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folderName)
-        isEditing = false
+        dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folder.name ?? "Sem nome")
+        folder.isEditing = false // Salva e encerra a edição
     }
 }
 

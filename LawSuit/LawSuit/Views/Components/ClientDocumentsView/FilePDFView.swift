@@ -32,7 +32,7 @@ struct FilePDFView: View {
         self.geometry = geometry
         
         _filesPDF = FetchRequest<FilePDF>(
-            sortDescriptors: [],
+            sortDescriptors: [NSSortDescriptor(keyPath: \FilePDF.createdAt, ascending: true)],
             predicate: NSPredicate(format: "parentFolder == %@", parentFolder)
         )
     }
