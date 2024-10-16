@@ -45,7 +45,7 @@ struct FolderView: View {
                     dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, destinationFolder: folder, context: context, dataViewModel: dataViewModel)
                     return true
                 }
-                .transition(.scale)
+//                .transition(.scale)
         }
     }
 }

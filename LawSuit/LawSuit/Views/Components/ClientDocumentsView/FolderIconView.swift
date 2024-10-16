@@ -18,6 +18,7 @@ struct FolderIconView: View {
     //MARK: Variáveis de estado
     @ObservedObject var folder: Folder
     @ObservedObject var parentFolder: Folder
+    @FocusState private var isTextFieldFocused: Bool
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -31,23 +32,29 @@ struct FolderIconView: View {
                         .resizable()
                         .frame(width: 73, height: 58)
 
-                    // Verifica o atributo isEditing
                     if folder.isEditing {
                         TextField("", text: Binding(
-                            get: { folder.name ?? "Sem nome" },
+                            get: { folder.name },
                             set: { newValue in
                                 folder.name = newValue
                             }
                         ), onCommit: {
                             saveChanges()
                         })
+                        .focused($isTextFieldFocused)
                         .lineLimit(2)
                         .frame(height: 12)
+                        .onAppear {
+                            isTextFieldFocused = true
+                            DispatchQueue.main.async {
+                                selectAllTextInTextField()
+                            }
+                        }
                     } else {
-                        Text(folder.name ?? "Sem nome")
+                        Text(folder.name)
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                folder.isEditing = true // Inicia a edição
+                                folder.isEditing = true
                             }
                     }
                 }
@@ -59,7 +66,7 @@ struct FolderIconView: View {
                     
                     if folder.isEditing {
                         TextField("", text: Binding(
-                            get: { folder.name ?? "Sem nome" },
+                            get: { folder.name },
                             set: { newValue in
                                 folder.name = newValue
                             }
@@ -68,18 +75,19 @@ struct FolderIconView: View {
                         })
                         .lineLimit(2)
                         .frame(height: 12)
+                        .focused($isTextFieldFocused)
                     } else {
-                        Text(folder.name ?? "Sem nome")
+                        Text(folder.name)
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                folder.isEditing = true // Inicia a edição
+                                folder.isEditing = true
                             }
                     }
                 }
             }
         }
         .onDisappear {
-            folder.isEditing = false // Para edição quando a view desaparecer
+            folder.isEditing = false
         }
         .contextMenu {
             Button(action: {
@@ -89,13 +97,12 @@ struct FolderIconView: View {
                 Image(systemName: "folder")
             }
             Button(action: {
-                folder.isEditing = true // Ativa edição pelo menu de contexto
+                folder.isEditing = true
             }) {
                 Text("Renomear")
                 Image(systemName: "pencil")
             }
             Button(action: {
-                // Ação para excluir a pasta
                 withAnimation(.easeIn) {
                     dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
                 }
@@ -109,7 +116,7 @@ struct FolderIconView: View {
 
             // Gera um diretório temporário para a pasta e seu conteúdo
             let tempDirectory = FileManager.default.temporaryDirectory
-            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
+            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name)
             
             // Cria o diretório temporário
             do {
@@ -121,15 +128,22 @@ struct FolderIconView: View {
             } catch {
                 print("Erro ao criar diretório temporário: \(error)")
             }
-
+            
             // Retorna o NSItemProvider com a URL da pasta temporária
             return NSItemProvider(object: tempFolderURL as NSURL)
         }
     }
     
     private func saveChanges() {
-        dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folder.name ?? "Sem nome")
-        folder.isEditing = false // Salva e encerra a edição
+        dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folder.name)
+        folder.isEditing = false
+    }
+    
+    func selectAllTextInTextField() {
+        if let window = NSApplication.shared.windows.first,
+           let textField = window.firstResponder as? NSTextField,
+           let editor = textField.currentEditor() {
+            editor.selectedRange = NSRange(location: 0, length: textField.stringValue.count)
+        }
     }
 }
-

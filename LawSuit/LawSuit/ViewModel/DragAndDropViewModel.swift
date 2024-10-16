@@ -110,7 +110,7 @@ class DragAndDropViewModel: ObservableObject {
             folder.id = UUID().uuidString
             folder.name = url.lastPathComponent
             folder.parentFolder = parentFolder
-            print("processFolder: Nova pasta criada - \(folder.name!)")
+            print("processFolder: Nova pasta criada - \(folder.name)")
             
             if let contents = try? fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil) {
                 for item in contents {

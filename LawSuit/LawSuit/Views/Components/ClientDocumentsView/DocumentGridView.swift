@@ -17,6 +17,8 @@ struct DocumentGridView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
+    @FetchRequest var folders: FetchedResults<Folder>
+    @FetchRequest var files: FetchedResults<FilePDF>
     
     //MARK: Calculo da grid
     let spacing: CGFloat = 10
@@ -24,6 +26,18 @@ struct DocumentGridView: View {
     
     //MARK: Viariáveis
     var openFolder: Folder
+    
+    init(openFolder: Folder) {
+        self.openFolder = openFolder
+        _folders = FetchRequest<Folder>(
+            sortDescriptors: []
+            ,predicate: NSPredicate(format: "parentFolder == %@", openFolder)
+        )
+        _files = FetchRequest<FilePDF>(
+            sortDescriptors: []
+            ,predicate: NSPredicate(format: "parentFolder == %@", openFolder)
+        )
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -36,7 +50,7 @@ struct DocumentGridView: View {
                             FolderView(parentFolder: openFolder)
                             FilePDFView(parentFolder: openFolder, geometry: geometry)
                         }
-                        if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
+                        if folders.count == 0 && files.count == 0{
                             Text("Sem pastas ou arquivos")
                                 .foregroundStyle(.gray)
                                 .frame(height: geometry.size.height / 2)
