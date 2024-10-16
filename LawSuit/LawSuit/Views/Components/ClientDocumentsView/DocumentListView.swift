@@ -65,11 +65,11 @@ struct DocumentListView: View {
                     }
                     ScrollView {
                         VStack(alignment: .leading) {
-                            FolderView(parentFolder: openFolder, geometry: geometry)
+                            FolderView(parentFolder: openFolder)
                                 .onTapGesture(count: 2) {
                                     folderViewModel.openFolder(folder: openFolder)
                                 }
-                            FilePDFGridView(parentFolder: openFolder, geometry: geometry)
+                            FilePDFView(parentFolder: openFolder, geometry: geometry)
                         }
                         .padding(.leading, 10)
                     }
@@ -77,10 +77,6 @@ struct DocumentListView: View {
                 .background(.black.opacity(0.01))
             }
             .padding(.top, 11)
-            .onChange(of: openFolder) { _ in
-                dragAndDropViewModel.updateFramesFolder(folders: folders)
-                dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
-            }
             .contextMenu {
                 Button(action: {
                     dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
@@ -95,6 +91,10 @@ struct DocumentListView: View {
                     Text("Importar PDF")
                     Image(systemName: "doc")
                 }
+            }
+            .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+                dragAndDropViewModel.handleDrop(providers: providers, parentFolder: openFolder, destinationFolder: openFolder, context: context, dataViewModel: dataViewModel)
+                return true
             }
         }
         .frame(minWidth: 777)

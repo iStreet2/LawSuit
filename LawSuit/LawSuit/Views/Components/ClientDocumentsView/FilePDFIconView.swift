@@ -116,25 +116,24 @@ struct FilePDFIconView: View {
                 // Ação para excluir a pasta
                 withAnimation(.easeIn) {
                     dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
-                    dragAndDropViewModel.updateFramesFolder(folders: folders)
-                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: files)
                 }
             }) {
                 Text("Excluir")
                 Image(systemName: "trash")
             }
         }
-//        .onDrag {
-//            // Gera uma URL temporária para o PDF
-//            let tempDirectory = FileManager.default.temporaryDirectory
-//            let tempPDFURL = tempDirectory.appendingPathComponent(filePDF.name!)
-//            
-//            // Escreve os dados do PDF no local temporário
-//            try? filePDF.content?.write(to: tempPDFURL)
-//            
-//            // Retorna o NSItemProvider com a URL do PDF temporário
-//            return NSItemProvider(object: tempPDFURL as NSURL)
-//        }
+        .onDrag {
+            dragAndDropViewModel.movingFilePDF = filePDF
+            // Gera uma URL temporária para o PDF
+            let tempDirectory = FileManager.default.temporaryDirectory
+            let tempPDFURL = tempDirectory.appendingPathComponent(filePDF.name!)
+            
+            // Escreve os dados do PDF no local temporário
+            try? filePDF.content?.write(to: tempPDFURL)
+            
+            // Retorna o NSItemProvider com a URL do PDF temporário
+            return NSItemProvider(object: tempPDFURL as NSURL)
+        }
         
     }
     private func cancelChanges() {

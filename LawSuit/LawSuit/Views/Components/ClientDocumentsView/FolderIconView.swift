@@ -22,15 +22,13 @@ struct FolderIconView: View {
     @State var folderName: String
     
     //MARK: CoreData
-    @FetchRequest(sortDescriptors: []) var folders: FetchedResults<Folder>
-    @FetchRequest(sortDescriptors: []) var files: FetchedResults<FilePDF>
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
     init(folder: Folder, parentFolder: Folder) {
         self.folder = folder
         self.parentFolder = parentFolder
-        folderName = folder.name!
+        self.folderName = folder.name!
     }
     
     var body: some View {
@@ -57,7 +55,6 @@ struct FolderIconView: View {
                                 isEditing = true
                             }
                     }
-                    //lalallala teste
                 }
             } else {
                 HStack {
@@ -112,25 +109,33 @@ struct FolderIconView: View {
                 // Ação para excluir a pasta
                 withAnimation(.easeIn) {
                     dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
-                    dragAndDropViewModel.updateFramesFolder(folders: folders)
-                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: files)
                 }
             }) {
                 Text("Excluir")
                 Image(systemName: "trash")
             }
         }
-        //        .onDrag {
-        //            // Gera uma URL temporária para a pasta
-        //            let tempDirectory = FileManager.default.temporaryDirectory
-        //            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
-        //
-        //            // Cria a pasta temporária
-        //            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
-        //
-        //            // Retorna o NSItemProvider com a URL da pasta temporária
-        //            return NSItemProvider(object: tempFolderURL as NSURL)
-        //        }
+        .onDrag {
+            dragAndDropViewModel.movingFolder = folder
+
+            // Gera um diretório temporário para a pasta e seu conteúdo
+            let tempDirectory = FileManager.default.temporaryDirectory
+            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
+            
+            // Cria o diretório temporário
+            do {
+                try FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
+                
+                // Copia o conteúdo da pasta para o diretório temporário
+                dragAndDropViewModel.copyFolderContents(from: folder, to: tempFolderURL)
+                
+            } catch {
+                print("Erro ao criar diretório temporário: \(error)")
+            }
+
+            // Retorna o NSItemProvider com a URL da pasta temporária
+            return NSItemProvider(object: tempFolderURL as NSURL)
+        }
     }
     private func cancelChanges() {
         folderName = folder.name!

@@ -11,30 +11,25 @@ struct FolderView: View {
     
     //MARK: Variáveis
     @ObservedObject var parentFolder: Folder
-    var geometry: GeometryProxy
     //    @Binding var showingGridView: Bool
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
     
+    @State var geometry: GeometryProxy?
+    
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest var folders: FetchedResults<Folder>
-    @FetchRequest var filesPDF: FetchedResults<FilePDF>
     
-    init(parentFolder: Folder, geometry: GeometryProxy) {
+    init(parentFolder: Folder) {
         self.parentFolder = parentFolder
-        self.geometry = geometry
         
         _folders = FetchRequest<Folder>(
-            sortDescriptors: []
+            sortDescriptors: [NSSortDescriptor(keyPath: \Folder.name, ascending: true)]
             ,predicate: NSPredicate(format: "parentFolder == %@", parentFolder)
-        )
-        _filesPDF = FetchRequest<FilePDF>(
-            sortDescriptors: [],
-            predicate: NSPredicate(format: "parentFolder == %@", parentFolder)
         )
     }
     
@@ -46,32 +41,11 @@ struct FolderView: View {
                 .onTapGesture(count: 2) {
                     folderViewModel.openFolder(folder: folder)
                 }
-                .offset(x: dragAndDropViewModel.folderOffsets[folder.id!]?.width ?? 0, y: dragAndDropViewModel.folderOffsets[folder.id!]?.height ?? 0)
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            dragAndDropViewModel.onDragChangedFolder(gesture: gesture, folder: folder, geometry: geometry)
-                        }
-                        .onEnded { _ in
-                            if let destinationFolder = dragAndDropViewModel.onDragEndedFolder(folder: folder, context: context) {
-                                withAnimation(.easeIn) {
-                                    dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
-                                    dragAndDropViewModel.folderOffsets[folder.id!] = .zero
-                                }
-                            } else {
-                                withAnimation(.bouncy) {
-                                    dragAndDropViewModel.folderOffsets[folder.id!] = .zero
-                                }
-                            }
-                        }
-                )
-                .onAppear {
-                    let frame = geometry.frame(in: .global)
-                    dragAndDropViewModel.folderFrames[folder.id!] = frame
+                .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+                    dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, destinationFolder: folder, context: context, dataViewModel: dataViewModel)
+                    return true
                 }
-                .onChange(of: geometry.frame(in: .global)) { newFrame in
-                    dragAndDropViewModel.folderFrames[folder.id!] = newFrame
-                }
+                .transition(.scale)
         }
     }
 }

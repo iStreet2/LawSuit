@@ -22,12 +22,6 @@ public class FilePDF: NSManagedObject, Identifiable, Recordable {
 	@NSManaged public var parentFolder: Folder? //Ignorar para o CloudKit
 	@NSManaged public var parentUpdate: Update?
 	@NSManaged public var recordName: String?
-
-    //Novas variáveis do Drag and Drop
-    @NSManaged public var width: Double
-    @NSManaged public var height: Double
-    @NSManaged public var frameX: Double
-    @NSManaged public var frameY: Double
 	
 //	enum CodingKeys: String, CodingKey {
 //		case content

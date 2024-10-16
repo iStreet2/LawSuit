@@ -49,7 +49,7 @@
 		3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */; };
 		3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */; };
 		3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7D2C80E2D8005B1B7F /* FolderView.swift */; };
-		3B423E802C80E2E1005B1B7F /* FilePDFGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */; };
+		3B423E802C80E2E1005B1B7F /* FilePDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7F2C80E2E1005B1B7F /* FilePDFView.swift */; };
 		3B423E832C80E613005B1B7F /* FolderIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E822C80E613005B1B7F /* FolderIconView.swift */; };
 		3B6168002C7E43AC00260585 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6167FF2C7E43AC00260585 /* SideBarView.swift */; };
 		3B6168022C7E45CE00260585 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6168012C7E45CE00260585 /* Sections.swift */; };
@@ -86,6 +86,7 @@
 		3BD40B6F2C6E76EC004048FA /* ClientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD40B6E2C6E76EC004048FA /* ClientListView.swift */; };
 		3BDEFFCD2C8A4A6A00990528 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCB2C8A4A6A00990528 /* Entity.swift */; };
 		3BDEFFD02C8A4C5500990528 /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */; };
+		3BE3ADBE2CBEE88D0087FCAD /* ViewDeTeste.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE3ADBD2CBEE88D0087FCAD /* ViewDeTeste.swift */; };
 		6A2A9DF12CADE2CA00177DFF /* ClientRowSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2A9DF02CADE2CA00177DFF /* ClientRowSelectView.swift */; };
 		6A2A9DF32CB064AC00177DFF /* LawsuitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2A9DF22CB064AC00177DFF /* LawsuitViewModel.swift */; };
 		6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6A2C68FE2C6D4FA300E017EE /* Model.xcdatamodeld */; };
@@ -106,7 +107,6 @@
 		6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */; };
 		6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */; };
 		6AC0BB952C9B850F00FAF3E6 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */; };
-		6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */; };
 		DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */; };
 		DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */; };
 		DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */; };
@@ -216,7 +216,7 @@
 		3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentGridView.swift; sourceTree = "<group>"; };
 		3B423E7D2C80E2D8005B1B7F /* FolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
-		3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePDFGridView.swift; sourceTree = "<group>"; };
+		3B423E7F2C80E2E1005B1B7F /* FilePDFView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePDFView.swift; sourceTree = "<group>"; };
 		3B423E822C80E613005B1B7F /* FolderIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderIconView.swift; sourceTree = "<group>"; };
 		3B6167FF2C7E43AC00260585 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
 		3B6168012C7E45CE00260585 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
@@ -254,6 +254,7 @@
 		3BD40B6E2C6E76EC004048FA /* ClientListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientListView.swift; sourceTree = "<group>"; };
 		3BDEFFCB2C8A4A6A00990528 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		3BDEFFCF2C8A4C5500990528 /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
+		3BE3ADBD2CBEE88D0087FCAD /* ViewDeTeste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDeTeste.swift; sourceTree = "<group>"; };
 		6A2A9DF02CADE2CA00177DFF /* ClientRowSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRowSelectView.swift; sourceTree = "<group>"; };
 		6A2A9DF22CB064AC00177DFF /* LawsuitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitViewModel.swift; sourceTree = "<group>"; };
 		6A2C68FF2C6D4FA300E017EE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -274,7 +275,6 @@
 		6AC0BB8E2C9238CC00FAF3E6 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
 		6AC0BB922C98C57800FAF3E6 /* DocumentActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentActionButtonsView.swift; sourceTree = "<group>"; };
 		6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
-		6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFListView.swift; sourceTree = "<group>"; };
 		DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDataViewModel.swift; sourceTree = "<group>"; };
 		DC1572BA2C6E96BB007815E1 /* PendentDocumentStyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentStyleView.swift; sourceTree = "<group>"; };
 		DC1572BC2C6FE962007815E1 /* PendentDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendentDocumentView.swift; sourceTree = "<group>"; };
@@ -414,8 +414,7 @@
 				3B423E7D2C80E2D8005B1B7F /* FolderView.swift */,
 				6AC0BB942C9B850F00FAF3E6 /* FolderListView.swift */,
 				3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */,
-				3B423E7F2C80E2E1005B1B7F /* FilePDFGridView.swift */,
-				6AC0BB962C9DF11600FAF3E6 /* FilePDFListView.swift */,
+				3B423E7F2C80E2E1005B1B7F /* FilePDFView.swift */,
 				3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */,
 				3B04F11C2C7FB9B600991746 /* ClientInfoView.swift */,
 				3BAF94CF2C73DC0F001FCA45 /* OpenFilePDFView.swift */,
@@ -609,6 +608,7 @@
 				E94C01612CA1E28300F6316F /* SpotlightSearchBarView2.swift */,
 				0897CB392C8BA21D00B488A9 /* MailManager.swift */,
 				08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */,
+				3BE3ADBD2CBEE88D0087FCAD /* ViewDeTeste.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -815,7 +815,6 @@
 				3BB9A34A2C84F36800AD1E30 /* TagViewComponentV2.swift in Sources */,
 				E9E323E22C7FB6F3000BA6FD /* ClientMoreInfoView.swift in Sources */,
 				DC1572C12C73E30F007815E1 /* PendentClientDocumentView.swift in Sources */,
-				6AC0BB972C9DF11600FAF3E6 /* FilePDFListView.swift in Sources */,
 				3BB9A34C2C84F37300AD1E30 /* TagViewComponentV3.swift in Sources */,
 				DC1572BD2C6FE962007815E1 /* PendentDocumentView.swift in Sources */,
 				E94C01602CA1E23D00F6316F /* SpotlightView2.swift in Sources */,
@@ -868,7 +867,7 @@
 				E9E323E42C80EA12000BA6FD /* DetailedLawSuitView.swift in Sources */,
 				DC401F9D2C931FE3006FC949 /* Alerts.swift in Sources */,
 				E94C01662CA1E2C100F6316F /* EventMonitorProtocol2.swift in Sources */,
-				3B423E802C80E2E1005B1B7F /* FilePDFGridView.swift in Sources */,
+				3B423E802C80E2E1005B1B7F /* FilePDFView.swift in Sources */,
 				3B7642082CB843B700196914 /* RemovePhotoButton.swift in Sources */,
 				3BD40B312C6D40FE004048FA /* LawyerManager.swift in Sources */,
 				3BD40B352C6D4384004048FA /* UpdateManager.swift in Sources */,
@@ -919,6 +918,7 @@
 				6AC0BB6C2C8F8C5F00FAF3E6 /* AddressViewModel.swift in Sources */,
 				6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */,
 				3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */,
+				3BE3ADBE2CBEE88D0087FCAD /* ViewDeTeste.swift in Sources */,
 				E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */,

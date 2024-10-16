@@ -17,8 +17,6 @@ struct DocumentGridView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: []) var folders: FetchedResults<Folder>
-    @FetchRequest(sortDescriptors: []) var filesPDF: FetchedResults<FilePDF>
     
     //MARK: Calculo da grid
     let spacing: CGFloat = 10
@@ -35,8 +33,8 @@ struct DocumentGridView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         LazyVGrid(columns: gridItems, spacing: spacing) {
-                            FolderView(parentFolder: openFolder, geometry: geometry)
-                            FilePDFGridView(parentFolder: openFolder, geometry: geometry)
+                            FolderView(parentFolder: openFolder)
+                            FilePDFView(parentFolder: openFolder, geometry: geometry)
                         }
                         if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
                             Text("Sem pastas ou arquivos")
@@ -46,10 +44,6 @@ struct DocumentGridView: View {
                     }
                     .padding(.trailing, 25)
                     .padding(.top, 20)
-                }
-                .onChange(of: openFolder) { _ in
-                    dragAndDropViewModel.updateFramesFolder(folders: folders)
-                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
                 }
                 .contextMenu {
                     Button(action: {
@@ -65,10 +59,10 @@ struct DocumentGridView: View {
                         Image(systemName: "doc")
                     }
                 }
-                //            .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
-                //                dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, context: context, coreDataViewModel: coreDataViewModel)
-                //                return true
-                //            }
+                .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+                    dragAndDropViewModel.handleDrop(providers: providers, parentFolder: openFolder, destinationFolder: openFolder, context: context, dataViewModel: dataViewModel)
+                    return true
+                }
                                 
             }
             .frame(maxHeight: .infinity)

@@ -24,12 +24,6 @@ public class Folder: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var parentLawsuit: Lawsuit? //Ignorar pro CloudKit
     @NSManaged public var parentFolder: Folder? //Ignorar pro ClouKit
     @NSManaged public var recordName: String?
-    
-    //Novas variáveis do Drag and Drop
-    @NSManaged public var width: Double
-    @NSManaged public var height: Double
-    @NSManaged public var frameX: Double
-    @NSManaged public var frameY: Double
 }
 
 // MARK: Generated accessors for files
