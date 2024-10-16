@@ -48,8 +48,15 @@ struct FolderView: View {
                                 return false
                             }
                             dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, destinationFolder: folder, context: context, dataViewModel: dataViewModel)
+                            return true
+                        } else if let movingFilePDF = dragAndDropViewModel.movingFilePDF {
+                            dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, destinationFolder: folder, context: context, dataViewModel: dataViewModel)
+                            dragAndDropViewModel.movingFilePDF = nil
+                            return true
                         }
-                        return true
+                        dragAndDropViewModel.movingFolder = nil
+                        dragAndDropViewModel.movingFilePDF = nil
+                        return false
                     }
                 }
                 .simultaneousGesture(

@@ -53,13 +53,20 @@ struct PathViewComponent: View {
                         if let movingFolder = dragAndDropViewModel.movingFolder {
                             if let parentFolder = movingFolder.parentFolder {
                                 if folder.id != parentFolder.id {
-                                    dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: openFolder, movingFolder: movingFolder, destinationFolder: folder)
+                                    dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: movingFolder, destinationFolder: folder)
                                     dragAndDropViewModel.movingFolder = nil
                                     return true
                                 }
                             }
+                        } else if let movingFilePDF = dragAndDropViewModel.movingFilePDF {
+                            if let parentFolder = movingFilePDF.parentFolder {
+                                dataViewModel.coreDataManager.filePDFManager.moveFilePDF(parentFolder: parentFolder, movingFilePDF: movingFilePDF, destinationFolder: folder)
+                                dragAndDropViewModel.movingFilePDF = nil
+                                return true
+                            }
                         }
                         dragAndDropViewModel.movingFolder = nil
+                        dragAndDropViewModel.movingFilePDF = nil
                         return false
                     }
                 }

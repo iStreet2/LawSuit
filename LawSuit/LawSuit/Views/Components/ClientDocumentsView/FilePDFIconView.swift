@@ -107,6 +107,17 @@ struct FilePDFIconView: View {
                 Text("Excluir")
                 Image(systemName: "trash")
             }
+            Button {
+                withAnimation {
+                    if let destinationFolder = parentFolder.parentFolder {
+                        dataViewModel.coreDataManager.filePDFManager.moveFilePDF(parentFolder: parentFolder, movingFilePDF: filePDF, destinationFolder: destinationFolder)
+                    }
+                }
+            } label: {
+                Text("Mover para pasta anterior")
+                Image(systemName: "arrowshape.turn.up.left")
+            }
+            .disabled(parentFolder.parentFolder == nil)
         }
         .onDrag {
             dragAndDropViewModel.movingFilePDF = filePDF

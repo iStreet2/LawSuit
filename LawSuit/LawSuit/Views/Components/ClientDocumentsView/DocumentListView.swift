@@ -100,7 +100,10 @@ struct DocumentListView: View {
                         dragAndDropViewModel.movingFolder = nil
                         return false
                     }
-                    
+                    if let movingFilePDF = dragAndDropViewModel.movingFilePDF, movingFilePDF.parentFolder == openFolder {
+                        dragAndDropViewModel.movingFolder = nil
+                        return false
+                    }
                     // Se não for uma pasta interna, executa a lógica de drop normalmente
                     dragAndDropViewModel.handleDrop(providers: providers, parentFolder: openFolder, destinationFolder: openFolder, context: context, dataViewModel: dataViewModel)
                     return true
