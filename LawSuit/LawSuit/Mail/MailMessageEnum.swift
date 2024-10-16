@@ -18,7 +18,7 @@ enum MailMessageEnum: String {
                                 <meta charset="UTF-8">
                             </head>
                             <body>
-                                <h1>Olá \(client.name)! Como você está?</h1>
+                                <h1>Olá \(client.socialName ?? client.name)! Como você está?</h1>
                                 <p>Para continuarmos o andamento do seu processo, preciso que envie os seguintes documentos:</p>
                                 <ul>
                                     \(documentsList)

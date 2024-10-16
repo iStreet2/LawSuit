@@ -51,7 +51,7 @@ struct LawsuitListViewHeaderContent: View {
 
                     NavigationLink {
                         if let client = lawsuitData.client, let entity = lawsuitData.entity {
-                            DetailedLawSuitView(lawsuit: lawsuit, client: client, entity: entity)
+                            DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
                         }
                     } label: {
                         if let client = lawsuitData.client {

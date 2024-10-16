@@ -66,7 +66,7 @@ struct AddClientView: View {
                 Spacer()
                 Divider()
                 VStack(spacing: 0) {
-                    AddClientForm(stage: $stage, name: $name, socialName: $socialName, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone)
+                    AddClientForm(stage: $stage, name: $name, socialName: $socialName, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone, photo: $photo)
                 }
                 .padding()
                 .background(Color("ScrollBackground"))
@@ -120,7 +120,7 @@ struct AddClientView: View {
                         if stage == 3 {
                             print("Cliente adicionado aos contatos? \(isClientContactsToggleOn)")
                             if isClientContactsToggleOn {
-                                if let contact = contactsManager?.createContact(name: name, cellphone: cellphone, email: email, occupation: occupation) {
+                                if let contact = contactsManager?.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, occupation: occupation) {
                                     contactsManager?.checkContactsAuthorizationAndSave(contact: contact)
                                     showContactAlert = true
                                 } else {
@@ -136,7 +136,7 @@ struct AddClientView: View {
                             else {
                                 //MARK: Advogado temporário
                                 let lawyer = lawyers[0]
-                                dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                                let _ = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
                                 dismiss()
                             }
                             return
