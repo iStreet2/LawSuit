@@ -20,11 +20,13 @@ struct ClientRowSelectView: View {
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: 8)
-                .foregroundStyle(.tertiary.opacity(0.05))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.secondary.opacity(0.05), lineWidth: 1)
-                )
+                .foregroundStyle(.tertiary.opacity(0.2))
+               .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+        )
+
+            
             if clientRowState == .selected {
                 HStack{
                     if let nsImage {

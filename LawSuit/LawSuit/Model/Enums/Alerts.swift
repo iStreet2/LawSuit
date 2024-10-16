@@ -24,6 +24,8 @@ enum InvalidInformation: Error, Identifiable {
             return "invalidLawSuitNumber"
         case .invalidCEP:
             return "invalidCEP"
+//        case .invalidDate:
+//            return "invalidDate"
         }
         
     }
@@ -34,6 +36,7 @@ enum InvalidInformation: Error, Identifiable {
     case missingCellphoneNumber
     case invalidLawSuitNumber
     case invalidCEP
+//    case invalidDate
 }
 
 enum LawsuitInvalidInformation: String, Identifiable {

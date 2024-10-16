@@ -41,6 +41,7 @@ struct AddClientForm: View {
     @Binding var cellphone: String
     @Binding var photo: Data?
     
+    @State var showError: Bool = false
     @State var addressApi = AddressAPI()
     @State var isEmailValid = true
     @State var imageData: NSImage?
@@ -105,15 +106,39 @@ struct AddClientForm: View {
                                     .buttonStyle(.plain)
                                 }
                             }
-                            VStack(alignment: .leading){
-                                LabeledTextField(label: "Nome Civil", placeholder: "Insira o nome civil do Cliente", mandatory: true, textfieldText: $name)
-                                    .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
-                                LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $birthDate)
-                                    .onReceive(Just(birthDate)) { newValue in
-                                        birthDate = textFieldDataViewModel.dateValidation(newValue)
+                                VStack(alignment: .leading, spacing: 8) {
+                                    LabeledTextField(label: "Nome Civil", placeholder: "Insira o nome civil do Cliente", mandatory: true, textfieldText: $name)
+                                        .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
+                                    
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $birthDate)
+                                            .onReceive(Just(birthDate)) { newValue in birthDate = textFieldDataViewModel.dateFormat(newValue)}
+                                            .onChange(of: birthDate) { newValue in
+                                                
+                                                if birthDate.count > 00 && birthDate.count == 10  {
+                                                    showError = textFieldDataViewModel.dateValidation(birthDate)
+                                                } else {
+                                                    showError = false
+                                                }
+                                            }
+                                        if showError {
+                                            Text("Data inválida")
+                                                .foregroundColor(.red)
+                                                .font(.caption)
+                                        } 
+                                        else {
+                                            Text(" ")
+                                                .font(.callout)
+                                        }
                                     }
-                                
-                            }
+                                    .frame(height: 80)
+
+                                }
+
+                            .frame(height: 140)
+                            .border(.red)
+
+
                         }
                         LabeledTextField(label: "Nome Social", placeholder: "Insira o nome social do Cliente", textfieldText: $socialName)
                             .onReceive(Just(socialName)) { _ in textFieldDataViewModel.limitText(text: &socialName, upper: textLimit) }
@@ -146,8 +171,9 @@ struct AddClientForm: View {
                                     }
                                 }
                                 .frame(height: 80)
+                                
                             }
-                            .frame(height: 80)
+                            .frame(height: 60)
                             
                             LabeledTextField(label: "Filiação", placeholder: "Insira a filiação do Cliente", mandatory: true, textfieldText: $affiliation)
                                 .onReceive(Just(affiliation)) { _ in textFieldDataViewModel.limitText(text: &affiliation, upper: textLimit) }
@@ -242,7 +268,7 @@ struct AddClientForm: View {
                 .frame(height: 80)
                 LabeledTextField(label: "Telefone", placeholder: "Insira o telefone do Cliente", textfieldText: $telephone)
                     .onReceive(Just(telephone)) { _ in telephone = textFieldDataViewModel.formatPhoneNumber(telephone, cellphone: false) }
-                 
+                
                 if telephone.count > 0 && telephone.count < 14 {
                     Text("Telefone inválido")
                         .foregroundStyle(.red)

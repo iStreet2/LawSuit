@@ -19,7 +19,7 @@ struct TagViewPickerComponent: View {
     
     
     var body: some View {
-        
+
         if tagViewStyle == .bullet {
             TagViewComponent(tagType: tagType)
         }
@@ -27,12 +27,14 @@ struct TagViewPickerComponent: View {
         if tagViewStyle == .picker {
             Picker("", selection: $tagType) {
                 ForEach(TagType.allCases, id: \.self){ tag in
-                    Text(tag.tagText).tag(tag)
+                    Text(tag.tagText)
+                        .tag(tag)
                 }
             }
-            .frame(width: 130)
+            .labelsHidden()
+            .frame(width: 100)
             .pickerStyle(.automatic)
-            
+            .tint(.black)
         }
     }
 }
