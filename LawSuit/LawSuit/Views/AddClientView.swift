@@ -120,10 +120,11 @@ struct AddClientView: View {
                         if stage == 3 {
                             print("Cliente adicionado aos contatos? \(isClientContactsToggleOn)")
                             if isClientContactsToggleOn {
-                                let contact = contactsManager.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, photo: photo ?? Data(), occupation: occupation) 
+                                
+                                let contact = contactsManager.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, photo: photo ?? Data(), occupation: occupation)
                                     
                                     contactsManager.checkContactsAuthorizationAndSave(contact: contact)
-                                    showContactAlert = true
+//                                    showContactAlert = true
                             }
                             
                             if !textFieldDataViewModel.isValidEmail(email) {

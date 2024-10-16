@@ -39,8 +39,8 @@ class ContactsManager: ObservableObject {
         }
     }
     
-    func updateClientContact(client: Client) throws {
-        let predicate = CNContact.predicateForContacts(matchingEmailAddress: client.email)
+    func updateClientContact(client: Client, oldClientEmail: String) throws {
+        let predicate = CNContact.predicateForContacts(matchingEmailAddress: oldClientEmail)
         let keysToFetch = [CNContactGivenNameKey, CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactEmailAddressesKey, CNContactJobTitleKey] as [CNKeyDescriptor]
         
         let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
