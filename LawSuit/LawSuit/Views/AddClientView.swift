@@ -110,6 +110,7 @@ struct AddClientView: View {
                         invalidInformation = .invalidRG
                         return
                     }
+                    
                     if stage == 2 {
                         if cep.count < 8 {
                             invalidInformation = .invalidCEP
@@ -177,6 +178,10 @@ struct AddClientView: View {
                                      message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
                         
+//                    case .invalidDate:
+//                        return Alert(title: Text("Data de nascimento não autorizada"),
+//                                     message: Text("Por favor, insira um número de nascimento válido antes de continuar"),
+//                                     dismissButton: .default(Text("Ok")))
                     }
                 }
             }

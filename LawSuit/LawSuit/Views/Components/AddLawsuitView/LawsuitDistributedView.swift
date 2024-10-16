@@ -17,6 +17,8 @@ struct LawsuitDistributedView: View {
     @State var textInput = ""
     @Binding var tagType: TagType
     @State var selectTag = false
+    @State var birthDateString: String = ""
+    @State var showError: Bool = false
     
     //MARK: Variáveis de estado
     @State var authorRowState: ClientRowStateEnum = .notSelected
@@ -39,17 +41,35 @@ struct LawsuitDistributedView: View {
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
     var body: some View {
-        VStack {
-            HStack {
-                LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", mandatory: true, textfieldText: $lawsuitNumber)
-                    .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .top) {
+                    LabeledTextField(label: "Nº do processo", placeholder: "Nº do processo", mandatory: true, textfieldText: $lawsuitNumber)
+                        .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber)
+                        
+                }
+                VStack(alignment: .leading, spacing: 10) {
+                    LabeledTextField(label: "Data de distribuição", placeholder: "Data de distribuição", mandatory: true, textfieldText: $lawsuitActionDate)
+                        .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateFormat(newValue)}
+                        .onChange(of: lawsuitActionDate) { newValue in
+                            if lawsuitActionDate.count == 10 {
+                                showError = textFieldDataViewModel.dateValidation(lawsuitActionDate)
+                            } else {
+                                showError = false
+                            }
+                        }
+                    if showError {
+                        Text("Data inválida")
+                            .foregroundColor(.red)
+                            .font(.callout)
+                    } else {
+                        Text(" ") 
+                            .font(.callout)
                     }
-                LabeledTextField(label: "Data de distribuição", placeholder: "Data de distribuição", mandatory: true, textfieldText: $lawsuitActionDate)
-                    .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateFormat(newValue)}
-                    .frame(width: 140)
+                }
+                .frame(width: 140)
             }
             
-            HStack {
+            HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     HStack(alignment: .top, spacing: 1) {
                         Text("Área")
@@ -60,12 +80,12 @@ struct LawsuitDistributedView: View {
                     TagViewPickerComponent(tagType: $tagType, tagViewStyle: .picker)
                 }
                 Spacer()
-
+                
                 LabeledTextField(label: "Vara", placeholder: "Vara", mandatory: true, textfieldText: $lawsuitCourt)
-                    .padding(.top)
+                    .padding(.vertical, 1) // Adiciona padding vertical para evitar bordas cortadas
                     .frame(width: 360)
-
             }
+            
             
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
@@ -91,12 +111,12 @@ struct LawsuitDistributedView: View {
                     }
                 }
                 Spacer()
-
+                
                 VStack(alignment: .leading){
                     //MARK: Se o usuário não selecionou nada
                     if !attributedAuthor {
                         EditLawsuitAuthorComponent(button: "Atribuir cliente", label: "Réu", lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: "defendant", attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant, required: true)
-
+                        
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
@@ -115,7 +135,7 @@ struct LawsuitDistributedView: View {
                                     attributedDefendant = false
                                 }
                             }
-
+                        
                     }
                 }
             }
