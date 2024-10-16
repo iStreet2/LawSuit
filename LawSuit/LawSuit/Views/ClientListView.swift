@@ -171,18 +171,18 @@ struct ClientListView: View {
             })
             
             //MARK: Botão para criar vários clientes
-//            Button {
-//                var photoData:Data? = Data()
-//                folderViewModel.importPhoto { data in
-//                    photoData = data
-//                    let lawyer = lawyers[0]
-//                    for i in 0...10 {
-//                        dataViewModel.coreDataManager.clientManager.createClient(name: "Test\(i)", socialName: "testSocial\(i)", occupation: "Hom", rg: "593925178", cpf: "570.067.128-07", lawyer: lawyer, affiliation: "Hom", maritalStatus: "Hom", nationality: "Hom", birthDate: Date.now, cep: "05427005", address: "Hom", addressNumber: "472389", neighborhood: "Hom", complement: "Hom", state: "Hom", city: "Hom", email: "gabrielvicentinnegro@hotmail.com", telephone: "(11) 84435268", cellphone: "(11) 984435268", photo: photoData)
-//                    }
-//                }
-//            } label: {
-//                Text("Criar vários clientes")
-//            }
+            Button {
+                var photoData:Data? = Data()
+                folderViewModel.importPhoto { data in
+                    photoData = data
+                    let lawyer = lawyers[0]
+                    for i in 0...10 {
+                        dataViewModel.coreDataManager.clientManager.createClient(name: "Test\(i)", socialName: "testSocial\(i)", occupation: "Hom", rg: "593925178", cpf: "570.067.128-07", lawyer: lawyer, affiliation: "Hom", maritalStatus: "Hom", nationality: "Hom", birthDate: Date.now, cep: "05427005", address: "Hom", addressNumber: "472389", neighborhood: "Hom", complement: "Hom", state: "Hom", city: "Hom", email: "gabrielvicentinnegro@hotmail.com", telephone: "(11) 84435268", cellphone: "(11) 984435268", photo: photoData)
+                    }
+                }
+            } label: {
+                Text("Criar vários clientes")
+            }
         }
         .background(.white)
     }

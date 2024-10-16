@@ -17,7 +17,9 @@ public class Folder: NSManagedObject, Identifiable, Recordable {
     }
 
     @NSManaged public var id: String?
-    @NSManaged public var name: String?
+    @NSManaged public var name: String
+    @NSManaged public var isEditing: Bool
+    @NSManaged public var createdAt: Date
     @NSManaged public var parentClient: Client? //Ignorar pro CloudKit
     @NSManaged public var files: NSSet? //Reference
     @NSManaged public var folders: NSSet? //Reference

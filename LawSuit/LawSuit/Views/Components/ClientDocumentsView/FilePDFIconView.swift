@@ -12,19 +12,13 @@ struct FilePDFIconView: View {
     //MARK: Variáveis
     @ObservedObject var filePDF: FilePDF
     @ObservedObject var parentFolder: Folder
-    @State var isEditing = false
-    @State var fileName: String
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    @EnvironmentObject var folderViewModel: FolderViewModel
     
-    init(filePDF: FilePDF, parentFolder: Folder) {
-        self.filePDF = filePDF
-        self.fileName = filePDF.name!
-        self.parentFolder = parentFolder
-    }
+    @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
     
     var body: some View {
         Group {
@@ -32,13 +26,16 @@ struct FilePDFIconView: View {
                 VStack {
                     Image(systemName: "doc")
                         .font(.system(size: 55))
-                    if isEditing {
-                        TextField("", text: $fileName, onEditingChanged: { _ in
-                            isEditing = true
-                        }, onCommit: {
+                    // Verifica o atributo isEditing
+                    if filePDF.isEditing {
+                        TextField("", text: Binding(
+                            get: { filePDF.name ?? "Sem nome" },
+                            set: { newValue in
+                                filePDF.name = newValue
+                            }
+                        ), onCommit: {
                             saveChanges()
                         })
-                        .onExitCommand(perform: cancelChanges)
                         .lineLimit(1)
                         .frame(height: 4)
                     }
@@ -46,16 +43,16 @@ struct FilePDFIconView: View {
                         Text(filePDF.name ?? "Sem nome")
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                isEditing = true
+                                filePDF.isEditing = true // Inicia a edição
                             }
                     }
                 }
                 .onDisappear {
-                    isEditing = false
+                    filePDF.isEditing = false // Para edição quando a view desaparecer
                 }
                 .onAppear {
-                    if fileName == "Novo Arquivo" {
-                        isEditing = true
+                    if filePDF.name == "Novo Arquivo" {
+                        filePDF.isEditing = true
                     }
                 }
             } else {
@@ -63,35 +60,28 @@ struct FilePDFIconView: View {
                 HStack {
                     Image(systemName: "doc")
                         .resizable()
-                        .frame(width: 15,height: 18)
+                        .frame(width: 15, height: 18)
                         .font(.system(size: 55))
                     
-                    if isEditing {
-                        TextField("", text: $fileName, onEditingChanged: { _ in
-                            isEditing = true
-                        }, onCommit: {
+                    if filePDF.isEditing {
+                        TextField("", text: Binding(
+                            get: { filePDF.name ?? "Sem nome" },
+                            set: { newValue in
+                                filePDF.name = newValue
+                            }
+                        ), onCommit: {
                             saveChanges()
                         })
-                        .onExitCommand(perform: cancelChanges)
                         .lineLimit(1)
                         .frame(height: 4)
-                    }
-                    else {
+                    } else {
                         Text(filePDF.name ?? "Sem nome")
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                isEditing = true
+                                filePDF.isEditing = true // Inicia a edição
                             }
                     }
                 }
-            }
-        }
-        .onDisappear {
-            isEditing = false
-        }
-        .onAppear {
-            if fileName == "Novo Arquivo" {
-                isEditing = true
             }
         }
         .contextMenu {
@@ -103,13 +93,13 @@ struct FilePDFIconView: View {
                 Image(systemName: "doc")
             }
             Button(action: {
-                isEditing = true
+                filePDF.isEditing = true // Ativa edição pelo menu de contexto
             }) {
                 Text("Renomear")
                 Image(systemName: "pencil")
             }
             Button(action: {
-                // Ação para excluir a pasta
+                // Ação para excluir o arquivo
                 withAnimation(.easeIn) {
                     dataViewModel.coreDataManager.filePDFManager.deleteFilePDF(parentFolder: parentFolder, filePDF: filePDF)
                 }
@@ -118,26 +108,22 @@ struct FilePDFIconView: View {
                 Image(systemName: "trash")
             }
         }
-//        .onDrag {
-//            // Gera uma URL temporária para o PDF
-//            let tempDirectory = FileManager.default.temporaryDirectory
-//            let tempPDFURL = tempDirectory.appendingPathComponent(filePDF.name!)
-//            
-//            // Escreve os dados do PDF no local temporário
-//            try? filePDF.content?.write(to: tempPDFURL)
-//            
-//            // Retorna o NSItemProvider com a URL do PDF temporário
-//            return NSItemProvider(object: tempPDFURL as NSURL)
-//        }
-        
-    }
-    private func cancelChanges() {
-        fileName = filePDF.name!
-        isEditing = false
+        .onDrag {
+            dragAndDropViewModel.movingFilePDF = filePDF
+            // Gera uma URL temporária para o PDF
+            let tempDirectory = FileManager.default.temporaryDirectory
+            let tempPDFURL = tempDirectory.appendingPathComponent(filePDF.name ?? "Sem nome")
+            
+            // Escreve os dados do PDF no local temporário
+            try? filePDF.content?.write(to: tempPDFURL)
+            
+            // Retorna o NSItemProvider com a URL do PDF temporário
+            return NSItemProvider(object: tempPDFURL as NSURL)
+        }
     }
     
     private func saveChanges() {
-        dataViewModel.coreDataManager.filePDFManager.editFilePDFName(filePDF: filePDF, name: fileName)
-        isEditing = false
+        dataViewModel.coreDataManager.filePDFManager.editFilePDFName(filePDF: filePDF, name: filePDF.name ?? "Sem nome")
+        filePDF.isEditing = false // Salva e encerra a edição
     }
 }

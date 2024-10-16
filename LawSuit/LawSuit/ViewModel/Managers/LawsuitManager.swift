@@ -44,8 +44,8 @@ class LawsuitManager {
         // Criar pasta raiz para esse processo:
         let rootFolder = Folder(context: context)
         rootFolder.parentLawsuit = lawsuit
-        rootFolder.name = lawsuit.name
-        rootFolder.id = UUID().uuidString
+        rootFolder.name = "lawsuit"
+        rootFolder.id = "root\(number)"
         
         lawsuit.rootFolder = rootFolder
         saveContext()
