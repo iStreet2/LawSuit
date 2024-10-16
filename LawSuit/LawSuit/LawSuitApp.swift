@@ -21,6 +21,7 @@ struct LawSuitApp: App {
     @StateObject var addressViewModel = AddressViewModel()
     @StateObject var eventManager = EventManager()
     @StateObject var lawsuitViewModel = LawsuitViewModel()
+    @StateObject var contactsManager = ContactsManager()
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
@@ -38,11 +39,12 @@ struct LawSuitApp: App {
                 .environmentObject(addressViewModel)
                 .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
+                .environmentObject(contactsManager)
                 .preferredColorScheme(.light)
                 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
                     hotkey.keyDownHandler = eventManager.hotkeyDownHandler
-                    ContactsManager().requestContactsAuthorization()
+                    contactsManager.requestContactsAuthorization()
                 }
                 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
                     SpotlightSearchbarView()
