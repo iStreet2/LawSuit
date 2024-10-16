@@ -19,7 +19,6 @@ struct LawsuitListViewHeaderContent: View {
     @Environment(\.managedObjectContext) var context
   
     var body: some View {
-        
             GeometryReader { geo in
                 HStack {
                     Text("Nome e Número")

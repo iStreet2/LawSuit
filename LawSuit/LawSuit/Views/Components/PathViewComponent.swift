@@ -25,19 +25,23 @@ struct PathViewComponent: View {
         HStack {
             ForEach(Array(folderViewModel.getPath().getItens().enumerated()), id: \.offset) { index, folder in
                 Group {
-                    if folder.name == "client" {
-                        if let client = navigationViewModel.selectedClient {
-                            if let socialName = client.socialName {
-                                Text(index == 0 ? "Documentos de \(String(describing: socialName.split(separator: " ").first ?? ""))" : folder.name)
-                                Text("/")
-                            } else {
-                                Text(index == 0 ? "Documentos de \(String(describing: client.name.split(separator: " ").first ?? ""))" : folder.name)
-                                Text("/")
+                    if index == 0 {
+                        if folder.name == "client" {
+                            if let client = navigationViewModel.selectedClient {
+                                if let socialName = client.socialName {
+                                    Text("Documentos de \(String(describing: socialName.split(separator: " ").first ?? ""))")
+                                } else {
+                                    Text("Documentos de \(String(describing: client.name.split(separator: " ").first ?? ""))")
+                                }
                             }
-                            
+                        } else if folder.name == "lawsuit" {
+                            Text("Documentos do Processo")
+                        } else {
+                            Text(folder.name)
                         }
+                        Text("/")
                     } else {
-                        Text(index == 0 ? "Documentos do processo" : folder.name)
+                        Text(folder.name)
                         Text("/")
                     }
                 }
@@ -45,14 +49,22 @@ struct PathViewComponent: View {
                 .bold()
                 .foregroundStyle(Color.gray)
                 .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
-                    if let movingFolder = dragAndDropViewModel.movingFolder {
-                        dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: openFolder, movingFolder: movingFolder, destinationFolder: folder)
+                    withAnimation {
+                        if let movingFolder = dragAndDropViewModel.movingFolder {
+                            if let parentFolder = movingFolder.parentFolder {
+                                if folder.id != parentFolder.id {
+                                    dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: openFolder, movingFolder: movingFolder, destinationFolder: folder)
+                                    dragAndDropViewModel.movingFolder = nil
+                                    return true
+                                }
+                            }
+                        }
+                        dragAndDropViewModel.movingFolder = nil
+                        return false
                     }
-                    return true
                 }
             }
-            
         }
-        .padding(.horizontal)
+        .padding()
     }
 }

@@ -110,6 +110,17 @@ struct FolderIconView: View {
                 Text("Excluir")
                 Image(systemName: "trash")
             }
+            Button {
+                withAnimation {
+                    if let destinationFolder = parentFolder.parentFolder {
+                        dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
+                    }
+                }
+            } label: {
+                Text("Mover para pasta anterior")
+                Image(systemName: "arrowshape.turn.up.left")
+            }
+            .disabled(parentFolder.parentFolder == nil)
         }
         .onDrag {
             dragAndDropViewModel.movingFolder = folder

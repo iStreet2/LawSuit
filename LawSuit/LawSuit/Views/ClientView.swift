@@ -101,10 +101,19 @@ struct ClientView: View {
                                 .padding(.horizontal, 20)
                                 //Aqui eu preciso de um onDrop, para voltar uma pasta
                                 .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
-//                                    if let movingFolder = dragAndDropViewModel.movingFolder {
-//                                        dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: openFolder, movingFolder: movingFolder, destinationFolder: )
-//                                    }
-                                    return true
+                                    withAnimation {
+                                        if let openFolder = folderViewModel.getOpenFolder() {
+                                            if let movingFolder = dragAndDropViewModel.movingFolder {
+                                                if let destinationFolder = openFolder.parentFolder {
+                                                    dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: openFolder, movingFolder: movingFolder, destinationFolder: destinationFolder)
+                                                    dragAndDropViewModel.movingFolder = nil
+                                                    return true
+                                                }
+                                            }
+                                        }
+                                        dragAndDropViewModel.movingFolder = nil
+                                        return false
+                                    }
                                 }
                                 
                                 Text((folderViewModel.getPath().count() == 1 ? "" : folderViewModel.getOpenFolder()?.name) ?? "Sem nome")
