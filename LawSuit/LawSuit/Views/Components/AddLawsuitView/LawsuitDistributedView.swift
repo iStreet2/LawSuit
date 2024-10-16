@@ -120,7 +120,7 @@ struct LawsuitDistributedView: View {
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
-                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", , mandatory: true ,textfieldText: $lawsuitDefendantName)
+                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", mandatory: true ,textfieldText: $lawsuitDefendantName)
                             .frame(width: 218)
                             .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                         
