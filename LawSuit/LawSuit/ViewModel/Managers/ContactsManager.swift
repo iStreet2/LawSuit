@@ -48,10 +48,14 @@ class ContactsManager: ObservableObject {
         guard let contact = contacts.first else {
             throw NSError(domain: "Contact not found", code: 404, userInfo: nil)
         }
-        
+                
         let mutableContact = contact.mutableCopy() as! CNMutableContact
+        
+        mutableContact.givenName = client.name
         mutableContact.phoneNumbers = [CNLabeledValue(label: CNLabelPhoneNumberMain, value: CNPhoneNumber(stringValue: client.cellphone))]
         mutableContact.emailAddresses = [CNLabeledValue(label: CNLabelHome, value: client.email as NSString)]
+        mutableContact.imageData = client.photo
+        mutableContact.jobTitle = client.occupation
         
         let saveRequest = CNSaveRequest()
         saveRequest.update(mutableContact)
