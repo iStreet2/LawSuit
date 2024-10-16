@@ -52,10 +52,8 @@ struct DocumentListView: View {
                 .font(.footnote)
                 .bold()
                 .foregroundStyle(Color(.gray))
-                
                 VStack(alignment: .leading) {
                     Divider()
-                    
                     if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
                         HStack {
                             Spacer()
@@ -64,32 +62,21 @@ struct DocumentListView: View {
                                 .frame(height: geometry.size.height / 2)
                             Spacer()
                         }
-                        
                     }
-                    
                     ScrollView {
-                        
                         VStack(alignment: .leading) {
-                            FolderView(parentFolder: openFolder, geometry: geometry)
+                            FolderView(parentFolder: openFolder)
                                 .onTapGesture(count: 2) {
                                     folderViewModel.openFolder(folder: openFolder)
                                 }
-                            FilePDFGridView(parentFolder: openFolder, geometry: geometry)
-                            
+                            FilePDFView(parentFolder: openFolder)
                         }
                         .padding(.leading, 10)
-                        
                     }
-                    
                 }
                 .background(.black.opacity(0.01))
-                
             }
             .padding(.top, 11)
-            .onChange(of: openFolder) { _ in
-                dragAndDropViewModel.updateFramesFolder(folders: folders)
-                dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
-            }
             .contextMenu {
                 Button(action: {
                     dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
@@ -97,13 +84,26 @@ struct DocumentListView: View {
                     Text("Nova Pasta")
                     Image(systemName: "folder")
                         .resizable()
-                    
                 })
                 Button {
                     folderViewModel.importPDF(parentFolder: openFolder, dataViewModel: dataViewModel)
                 } label: {
                     Text("Importar PDF")
                     Image(systemName: "doc")
+                }
+            }
+            .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+                withAnimation {
+                    // Verifica se a pasta sendo arrastada é uma pasta interna
+                    if let movingFolder = dragAndDropViewModel.movingFolder,
+                       movingFolder.parentFolder == openFolder {
+                        dragAndDropViewModel.movingFolder = nil
+                        return false
+                    }
+                    
+                    // Se não for uma pasta interna, executa a lógica de drop normalmente
+                    dragAndDropViewModel.handleDrop(providers: providers, parentFolder: openFolder, destinationFolder: openFolder, context: context, dataViewModel: dataViewModel)
+                    return true
                 }
             }
         }

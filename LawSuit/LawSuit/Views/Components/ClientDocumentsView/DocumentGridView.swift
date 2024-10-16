@@ -17,8 +17,8 @@ struct DocumentGridView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: []) var folders: FetchedResults<Folder>
-    @FetchRequest(sortDescriptors: []) var filesPDF: FetchedResults<FilePDF>
+    @FetchRequest var folders: FetchedResults<Folder>
+    @FetchRequest var files: FetchedResults<FilePDF>
     
     //MARK: Calculo da grid
     let spacing: CGFloat = 10
@@ -27,22 +27,30 @@ struct DocumentGridView: View {
     //MARK: Viariáveis
     var openFolder: Folder
     
+    init(openFolder: Folder) {
+        self.openFolder = openFolder
+        _folders = FetchRequest<Folder>(
+            sortDescriptors: []
+            ,predicate: NSPredicate(format: "parentFolder == %@", openFolder)
+        )
+        _files = FetchRequest<FilePDF>(
+            sortDescriptors: []
+            ,predicate: NSPredicate(format: "parentFolder == %@", openFolder)
+        )
+    }
+    
     var body: some View {
-        //senao criaria um openFolder novo e não abriria o nosso
-        //        if let openFolder = folderViewModel.getOpenFolder() {
         GeometryReader { geometry in
-            
             VStack(alignment: .leading, spacing: 0) {
-                
                 let columns = Int(geometry.size.width / (itemWidth + spacing))
                 let gridItems = Array(repeating: GridItem(.flexible(), spacing: spacing), count: max(columns, 1))
                 ScrollView {
                     VStack(spacing: 0) {
                         LazyVGrid(columns: gridItems, spacing: spacing) {
-                            FolderView(parentFolder: openFolder, geometry: geometry)
-                            FilePDFGridView(parentFolder: openFolder, geometry: geometry)
+                            FolderView(parentFolder: openFolder)
+                            FilePDFView(parentFolder: openFolder)
                         }
-                        if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
+                        if folders.count == 0 && files.count == 0{
                             Text("Sem pastas ou arquivos")
                                 .foregroundStyle(.gray)
                                 .frame(height: geometry.size.height / 2)
@@ -50,9 +58,11 @@ struct DocumentGridView: View {
                     }
                     .padding(.top, 20)
                 }
-                .onChange(of: openFolder) { _ in
-                    dragAndDropViewModel.updateFramesFolder(folders: folders)
-                    dragAndDropViewModel.updateFramesFilePDF(filesPDF: filesPDF)
+                .onTapGesture {
+                    //Tirar a seleção de todas as pastas
+                    for folder in folders {
+                        folder.isSelected = false
+                    }
                 }
                 .contextMenu {
                     Button(action: {
@@ -68,17 +78,24 @@ struct DocumentGridView: View {
                         Image(systemName: "doc")
                     }
                 }
-                //            .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
-                //                dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, context: context, coreDataViewModel: coreDataViewModel)
-                //                return true
-                //            }
-                                
+                .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+                    withAnimation {
+                        // Verifica se a pasta sendo arrastada é uma pasta interna
+                        if let movingFolder = dragAndDropViewModel.movingFolder,
+                           movingFolder.parentFolder == openFolder {
+                            dragAndDropViewModel.movingFolder = nil
+                            return false
+                        }
+                        // Se não for uma pasta interna, executa a lógica de drop normalmente
+                        dragAndDropViewModel.handleDrop(providers: providers, parentFolder: openFolder, destinationFolder: openFolder, context: context, dataViewModel: dataViewModel)
+                        return true
+                    }
+                }
             }
             .padding(.horizontal, 20)
             .frame(maxHeight: .infinity)
             .background(.black.opacity(0.01))
         }
-        //.border(Color(.quaternaryLabelColor))
         .frame(maxHeight: .infinity)
     }
 }

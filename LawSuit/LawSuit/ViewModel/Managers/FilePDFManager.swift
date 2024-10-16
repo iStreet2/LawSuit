@@ -21,6 +21,8 @@ class FilePDFManager {
         newFilePDF.id = UUID().uuidString
         newFilePDF.name = name
         newFilePDF.content = content
+        newFilePDF.isEditing = false
+        newFilePDF.createdAt = Date.now
         newFilePDF.parentFolder = parentFolder
         parentFolder.addToFiles(newFilePDF)
         saveContext()

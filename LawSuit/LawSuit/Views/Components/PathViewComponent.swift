@@ -8,23 +8,63 @@
 import SwiftUI
 
 struct PathViewComponent: View {
+    
+    //MARK: Variáveis de estado
+    @ObservedObject var openFolder: Folder
+    
+    //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
+    
+    //MARK: CoreData
+    @EnvironmentObject var dataViewModel: DataViewModel
+    @Environment(\.managedObjectContext) var context
     
     var body: some View {
-        if folderViewModel.getPath().getItens().count != 1 {
-            VStack(alignment: .leading, spacing: 0) {
-                Divider()
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(folderViewModel.getFolderPath())
-                        .font(.footnote)
-                        .bold()
-                        .foregroundStyle(Color(.gray))
-                        .padding(.vertical, 5.5)
+        HStack {
+            ForEach(Array(folderViewModel.getPath().getItens().enumerated()), id: \.offset) { index, folder in
+                Group {
+                    if index == 0 {
+                        if folder.name == "client" {
+                            if let client = navigationViewModel.selectedClient {
+                                if let socialName = client.socialName {
+                                    Text("Documentos de \(String(describing: socialName.split(separator: " ").first ?? ""))")
+                                } else {
+                                    Text("Documentos de \(String(describing: client.name.split(separator: " ").first ?? ""))")
+                                }
+                            }
+                        } else if folder.name == "lawsuit" {
+                            Text("Documentos do Processo")
+                        } else {
+                            Text(folder.name)
+                        }
+                        Text("/")
+                    } else {
+                        Text(folder.name)
+                        Text("/")
+                    }
                 }
-                .padding(.horizontal, 20)
-                
+                .font(.callout)
+                .bold()
+                .foregroundStyle(Color.gray)
+                .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+                    withAnimation {
+                        if let movingFolder = dragAndDropViewModel.movingFolder {
+                            if let parentFolder = movingFolder.parentFolder {
+                                if folder.id != parentFolder.id {
+                                    dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: openFolder, movingFolder: movingFolder, destinationFolder: folder)
+                                    dragAndDropViewModel.movingFolder = nil
+                                    return true
+                                }
+                            }
+                        }
+                        dragAndDropViewModel.movingFolder = nil
+                        return false
+                    }
+                }
             }
-            .background(.quaternary.opacity(0.5))
         }
+        .padding()
     }
 }

@@ -34,14 +34,18 @@
     </entity>
     <entity name="FilePDF" representedClassName="FilePDF" syncable="YES">
         <attribute name="content" optional="YES" attributeType="Binary"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="isEditing" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
         <relationship name="parentFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="files" inverseEntity="Folder"/>
         <relationship name="parentUpdate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Update" inverseName="file" inverseEntity="Update"/>
     </entity>
     <entity name="Folder" representedClassName="Folder" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="isEditing" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="recordName" optional="YES" attributeType="String"/>
