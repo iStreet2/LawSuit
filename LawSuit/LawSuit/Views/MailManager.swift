@@ -17,6 +17,7 @@ class MailManager {
     }
 
     func sendMail(emailSubject: String, message: String) {
+
         let service = NSSharingService(named: .composeEmail)
         service?.recipients = [client.email]
         service?.subject = emailSubject

@@ -130,4 +130,27 @@ class LawsuitManager {
         
     }
     
+    func fetchDefendantName(for client: Client) -> String {
+        
+        if let lawsuits = fetchFromClient(client: client) {
+            for lawsuit in lawsuits {
+                let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "id == %@", lawsuit.defendantID)
+                
+                do {
+                    let defendants = try context.fetch(fetchRequest)
+                    
+                    lawsuit.name = client.socialName != nil ? "\(String(describing: client.socialName)) X \(defendants.first?.name ?? "")" : "\(client.name) X \(defendants.first?.name ?? "")"
+                    print(lawsuit.name)
+                    return lawsuit.name
+                } catch {
+                    print("Erro ao buscar o réu: \(error)")
+                    return ""
+                }
+            }
+            saveContext()
+        }
+        return ""
+    }
+    
 }

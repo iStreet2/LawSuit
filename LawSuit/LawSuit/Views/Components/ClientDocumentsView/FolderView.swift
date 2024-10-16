@@ -11,7 +11,6 @@ struct FolderView: View {
     
     //MARK: Variáveis
     @ObservedObject var parentFolder: Folder
-    //    @Binding var showingGridView: Bool
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -53,6 +52,14 @@ struct FolderView: View {
                         return true
                     }
                 }
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            for selectedFolder in folders {
+                                selectedFolder.isSelected = (selectedFolder == folder)
+                            }
+                        }
+                )
 //                .transition(.scale)
         }
     }

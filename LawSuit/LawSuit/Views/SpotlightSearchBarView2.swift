@@ -29,13 +29,8 @@ struct SpotlightSearchbarView: View {
 		if let clientWrapper = entity as? ClientWrapper {
 			navigationViewModel.selectedClient = clientWrapper.client
 		} else if let lawsuitWrapper = entity as? LawsuitWrapper {
-			for client in dataViewModel.fetchCoreDataObjects(for: .client) as! [Client] {
-				if client.id == lawsuitWrapper.lawsuit.authorID || client.id == lawsuitWrapper.lawsuit.defendantID {
-					navigationViewModel.selectedClient = client
-					navigationViewModel.isShowingDetailedLawsuitView = true
-					break
-				}
-			}
+			navigationViewModel.lawsuitToShow = lawsuitWrapper.lawsuit
+			navigationViewModel.isShowingDetailedLawsuitView = true
 		} else if let fileWrapper = entity as? FileWrapper {
 			dismiss()
 			openWindow(value: fileWrapper.file.content!)
@@ -50,13 +45,8 @@ struct SpotlightSearchbarView: View {
 		if let clientWrapper = currentEntity as? ClientWrapper {
 			navigationViewModel.selectedClient = clientWrapper.client
 		} else if let lawsuitWrapper = currentEntity as? LawsuitWrapper {
-			for client in dataViewModel.fetchCoreDataObjects(for: .client) as! [Client] {
-				if client.id == lawsuitWrapper.lawsuit.authorID || client.id == lawsuitWrapper.lawsuit.defendantID {
-					navigationViewModel.selectedClient = client
-					navigationViewModel.isShowingDetailedLawsuitView = true
-					break
-				}
-			}
+			navigationViewModel.lawsuitToShow = lawsuitWrapper.lawsuit
+			navigationViewModel.isShowingDetailedLawsuitView = true
 		} else if let fileWrapper = currentEntity as? FileWrapper {
 			dismiss()
 			openWindow(value: fileWrapper.file.content!)
@@ -79,7 +69,7 @@ struct SpotlightSearchbarView: View {
 			}
 			.font(.title2)
 			.padding(.leading)
-			.frame(width: 620, height: 42)
+			.frame(width: 620, height: searchString.notEmpty ? 42 : 80) // Frame sem resultado de busca (original: 42H)
 			
 			if searchString.notEmpty {
 				List {
@@ -136,7 +126,7 @@ struct SpotlightSearchbarView: View {
 				}
 				.scrollIndicators(.never)
 				.scrollContentBackground(.hidden)
-				.frame(height: 383)
+				.frame(height: 383) // Frame com resultado de busca
 				
 			}
 			

@@ -10,12 +10,7 @@ import SwiftUI
 struct RequestDocumentsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var client: Client
-//    @State var isRgOn: Bool = false
-//    @State var isCPFOn: Bool = false
-//    @State var isCNHOn: Bool = false
-//    @State var isCertidaoNascimentoOn: Bool = false
-//    @State var isCertidaoCasamentoOn: Bool = false
-//    
+
     @State var documents: [(name: String, isSelected: Bool)] = [
         ("RG", false),
         ("CPF", false),
@@ -32,7 +27,7 @@ struct RequestDocumentsView: View {
                 .font(.title)
                 .bold()
             
-            Text("Cliente: \(client.name)")
+            Text("Cliente: \(client.socialName ?? client.name)")
                 .font(.title2)
             
             HStack(spacing: 50) {
@@ -41,8 +36,11 @@ struct RequestDocumentsView: View {
                 }
             }
             CheckboxIconComponent(isChecked: $documents[4].isSelected, text: documents[4].name)
-
-            Spacer()
+            
+            Text("Certifique-se de que sua preferência de e-mail é um provedor válido (Mail -> Ajustes -> Geral -> App de e-mail padrão). Isso garantirá que o envio de mensagens ocorra corretamente")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .frame(height: 50)
             
             HStack {
                 Spacer()
@@ -59,9 +57,10 @@ struct RequestDocumentsView: View {
                     Text("Solicitar")
                 })
                 .buttonStyle(.borderedProminent)
+                .tint(.black)
             }
         }
-        .frame(width: 450, height: 200)
+        .frame(width: 450, height: 250)
         .padding(20)
     }
     

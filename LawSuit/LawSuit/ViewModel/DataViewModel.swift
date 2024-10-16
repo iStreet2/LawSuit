@@ -10,6 +10,7 @@ import CoreData
 import CloudKit
 import CoreSpotlight
 import CoreServices
+import AuthenticationServices
 
 class DataViewModel: ObservableObject {
     
@@ -23,6 +24,7 @@ class DataViewModel: ObservableObject {
 //    var cloudManager: CloudManager
 //    var cloudDataConverter: CloudDataConverter
 	var spotlightManager: SpotlightManager
+	private var authenticationManager: AuthenticationManager
     
     
 //    var lawsuitNetworkService: LawsuitNetworkingService
@@ -39,6 +41,7 @@ class DataViewModel: ObservableObject {
 //        self.cloudManager = CloudManager(container: cloudContainer, cloudDataConverter: cloudDataConverter)
 //        self.lawsuitNetworkService = LawsuitNetworkingService(updateManager: UpdateManager(context: context))
 		 self.spotlightManager = SpotlightManager(container: self.coreDataContainer, context: self.context)
+		 self.authenticationManager = AuthenticationManager()
     }
 	
 	func fetchCoreDataObjects<T: NSManagedObject>(for model: CoreDataModelsEnumerator) -> [T] {
@@ -69,6 +72,14 @@ class DataViewModel: ObservableObject {
 	
 	func getObjectByURI(uri: String) -> Recordable? {
 		return spotlightManager.getObjectByURI(uri: uri)
+	}
+	
+	func handleSuccessfulLogin(with authorization: ASAuthorization) {
+		authenticationManager.handleSuccessfulLogin(with: authorization)
+		
+	}
+	func handleLoginError(with error: Error) {
+		authenticationManager.handleLoginError(with: error)
 	}
 }
 

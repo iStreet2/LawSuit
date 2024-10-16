@@ -31,6 +31,9 @@ struct FolderIconView: View {
                     Image("Pasta")
                         .resizable()
                         .frame(width: 73, height: 58)
+                        .frame(width: 85, height: 73)
+                        .background(folder.isSelected ? Color.gray.opacity(0.2) : Color.clear)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
 
                     if folder.isEditing {
                         TextField("", text: Binding(
@@ -58,6 +61,8 @@ struct FolderIconView: View {
                             }
                     }
                 }
+                
+                
             } else {
                 HStack {
                     Image("Pasta")
@@ -86,6 +91,7 @@ struct FolderIconView: View {
                 }
             }
         }
+        //.border(.black)
         .onDisappear {
             folder.isEditing = false
         }

@@ -45,7 +45,6 @@ struct LawsuitNotDistributedView: View {
                             .onChange(of: lawsuitAuthorName) { newValue in
                                 if !newValue.isEmpty {
                                     authorRowState = .selected
-
                                 } else {
                                     authorRowState = .notSelected
                                     attributedAuthor = false

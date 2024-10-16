@@ -56,4 +56,19 @@ class CoreDataManager: ObservableObject {
             print("Error saving context after deletion: \(error)")
         }
     }
+    
+    func getClientAndEntity(for lawsuit: Lawsuit) -> (client: Client?, entity: Entity?) {
+        if lawsuit.authorID.hasPrefix("client:") {
+            if let author = clientManager.fetchFromId(id: lawsuit.authorID),
+               let defendant = entityManager.fetchFromID(id: lawsuit.defendantID) {
+                return (client: author, entity: defendant)
+            }
+        } else {
+            if let defendant = clientManager.fetchFromId(id: lawsuit.defendantID),
+               let author = entityManager.fetchFromID(id: lawsuit.authorID) {
+                return (client: defendant, entity: author)
+            }
+        }
+        return (client: nil, entity: nil)
+    }
 }
