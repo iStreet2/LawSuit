@@ -9,17 +9,13 @@ import SwiftUI
 
 struct LawsuitListViewHeaderContent: View {
     
-    //MARK: Variáveis de estado
-    @State var lawsuitClient: Client?
     var lawsuits: FetchedResults<Lawsuit>
     @EnvironmentObject var navigationViewModel: NavigationViewModel
-    
-    //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-  
+
     var body: some View {
-        
+        VStack(spacing: 0) {
             GeometryReader { geo in
                 HStack {
                     Text("Nome e Número")
@@ -35,10 +31,11 @@ struct LawsuitListViewHeaderContent: View {
                         .frame(width: geo.size.width * 0.17, alignment: .leading)
                     
                     Text("Advogado Responsável")
-                    
                 }
                 .padding(.horizontal, 20)
             }
+            .padding(.horizontal, 20)
+        }
         .frame(minWidth: 777)
         .frame(height: 13)
         .font(.footnote)
@@ -50,35 +47,28 @@ struct LawsuitListViewHeaderContent: View {
         ScrollView {
             VStack(spacing: 0) {
                 ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
-                    NavigationLink {
-                        DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
+                    let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
 
+                    NavigationLink {
+                        if let client = lawsuitData.client, let entity = lawsuitData.entity {
+                            DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
+                        }
                     } label: {
-                        if let lawsuitClient = self.lawsuitClient {
-                            LawsuitCellComponent(client: lawsuitClient, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                        if let client = lawsuitData.client {
+                            LawsuitCellComponent(client: client, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
                                 .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
-                        }
-                        else {
+                        } else {
                             Text("Carregando")
-                                .onAppear {
-                                    //Se o cliente do processo estiver no autor
-                                    if lawsuit.authorID.hasPrefix("client:") {
-                                        if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID) {
-                                            self.lawsuitClient = author
-                                        }
-                                    //Se o cliente do processo estiver no reu
-                                    } else {
-                                        if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID){
-                                            self.lawsuitClient = defendant
-                                        }
-                                        }
-                                    }
-                            }
                         }
-                        .buttonStyle(PlainButtonStyle())
                     }
+                    .buttonStyle(PlainButtonStyle())
+                    .simultaneousGesture(TapGesture().onEnded({
+						            navigationViewModel.lawsuitToShow = lawsuit
+					          }))                                                 
                 }
             }
         }
     }
+}
+
 

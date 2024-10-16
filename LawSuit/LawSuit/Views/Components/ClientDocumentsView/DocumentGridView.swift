@@ -48,7 +48,6 @@ struct DocumentGridView: View {
                                 .frame(height: geometry.size.height / 2)
                         }
                     }
-                    .padding(.trailing, 25)
                     .padding(.top, 20)
                 }
                 .onChange(of: openFolder) { _ in
@@ -75,8 +74,8 @@ struct DocumentGridView: View {
                 //            }
                                 
             }
+            .padding(.horizontal, 20)
             .frame(maxHeight: .infinity)
-            .padding(.leading, 10)
             .background(.black.opacity(0.01))
         }
         //.border(Color(.quaternaryLabelColor))

@@ -35,10 +35,15 @@ struct FolderIconView: View {
         Group {
             if folderViewModel.showingGridView {
                 VStack {
-                    Image("Pasta")
-                        .resizable()
-                        .frame(width: 73, height: 58)
-
+                    ZStack {
+                        Image("Pasta")
+                            .resizable()
+                            .frame(width: 73, height: 58)
+                    }
+                    .frame(width: 85, height: 73)
+                    .background(folder.isSelected ? Color.gray.opacity(0.2) : Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    
                     if isEditing {
                         TextField("", text: $folderName, onEditingChanged: { _ in
                         }, onCommit: {
@@ -55,8 +60,9 @@ struct FolderIconView: View {
                                 isEditing = true
                             }
                     }
-                    //lalallala teste
                 }
+                
+                
             } else {
                 HStack {
                     Image("Pasta")
@@ -85,6 +91,7 @@ struct FolderIconView: View {
                 }
             }
         }
+        //.border(.black)
         .onDisappear {
             isEditing = false
         }

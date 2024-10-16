@@ -33,7 +33,7 @@ enum TagTypeString {
 }
 
 enum TagType: CaseIterable, Identifiable {
-    init?(s: String) {
+    init(s: String) {
         switch s.lowercased() {
         case "trabalhista":
             self = .trabalhista

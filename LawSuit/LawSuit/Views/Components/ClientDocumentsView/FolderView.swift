@@ -12,7 +12,6 @@ struct FolderView: View {
     //MARK: Variáveis
     @ObservedObject var parentFolder: Folder
     var geometry: GeometryProxy
-    //    @Binding var showingGridView: Bool
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -43,9 +42,18 @@ struct FolderView: View {
             FolderIconView(folder: folder, parentFolder: parentFolder)
                 .frame(maxWidth: .infinity,minHeight: 20, alignment: folderViewModel.showingGridView ? .center : .leading)
                 .background(folderViewModel.showingGridView ? Color.clear : Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+            
                 .onTapGesture(count: 2) {
                     folderViewModel.openFolder(folder: folder)
                 }
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            for selectedFolder in folders {
+                                selectedFolder.isSelected = (selectedFolder == folder)
+                            }
+                        }
+                )
                 .offset(x: dragAndDropViewModel.folderOffsets[folder.id!]?.width ?? 0, y: dragAndDropViewModel.folderOffsets[folder.id!]?.height ?? 0)
                 .gesture(
                     DragGesture()

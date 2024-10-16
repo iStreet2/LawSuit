@@ -74,14 +74,16 @@ struct EditLawSuitView: View {
                             
                             //MARK: - Caso o usuário atribuir cliente para o autor
                         } else {
-                            ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
+                            ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorOrDefendantName: $lawsuitAuthorName)
                                 .onChange(of: lawsuitAuthorName) { newValue in
-                                    if !newValue.isEmpty {
-                                        authorRowState = .selected
-                                        defendantRowState = .notSelected
-                                    } else {
-                                        authorRowState = .notSelected
-                                        attributedAuthor = false
+                                    withAnimation {
+                                        if !newValue.isEmpty {
+                                            authorRowState = .selected
+                                            defendantRowState = .notSelected
+                                        } else {
+                                            authorRowState = .notSelected
+                                            attributedAuthor = false
+                                        }
                                     }
                                 }
                         }
@@ -99,14 +101,16 @@ struct EditLawSuitView: View {
                                 .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                             
                         } else {
-                            ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorName: $lawsuitDefendantName)
+                            ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorOrDefendantName: $lawsuitDefendantName)
                                 .onChange(of: lawsuitDefendantName) { newValue in
-                                    if !newValue.isEmpty {
-                                        defendantRowState = .selected
-                                        authorRowState = .notSelected
-                                    } else {
-                                        defendantRowState = .notSelected
-                                        attributedDefendant = false
+                                    withAnimation {
+                                        if !newValue.isEmpty {
+                                            defendantRowState = .selected
+                                            authorRowState = .notSelected
+                                        } else {
+                                            defendantRowState = .notSelected
+                                            attributedDefendant = false
+                                        }
                                     }
                                 }
                         }
@@ -218,39 +222,20 @@ struct EditLawSuitView: View {
                                      message: Text("Por favor, insira um número de processo válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
                     case .invalidCEP:
-                            return Alert(title: Text("Número do processo inválido"),
-                            message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                            dismissButton: .default(Text("Ok")))
-                        }
+                        return Alert(title: Text("Número do CEP inválido"),
+                                     message: Text("Por favor, insira um número de CEP válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
                     }
                 }
             }
-        
-//        .sheet(isPresented: $selectTag, content: {
-//            
-//            VStack {
-//                Spacer()
-//                TagViewComponent(tagType: tagType)
-//                Spacer()
-//                HStack {
-//                    Spacer()
-//                    Button(action: {
-//                        selectTag.toggle()
-//                    }, label: {
-//                        Text("Salvar")
-//                    })
-//                    .buttonStyle(.borderedProminent)
-//                    .padding()
-//                }
-//            }
-//        })
+        }
         .onAppear {
             //Se o cliente do processo estiver no autor
             if lawsuit.authorID.hasPrefix("client:") {
                 attributedAuthor = true
                 if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
                    let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                    lawsuitAuthorName = author.name
+                    lawsuitAuthorName = author.socialName ?? author.name
                     lawsuitDefendantName = defendant.name
                 }
                 //Se o cliente do processo estiver no reu
@@ -259,7 +244,7 @@ struct EditLawSuitView: View {
                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
                    let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
                     lawsuitAuthorName = author.name
-                    lawsuitDefendantName = defendant.name
+                    lawsuitDefendantName = defendant.socialName ?? defendant.name
                 }
             }
             lawsuitNumber = lawsuit.number

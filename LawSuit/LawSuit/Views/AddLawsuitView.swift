@@ -23,10 +23,13 @@ struct AddLawsuitView: View {
     //MARK: Variáveis de estado
     @State var lawsuitType: LawsuitType = .distributed
     @State var lawsuitTypeString: String = ""
+    
     @State var lawsuitNumber = ""
     @State var lawsuitCourt = ""
+
     @State var lawsuitAuthorName = ""
     @State var lawsuitDefendantName = ""
+
     @State var lawsuitActionDate = ""
     @State var invalidInformation: InvalidInformation?
     @State var tagType: TagType = .civel
@@ -176,6 +179,5 @@ struct AddLawsuitView: View {
         !lawsuitActionDate.description.isEmpty &&
         !lawsuitAuthorName.isEmpty &&
         !lawsuitDefendantName.isEmpty
-        
     }
 }

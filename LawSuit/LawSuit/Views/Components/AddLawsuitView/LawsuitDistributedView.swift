@@ -95,11 +95,11 @@ struct LawsuitDistributedView: View {
                     }
                     //MARK: Caso usuário atribuir cliente para o réu
                     if attributedDefendant {
-                        LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", textfieldText: $lawsuitAuthorName)
+                        LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", mandatory: true, textfieldText: $lawsuitAuthorName)
                             .frame(width: 218)
                             .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                     } else {
-                        ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorName: $lawsuitAuthorName)
+                        ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorOrDefendantName: $lawsuitAuthorName)
                             .onChange(of: lawsuitAuthorName) { newValue in
                                 if !newValue.isEmpty {
                                     authorRowState = .selected
@@ -120,13 +120,13 @@ struct LawsuitDistributedView: View {
                     }
                     //MARK: Caso o usuário tenha adicionado um cliente no autor
                     if attributedAuthor {
-                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
+                        LabeledTextField(label: "Réu", placeholder: "Adicionar réu", , mandatory: true ,textfieldText: $lawsuitDefendantName)
                             .frame(width: 218)
                             .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                         
                         
                     } else {
-                        ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorName: $lawsuitDefendantName)
+                        ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorOrDefendantName: $lawsuitDefendantName)
                             .onChange(of: lawsuitDefendantName) { newValue in
                                 if !newValue.isEmpty {
                                     defendantRowState = .selected
@@ -144,4 +144,3 @@ struct LawsuitDistributedView: View {
         }
     }
 }
-

@@ -18,18 +18,16 @@ struct DetailedLawSuitView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
     @ObservedObject var lawsuit: Lawsuit
+    
     @State var deleted = false
     @State var editLawSuit = false
     @State var lawsuitCategory: TagType
+    @State var isCopied = false
+    @ObservedObject var client: Client
+    @ObservedObject var entity: Entity
     @State var lawsuitAuthorName: String = ""
     @State var lawsuitAuthorSocialName: String = ""
     @State var lawsuitDefendantName: String = ""
-    @State var isCopied = false
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy" // Personaliza o formato da data
-        return formatter
-    }
     @State var showingGridView = true
     
     //MARK: CoreData
@@ -98,14 +96,7 @@ struct DetailedLawSuitView: View {
         .onAppear {
             folderViewModel.resetFolderStack()
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
-            updateNames()
             navigationViewModel.isShowingDetailedLawsuitView = true
-        }
-        .onChange(of: lawsuit.authorID) { _ in
-            updateNames()
-        }
-        .onChange(of: lawsuit.defendantID) { _ in
-            updateNames()
         }
         .onChange(of: deleted) { _ in
             dismiss()
@@ -117,7 +108,7 @@ struct DetailedLawSuitView: View {
         })
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
     }
-    
+
     func updateNames() {
         //Se o cliente do processo estiver no autor
         if lawsuit.authorID.hasPrefix("client:") {
@@ -153,17 +144,18 @@ extension DetailedLawSuitView {
         HStack {
             TagViewComponent(tagType: TagType(s: lawsuit.category) ?? TagType.ambiental)
             Spacer()
-            Button {
-                // editar
-                editLawSuit.toggle()
-            } label: {
-                Image(systemName: "square.and.pencil")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 21)
-                    .foregroundStyle(.secondary)
+            HStack {
+                Button {
+                    editLawSuit.toggle()
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 21)
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(PlainButtonStyle())
             }
-            .buttonStyle(PlainButtonStyle())
         }
     }
     
@@ -187,12 +179,6 @@ extension DetailedLawSuitView {
         }
     }
     
-    //    func copyToClipboard() {
-    //        pasteboard.clearContents()
-    //        pasteboard.setString(lawsuit.number, forType: .string)
-    //        isCopied.toggle()
-    //    }
-    
     private var mainBlock: some View {
         BoxView {
             VStack(alignment: .leading) {
@@ -206,11 +192,10 @@ extension DetailedLawSuitView {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .bold()
-                //                Text(dateFormatter.string(from: lawsuit.actionDate))
-                Text("\(lawsuit.actionDate, formatter: dateFormatter)")
+                Text("\(lawsuit.actionDate.convertBirthDateToString())")
                 
                 Spacer()
-                
+
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Autor")
@@ -218,8 +203,7 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        
-                        Text(lawsuitAuthorSocialName)
+                        Text((dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.socialName) ?? client.name)
                             .font(.subheadline)
                             .bold()
                     }
@@ -231,7 +215,8 @@ extension DetailedLawSuitView {
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
                         //                        if !lawsuitDefendantName.isEmpty {
-                        Text(lawsuitDefendantName)
+                        Text(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? client.socialName ?? client.name : entity.name)
+                        // Text(lawsuitDefendantName)
                             .font(.subheadline)
                             .bold()
                         //                                            }
@@ -242,3 +227,12 @@ extension DetailedLawSuitView {
         }
     }
 }
+
+
+
+
+
+
+
+
+

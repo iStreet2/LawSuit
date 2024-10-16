@@ -38,31 +38,42 @@ struct SelectClientComponent: View {
                 })
             }
             List {
-                ForEach(filteredClients, id: \.self) { client in
-                    if let socialName = client.socialName {
-                        Text(socialName)
-                            .onTapGesture {
-                                withAnimation {
-                                    if authorOrDefendant == "author" {
-                                        lawsuitAuthorName = client.socialName!
-                                        attributedAuthor = true
-                                    } else {
-                                        lawsuitDefendantName = client.socialName!
-                                        attributedDefendant = true
-                                    }
+
+                ForEach(Array(filteredClients.enumerated()), id: \.offset) { index, client in
+                                                                            
+                    let displayName = client.socialName ?? client.name
+
+                    if let socialName = client.socialName, let nsImage = nsImages[index] {
+                        HStack {
+                            Image(nsImage: nsImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 30, height: 30)
+                                .clipShape(Circle())
+                            Text(socialName)
+                        }
+                        .onTapGesture {
+                            withAnimation {
+                                if authorOrDefendant == "author" {
+                                    lawsuitAuthorName = displayName
+                                    attributedAuthor = true
+                                } else {
+                                    lawsuitDefendantName = displayName
+                                    attributedDefendant = true
                                 }
-                                dismiss()
                             }
-                            .background(isEditing ? Color.blue : Color(.white))
+                            dismiss()
+                        }
+                        .background(isEditing ? Color.blue : Color(.white))
                     } else {
-                        Text(client.name)
+                        Text(displayName)
                             .onTapGesture {
                                 withAnimation {
                                     if authorOrDefendant == "author" {
-                                        lawsuitAuthorName = client.name
+                                        lawsuitAuthorName = displayName
                                         attributedAuthor = true
                                     } else {
-                                        lawsuitDefendantName = client.name
+                                        lawsuitDefendantName = displayName
                                         attributedDefendant = true
                                     }
                                 }
@@ -93,6 +104,18 @@ struct SelectClientComponent: View {
                 ($0.socialName?.localizedCaseInsensitiveContains(searchQuery) == true)
             }
         }
+    }
+    
+    var nsImages: [NSImage?] {
+        var temp: [NSImage?] = []
+        for client in clients {
+            if let photo = client.photo {
+                temp.append(NSImage(data: photo))
+            } else {
+                temp.append(NSImage(data: Data()))
+            }
+        }
+        return temp
     }
     
 }
