@@ -8,23 +8,51 @@
 import SwiftUI
 
 struct PathViewComponent: View {
+    
+    //MARK: Variáveis de estado
+    @ObservedObject var openFolder: Folder
+    
+    //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
+    
+    //MARK: CoreData
+    @EnvironmentObject var dataViewModel: DataViewModel
+    @Environment(\.managedObjectContext) var context
     
     var body: some View {
-        if folderViewModel.getPath().getItens().count != 1 {
-            VStack(alignment: .leading, spacing: 0) {
-                Divider()
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(folderViewModel.getFolderPath())
-                        .font(.footnote)
-                        .bold()
-                        .foregroundStyle(Color(.gray))
-                        .padding(.vertical, 5.5)
+        HStack {
+            ForEach(Array(folderViewModel.getPath().getItens().enumerated()), id: \.offset) { index, folder in
+                Group {
+                    if folder.name == "client" {
+                        if let client = navigationViewModel.selectedClient {
+                            if let socialName = client.socialName {
+                                Text(index == 0 ? "Documentos de \(String(describing: socialName.split(separator: " ").first ?? ""))" : folder.name)
+                                Text("/")
+                            } else {
+                                Text(index == 0 ? "Documentos de \(String(describing: client.name.split(separator: " ").first ?? ""))" : folder.name)
+                                Text("/")
+                            }
+                            
+                        }
+                    } else {
+                        Text(index == 0 ? "Documentos do processo" : folder.name)
+                        Text("/")
+                    }
                 }
-                .padding(.horizontal, 20)
-                
+                .font(.callout)
+                .bold()
+                .foregroundStyle(Color.gray)
+                .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+                    if let movingFolder = dragAndDropViewModel.movingFolder {
+                        dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: openFolder, movingFolder: movingFolder, destinationFolder: folder)
+                    }
+                    return true
+                }
             }
-            .background(.quaternary.opacity(0.5))
+            
         }
+        .padding(.horizontal)
     }
 }

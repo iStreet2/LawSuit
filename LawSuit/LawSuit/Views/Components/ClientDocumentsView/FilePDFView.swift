@@ -14,7 +14,6 @@ struct FilePDFView: View {
 
     @State var selectedFilePDF: FilePDF?
     @State var showPDF = false
-    var geometry: GeometryProxy
     
     //MARK: ViewModels
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
@@ -26,10 +25,8 @@ struct FilePDFView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest var filesPDF: FetchedResults<FilePDF>
     
-    init(parentFolder: Folder, geometry: GeometryProxy) {
-        
+    init(parentFolder: Folder) {
         self.parentFolder = parentFolder
-        self.geometry = geometry
         
         _filesPDF = FetchRequest<FilePDF>(
             sortDescriptors: [NSSortDescriptor(keyPath: \FilePDF.createdAt, ascending: true)],

@@ -42,7 +42,12 @@ struct FolderView: View {
                     folderViewModel.openFolder(folder: folder)
                 }
                 .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
-                    dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, destinationFolder: folder, context: context, dataViewModel: dataViewModel)
+                    if let movingFolder = dragAndDropViewModel.movingFolder {
+                        if movingFolder.id == folder.id {
+                            return false
+                        }
+                        dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, destinationFolder: folder, context: context, dataViewModel: dataViewModel)
+                    }
                     return true
                 }
 //                .transition(.scale)

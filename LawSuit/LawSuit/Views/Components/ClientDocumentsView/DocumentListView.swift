@@ -69,7 +69,7 @@ struct DocumentListView: View {
                                 .onTapGesture(count: 2) {
                                     folderViewModel.openFolder(folder: openFolder)
                                 }
-                            FilePDFView(parentFolder: openFolder, geometry: geometry)
+                            FilePDFView(parentFolder: openFolder)
                         }
                         .padding(.leading, 10)
                     }

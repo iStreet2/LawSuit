@@ -161,13 +161,13 @@ class DragAndDropViewModel: ObservableObject {
         // Copia as subpastas da pasta
         if let subfolders = folder.folders as? Set<Folder> {
             for subfolder in subfolders {
-                let subfolderURL = destinationURL.appendingPathComponent(subfolder.name ?? "Subpasta")
+                let subfolderURL = destinationURL.appendingPathComponent(subfolder.name)
                 do {
                     try fileManager.createDirectory(at: subfolderURL, withIntermediateDirectories: true, attributes: nil)
                     // Recursivamente copia o conteúdo das subpastas
                     copyFolderContents(from: subfolder, to: subfolderURL)
                 } catch {
-                    print("Erro ao criar subpasta temporária \(subfolder.name ?? ""): \(error)")
+                    print("Erro ao criar subpasta temporária \(subfolder.name): \(error)")
                 }
             }
         }

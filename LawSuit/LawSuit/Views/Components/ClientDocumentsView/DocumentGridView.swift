@@ -48,7 +48,7 @@ struct DocumentGridView: View {
                     VStack(spacing: 0) {
                         LazyVGrid(columns: gridItems, spacing: spacing) {
                             FolderView(parentFolder: openFolder)
-                            FilePDFView(parentFolder: openFolder, geometry: geometry)
+                            FilePDFView(parentFolder: openFolder)
                         }
                         if folders.count == 0 && files.count == 0{
                             Text("Sem pastas ou arquivos")

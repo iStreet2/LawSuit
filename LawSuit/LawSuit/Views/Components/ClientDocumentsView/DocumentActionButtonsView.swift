@@ -15,8 +15,7 @@ struct DocumentActionButtonsView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     
-    //MARK: Viariáveis
-//    @Binding var showingGridView: Bool
+    //MARK: Variáveis
     var folder: Folder
     
     var body: some View {
