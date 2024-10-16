@@ -131,8 +131,13 @@ struct ContentView: View {
 		}
 		.navigationTitle("Arqion")
 		.sheet(isPresented: $addClient, content: {
-            AddClientView(showContactAlert: $showContactAlert)
+            AddClientView()
 		})
+        .alert(isPresented: $contactsManager.showAlert) {
+            Alert(title: Text("Aviso"),
+                  message: Text(contactsManager.alertMessage),
+                  dismissButton: .default(Text("Ok")))
+        }
 	}
 }
 

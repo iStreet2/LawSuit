@@ -9,11 +9,17 @@ import Foundation
 import Contacts
 import SwiftUI
 
+enum AlertMessageEnum: String {
+    case accessDenied = "Acesso aos contatos foi negado. Vá até as Preferências do Sistema > Segurança e Privacidade para conceder acesso ao app."
+    case accessRestricted = "O acesso aos contatos está restrito e não pode ser autorizado."
+    case unknownError = "Erro desconhecido ao acessar contatos."
+}
+
 class ContactsManager: ObservableObject {
     let store = CNContactStore()
     
-    @State private var showAlert = false
-    @State private var alertMessage = ""
+    @Published var showAlert = false
+    @Published var alertMessage = ""
     
     func requestContactsAuthorization() {
         store.requestAccess(for: .contacts) { granted, error in
@@ -29,11 +35,6 @@ class ContactsManager: ObservableObject {
             if granted {
                 DispatchQueue.main.async {
                     print("acesso concedido")
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.alertMessage = "Permissão para acessar contatos foi negada. Vá até as Preferências do Sistema para permitir o acesso."
-                    self.showAlert = true
                 }
             }
         }
@@ -79,23 +80,21 @@ class ContactsManager: ObservableObject {
         let authorizationStatus = CNContactStore.authorizationStatus(for: .contacts)
         
         switch authorizationStatus {
+            
         case .notDetermined:
-            //Se a permissão não foi determinada, solicita o acesso
             requestContactsAuthorization()
             print("Pediu o acesso novamente")
         case .authorized:
-            //Se já foi autorizado, adiciona o contato
             print("Autorizado")
             saveContact(contact: contact)
         case .denied:
-            //Se o acesso foi negado, sugere ir para os ajustes
-            alertMessage = "Acesso aos contatos foi negado. Vá até as Preferências do Sistema > Segurança e Privacidade para conceder acesso ao app."
+            alertMessage = AlertMessageEnum.accessDenied.rawValue
             showAlert = true
         case .restricted:
-            alertMessage = "O acesso aos contatos está restrito e não pode ser autorizado."
+            alertMessage = AlertMessageEnum.accessRestricted.rawValue
             showAlert = true
         @unknown default:
-            alertMessage = "Erro desconhecido ao acessar contatos."
+            alertMessage = AlertMessageEnum.unknownError.rawValue
             showAlert = true
         }
     }
