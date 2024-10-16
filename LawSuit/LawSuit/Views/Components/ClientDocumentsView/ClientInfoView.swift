@@ -1,30 +1,19 @@
-//
-//  ClientInfoView.swift
-//  LawSuit
-//
-//  Created by Gabriel Vicentin Negro on 28/08/24.
-//
-
 import SwiftUI
 import AppKit
 
 struct ClientInfoView: View {
-    
-    //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
-    
-    //MARK: Variáveis de estado:
     @ObservedObject var client: Client
     @State var editClient = false
     @State var nsImage: NSImage?
     @Binding var deleted: Bool
     @State var requestDocument = false
+    @State var doNotShowAgainToggle = false
+    @State var sendMailSheet = false
     var mailManager: MailManager
-    
+  
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
-    
-    //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
 
@@ -63,48 +52,71 @@ struct ClientInfoView: View {
                         Text("Celular")
                             .font(.body)
                             .bold()
-                            .foregroundStyle(Color(.gray))
-                        Text(client.cellphone)
-                            .font(.body)
-                        Text("E-mail")
-                            .font(.body)
+                    } else {
+                        Text(client.name)
+                            .font(.title)
                             .bold()
-                            .foregroundStyle(Color(.gray))
-                        Text(client.email)
-                            .font(.body)
                     }
                     .font(.footnote)
                     
                     NavigationLink {
                         ClientMoreInfoView(client: client, deleted: $deleted, nsImage: $nsImage)
-                        
+                      
                     } label: {
-                        Text("Mais informações")
-                            .font(.body)
-                            .foregroundColor(.wine)
-                            .underline()
-                            .bold()
+                        Image(systemName: "square.and.pencil")
+                            .font(.system(size: 18))
                     }
                     .buttonStyle(PlainButtonStyle())
-                    
-                    HStack {
-                        Button {
+                }
+                
+                HStack {
+                    Text("Celular")
+                        .font(.body)
+                        .bold()
+                        .foregroundStyle(Color(.gray))
+                    Text(client.cellphone)
+                        .font(.body)
+                    Text("E-mail")
+                        .font(.body)
+                        .bold()
+                        .foregroundStyle(Color(.gray))
+                    Text(client.email)
+                        .font(.body)
+                }
+                .font(.footnote)
+                
+                NavigationLink {
+                    ClientMoreInfoView(client: client, deleted: $deleted)
+                } label: {
+                    Text("Mais informações")
+                        .font(.body)
+                        .foregroundColor(.wine)
+                        .underline()
+                        .bold()
+                }
+                .buttonStyle(PlainButtonStyle())
+
+                HStack {
+                    Button {
+                        // Verificar se deve mostrar o alerta ou não
+                        if !UserDefaults.standard.bool(forKey: "DoNotShowAgainPreference") {
+                            sendMailSheet.toggle()
+                        } else {
                             mailManager.sendMail(emailSubject: "Arqion", message: "")
-                        } label: {
-                            Text("Enviar e-mail")
                         }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.black)
-                        
-                        Button {
-                            requestDocument.toggle()
-                        } label: {
-                            Text("Solicitar documentos")
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.black)
-                        
+                    } label: {
+                        Text("Enviar e-mail")
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.black)
+
+                    Button {
+                        requestDocument.toggle()
+                    } label: {
+                        Text("Solicitar documentos")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.black)
                 }
             }
             .onAppear {
@@ -116,6 +128,9 @@ struct ClientInfoView: View {
         .onChange(of: deleted) { _ in
             dismiss()
         }
+        .sheet(isPresented: $sendMailSheet, content: {
+            SendMailSheet(mailManager: mailManager, doNotShowAgain: $doNotShowAgainToggle)
+        })
         .sheet(isPresented: $requestDocument, content: {
             RequestDocumentsView(client: client, mailManager: mailManager)
         })

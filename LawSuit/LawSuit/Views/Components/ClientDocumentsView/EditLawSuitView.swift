@@ -201,56 +201,53 @@ struct EditLawSuitView: View {
                                      message: Text("Por favor, insira um CPF válido antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
                         
-                    case .invalidRG:
-                        return Alert(title: Text("RG inválido"),
-                                     message: Text("Por favor, insira um RG válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .invalidEmail:
-                        return Alert(title: Text("E-mail inválido"),
-                                     message: Text("Por favor, insira um e-mail válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .missingCellphoneNumber:
-                        return Alert(title: Text("Número de celular inválido"),
-                                     message: Text("Por favor, insira um número de celular válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .invalidLawSuitNumber:
-                        return Alert(title: Text("Número do processo inválido"),
-                                     message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .invalidCEP:
+                    }, label: {
+                        Text("Salvar")
+                    })
+                    .buttonStyle(.borderedProminent)
+                    .tint(.black)
+                    .alert(item: $invalidInformation) { error in
+                        switch error {
+                        case .missingInformation:
+                            return Alert(title: Text("Informações Faltando"),
+                                         message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidCPF:
+                            return Alert(title: Text("CPF inválido"),
+                                         message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                            
+                        case .invalidRG:
+                            return Alert(title: Text("RG inválido"),
+                                         message: Text("Por favor, insira um RG válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidEmail:
+                            return Alert(title: Text("E-mail inválido"),
+                                         message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .missingCellphoneNumber:
+                            return Alert(title: Text("Número de celular inválido"),
+                                         message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidLawSuitNumber:
                             return Alert(title: Text("Número do processo inválido"),
-                            message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                         message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidCEP:
+                            return Alert(title: Text("Número do CEP inválido"),
+                            message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                             dismissButton: .default(Text("Ok")))
                         }
                     }
                 }
             }
-        
-//        .sheet(isPresented: $selectTag, content: {
-//            
-//            VStack {
-//                Spacer()
-//                TagViewComponent(tagType: tagType)
-//                Spacer()
-//                HStack {
-//                    Spacer()
-//                    Button(action: {
-//                        selectTag.toggle()
-//                    }, label: {
-//                        Text("Salvar")
-//                    })
-//                    .buttonStyle(.borderedProminent)
-//                    .padding()
-//                }
-//            }
-//        })
         .onAppear {
             //Se o cliente do processo estiver no autor
             if lawsuit.authorID.hasPrefix("client:") {
                 attributedAuthor = true
                 if let author = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.authorID),
                    let defendant = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.defendantID) {
-                    lawsuitAuthorName = author.name
+                    lawsuitAuthorName = author.socialName ?? author.name
                     lawsuitDefendantName = defendant.name
                 }
                 //Se o cliente do processo estiver no reu
@@ -259,7 +256,7 @@ struct EditLawSuitView: View {
                 if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
                    let author = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID) {
                     lawsuitAuthorName = author.name
-                    lawsuitDefendantName = defendant.name
+                    lawsuitDefendantName = defendant.socialName ?? defendant.name
                 }
             }
             lawsuitNumber = lawsuit.number

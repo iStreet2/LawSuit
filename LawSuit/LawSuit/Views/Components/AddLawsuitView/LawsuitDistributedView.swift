@@ -81,6 +81,7 @@ struct LawsuitDistributedView: View {
                             }
                     }
                 }
+
                 Spacer()
                 VStack(alignment: .leading){
                     //MARK: Se o usuário não selecionou nada

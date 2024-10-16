@@ -20,7 +20,6 @@ class UpdateManager {
         let update = Update(context: context)
         update.name = name
         update.date = date
-        //update.parentLawsuit = lawsuit
         return update
     }
     

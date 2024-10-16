@@ -38,7 +38,11 @@ struct SelectClientComponent: View {
                 })
             }
             List {
+
                 ForEach(Array(filteredClients.enumerated()), id: \.offset) { index, client in
+                                                                            
+                    let displayName = client.socialName ?? client.name
+
                     if let socialName = client.socialName, let nsImage = nsImages[index] {
                         HStack {
                             Image(nsImage: nsImage)
@@ -51,10 +55,10 @@ struct SelectClientComponent: View {
                         .onTapGesture {
                             withAnimation {
                                 if authorOrDefendant == "author" {
-                                    lawsuitAuthorName = client.socialName!
+                                    lawsuitAuthorName = displayName
                                     attributedAuthor = true
                                 } else {
-                                    lawsuitDefendantName = client.socialName!
+                                    lawsuitDefendantName = displayName
                                     attributedDefendant = true
                                 }
                             }
@@ -62,14 +66,14 @@ struct SelectClientComponent: View {
                         }
                         .background(isEditing ? Color.blue : Color(.white))
                     } else {
-                        Text(client.name)
+                        Text(displayName)
                             .onTapGesture {
                                 withAnimation {
                                     if authorOrDefendant == "author" {
-                                        lawsuitAuthorName = client.name
+                                        lawsuitAuthorName = displayName
                                         attributedAuthor = true
                                     } else {
-                                        lawsuitDefendantName = client.name
+                                        lawsuitDefendantName = displayName
                                         attributedDefendant = true
                                     }
                                 }

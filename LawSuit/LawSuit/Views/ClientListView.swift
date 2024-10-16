@@ -23,7 +23,13 @@ struct ClientListView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Client.name, ascending: true)]) var clients: FetchedResults<Client>
+    @FetchRequest(
+        sortDescriptors: [
+            NSSortDescriptor(keyPath: \Client.socialName, ascending: true),
+            NSSortDescriptor(keyPath: \Client.name, ascending: true)
+        ]
+    ) var clients: FetchedResults<Client> 
+  
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
     

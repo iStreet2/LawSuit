@@ -42,11 +42,22 @@ struct LawSuitApp: App {
 					 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
                     hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+                    ContactsManager().requestContactsAuthorization()
                 }
                 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
                     SpotlightSearchbarView()
                         .environmentObject(dataViewModel)
                         .environmentObject(navigationViewModel)
+                }
+                .background(MaterialWindow().ignoresSafeArea())
+                .toolbar(){
+                    ToolbarItem(placement: .primaryAction){
+                        Button(action: {
+                            self.eventManager.spotlightBarIsPresented.toggle()
+                        }){
+                            Image(systemName: "magnifyingglass")
+                        }
+                    }
                 }
 					 .sheet(isPresented: $dataViewModel.spotlightManager.shouldShowFilePreview) {
 						 OpenFilePDFView(selectedFile: $dataViewModel.spotlightManager.fileToShow)
@@ -65,7 +76,7 @@ struct LawSuitApp: App {
 							 }
 						 }
 					 })
-                
+              
         }
 		 WindowGroup(id: "FileWindow", for: Data.self) { fileData in
 			 if let data = fileData.wrappedValue {

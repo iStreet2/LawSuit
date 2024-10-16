@@ -36,6 +36,9 @@ struct AddClientView: View {
     @State var email: String = ""
     @State var telephone: String = ""
     @State var cellphone: String = ""
+    @State var isClientContactsToggleOn: Bool = false
+    @Binding var showContactAlert: Bool
+    var contactsManager: ContactsManager?
     @State var photo: Data?
     
     
@@ -46,148 +49,154 @@ struct AddClientView: View {
     
     
     var body: some View {
-        VStack(spacing: 0) {
-            VStack {
-                HStack {
-                    Text("Novo Cliente")
-                        .font(.title)
-                        .bold()
-                        .padding(.horizontal, 15)
-                    Spacer()
-                }
-                //MARK: ProgressBar
-                AddClientProgressView(stage: $stage)
-            }
-            .padding(.vertical, 7)
-            Spacer()
-            Divider()
+        ZStack {
             VStack(spacing: 0) {
-                AddClientForm(stage: $stage, name: $name, socialName: $socialName, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone, photo: $photo)
-            }
-            .padding(.horizontal)
-            .background(Color("ScrollBackground"))
-            Divider()
-            
-            Spacer()
-            //MARK: Botões
-            HStack {
-//                Button(action: {
-//                    
-//                }, label: {
-//                    Text("Importar Dados")
-//                        .foregroundStyle(.wine)
-//                })
+                VStack {
+                    HStack {
+                        Text("Novo Cliente")
+                            .font(.title)
+                            .bold()
+                            .padding(.horizontal, 15)
+                        Spacer()
+                    }
+                    //MARK: ProgressBar
+                    AddClientProgressView(stage: $stage)
+                }
+                .padding(.vertical, 7)
                 Spacer()
-                Button(action: {
-                    if stage == 1 {
-                        dismiss()
+                Divider()
+                VStack(spacing: 0) {
+                    AddClientForm(stage: $stage, name: $name, socialName: $socialName, occupation: $occupation, rg: $rg, cpf: $cpf, affiliation: $affiliation, maritalStatus: $maritalStatus, nationality: $nationality, birthDate: $birthDate, cep: $cep, address: $address, addressNumber: $addressNumber, neighborhood: $neighborhood, complement: $complement, state: $state, city: $city, email: $email, telephone: $telephone, cellphone: $cellphone)
+                }
+                .padding()
+                .background(Color("ScrollBackground"))
+                Divider()
+                Spacer()
+                //MARK: Botões
+                HStack {
+                    Toggle(isOn: $isClientContactsToggleOn) {
+                        Text("Adicionar aos Contatos")
                     }
-                    else {
-                        if stage > 1 {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                stage -= 1
-                            }
-                        }
-                    }
-                }, label: {
-                    if stage == 1 {
-                        Text("Cancelar")
-                    }
-                    else {
-                        Text("Voltar")
-                    }
-                })
-                Button(action: {
-                    if !areFieldsFilled(){
-                        invalidInformation = .missingInformation
-                        return
-                    }
-                    if  cpf.count < 14 || !textFieldDataViewModel.isValidCPF(cpf) {
-                        invalidInformation = .invalidCPF
-                        return
-                    }
-                    if rg.count < 9 {
-                        invalidInformation = .invalidRG
-                        return
-                    }
-                    if stage == 2 {
-                        if cep.count < 8 {
-                            invalidInformation = .invalidCEP
-                            return
-                        }
-                    }
-                    if stage == 3 {
-                        if !textFieldDataViewModel.isValidEmail(email) {
-                            invalidInformation = .invalidEmail
-                        } else if cellphone.count < 15 {
-                            invalidInformation = .missingCellphoneNumber
-                        }
-                        else {
-                            //MARK: Advogado temporário
-                            let lawyer = lawyers[0]
-                           let client = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone, photo: photo)
-									
-									dataViewModel.indexObjectsToSpotlight(objects: [client], for: .client)
-									
+                    
+                    Spacer()
+                    Button(action: {
+                        if stage == 1 {
                             dismiss()
                         }
-                        return
-                    }
-                    if stage < 3 {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            stage += 1
+                        else {
+                            if stage > 1 {
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    stage -= 1
+                                }
+                            }
+                        }
+                    }, label: {
+                        if stage == 1 {
+                            Text("Cancelar")
+                        }
+                        else {
+                            Text("Voltar")
+                        }
+                    })
+                    Button(action: {
+                        if !areFieldsFilled(){
+                            invalidInformation = .missingInformation
+                            return
+                        }
+                        if  cpf.count < 14 || !textFieldDataViewModel.isValidCPF(cpf) {
+                            invalidInformation = .invalidCPF
+                            return
+                        }
+                        if rg.count < 9 {
+                            invalidInformation = .invalidRG
+                            return
+                        }
+                        if stage == 2 {
+                            if cep.count < 8 {
+                                invalidInformation = .invalidCEP
+                                return
+                            }
+                        }
+                        if stage == 3 {
+                            print("Cliente adicionado aos contatos? \(isClientContactsToggleOn)")
+                            if isClientContactsToggleOn {
+                                if let contact = contactsManager?.createContact(name: name, cellphone: cellphone, email: email, occupation: occupation) {
+                                    contactsManager?.checkContactsAuthorizationAndSave(contact: contact)
+                                    showContactAlert = true
+                                } else {
+                                    print("Falha ao criar contato")
+                                }
+                            }
+                            
+                            if !textFieldDataViewModel.isValidEmail(email) {
+                                invalidInformation = .invalidEmail
+                            } else if cellphone.count < 15 {
+                                invalidInformation = .missingCellphoneNumber
+                            }
+                            else {
+                                //MARK: Advogado temporário
+                                let lawyer = lawyers[0]
+                                dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                                dismiss()
+                            }
+                            return
+                        }
+                        if stage < 3 {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                stage += 1
+                            }
+                        }
+                    }, label: {
+                        if stage == 3 {
+                            Text("Adicionar Cliente")
+                        }
+                        else {
+                            Text("Próximo")
+                        }
+                    })
+                    .buttonStyle(.borderedProminent)
+                    .tint(.black)
+                    .alert(item: $invalidInformation) { error in
+                        switch error {
+                        case .missingInformation:
+                            return Alert(title: Text("Informações Faltando"),
+                                         message: Text("Por favor, preencha todos os campos antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidCPF:
+                            return Alert(title: Text("CPF inválido"),
+                                         message: Text("Por favor, insira um CPF válido antes de continuar."),
+                                         dismissButton: .default(Text("Ok")))
+                            
+                        case .invalidRG:
+                            return Alert(title: Text("RG inválido"),
+                                         message: Text("Por favor, insira um RG válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidEmail:
+                            return Alert(title: Text("E-mail inválido"),
+                                         message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .missingCellphoneNumber:
+                            return Alert(title: Text("Número de celular inválido"),
+                                         message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                        case .invalidLawSuitNumber:
+                            return Alert(title: Text(""),
+                                         message: Text(""),
+                                         dismissButton: .default(Text("")))
+                        case .invalidCEP:
+                            return Alert(title: Text("Número de CEP não encontrado"),
+                                         message: Text("Por favor, insira um número de CEP válido antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
+                            
                         }
                     }
-                }, label: {
-                    if stage == 3 {
-                        Text("Adicionar Cliente")
-                    }
-                    else {
-                        Text("Próximo")
-                    }
-                })
-                .buttonStyle(.borderedProminent)
-                .foregroundStyle(.green)
-                .alert(item: $invalidInformation) { error in
-                    switch error {
-                    case .missingInformation:
-                        return Alert(title: Text("Informações Faltando"),
-                                     message: Text("Por favor, preencha todos os campos antes de continuar."),
-                                     dismissButton: .default(Text("Ok")))
-                    case .invalidCPF:
-                        return Alert(title: Text("CPF inválido"),
-                                     message: Text("Por favor, insira um CPF válido antes de continuar."),
-                                     dismissButton: .default(Text("Ok")))
-                        
-                    case .invalidRG:
-                        return Alert(title: Text("RG inválido"),
-                                     message: Text("Por favor, insira um RG válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .invalidEmail:
-                        return Alert(title: Text("E-mail inválido"),
-                                     message: Text("Por favor, insira um e-mail válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .missingCellphoneNumber:
-                        return Alert(title: Text("Número de celular inválido"),
-                                     message: Text("Por favor, insira um número de celular válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .invalidLawSuitNumber:
-                        return Alert(title: Text(""),
-                                     message: Text(""),
-                                     dismissButton: .default(Text("")))
-                    case .invalidCEP:
-                        return Alert(title: Text("Número de CEP não encontrado"),
-                                     message: Text("Por favor, insira um número de CEP válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                        
-                    }
                 }
+                .padding(.vertical, 7)
+                .padding(.horizontal, 10)
             }
-            .padding(.vertical, 7)
-            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .frame(width: 515, height: 500)
         }
-        .padding(.vertical, 5)
-        .frame(width: 515, height: 500)
     }
     
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage

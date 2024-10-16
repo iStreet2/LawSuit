@@ -11,7 +11,7 @@ struct EditLawsuitAuthorComponent: View {
     
     //MARK: Variáveis de estado
     @State var showingDetail = false
-    @State var button: String
+    @State var buttonLabel: String
     @State var label: String
     @Binding var lawsuitAuthorName: String
     @Binding var lawsuitDefendantName: String
@@ -27,7 +27,7 @@ struct EditLawsuitAuthorComponent: View {
                 Button(action: {
                     self.showingDetail.toggle()
                 }, label: {
-                    Text(button)
+                    Text(buttonLabel)
                 })
                 .foregroundStyle(Color(.wine))
                 .buttonStyle(.borderless)

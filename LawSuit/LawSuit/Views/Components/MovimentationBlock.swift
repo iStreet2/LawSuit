@@ -30,6 +30,8 @@ struct MovimentationBlock: View {
                                 }, label: {
                                     Text("Acessar JusBrasil")
                                 })
+                                .buttonStyle(.borderedProminent)
+                                .tint(.black)
                             }
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("Movimentações Anteriores")
