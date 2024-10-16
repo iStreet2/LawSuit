@@ -109,9 +109,16 @@ struct ClientView: View {
                                                     dragAndDropViewModel.movingFolder = nil
                                                     return true
                                                 }
+                                            } else if let movingFilePDF = dragAndDropViewModel.movingFilePDF {
+                                                if let destinationFolder = openFolder.parentFolder {
+                                                    dataViewModel.coreDataManager.filePDFManager.moveFilePDF(parentFolder: openFolder, movingFilePDF: movingFilePDF, destinationFolder: destinationFolder)
+                                                    dragAndDropViewModel.movingFilePDF = nil
+                                                    return true
+                                                }
                                             }
                                         }
                                         dragAndDropViewModel.movingFolder = nil
+                                        dragAndDropViewModel.movingFilePDF = nil
                                         return false
                                     }
                                 }
