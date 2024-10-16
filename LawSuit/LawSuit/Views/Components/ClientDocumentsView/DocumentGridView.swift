@@ -58,6 +58,12 @@ struct DocumentGridView: View {
                     }
                     .padding(.top, 20)
                 }
+                .onTapGesture {
+                    //Tirar a seleção de todas as pastas
+                    for folder in folders {
+                        folder.isSelected = false
+                    }
+                }
                 .contextMenu {
                     Button(action: {
                         dataViewModel.coreDataManager.folderManager.createFolder(parentFolder: openFolder, name: "Nova Pasta")
