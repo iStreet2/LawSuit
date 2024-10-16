@@ -114,22 +114,15 @@ struct FolderIconView: View {
         .onDrag {
             dragAndDropViewModel.movingFolder = folder
 
-            // Gera um diretório temporário para a pasta e seu conteúdo
             let tempDirectory = FileManager.default.temporaryDirectory
             let tempFolderURL = tempDirectory.appendingPathComponent(folder.name)
             
-            // Cria o diretório temporário
             do {
                 try FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
-                
-                // Copia o conteúdo da pasta para o diretório temporário
                 dragAndDropViewModel.copyFolderContents(from: folder, to: tempFolderURL)
-                
             } catch {
                 print("Erro ao criar diretório temporário: \(error)")
             }
-            
-            // Retorna o NSItemProvider com a URL da pasta temporária
             return NSItemProvider(object: tempFolderURL as NSURL)
         }
     }

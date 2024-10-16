@@ -74,10 +74,17 @@ struct DocumentGridView: View {
                     }
                 }
                 .onDrop(of: ["public.folder", "public.file-url"], isTargeted: nil) { providers in
+                    // Verifica se a pasta sendo arrastada é uma pasta interna
+                    if let movingFolder = dragAndDropViewModel.movingFolder,
+                       movingFolder.parentFolder == openFolder {
+                        // Impede o drop e evita o ícone de "+"
+                        return false
+                    }
+                    
+                    // Se não for uma pasta interna, executa a lógica de drop normalmente
                     dragAndDropViewModel.handleDrop(providers: providers, parentFolder: openFolder, destinationFolder: openFolder, context: context, dataViewModel: dataViewModel)
                     return true
                 }
-                                
             }
             .frame(maxHeight: .infinity)
             .padding(.leading, 10)
