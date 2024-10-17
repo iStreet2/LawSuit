@@ -42,25 +42,20 @@ struct ContentView: View {
 		HStack (spacing: 0){
 			
 			SideBarView(selectedView: $selectedView, navigationVisibility: $navigationVisibility)
-			
-			ZStack{
-				Color.white
-				NavigationSplitView(columnVisibility: isLawsuit ? .constant(.detailOnly) : $navigationVisibility) {
-					if #available(macOS 14.0, *) {
-						ClientListView(addClient: $addClient, deleted: $deleted)
-							.frame(minWidth: 170)
-							.toolbar(removing: isLawsuit ? .sidebarToggle : nil)
-					} else {
-						ClientListView(addClient: $addClient, deleted: $deleted)
-							.frame(minWidth: 170)
-					}
-					
-				} detail: {
-					NavigationStack {
-						switch selectedView {
-						case .clients:
-							if let selectedClient = navigationViewModel.selectedClient {
-								ClientView(client: selectedClient, deleted: $deleted)
+            
+            ZStack{
+                Color.white
+                NavigationSplitView(columnVisibility: isLawsuit ? .constant(.detailOnly) : $navigationVisibility) {
+                    ClientListView(addClient: $addClient, deleted: $deleted)
+                        .frame(minWidth: 170)
+                        .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
+                    
+                } detail: {
+                    NavigationStack {
+                        switch selectedView {
+                        case .clients:
+                            if let selectedClient = navigationViewModel.selectedClient {
+                                ClientView(client: selectedClient, deleted: $deleted)
 									.background(.white)
 									.navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
 										if let lawsuit = navigationViewModel.lawsuitToShow {

@@ -49,8 +49,9 @@ struct AddLawsuitView: View {
                 Text("Novo Processo")
                     .bold()
                     .font(.title)
-                    CustomSegmentedControl(
-                        selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
+                //MARK: Retirar opção de fazer processo nao distribuido para a AppStore
+//                    CustomSegmentedControl(
+//                        selectedOption: $lawsuitTypeString, infos: ["Distribuído","Não Distribuído"])
             }
             .padding(10)
             Divider()

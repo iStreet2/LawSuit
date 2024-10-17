@@ -26,7 +26,7 @@ struct FilePDFIconView: View {
                 VStack {
                     Image(systemName: "doc")
                         .font(.system(size: 55))
-                    // Verifica o atributo isEditing
+                        .background(.clear)
                     if filePDF.isEditing {
                         TextField("", text: Binding(
                             get: { filePDF.name ?? "Sem nome" },
