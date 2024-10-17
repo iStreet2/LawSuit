@@ -124,7 +124,7 @@ struct EditClientView: View {
                         .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
                     LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $clientBirthDate)
                         .onReceive(Just(clientBirthDate)) { _ in
-                            clientBirthDate = textFieldDataViewModel.dateValidation(clientBirthDate)
+                            clientBirthDate = textFieldDataViewModel.dateFormat(clientBirthDate)
                         }
                 }
                 .padding()

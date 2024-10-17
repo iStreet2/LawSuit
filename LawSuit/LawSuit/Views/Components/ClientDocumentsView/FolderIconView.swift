@@ -18,46 +18,46 @@ struct FolderIconView: View {
     //MARK: Variáveis de estado
     @ObservedObject var folder: Folder
     @ObservedObject var parentFolder: Folder
-    @State var isEditing = false
-    @State var folderName: String
+    @FocusState private var isTextFieldFocused: Bool
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     
-    init(folder: Folder, parentFolder: Folder) {
-        self.folder = folder
-        self.parentFolder = parentFolder
-        folderName = folder.name!
-    }
-    
     var body: some View {
         Group {
             if folderViewModel.showingGridView {
                 VStack {
-                    ZStack {
-                        Image("Pasta")
-                            .resizable()
-                            .frame(width: 73, height: 58)
-                    }
-                    .frame(width: 85, height: 73)
-                    .background(folder.isSelected ? Color.gray.opacity(0.2) : Color.clear)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                    
-                    if isEditing {
-                        TextField("", text: $folderName, onEditingChanged: { _ in
-                        }, onCommit: {
+                    Image("Pasta")
+                        .resizable()
+                        .frame(width: 73, height: 58)
+                        .frame(width: 85, height: 73)
+                        .background(folder.isSelected ? Color.gray.opacity(0.2) : Color.clear)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+
+                    if folder.isEditing {
+                        TextField("", text: Binding(
+                            get: { folder.name },
+                            set: { newValue in
+                                folder.name = newValue
+                            }
+                        ), onCommit: {
                             saveChanges()
                         })
-                        .onExitCommand(perform: cancelChanges)
+                        .focused($isTextFieldFocused)
                         .lineLimit(2)
                         .frame(height: 12)
-                    }
-                    else {
-                        Text(folder.name ?? "Sem nome")
+                        .onAppear {
+                            isTextFieldFocused = true
+                            DispatchQueue.main.async {
+                                selectAllTextInTextField()
+                            }
+                        }
+                    } else {
+                        Text(folder.name)
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                isEditing = true
+                                folder.isEditing = true
                             }
                     }
                 }
@@ -67,38 +67,33 @@ struct FolderIconView: View {
                 HStack {
                     Image("Pasta")
                         .resizable()
-                        .frame(width: 18,height: 14)
+                        .frame(width: 18, height: 14)
                     
-                    if isEditing {
-                        TextField("", text: $folderName, onEditingChanged: { _ in
-                        }, onCommit: {
+                    if folder.isEditing {
+                        TextField("", text: Binding(
+                            get: { folder.name },
+                            set: { newValue in
+                                folder.name = newValue
+                            }
+                        ), onCommit: {
                             saveChanges()
                         })
-                        .onExitCommand(perform: cancelChanges)
                         .lineLimit(2)
                         .frame(height: 12)
-                    }
-                    else {
-                        Text(folder.name ?? "Sem nome")
+                        .focused($isTextFieldFocused)
+                    } else {
+                        Text(folder.name)
                             .lineLimit(1)
                             .onTapGesture(count: 2) {
-                                folderViewModel.openFolder(folder: folder)
+                                folder.isEditing = true
                             }
-                            .onLongPressGesture(perform: {
-                                isEditing = true
-                            })
                     }
                 }
             }
         }
         //.border(.black)
         .onDisappear {
-            isEditing = false
-        }
-        .onAppear {
-            if folderName == "Nova Pasta" {
-                isEditing = true
-            }
+            folder.isEditing = false
         }
         .contextMenu {
             Button(action: {
@@ -108,13 +103,12 @@ struct FolderIconView: View {
                 Image(systemName: "folder")
             }
             Button(action: {
-                isEditing = true
+                folder.isEditing = true
             }) {
                 Text("Renomear")
                 Image(systemName: "pencil")
             }
             Button(action: {
-                // Ação para excluir a pasta
                 withAnimation(.easeIn) {
                     dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
                 }
@@ -122,27 +116,44 @@ struct FolderIconView: View {
                 Text("Excluir")
                 Image(systemName: "trash")
             }
+            Button {
+                withAnimation {
+                    if let destinationFolder = parentFolder.parentFolder {
+                        dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
+                    }
+                }
+            } label: {
+                Text("Mover para pasta anterior")
+                Image(systemName: "arrowshape.turn.up.left")
+            }
+            .disabled(parentFolder.parentFolder == nil)
         }
-        //        .onDrag {
-        //            // Gera uma URL temporária para a pasta
-        //            let tempDirectory = FileManager.default.temporaryDirectory
-        //            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name!)
-        //
-        //            // Cria a pasta temporária
-        //            try? FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
-        //
-        //            // Retorna o NSItemProvider com a URL da pasta temporária
-        //            return NSItemProvider(object: tempFolderURL as NSURL)
-        //        }
-    }
-    private func cancelChanges() {
-        folderName = folder.name!
-        isEditing = false
+        .onDrag {
+            dragAndDropViewModel.movingFolder = folder
+
+            let tempDirectory = FileManager.default.temporaryDirectory
+            let tempFolderURL = tempDirectory.appendingPathComponent(folder.name)
+            
+            do {
+                try FileManager.default.createDirectory(at: tempFolderURL, withIntermediateDirectories: true, attributes: nil)
+                dragAndDropViewModel.copyFolderContents(from: folder, to: tempFolderURL)
+            } catch {
+                print("Erro ao criar diretório temporário: \(error)")
+            }
+            return NSItemProvider(object: tempFolderURL as NSURL)
+        }
     }
     
     private func saveChanges() {
-        dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folderName)
-        isEditing = false
+        dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folder.name)
+        folder.isEditing = false
+    }
+    
+    func selectAllTextInTextField() {
+        if let window = NSApplication.shared.windows.first,
+           let textField = window.firstResponder as? NSTextField,
+           let editor = textField.currentEditor() {
+            editor.selectedRange = NSRange(location: 0, length: textField.stringValue.count)
+        }
     }
 }
-

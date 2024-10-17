@@ -19,6 +19,8 @@ public class FilePDF: NSManagedObject, Identifiable, Recordable {
 	@NSManaged public var content: Data?
 	@NSManaged public var id: String?
 	@NSManaged public var name: String?
+    @NSManaged public var isEditing: Bool
+    @NSManaged public var createdAt: Date
 	@NSManaged public var parentFolder: Folder? //Ignorar para o CloudKit
 	@NSManaged public var parentUpdate: Update?
 	@NSManaged public var recordName: String?

@@ -71,7 +71,7 @@ struct AddLawsuitView: View {
             Divider()
                 .frame(maxWidth: .infinity)
         }
-        .frame(minHeight: 350)
+        .frame(width: 510, height: 350)
         .onAppear {
             lawsuitTypeString = lawsuitType.rawValue
         }
@@ -134,6 +134,7 @@ struct AddLawsuitView: View {
                 Text("Criar")
             }
             .buttonStyle(.borderedProminent)
+            .tint(.black)
             .alert(item: $invalidInformation) { error in
                 switch error {
                 case .missingInformation:

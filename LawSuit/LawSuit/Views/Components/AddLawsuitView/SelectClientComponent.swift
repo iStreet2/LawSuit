@@ -38,19 +38,16 @@ struct SelectClientComponent: View {
                 })
             }
             List {
-
                 ForEach(Array(filteredClients.enumerated()), id: \.offset) { index, client in
-                                                                            
                     let displayName = client.socialName ?? client.name
-
-                    if let socialName = client.socialName, let nsImage = nsImages[index] {
+                    if let nsImage = nsImages[index] {
                         HStack {
                             Image(nsImage: nsImage)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 30, height: 30)
                                 .clipShape(Circle())
-                            Text(socialName)
+                            Text(displayName)
                         }
                         .onTapGesture {
                             withAnimation {
@@ -65,21 +62,6 @@ struct SelectClientComponent: View {
                             dismiss()
                         }
                         .background(isEditing ? Color.blue : Color(.white))
-                    } else {
-                        Text(displayName)
-                            .onTapGesture {
-                                withAnimation {
-                                    if authorOrDefendant == "author" {
-                                        lawsuitAuthorName = displayName
-                                        attributedAuthor = true
-                                    } else {
-                                        lawsuitDefendantName = displayName
-                                        attributedDefendant = true
-                                    }
-                                }
-                                dismiss()
-                            }
-                            .background(isEditing ? Color.blue : Color(.white))
                     }
                 }
                 .padding(2)

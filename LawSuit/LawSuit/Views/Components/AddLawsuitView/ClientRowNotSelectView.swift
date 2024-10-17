@@ -16,7 +16,7 @@ struct ClientRowNotSelectView: View {
                 .frame(width: 97, height: 13)
             Spacer()
         }
-        .foregroundStyle(.secondary.opacity(0.08))
+        .foregroundStyle(.secondary.opacity(0.2))
         .padding( 5)
     }
 }

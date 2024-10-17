@@ -14,7 +14,7 @@ extension Date {
         return formatter.string(from: self)
     }
     
-    func convertBirthDateToString() -> String{
+    func convertBirthDateToString() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         return formatter.string(from: self)

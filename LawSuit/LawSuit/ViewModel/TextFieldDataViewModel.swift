@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 class TextFieldDataViewModel: ObservableObject {
-
+    
     func limitText(text: inout String, upper: Int) {
         
         text = text.filter { $0.isLetter || $0 == " " }
@@ -95,11 +95,11 @@ class TextFieldDataViewModel: ObservableObject {
         }
         return format
     }
-	func isValidEmail(_ email: String) -> Bool {
-		let emailRegex = "^[A-Z0-9a-z](?:[A-Z0-9a-z._%+-]{0,63}[A-Z0-9a-z])?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-		let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-		return emailPredicate.evaluate(with: email)
-	}
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "^[A-Z0-9a-z](?:[A-Z0-9a-z._%+-]{0,63}[A-Z0-9a-z])?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
+    }
     
     func lawSuitNumberValidation(_ lawsuit: String) -> String {
         let numbers = lawsuit.filter {"0987654321".contains($0)}
@@ -117,8 +117,8 @@ class TextFieldDataViewModel: ObservableObject {
         return formatLawsuit
     }
     
-    func dateValidation(_ date: String) -> String {
-        let numbers = date.filter { "0987654321".contains($0) } 
+    func dateFormat(_ date: String) -> String {
+        let numbers = date.filter { "0987654321".contains($0) }
         var formatDate = ""
         
         for (index, character) in numbers.prefix(8).enumerated() {
@@ -129,7 +129,29 @@ class TextFieldDataViewModel: ObservableObject {
         }
         return formatDate
     }
-  
+    
+    func dateValidation(_ dateString: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        
+        guard dateString.count == 10 else {
+               return false
+           }
+        
+        if let birthDate = dateFormatter.date(from: dateString) {
+            let today = Date()
+            
+            if birthDate > today {
+                return true
+            } else {
+                 return false
+            }
+        }
+        else {
+            return true
+        }
+    }
+    
 }
 
 
