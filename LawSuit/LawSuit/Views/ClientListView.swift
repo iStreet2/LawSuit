@@ -123,12 +123,12 @@ struct ClientListView: View {
                                 Image(systemName: "trash")
                                 Text("Deletar")
                             }
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "pencil")
-                                Text("Editar")
-                            }
+//                            Button {
+//                                
+//                            } label: {
+//                                Image(systemName: "pencil")
+//                                Text("Editar")
+//                            }
                         }
                     }
                     .tint(.red)
