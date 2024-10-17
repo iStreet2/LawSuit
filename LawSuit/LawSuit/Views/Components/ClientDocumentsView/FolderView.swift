@@ -49,7 +49,7 @@ struct FolderView: View {
                             }
                             dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, destinationFolder: folder, context: context, dataViewModel: dataViewModel)
                             return true
-                        } else if let movingFilePDF = dragAndDropViewModel.movingFilePDF {
+                        } else if dragAndDropViewModel.movingFilePDF != nil {
                             dragAndDropViewModel.handleDrop(providers: providers, parentFolder: parentFolder, destinationFolder: folder, context: context, dataViewModel: dataViewModel)
                             dragAndDropViewModel.movingFilePDF = nil
                             return true
@@ -67,6 +67,39 @@ struct FolderView: View {
                             }
                         }
                 )
+                .contextMenu {
+                    Button(action: {
+                        folderViewModel.openFolder(folder: folder)
+                    }) {
+                        Text("Abrir Pasta")
+                        Image(systemName: "folder")
+                    }
+                    Button(action: {
+                        folder.isEditing = true
+                    }) {
+                        Text("Renomear")
+                        Image(systemName: "pencil")
+                    }
+                    Button(action: {
+                        withAnimation(.easeIn) {
+                            dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+                        }
+                    }) {
+                        Text("Excluir")
+                        Image(systemName: "trash")
+                    }
+                    Button {
+                        withAnimation {
+                            if let destinationFolder = parentFolder.parentFolder {
+                                dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
+                            }
+                        }
+                    } label: {
+                        Text("Mover para pasta anterior")
+                        Image(systemName: "arrowshape.turn.up.left")
+                    }
+                    .disabled(parentFolder.parentFolder == nil)
+                }
 //                .transition(.scale)
         }
     }

@@ -79,12 +79,17 @@ struct FolderIconView: View {
                             saveChanges()
                         })
                         .lineLimit(2)
-                        .frame(height: 12)
-                        .focused($isTextFieldFocused)
+                        .frame(width: 120, height: 12)
+                        .onAppear {
+                            isTextFieldFocused = true
+                            DispatchQueue.main.async {
+                                selectAllTextInTextField()
+                            }
+                        }
                     } else {
                         Text(folder.name)
                             .lineLimit(1)
-                            .onTapGesture(count: 2) {
+                            .onLongPressGesture {
                                 folder.isEditing = true
                             }
                     }
@@ -94,39 +99,6 @@ struct FolderIconView: View {
         //.border(.black)
         .onDisappear {
             folder.isEditing = false
-        }
-        .contextMenu {
-            Button(action: {
-                folderViewModel.openFolder(folder: folder)
-            }) {
-                Text("Abrir Pasta")
-                Image(systemName: "folder")
-            }
-            Button(action: {
-                folder.isEditing = true
-            }) {
-                Text("Renomear")
-                Image(systemName: "pencil")
-            }
-            Button(action: {
-                withAnimation(.easeIn) {
-                    dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
-                }
-            }) {
-                Text("Excluir")
-                Image(systemName: "trash")
-            }
-            Button {
-                withAnimation {
-                    if let destinationFolder = parentFolder.parentFolder {
-                        dataViewModel.coreDataManager.folderManager.moveFolder(parentFolder: parentFolder, movingFolder: folder, destinationFolder: destinationFolder)
-                    }
-                }
-            } label: {
-                Text("Mover para pasta anterior")
-                Image(systemName: "arrowshape.turn.up.left")
-            }
-            .disabled(parentFolder.parentFolder == nil)
         }
         .onDrag {
             dragAndDropViewModel.movingFolder = folder

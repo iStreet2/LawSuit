@@ -81,6 +81,12 @@ class FolderManager {
         saveContext()
     }
     
+    func removeSelectedFromAllFolders(folders: FetchedResults<Folder>) {
+        for folder in folders {
+            folder.isSelected = false
+        }
+    }
+    
     func saveContext() {
         do {
             try context.save()

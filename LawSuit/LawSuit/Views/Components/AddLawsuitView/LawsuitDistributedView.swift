@@ -108,6 +108,7 @@ struct LawsuitDistributedView: View {
                                     attributedAuthor = false
                                 }
                             }
+                            .transition(.scale)
                     }
                 }
                 Spacer()
@@ -123,6 +124,7 @@ struct LawsuitDistributedView: View {
                         LabeledTextField(label: "Réu", placeholder: "Adicionar réu", mandatory: true ,textfieldText: $lawsuitDefendantName)
                             .frame(width: 218)
                             .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
+                            .transition(.scale)
                         
                         
                     } else {
@@ -135,7 +137,6 @@ struct LawsuitDistributedView: View {
                                     attributedDefendant = false
                                 }
                             }
-                        
                     }
                 }
             }

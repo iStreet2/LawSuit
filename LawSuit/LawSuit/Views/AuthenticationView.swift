@@ -38,7 +38,7 @@ struct AuthenticationView: View {
 					switch result {
 					case .success(let authorization):
 						dataViewModel.handleSuccessfulLogin(with: authorization)
-						withAnimation(.easeInOut(duration: 3)) {
+                        withAnimation(.easeInOut(duration: 0.5)) {
 							authenticationStatus = true
 						}
 					case .failure(let error):
