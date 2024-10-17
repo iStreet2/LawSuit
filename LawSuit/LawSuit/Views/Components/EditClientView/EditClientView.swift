@@ -213,9 +213,30 @@ struct EditClientView: View {
                         let clientCurrentEmail = client.email
                         
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone, photo: clientImageData)
-                        
-                        //Para todos os processos desse cliente, eu preciso editar o nome do processo :D
-                        
+                                                
+                        //Para todos os processos que esse cliente está envolvido
+                        let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchAllLawsuitsFrom(client: client)
+                        for lawsuit in lawsuits {
+                            //Se ele tiver socialName
+                            if clientSocialName != "" {
+                                //Se o cliente estiver no autor
+                                if dataViewModel.coreDataManager.lawsuitManager.authorIsClient(lawsuit: lawsuit) {
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawsuitAuthorName(lawsuit: lawsuit, authorName: clientSocialName)
+                                //Se o cliente estiver no réu
+                                } else {
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawsuitDefendantName(lawsuit: lawsuit, defendantName: clientSocialName)
+                                }
+                            //Se ele não tiver social name
+                            } else {
+                                //Se ele é autor
+                                if dataViewModel.coreDataManager.lawsuitManager.authorIsClient(lawsuit: lawsuit) {
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawsuitAuthorName(lawsuit: lawsuit, authorName: clientName)
+                                //Se ele é reu
+                                } else {
+                                    dataViewModel.coreDataManager.lawsuitManager.editLawsuitDefendantName(lawsuit: lawsuit, defendantName: clientName)
+                                }
+                            }
+                        }
                         
                         do {
                             try contactsManager.updateClientContact(client: client, oldClientEmail: clientCurrentEmail)
