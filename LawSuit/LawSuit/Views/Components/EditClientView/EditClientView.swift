@@ -15,6 +15,7 @@ struct EditClientView: View {
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var addressViewModel: AddressViewModel
     @EnvironmentObject var folderViewModel: FolderViewModel
+    @EnvironmentObject var contactsManager: ContactsManager
     
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
@@ -210,7 +211,18 @@ struct EditClientView: View {
                         invalidInformation = .missingCellphoneNumber
                         
                     } else {
+                        
+                        let clientCurrentEmail = client.email
+                        
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone, photo: clientImageData)
+                        
+                        do {
+                            try contactsManager.updateClientContact(client: client, oldClientEmail: clientCurrentEmail)
+                            print("contato atualizado com sucesso")
+                        } catch {
+                            print("Erro ao atualizar o contato: \(error)")
+                        }
+                        
                         dismiss()
                         return
                     }
