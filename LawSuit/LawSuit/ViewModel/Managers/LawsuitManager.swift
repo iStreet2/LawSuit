@@ -86,6 +86,11 @@ class LawsuitManager {
         saveContext()
     }
     
+    func editLawsuitName(lawsuit: Lawsuit, authorName: String, defendantName: String) {
+        lawsuit.name = "\(authorName) X \(defendantName)"
+        saveContext()
+    }
+    
     func deleteLawsuit(lawsuit: Lawsuit) {
         context.delete(lawsuit)
         saveContext()
@@ -130,6 +135,7 @@ class LawsuitManager {
         
     }
     
+    
     func fetchDefendantName(for client: Client) -> String {
         
         if let lawsuits = fetchFromClient(client: client) {
@@ -151,6 +157,14 @@ class LawsuitManager {
             saveContext()
         }
         return ""
+    }
+    
+    func fetchAllLawsuitsFrom(client: Client) -> [Lawsuit] {
+        
+        if let lawsuits = fetchFromClient(client: client) {
+            return lawsuits
+        }
+        return []
     }
     
 }

@@ -169,9 +169,7 @@ struct EditClientView: View {
                             }
                             // Após deletar os processos, deletar o cliente
                             dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
-									
-									dataViewModel.spotlightManager.removeIndexedObject(client)
-									
+                            dataViewModel.spotlightManager.removeIndexedObject(client)
                             navigationViewModel.selectedClient = nil
                             deleted.toggle()
                             dismiss()
@@ -215,6 +213,9 @@ struct EditClientView: View {
                         let clientCurrentEmail = client.email
                         
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone, photo: clientImageData)
+                        
+                        //Para todos os processos desse cliente, eu preciso editar o nome do processo :D
+                        
                         
                         do {
                             try contactsManager.updateClientContact(client: client, oldClientEmail: clientCurrentEmail)
