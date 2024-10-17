@@ -18,7 +18,7 @@ struct DocumentGridView: View {
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest var folders: FetchedResults<Folder>
-    @FetchRequest var files: FetchedResults<FilePDF>
+    @FetchRequest var filesPDF: FetchedResults<FilePDF>
     
     //MARK: Calculo da grid
     let spacing: CGFloat = 10
@@ -33,7 +33,7 @@ struct DocumentGridView: View {
             sortDescriptors: []
             ,predicate: NSPredicate(format: "parentFolder == %@", openFolder)
         )
-        _files = FetchRequest<FilePDF>(
+        _filesPDF = FetchRequest<FilePDF>(
             sortDescriptors: []
             ,predicate: NSPredicate(format: "parentFolder == %@", openFolder)
         )
@@ -50,7 +50,7 @@ struct DocumentGridView: View {
                             FolderView(parentFolder: openFolder)
                             FilePDFView(parentFolder: openFolder)
                         }
-                        if folders.count == 0 && files.count == 0{
+                        if folders.count == 0 && filesPDF.count == 0{
                             Text("Sem pastas ou arquivos")
                                 .foregroundStyle(.gray)
                                 .frame(height: geometry.size.height / 2)
@@ -59,10 +59,13 @@ struct DocumentGridView: View {
                     .padding(.top, 20)
                 }
                 .onTapGesture {
-                    //Tirar a seleção de todas as pastas
-                    for folder in folders {
-                        folder.isSelected = false
-                    }
+                    dataViewModel.coreDataManager.folderManager.removeSelectedFromAllFolders(folders: folders)
+                }
+                .onChange(of: openFolder) {
+                    dataViewModel.coreDataManager.folderManager.removeSelectedFromAllFolders(folders: folders)
+                }
+                .onAppear {
+                    dataViewModel.coreDataManager.folderManager.removeSelectedFromAllFolders(folders: folders)
                 }
                 .contextMenu {
                     Button(action: {
