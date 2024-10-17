@@ -18,7 +18,8 @@ struct ContentView: View {
 	
 	//MARK: ViewModels
 	@EnvironmentObject var folderViewModel: FolderViewModel
-	@EnvironmentObject var navigationViewModel: NavigationViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
+    @EnvironmentObject var contactsManager: ContactsManager
 	
 	//MARK: CoreData
 	@EnvironmentObject var dataViewModel: DataViewModel
@@ -130,8 +131,13 @@ struct ContentView: View {
 		}
 		.navigationTitle("Arqion")
 		.sheet(isPresented: $addClient, content: {
-            AddClientView(showContactAlert: $showContactAlert, contactsManager: ContactsManager())
+            AddClientView()
 		})
+        .alert(isPresented: $contactsManager.showAlert) {
+            Alert(title: Text("Aviso"),
+                  message: Text(contactsManager.alertMessage),
+                  dismissButton: .default(Text("Ok")))
+        }
 	}
 }
 
