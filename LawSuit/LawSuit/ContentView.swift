@@ -82,7 +82,7 @@ struct ContentView: View {
                                                 }
                                             }
                                     } else {
-                                        ClientEmptyState(state: clients.count == 0 ? .haveNoClients : .haveClients, addClient: $addClient)
+                                        ClientEmptyState(addClient: $addClient)
                                     }
                                 }
                                 .background(.white)

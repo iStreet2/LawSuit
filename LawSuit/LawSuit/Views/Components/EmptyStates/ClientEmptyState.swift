@@ -9,18 +9,16 @@ import SwiftUI
 
 struct ClientEmptyState: View {
     
-    @State var state: clientEmptyState
     @Binding var addClient: Bool
-    
+    @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
-        
-        if state == .haveNoClients {
-            ZStack {
-                Image("clientEmptyStateBackground")
-                    .resizable()
-                    .scaledToFill()
-                VStack {
+        ZStack {
+            Image("clientEmptyStateBackground")
+                .resizable()
+                .scaledToFit()
+            VStack {
+                if clients.count == 0 {
                     Text("Dê o primeiro passo para uma gestão \n jurídica mais eficiente!")
                         .font(.title)
                         .multilineTextAlignment(.center)
@@ -33,14 +31,7 @@ struct ClientEmptyState: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.arqBlack)
-                }
-            }
-        } else {
-            ZStack {
-                Image("clientEmptyStateBackground")
-                    .resizable()
-                    .scaledToFill()
-                VStack {
+                } else {
                     Text("Selecione um cliente")
                         .font(.title)
                         .multilineTextAlignment(.center)
@@ -50,9 +41,4 @@ struct ClientEmptyState: View {
             }
         }
     }
-}
-
-enum clientEmptyState: String {
-    case haveNoClients
-    case haveClients
 }
