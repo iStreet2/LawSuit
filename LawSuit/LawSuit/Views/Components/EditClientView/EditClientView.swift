@@ -60,9 +60,7 @@ struct EditClientView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    
-    
-    
+
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 0) {
@@ -169,9 +167,7 @@ struct EditClientView: View {
                             }
                             // Após deletar os processos, deletar o cliente
                             dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
-									
-									dataViewModel.spotlightManager.removeIndexedObject(client)
-									
+                            dataViewModel.spotlightManager.removeIndexedObject(client)
                             navigationViewModel.selectedClient = nil
                             deleted.toggle()
                             dismiss()

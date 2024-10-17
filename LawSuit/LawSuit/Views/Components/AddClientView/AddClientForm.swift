@@ -113,7 +113,7 @@ struct AddClientForm: View {
                                     VStack(alignment: .leading, spacing: 0) {
                                         LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $birthDate)
                                             .onReceive(Just(birthDate)) { newValue in birthDate = textFieldDataViewModel.dateFormat(newValue)}
-                                            .onChange(of: birthDate) { newValue in
+                                            .onChange(of: birthDate) {
                                                 
                                                 if birthDate.count > 00 && birthDate.count == 10  {
                                                     showError = textFieldDataViewModel.dateValidation(birthDate)
