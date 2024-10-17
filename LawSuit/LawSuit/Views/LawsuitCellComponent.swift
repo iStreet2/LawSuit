@@ -23,7 +23,7 @@ struct LawsuitCellComponent: View {
         GeometryReader { geo in
             HStack {
                 VStack(alignment: .leading) {
-                    Text(lawsuit.name)
+                    Text("\(lawsuit.authorName) X \(lawsuit.defendantName)")
                         .lineLimit(1)
                         .font(.callout)
                         .bold()
@@ -35,7 +35,7 @@ struct LawsuitCellComponent: View {
                 .frame(width: geo.size.width * 0.27, height: 47, alignment: .leading)
                 
                 Spacer()
-                TagViewComponent(tagType: TagType(s: lawsuit.category) ?? TagType.ambiental)
+                TagViewComponent(tagType: TagType(s: lawsuit.category))
                     .frame(width: geo.size.width * 0.12, height: 47, alignment: .leading)
                 Spacer()
                 

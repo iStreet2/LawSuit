@@ -70,6 +70,14 @@ class EntityManager {
         saveContext()
     }
     
+    func authorIsEntity(lawsuit: Lawsuit) -> Bool {
+        if lawsuit.authorID.hasPrefix("client:") {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func saveContext() {
         do {
             try context.save()
@@ -77,12 +85,4 @@ class EntityManager {
             print("Error saving entity: \(error)")
         }
     }
-    
-    func authorIsEntity(lawsuit: Lawsuit) -> Bool {
-            if lawsuit.authorID.hasPrefix("client:") {
-                return false
-            } else {
-                return true
-            }
-        }
 }

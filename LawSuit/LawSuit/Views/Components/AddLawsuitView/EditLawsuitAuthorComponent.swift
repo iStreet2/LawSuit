@@ -22,43 +22,23 @@ struct EditLawsuitAuthorComponent: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if required {
-                HStack(alignment: .top, spacing: 1) {
-                    Text(label)
-                        .bold()
-                    Text("*")
-                        .foregroundStyle(.wine)
-                    Button(action: {
-                        self.showingDetail.toggle()
-                    }, label: {
-                        Text(button)
-                            .fontWeight(.semibold)
-                    })
-                    .foregroundStyle(Color(.wine))
-                    .buttonStyle(.borderless)
-                    .underline()
-                    .sheet(isPresented: $showingDetail) {
-                        SelectClientComponent(lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: $authorOrDefendant, screen: .small, attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
-                    }
+            HStack(alignment: .top, spacing: 1) {
+                Text(label)
+                    .bold()
+                Text(required ? "*" : "")
+                    .foregroundStyle(.wine)
+                Button(action: {
+                    self.showingDetail.toggle()
+                }, label: {
+                    Text(button)
+                        .fontWeight(.semibold)
+                })
+                .foregroundStyle(Color(.wine))
+                .buttonStyle(.borderless)
+                .underline()
+                .sheet(isPresented: $showingDetail) {
+                    SelectClientComponent(lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: $authorOrDefendant, screen: .small, attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                 }
-            } else {
-                HStack{
-                    Text(label)
-                        .bold()
-                    Button(action: {
-                        self.showingDetail.toggle()
-                    }, label: {
-                        Text(button)
-                            .fontWeight(.semibold)
-                    })
-                    .foregroundStyle(Color(.wine))
-                    .buttonStyle(.borderless)
-                    .underline()
-                    .sheet(isPresented: $showingDetail) {
-                        SelectClientComponent(lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, authorOrDefendant: $authorOrDefendant, screen: .small, attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
-                    }
-                }
-                
             }
         }
     }

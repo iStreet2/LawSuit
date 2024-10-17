@@ -50,7 +50,7 @@ struct LawsuitDistributedView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     LabeledTextField(label: "Data de distribuição", placeholder: "Data de distribuição", mandatory: true, textfieldText: $lawsuitActionDate)
                         .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateFormat(newValue)}
-                        .onChange(of: lawsuitActionDate) { newValue in
+                        .onChange(of: lawsuitActionDate) { oldValue, newValue in
                             if lawsuitActionDate.count == 10 {
                                 showError = textFieldDataViewModel.dateValidation(lawsuitActionDate)
                             } else {
@@ -98,9 +98,10 @@ struct LawsuitDistributedView: View {
                         LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", mandatory: true, textfieldText: $lawsuitAuthorName)
                             .frame(width: 218)
                             .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
+                            .transition(.scale)
                     } else {
                         ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorOrDefendantName: $lawsuitAuthorName)
-                            .onChange(of: lawsuitAuthorName) { newValue in
+                            .onChange(of: lawsuitAuthorName) { oldValue, newValue in
                                 if !newValue.isEmpty {
                                     authorRowState = .selected
                                 } else {
@@ -108,7 +109,7 @@ struct LawsuitDistributedView: View {
                                     attributedAuthor = false
                                 }
                             }
-                            .transition(.scale)
+                            
                     }
                 }
                 Spacer()
@@ -129,7 +130,7 @@ struct LawsuitDistributedView: View {
                         
                     } else {
                         ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorOrDefendantName: $lawsuitDefendantName)
-                            .onChange(of: lawsuitDefendantName) { newValue in
+                            .onChange(of: lawsuitDefendantName) { oldValue, newValue in
                                 if !newValue.isEmpty {
                                     defendantRowState = .selected
                                 } else {
