@@ -22,6 +22,7 @@ struct ClientView: View {
     @ObservedObject var client: Client
     @Binding var deleted: Bool
     @State var selectedOption = "Processos"
+    @State var lawsuitSelectedOption = "Distribuído"
     @State var createLawsuit = false
     @State var showingGridView = true
     var infos = ["Processos", "Documentos"]
@@ -86,7 +87,7 @@ struct ClientView: View {
                     
                     VStack(alignment: .leading, spacing: 0) {
                         if selectedOption == "Processos" {
-                            LawsuitListViewHeaderContent(lawsuits: lawsuits)
+                            LawsuitListViewHeaderContent(lawsuits: lawsuits, lawsuitTypeString: $lawsuitSelectedOption)
                         } else {
                             HStack(spacing: 0) {
                                 Button {

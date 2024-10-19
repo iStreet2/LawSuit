@@ -28,7 +28,7 @@ class LawsuitManager {
         saveContext()
     }
     
-    func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date) -> Lawsuit {
+    func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) -> Lawsuit {
         
         let lawsuit = Lawsuit(context: context)
         lawsuit.name = name
@@ -40,6 +40,7 @@ class LawsuitManager {
         lawsuit.authorID = authorID
         lawsuit.actionDate = actionDate
         lawsuit.id = UUID().uuidString
+        lawsuit.isDistributed = isDistributed
         
         // Criar pasta raiz para esse processo:
         let rootFolder = Folder(context: context)
@@ -53,7 +54,7 @@ class LawsuitManager {
         return lawsuit
     }
     
-    func createLawsuitNonDistribuited(name: String, number: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date) -> Lawsuit{
+    func createLawsuitNonDistribuited(name: String, number: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) -> Lawsuit{
         let lawsuit = Lawsuit(context: context)
         lawsuit.name = name
         lawsuit.category = category
@@ -61,6 +62,7 @@ class LawsuitManager {
         lawsuit.defendantID = defendantID
         lawsuit.authorID = authorID
         lawsuit.id = UUID().uuidString
+        lawsuit.isDistributed = isDistributed
         
         // Criar pasta raiz para esse processo:
         let rootFolder = Folder(context: context)
@@ -75,7 +77,7 @@ class LawsuitManager {
         return lawsuit
     }
     
-    func editLawSuit(lawsuit: Lawsuit, name: String, number: String, court: String, category: String, defendantID: String, authorID: String, actionDate: Date) {
+    func editLawSuit(lawsuit: Lawsuit, name: String, number: String, court: String, category: String, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) {
         lawsuit.name = name
         lawsuit.number = number
         lawsuit.court = court
@@ -83,6 +85,7 @@ class LawsuitManager {
         lawsuit.defendantID = defendantID
         lawsuit.authorID = authorID
         lawsuit.actionDate = actionDate
+        lawsuit.isDistributed = isDistributed
         saveContext()
     }
     

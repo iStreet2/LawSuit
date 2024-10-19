@@ -136,7 +136,6 @@ struct AddClientForm: View {
                                 }
 
                             .frame(height: 140)
-                            .border(.red)
 
 
                         }

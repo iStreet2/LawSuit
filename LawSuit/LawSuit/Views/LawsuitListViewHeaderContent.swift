@@ -13,7 +13,10 @@ struct LawsuitListViewHeaderContent: View {
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-
+    @Binding var lawsuitTypeString: String
+//    var distributedArray: [Lawsuit]
+//    var notDistributedArray: [Lawsuit]
+    
     var body: some View {
         VStack(spacing: 0) {
             GeometryReader { geo in
@@ -30,9 +33,10 @@ struct LawsuitListViewHeaderContent: View {
                     Text("Cliente")
                         .frame(width: geo.size.width * 0.17, alignment: .leading)
                     
-                    Text("Advogado Responsável")
+                    Text("Distribuição")
+                    
                 }
-                .padding(.horizontal, 20)
+                .padding(.trailing, 20)
             }
             .padding(.horizontal, 20)
         }
@@ -46,9 +50,10 @@ struct LawsuitListViewHeaderContent: View {
         
         ScrollView {
             VStack(spacing: 0) {
+                
                 ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
                     let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
-
+                    
                     NavigationLink {
                         if let client = lawsuitData.client, let entity = lawsuitData.entity {
                             DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
@@ -63,11 +68,14 @@ struct LawsuitListViewHeaderContent: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     .simultaneousGesture(TapGesture().onEnded({
-						            navigationViewModel.lawsuitToShow = lawsuit
-					          }))                                                 
+                        navigationViewModel.lawsuitToShow = lawsuit
+                    }))
+                    
                 }
+                
             }
         }
+        
     }
 }
 
