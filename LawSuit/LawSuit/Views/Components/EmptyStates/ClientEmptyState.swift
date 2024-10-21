@@ -16,7 +16,7 @@ struct ClientEmptyState: View {
         ZStack {
             Image("clientEmptyStateBackground")
                 .resizable()
-                .scaledToFit()
+                .scaledToFill()
             VStack {
                 if clients.count == 0 {
                     Text("Dê o primeiro passo para uma gestão \n jurídica mais eficiente!")
