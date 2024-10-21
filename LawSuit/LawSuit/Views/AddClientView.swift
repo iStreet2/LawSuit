@@ -37,8 +37,9 @@ struct AddClientView: View {
     @State var telephone: String = ""
     @State var cellphone: String = ""
     @State var isClientContactsToggleOn: Bool = false
+    @Binding var showContactAlert: Bool
+    var contactsManager: ContactsManager?
     @State var photo: Data?
-    @EnvironmentObject var contactsManager: ContactsManager
     
     
     //MARK: CoreData
@@ -111,9 +112,9 @@ struct AddClientView: View {
                             return
                         }
                         if textFieldDataViewModel.dateValidation(birthDate) {
-                                               invalidInformation = .invalidDate
-                                               return
-                                           }
+                            invalidInformation = .invalidDate
+                            return
+                        }
                         if stage == 2 {
                             if cep.count < 8 {
                                 invalidInformation = .invalidCEP
@@ -123,11 +124,12 @@ struct AddClientView: View {
                         if stage == 3 {
                             print("Cliente adicionado aos contatos? \(isClientContactsToggleOn)")
                             if isClientContactsToggleOn {
-                
-                                let contact = contactsManager.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, photo: photo ?? Data(), occupation: occupation)
-                                    
-                                    contactsManager.checkContactsAuthorizationAndSave(contact: contact)
-
+                                if let contact = contactsManager?.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, occupation: occupation) {
+                                    contactsManager?.checkContactsAuthorizationAndSave(contact: contact)
+                                    showContactAlert = true
+                                } else {
+                                    print("Falha ao criar contato")
+                                }
                             }
                             
                             if !textFieldDataViewModel.isValidEmail(email) {
@@ -138,7 +140,7 @@ struct AddClientView: View {
                             else {
                                 //MARK: Advogado temporário
                                 let lawyer = lawyers[0]
-                                let _ = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone, photo: photo)
+                                let _ = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
                                 dismiss()
                             }
                             return
@@ -189,9 +191,8 @@ struct AddClientView: View {
                             return Alert(title: Text("Número de CEP não encontrado"),
                                          message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                                          dismissButton: .default(Text("Ok")))
-                            
                         case .invalidDate:
-                            return Alert(title: Text("Número de nascimento inválido"),
+                            return Alert(title: Text("Data de nascimento inválida"),
                                          message: Text("Por favor, insira uma data válida antes de continuar"),
                                          dismissButton: .default(Text("Ok")))
                         }

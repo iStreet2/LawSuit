@@ -36,7 +36,7 @@ struct AddLawsuitView: View {
     @State var tagType: TagType = .civel
 
     @State var attributedAuthor = false
-    @State var attributedDefendant = false 
+    @State var attributedDefendant = false
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -102,16 +102,16 @@ struct AddLawsuitView: View {
                     return
                 }
                 if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
-                                    invalidInformation = .invalidDate
-                                    return
-                                }
+                    invalidInformation = .invalidDate
+                    return
+                }
                 //MARK: Se o cliente foi atribuido ao autor
                 if attributedAuthor {
                     if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                         let category = tagType.tagText
                         let lawyer = lawyers[0]
                         let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
+                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
                         
                         dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                         
@@ -126,7 +126,7 @@ struct AddLawsuitView: View {
                         let category = tagType.tagText
                         let lawyer = lawyers[0]
                         let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
+                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
                         
                         dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                         
@@ -169,15 +169,14 @@ struct AddLawsuitView: View {
                                  dismissButton: .default(Text("Ok")))
                 case .invalidCEP:
                     return Alert(title: Text("Número do processo inválido"),
-                    message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                    message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                     dismissButton: .default(Text("Ok")))
+                    
                 case .invalidDate:
-                                    return Alert(title: Text("Data de distribuição inválida"),
-                                                 message: Text("Por favor, insira uma data válida antes de continuar"),
-                                                 dismissButton: .default(Text("Ok")))
-                                
+                    return Alert(title: Text("Data de distribuição inválida"),
+                                 message: Text("Por favor, insira uma data válida antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
                 }
-                
             }
             
         }
