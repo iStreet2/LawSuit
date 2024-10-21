@@ -62,10 +62,10 @@ struct LawsuitWrapper: EntityWrapper {
 	
 	var entityName: String {
 		get {
-			return self.lawsuit.name
+            return self.lawsuit.name
 		}
 		set {
-			self.lawsuit.name = newValue
+            self.lawsuit.name = newValue
 		}
 	}
 	

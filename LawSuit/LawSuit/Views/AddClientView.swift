@@ -37,9 +37,8 @@ struct AddClientView: View {
     @State var telephone: String = ""
     @State var cellphone: String = ""
     @State var isClientContactsToggleOn: Bool = false
-    @Binding var showContactAlert: Bool
-    var contactsManager: ContactsManager?
     @State var photo: Data?
+    @EnvironmentObject var contactsManager: ContactsManager
     
     
     //MARK: CoreData
@@ -124,12 +123,11 @@ struct AddClientView: View {
                         if stage == 3 {
                             print("Cliente adicionado aos contatos? \(isClientContactsToggleOn)")
                             if isClientContactsToggleOn {
-                                if let contact = contactsManager?.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, occupation: occupation) {
-                                    contactsManager?.checkContactsAuthorizationAndSave(contact: contact)
-                                    showContactAlert = true
-                                } else {
-                                    print("Falha ao criar contato")
-                                }
+                
+                                let contact = contactsManager.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, photo: photo ?? Data(), occupation: occupation)
+                                    
+                                    contactsManager.checkContactsAuthorizationAndSave(contact: contact)
+
                             }
                             
                             if !textFieldDataViewModel.isValidEmail(email) {
@@ -140,7 +138,7 @@ struct AddClientView: View {
                             else {
                                 //MARK: Advogado temporário
                                 let lawyer = lawyers[0]
-                                let _ = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                                let _ = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone, photo: photo)
                                 dismiss()
                             }
                             return

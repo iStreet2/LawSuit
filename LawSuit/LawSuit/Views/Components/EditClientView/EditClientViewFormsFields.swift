@@ -98,7 +98,7 @@ struct EditClientViewFormsFields: View {
                 VStack(spacing: 15) {
                     LabeledTextField(label: "CEP", placeholder: "CEP", mandatory: true, textfieldText: $cep)
                         .onReceive(Just(cep)) { _ in cep = textFieldDataViewModel.formatNumber(cep, limit: 8) }
-                        .onChange(of: cep, perform: { _ in
+                        .onChange(of: cep) {
                             Task{
                                 if cep.count >= 8{
                                     if let addressApi = await addressViewModel.fetch(for: cep) {
@@ -110,7 +110,7 @@ struct EditClientViewFormsFields: View {
                                     }
                                 }
                             }
-                        })
+                        }
                     LabeledTextField(label: "Endereço", placeholder: "Endereço", mandatory: true, textfieldText: $address)
                         .onReceive(Just(address)) { _ in textFieldDataViewModel.limitText(text: &address, upper: textLimit) }
                     
@@ -135,7 +135,7 @@ struct EditClientViewFormsFields: View {
             VStack(spacing: 15) {
                 VStack(alignment: .leading, spacing: 4) {
                     LabeledTextField(label: "E-mail", placeholder: "Insira o e-mail do Cliente", mandatory: true, textfieldText: $email)
-                        .onChange(of: email) { _ in
+                        .onChange(of: email) {
                             isEmailValid = textFieldDataViewModel.isValidEmail(email)
                         }
                         .foregroundColor(isEmailValid ? .black : .red)

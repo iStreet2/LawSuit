@@ -19,15 +19,25 @@ struct DocumentListView: View {
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(sortDescriptors: []) var folders: FetchedResults<Folder>
-    @FetchRequest(sortDescriptors: []) var filesPDF: FetchedResults<FilePDF>
+    @FetchRequest var folders: FetchedResults<Folder>
+    @FetchRequest var filesPDF: FetchedResults<FilePDF>
     
     //MARK: Calculo da grid
     let spacing: CGFloat = 10
     let itemWidth: CGFloat = 90
-    
-    //MARK: Variáveis
-    //    @State var showingGridView = false
+
+    init(openFolder: Folder) {
+        self.openFolder = openFolder
+        
+        _folders = FetchRequest<Folder>(
+            sortDescriptors: []
+            ,predicate: NSPredicate(format: "parentFolder == %@", openFolder)
+        )
+        _filesPDF = FetchRequest<FilePDF>(
+            sortDescriptors: []
+            ,predicate: NSPredicate(format: "parentFolder == %@", openFolder)
+        )
+    }
     
     var body: some View {
         
@@ -54,7 +64,7 @@ struct DocumentListView: View {
                 .foregroundStyle(Color(.gray))
                 VStack(alignment: .leading) {
                     Divider()
-                    if openFolder.folders!.count == 0 && openFolder.files!.count == 0{
+                    if folders.count == 0 && filesPDF.count == 0{
                         HStack {
                             Spacer()
                             Text("Sem pastas ou arquivos")
