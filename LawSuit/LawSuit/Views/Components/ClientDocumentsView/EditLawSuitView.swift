@@ -224,6 +224,10 @@ struct EditLawSuitView: View {
                         return Alert(title: Text("Número do CEP inválido"),
                                      message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
+                    case .invalidDate:
+                        return Alert(title: Text("Data de distribuição inválida"),
+                                                         message: Text("Por favor, insira uma data válida antes de continuar"),
+                                                         dismissButton: .default(Text("Ok")))
                     }
                 }
             }
