@@ -37,8 +37,7 @@ struct AddClientView: View {
     @State var telephone: String = ""
     @State var cellphone: String = ""
     @State var isClientContactsToggleOn: Bool = false
-    @Binding var showContactAlert: Bool
-    var contactsManager: ContactsManager?
+    @EnvironmentObject var contactsManager: ContactsManager
     @State var photo: Data?
     
     
@@ -124,12 +123,8 @@ struct AddClientView: View {
                         if stage == 3 {
                             print("Cliente adicionado aos contatos? \(isClientContactsToggleOn)")
                             if isClientContactsToggleOn {
-                                if let contact = contactsManager?.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, occupation: occupation) {
-                                    contactsManager?.checkContactsAuthorizationAndSave(contact: contact)
-                                    showContactAlert = true
-                                } else {
-                                    print("Falha ao criar contato")
-                                }
+                                let contact = contactsManager.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, photo: photo ?? Data(), occupation: occupation)
+                                contactsManager.checkContactsAuthorizationAndSave(contact: contact)
                             }
                             
                             if !textFieldDataViewModel.isValidEmail(email) {
