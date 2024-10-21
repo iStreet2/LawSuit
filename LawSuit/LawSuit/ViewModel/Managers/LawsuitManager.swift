@@ -31,7 +31,9 @@ class LawsuitManager {
     func createLawsuit(authorName: String, defendantName: String, number: String, court: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) -> Lawsuit {
         
         let lawsuit = Lawsuit(context: context)
-        lawsuit.name = name
+        lawsuit.authorName = authorName
+        lawsuit.defendantName = defendantName
+        lawsuit.name = "\(authorName) X \(defendantName)"
         lawsuit.category = category
         lawsuit.number = number
         lawsuit.court = court
@@ -55,8 +57,11 @@ class LawsuitManager {
     }
     
     func createLawsuitNonDistribuited(authorName: String, defendantName: String, number: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) -> Lawsuit{
+        
         let lawsuit = Lawsuit(context: context)
-        lawsuit.name = name
+        lawsuit.authorName = authorName
+        lawsuit.defendantName = defendantName
+        lawsuit.name = "\(authorName) X \(defendantName)"
         lawsuit.category = category
         lawyer.addToLawsuits(lawsuit)
         lawsuit.defendantID = defendantID
@@ -67,7 +72,7 @@ class LawsuitManager {
         // Criar pasta raiz para esse processo:
         let rootFolder = Folder(context: context)
         rootFolder.parentLawsuit = lawsuit
-        rootFolder.name = lawsuit.name
+        rootFolder.name = "root(\(number)"
         rootFolder.id = UUID().uuidString
         
         lawsuit.rootFolder = rootFolder
