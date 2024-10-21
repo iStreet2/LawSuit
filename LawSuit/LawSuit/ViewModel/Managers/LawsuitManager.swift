@@ -28,10 +28,12 @@ class LawsuitManager {
         saveContext()
     }
     
-    func createLawsuit(name: String, number: String, court: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) -> Lawsuit {
+    func createLawsuit(authorName: String, defendantName: String, number: String, court: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) -> Lawsuit {
         
         let lawsuit = Lawsuit(context: context)
-        lawsuit.name = name
+        lawsuit.authorName = authorName
+        lawsuit.defendantName = defendantName
+        lawsuit.name = "\(authorName) X \(defendantName)"
         lawsuit.category = category
         lawsuit.number = number
         lawsuit.court = court
@@ -54,9 +56,10 @@ class LawsuitManager {
         return lawsuit
     }
     
-    func createLawsuitNonDistribuited(name: String, number: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) -> Lawsuit{
+    func createLawsuitNonDistribuited(authorName: String, defendantName: String, number: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) -> Lawsuit{
         let lawsuit = Lawsuit(context: context)
-        lawsuit.name = name
+        lawsuit.authorName = authorName
+        lawsuit.defendantName = defendantName
         lawsuit.category = category
         lawyer.addToLawsuits(lawsuit)
         lawsuit.defendantID = defendantID
@@ -67,7 +70,7 @@ class LawsuitManager {
         // Criar pasta raiz para esse processo:
         let rootFolder = Folder(context: context)
         rootFolder.parentLawsuit = lawsuit
-        rootFolder.name = lawsuit.name
+        rootFolder.name = "root(\(number)"
         rootFolder.id = UUID().uuidString
         
         lawsuit.rootFolder = rootFolder
@@ -77,8 +80,9 @@ class LawsuitManager {
         return lawsuit
     }
     
-    func editLawSuit(lawsuit: Lawsuit, name: String, number: String, court: String, category: String, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) {
-        lawsuit.name = name
+    func editLawSuit(lawsuit: Lawsuit, authorName: String, defendantName: String, number: String, court: String, category: String, defendantID: String, authorID: String, actionDate: Date, isDistributed: Bool) {
+        lawsuit.authorName = authorName
+        lawsuit.defendantName = defendantName
         lawsuit.number = number
         lawsuit.court = court
         lawsuit.category = category
@@ -86,6 +90,18 @@ class LawsuitManager {
         lawsuit.authorID = authorID
         lawsuit.actionDate = actionDate
         lawsuit.isDistributed = isDistributed
+        saveContext()
+    }
+    
+    func editLawsuitAuthorName(lawsuit: Lawsuit, authorName: String) {
+        lawsuit.authorName = authorName
+        lawsuit.name = "\(authorName) X \(lawsuit.defendantName)"
+        saveContext()
+    }
+    
+    func editLawsuitDefendantName(lawsuit: Lawsuit, defendantName: String) {
+        lawsuit.defendantName = defendantName
+        lawsuit.name = "\(lawsuit.authorName) X \(defendantName)"
         saveContext()
     }
     
@@ -133,27 +149,43 @@ class LawsuitManager {
         
     }
     
-    func fetchDefendantName(for client: Client) -> String {
+    
+//    func fetchDefendantName(for client: Client) -> String {
+//        
+//        if let lawsuits = fetchFromClient(client: client) {
+//            for lawsuit in lawsuits {
+//                let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
+//                fetchRequest.predicate = NSPredicate(format: "id == %@", lawsuit.defendantID)
+//                
+//                do {
+//                    let defendants = try context.fetch(fetchRequest)
+//                    
+//                    lawsuit.name = client.socialName != nil ? "\(String(describing: client.socialName)) X \(defendants.first?.name ?? "")" : "\(client.name) X \(defendants.first?.name ?? "")"
+//                    return lawsuit.name
+//                } catch {
+//                    print("Erro ao buscar o réu: \(error)")
+//                    return ""
+//                }
+//            }
+//            saveContext()
+//        }
+//        return ""
+//    }
+    
+    func fetchAllLawsuitsFrom(client: Client) -> [Lawsuit] {
         
         if let lawsuits = fetchFromClient(client: client) {
-            for lawsuit in lawsuits {
-                let fetchRequest: NSFetchRequest<Client> = Client.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "id == %@", lawsuit.defendantID)
-                
-                do {
-                    let defendants = try context.fetch(fetchRequest)
-                    
-                    lawsuit.name = client.socialName != nil ? "\(String(describing: client.socialName)) X \(defendants.first?.name ?? "")" : "\(client.name) X \(defendants.first?.name ?? "")"
-                    print(lawsuit.name)
-                    return lawsuit.name
-                } catch {
-                    print("Erro ao buscar o réu: \(error)")
-                    return ""
-                }
-            }
-            saveContext()
+            return lawsuits
         }
-        return ""
+        return []
+    }
+    
+    func authorIsClient(lawsuit: Lawsuit) -> Bool {
+        if lawsuit.authorID.hasPrefix("client:") {
+            return true
+        } else {
+            return false
+        }
     }
     
 }

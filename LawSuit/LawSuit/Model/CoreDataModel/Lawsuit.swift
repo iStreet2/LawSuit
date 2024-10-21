@@ -22,6 +22,8 @@ public class Lawsuit: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var defendantID: String
     @NSManaged public var id: String
     @NSManaged public var name: String
+    @NSManaged public var authorName: String
+    @NSManaged public var defendantName: String
     @NSManaged public var number: String
     @NSManaged public var authorID: String //Ignorar para o CloudKit
     @NSManaged public var parentLawyer: Lawyer? //Ignorar para o CloudKit
