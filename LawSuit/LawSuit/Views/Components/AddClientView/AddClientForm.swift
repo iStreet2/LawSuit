@@ -136,6 +136,8 @@ struct AddClientForm: View {
                                 }
 
                             .frame(height: 140)
+
+
                         }
                         LabeledTextField(label: "Nome Social", placeholder: "Insira o nome social do Cliente", textfieldText: $socialName)
                             .onReceive(Just(socialName)) { _ in textFieldDataViewModel.limitText(text: &socialName, upper: textLimit) }

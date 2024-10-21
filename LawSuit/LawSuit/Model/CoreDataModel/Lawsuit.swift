@@ -31,6 +31,8 @@ public class Lawsuit: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var updates: NSSet? //Reference
     @NSManaged public var isLoading: Bool
     @NSManaged public var recordName: String?
+    @NSManaged public var isDistributed: Bool
+
 }
 
 // MARK: Generated accessors for updates

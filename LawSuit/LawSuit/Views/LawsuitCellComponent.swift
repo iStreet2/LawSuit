@@ -14,6 +14,7 @@ struct LawsuitCellComponent: View {
     @ObservedObject var lawsuit: Lawsuit
     @EnvironmentObject var dataViewModel: DataViewModel
     @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
+    @State var nsImage: NSImage?
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -27,12 +28,14 @@ struct LawsuitCellComponent: View {
                         .lineLimit(1)
                         .font(.callout)
                         .bold()
+                    
                     Text(lawsuit.number)
                         .lineLimit(1)
                         .font(.callout)
                         .foregroundStyle(Color(.gray))
                 }
-                .frame(width: geo.size.width * 0.27, height: 47, alignment: .leading)
+                .frame(width: geo.size.width * 0.258, height: 47, alignment: .leading)
+
                 
                 Spacer()
                 TagViewComponent(tagType: TagType(s: lawsuit.category))
@@ -44,31 +47,48 @@ struct LawsuitCellComponent: View {
                         ProgressView()
                             .scaleEffect(0.5, anchor: .center)
                             .frame(width: geo.size.width * 0.17, height: 30)
+
                     } else {
                         if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() {
                             Text(latestUpdateDate)
-                                .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                                .frame(width: geo.size.width * 0.163, height: 47, alignment: .leading)
+
                         } else {
                             Text("Sem atualizações")
-                                .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                                .frame(width: geo.size.width * 0.163, height: 47, alignment: .leading)
+                            
                         }
                     }
-                    if let socialName = client.socialName {
-                        Text(socialName)
-                            .lineLimit(1)
-                            .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
-                    } else {
-                        Text(client.name)
-                            .lineLimit(1)
-                            .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                    HStack {
+                        if let nsImage {
+                            Image(nsImage: nsImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 26)
+                                .clipShape(Circle())
+                        }
+                        
+                        if let socialName = client.socialName {
+                            Text(socialName)
+                                .lineLimit(1)
+                            
+                        } else {
+                            Text(client.name)
+                                .lineLimit(1)                            
+                        }
                     }
-                    Text(lawyer.name ?? "Sem nome")
+                    .frame(width: geo.size.width * 0.163, height: 47, alignment: .leading)
+                    Text(lawsuit.isDistributed ? "Distribuído" : "Não distribuído")
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, minHeight: 47, alignment: .leading)
+                    
                 }
                 .font(.callout)
                 .bold()
                 
+            }
+            .onAppear {
+                self.nsImage = NSImage(data: client.photo ?? Data())
             }
             .padding(.horizontal, 20)
         }
