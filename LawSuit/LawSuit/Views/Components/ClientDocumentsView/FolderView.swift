@@ -11,6 +11,8 @@ struct FolderView: View {
     
     //MARK: Variáveis
     @ObservedObject var parentFolder: Folder
+	
+	@State var didTryToDeleteFile: Bool = false
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
@@ -80,14 +82,20 @@ struct FolderView: View {
                         Text("Renomear")
                         Image(systemName: "pencil")
                     }
-                    Button(action: {
-                        withAnimation(.easeIn) {
-                            dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
-                        }
-                    }) {
-                        Text("Excluir")
-                        Image(systemName: "trash")
-                    }
+//                    Button(action: {
+//                        withAnimation(.easeIn) {
+//                            dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+//                        }
+//                    }) {
+//                        Text("Excluir")
+//                        Image(systemName: "trash")
+//                    }
+						 Button(action: {
+							 didTryToDeleteFile = true
+						 }) {
+							 Text("Excluir")
+							 Image(systemName: "trash")
+						 }
                     Button {
                         withAnimation {
                             if let destinationFolder = parentFolder.parentFolder {
@@ -101,6 +109,17 @@ struct FolderView: View {
                     .disabled(parentFolder.parentFolder == nil)
                 }
 //                .transition(.scale)
+					 .alert(isPresented: $didTryToDeleteFile) {
+						 Alert(title: Text("Tem certeza que deseja excluir a pasta \(folder.name) e todos os arquivos dentro?"),
+								 message: Text("Você excluirá \(dataViewModel.coreDataManager.folderManager.getFolderItemsCount(folder: folder).0) arquivo(s) e \(dataViewModel.coreDataManager.folderManager.getFolderItemsCount(folder: folder).1) pasta(s)."),
+								 primaryButton: .destructive(Text("Sim, excluir"), action: {
+							 didTryToDeleteFile = false
+							 dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
+						 }),
+								 secondaryButton: .cancel(Text("Cancelar"), action: {
+							 didTryToDeleteFile = false
+						 }))
+					 }
         }
     }
 }

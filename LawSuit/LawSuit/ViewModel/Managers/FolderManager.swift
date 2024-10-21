@@ -28,6 +28,25 @@ class FolderManager {
             saveContext()
         }
     }
+	
+	func getFolderItemsCount(folder: Folder) -> (Int, Int) {
+		var files = 0
+		var folders = 1
+		
+		if let subFiles = folder.files as? Set<FilePDF> {
+			files = subFiles.count
+		}
+		
+		if let subFolders = folder.folders as? Set<Folder> {
+			for subFolder in subFolders {
+				let result = getFolderItemsCount(folder: subFolder)
+				folders += result.0
+				files += result.1
+			}
+		}
+		
+		return (folders, files)
+	}
     
     func deleteFolder(parentFolder: Folder, folder: Folder) {
         withAnimation(.bouncy) {
