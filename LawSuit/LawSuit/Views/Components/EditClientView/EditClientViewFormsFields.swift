@@ -53,30 +53,11 @@ struct EditClientViewFormsFields: View {
                     LabeledTextField(label: "Nome Social", placeholder: "Insira o Nome Social do Cliente", textfieldText: $socialName)
                         .onReceive(Just(socialName)) { _ in textFieldDataViewModel.limitText(text: &socialName, upper: textLimit) }
                     HStack(spacing: 15) {
-                        VStack(alignment: .leading, spacing: 0) {
-                            LabeledTextField(label: "RG", placeholder: "RG", mandatory: true, textfieldText: $rg)
-                                .onReceive(Just(rg)) { _ in rg = textFieldDataViewModel.formatNumber(rg, limit: 9) }
-                            Spacer()
-                            if rg.count > 0 && rg.count < 9 {
-                                Text("RG inválido")
-                                    .foregroundStyle(.red)
-                                    .font(.caption)
-                            }
-                        }
-                        .frame(height: 80)
-                        
-                        VStack(alignment: .leading, spacing: 0) {
-                            LabeledTextField(label: "CPF", placeholder: "CPF", mandatory: true, textfieldText: $cpf)
-                                .onReceive(Just(cpf)) { _ in cpf = textFieldDataViewModel.formatCPF(cpf) }
-                                .foregroundStyle(textFieldDataViewModel.isValidCPF(cpf) ? .black : .red)
-                            Spacer()
-                            if cpf.count > 0 && cpf.count < 14 || cpf.count == 14 && !textFieldDataViewModel.isValidCPF(cpf) {
-                                Text("CPF inválido")
-                                    .foregroundStyle(.red)
-                                    .font(.caption)
-                            }
-                        }
-                        .frame(height: 80)
+                        LabeledTextField(label: "RG", placeholder: "RG", mandatory: true, textfieldText: $rg)
+                            .onReceive(Just(rg)) { _ in rg = textFieldDataViewModel.formatNumber(rg, limit: 9) }
+                        LabeledTextField(label: "CPF", placeholder: "CPF", mandatory: true, textfieldText: $cpf)
+                            .onReceive(Just(cpf)) { _ in cpf = textFieldDataViewModel.formatCPF(cpf) }
+                            .foregroundStyle(textFieldDataViewModel.isValidCPF(cpf) ? .black : .red)
                     }
                     LabeledTextField(label: "Filiação", placeholder: "Filiação", mandatory: true, textfieldText: $affiliation)
                         .onReceive(Just(affiliation)) { _ in textFieldDataViewModel.limitText(text: &affiliation, upper: textLimit) }

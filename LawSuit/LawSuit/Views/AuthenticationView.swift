@@ -60,7 +60,7 @@ struct AuthenticationView: View {
 	}
 }
 
-//#Preview {
-//	AuthenticationView(authenticationStatus: .constant(false))
-//		.environmentObject(DataViewModel())
-//}
+#Preview {
+	AuthenticationView(authenticationStatus: .constant(false))
+		.environmentObject(DataViewModel())
+}
