@@ -56,7 +56,6 @@ struct EditClientView: View {
     @Binding var deleted: Bool
     @Binding var clientNSImage: NSImage?
     @State var clientNSImageBakcup: NSImage?
-    @State var showError: Bool = false
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -125,19 +124,8 @@ struct EditClientView: View {
                         .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
                     LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $clientBirthDate)
                         .onReceive(Just(clientBirthDate)) { _ in
-                            clientBirthDate = textFieldDataViewModel.dateFormat(clientBirthDate)}
-                        .onChange(of: clientBirthDate) { newValue in
-                                    if clientBirthDate.count > 00 && clientBirthDate.count == 10  {
-                                        showError = textFieldDataViewModel.dateValidation(clientBirthDate)
-                                    } else {
-                                        showError = false
-                                    }
-                                }
-                            Text(showError ? "Data inválida" : "")
-                                .foregroundColor(.red)
-                                .font(.callout)
-                                .frame(height: 20)
-                        
+                            clientBirthDate = textFieldDataViewModel.dateFormat(clientBirthDate)
+                        }
                 }
                 .padding()
             }
@@ -220,12 +208,10 @@ struct EditClientView: View {
                     if clientCellphone.count < 15 {
                         invalidInformation = .missingCellphoneNumber
                         
-                    }
-                    if textFieldDataViewModel.dateValidation(clientBirthDate) {
-                        invalidInformation = .invalidDate
-                        return
-                    }
-                    else {
+                    } else {
+                        
+                        let clientCurrentEmail = client.email
+                        
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone, photo: clientImageData)
                                                 
                         //Para todos os processos que esse cliente está envolvido
@@ -297,10 +283,6 @@ struct EditClientView: View {
                     case .invalidCEP:
                         return Alert(title: Text("Número do processo inválido"),
                                      message: Text("Por favor, insira um número de processo válido antes de continuar"),
-                                     dismissButton: .default(Text("Ok")))
-                    case .invalidDate:
-                        return Alert(title: Text("Data de nascimento inválida"),
-                                     message: Text("Por favor, insira uma data válida antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
                     }
                 }
