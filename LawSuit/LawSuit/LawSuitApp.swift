@@ -27,7 +27,8 @@ struct LawSuitApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+//            MainView()
+            ContentView()
                 .environment(\.managedObjectContext, dataViewModel.coreDataContainer.viewContext)
                 .environmentObject(dataViewModel)
                 .environmentObject(folderViewModel)

@@ -12,6 +12,7 @@ struct AddPhotoButton: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 19)
+            .fill(.black.opacity(0.0001))
             .stroke(Color.black, lineWidth: 1)
             .frame(width: 134, height: 134)
             .overlay {

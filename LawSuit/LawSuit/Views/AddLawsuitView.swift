@@ -76,13 +76,13 @@ struct AddLawsuitView: View {
         .onAppear {
             lawsuitTypeString = lawsuitType.rawValue
         }
-        .onChange(of: lawsuitTypeString, perform: { newValue in
+        .onChange(of: lawsuitTypeString) { oldValue, newValue in
             if newValue == "Distribuído" {
                 lawsuitType = .distributed
             } else {
                 lawsuitType = .notDistributed
             }
-        })
+        }
 
         HStack {
             Spacer()

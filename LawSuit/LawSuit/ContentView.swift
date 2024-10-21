@@ -19,6 +19,7 @@ struct ContentView: View {
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
+    @EnvironmentObject var contactsManager: ContactsManager
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -38,22 +39,14 @@ struct ContentView: View {
     }
     
     var body: some View {
-        HStack (spacing: 0){
-            
+        HStack(spacing: 0){
             SideBarView(selectedView: $selectedView, navigationVisibility: $navigationVisibility)
-            
             ZStack{
                 Color.white
                 NavigationSplitView(columnVisibility: isLawsuit ? .constant(.detailOnly) : $navigationVisibility) {
-                    if #available(macOS 14.0, *) {
-                        ClientListView(addClient: $addClient, deleted: $deleted)
-                            .frame(minWidth: 170)
-                            .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
-                    } else {
-                        ClientListView(addClient: $addClient, deleted: $deleted)
-                            .frame(minWidth: 170)
-                    }
-                    
+                    ClientListView(addClient: $addClient, deleted: $deleted)
+                        .frame(minWidth: 170)
+                        .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
                 } detail: {
                     NavigationStack {
                         switch selectedView {
@@ -64,7 +57,7 @@ struct ContentView: View {
                                     .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
                                         if let lawsuit = navigationViewModel.lawsuitToShow {
                                             let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
-
+                                            
                                             if let client = lawsuitData.client, let entity = lawsuitData.entity {
                                                 DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
                                             }
@@ -74,32 +67,29 @@ struct ContentView: View {
                             } else {
                                 VStack{
                                     if showContactAlert {
-                                    Text("Cliente adicionado aos contatos!")
-                                        .font(.body)
-                                        .foregroundStyle(.secondary)
-                                        .padding()
-                                        .background(Color.gray.opacity(0.1))
-                                        .clipShape(RoundedRectangle(cornerRadius: 7))
-                                        .transition(.opacity)
-                                        .onAppear {
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                                withAnimation {
-                                                    showContactAlert = false
+                                        Text("Cliente adicionado aos contatos!")
+                                            .font(.body)
+                                            .foregroundStyle(.secondary)
+                                            .padding()
+                                            .background(Color.gray.opacity(0.1))
+                                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                                            .transition(.opacity)
+                                            .onAppear {
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                                    withAnimation {
+                                                        showContactAlert = false
+                                                    }
                                                 }
                                             }
-                                        }
-                                } else {
-                                    Text("Selecione um cliente")
-                                        .padding()
-                                        .foregroundColor(.gray)
-                                    
-                                }
+                                    } else {
+                                        ClientEmptyState(addClient: $addClient)
+                                    }
                                 }
                                 .background(.white)
                                 .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
                                     if let lawsuit = navigationViewModel.lawsuitToShow {
                                         let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
-
+                                        
                                         if let client = lawsuitData.client, let entity = lawsuitData.entity {
                                             DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
                                         }
@@ -109,12 +99,12 @@ struct ContentView: View {
                             }
                             
                         case .lawsuits:
-                            LawsuitListView()
+                            LawsuitListView(addClient: $addClient)
                                 .background(.white)
                                 .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
                                     if let lawsuit = navigationViewModel.lawsuitToShow {
                                         let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
-
+                                        
                                         if let client = lawsuitData.client, let entity = lawsuitData.entity {
                                             DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
                                         }
@@ -130,8 +120,13 @@ struct ContentView: View {
         }
         .navigationTitle("Arqion")
         .sheet(isPresented: $addClient, content: {
-            AddClientView(showContactAlert: $showContactAlert, contactsManager: ContactsManager())
+            AddClientView()
         })
+        .alert(isPresented: $contactsManager.showAlert) {
+            Alert(title: Text("Aviso"),
+                  message: Text(contactsManager.alertMessage),
+                  dismissButton: .default(Text("Ok")))
+        }
     }
 }
 

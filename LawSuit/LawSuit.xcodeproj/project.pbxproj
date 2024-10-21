@@ -65,6 +65,8 @@
 		3B98F1282C668B1100C45121 /* LawSuitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B98F1272C668B1100C45121 /* LawSuitUITests.swift */; };
 		3B98F12A2C668B1100C45121 /* LawSuitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B98F1292C668B1100C45121 /* LawSuitUITestsLaunchTests.swift */; };
 		3BA150542CC0089800D2BF5C /* SelectableNSTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA150532CC0089800D2BF5C /* SelectableNSTextField.swift */; };
+		3BAE9E2F2CC1A44F00351CC5 /* ClientEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE9E2E2CC1A44F00351CC5 /* ClientEmptyState.swift */; };
+		3BAE9E312CC1ACF100351CC5 /* LawsuitsEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE9E302CC1ACF100351CC5 /* LawsuitsEmptyState.swift */; };
 		3BAF94C62C739BE7001FCA45 /* DragAndDropViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */; };
 		3BAF94CC2C73D5BF001FCA45 /* FilePDFIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */; };
 		3BAF94CE2C73DB7C001FCA45 /* PDFKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */; };
@@ -236,6 +238,8 @@
 		3B98F1272C668B1100C45121 /* LawSuitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitUITests.swift; sourceTree = "<group>"; };
 		3B98F1292C668B1100C45121 /* LawSuitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawSuitUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3BA150532CC0089800D2BF5C /* SelectableNSTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableNSTextField.swift; sourceTree = "<group>"; };
+		3BAE9E2E2CC1A44F00351CC5 /* ClientEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientEmptyState.swift; sourceTree = "<group>"; };
+		3BAE9E302CC1ACF100351CC5 /* LawsuitsEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitsEmptyState.swift; sourceTree = "<group>"; };
 		3BAF94C52C739BE7001FCA45 /* DragAndDropViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropViewModel.swift; sourceTree = "<group>"; };
 		3BAF94CB2C73D5BF001FCA45 /* FilePDFIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDFIconView.swift; sourceTree = "<group>"; };
 		3BAF94CD2C73DB7C001FCA45 /* PDFKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitView.swift; sourceTree = "<group>"; };
@@ -525,6 +529,15 @@
 			path = LawSuitUITests;
 			sourceTree = "<group>";
 		};
+		3BAE9E2D2CC1A43800351CC5 /* EmptyStates */ = {
+			isa = PBXGroup;
+			children = (
+				3BAE9E2E2CC1A44F00351CC5 /* ClientEmptyState.swift */,
+				3BAE9E302CC1ACF100351CC5 /* LawsuitsEmptyState.swift */,
+			);
+			path = EmptyStates;
+			sourceTree = "<group>";
+		};
 		3BAEA2E22C84F6E300AF5D6F /* PendentDocumentsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -648,6 +661,7 @@
 				3BB9A3442C84F19400AD1E30 /* AddLawsuitView */,
 				3B04F11B2C7FB99300991746 /* ClientDocumentsView */,
 				08E6572E2C7929FA00313FCB /* EditClientView */,
+				3BAE9E2D2CC1A43800351CC5 /* EmptyStates */,
 				6ABD796C2C6E962800A98BA3 /* CheckboxIconComponent.swift */,
 				6ABD79722C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift */,
 				E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */,
@@ -877,6 +891,7 @@
 				6AC0BB932C98C57800FAF3E6 /* DocumentActionButtonsView.swift in Sources */,
 				3BA150542CC0089800D2BF5C /* SelectableNSTextField.swift in Sources */,
 				6A2A9DF32CB064AC00177DFF /* LawsuitViewModel.swift in Sources */,
+				3BAE9E2F2CC1A44F00351CC5 /* ClientEmptyState.swift in Sources */,
 				6ABD797B2C7CEA6C00A98BA3 /* SegmentedControlComponent.swift in Sources */,
 				08A2B0E42C9486CA00719571 /* Date+.swift in Sources */,
 				6A2C69002C6D4FA300E017EE /* Model.xcdatamodeld in Sources */,
@@ -941,6 +956,7 @@
 				6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */,
 				3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */,
 				E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */,
+				3BAE9E312CC1ACF100351CC5 /* LawsuitsEmptyState.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,
