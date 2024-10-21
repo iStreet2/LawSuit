@@ -84,7 +84,7 @@ struct EditClientView: View {
                                     .cornerRadius(19)
                             }
                         }
-                        .transition(.scale)
+                        .transition(.asymmetric(insertion: .scale, removal: .opacity))
                         .buttonStyle(.plain)
                         .onHover { hovering in
                             if hovering {
