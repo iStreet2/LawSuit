@@ -38,10 +38,12 @@ struct SpotlightView: View {
 		.onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("HandleSpotlightSearch")), perform: { notification in
 			if let uniqueIdentifier = notification.object as? String {
 				print(uniqueIdentifier)
+				print("spotlightView")
 				self.currentRecordable = vm.getObjectByURI(uri: uniqueIdentifier)
 				
 				if let client = currentRecordable as? Client {
 					self.currentClient = client
+					
 				} else {
 					print("Object is not a client, \(type(of: currentRecordable))")
 				}

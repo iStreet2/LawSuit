@@ -64,4 +64,55 @@ class AuthenticationManager: ObservableObject {
 		}
 	}
 	
+	func checkAccountStatus() -> Bool {
+		let userFetchRequest: NSFetchRequest<User> = User.fetchRequest()
+		
+		do {
+			let result = try context.fetch(userFetchRequest)
+			
+			guard let user = result.first else { return false }
+			
+			if user.userName != nil {
+				return true
+			}
+			return false
+			
+		} catch {
+			print("Error fetching users: \(error)")
+		}
+		
+		return false
+	}
+	
+	func deleteUserAccount() {
+		let userFetchRequest: NSFetchRequest<User> = User.fetchRequest()
+		
+		do {
+			let result = try context.fetch(userFetchRequest)
+			
+			guard let user = result.first else { return }
+			
+			user.userName = nil
+			user.photo = nil
+			
+			try context.save()
+			
+		} catch {
+			print("Error fetching users: \(error)")
+		}
+	}
+	
+	func printUsers() {
+		let userFetchRequest: NSFetchRequest<User> = User.fetchRequest()
+		
+		do {
+			let result = try context.fetch(userFetchRequest)
+			
+			for user in result {
+				print("User: \(user.fullName)")
+			}
+		} catch {
+			print("Error fetching users: \(error)")
+		}
+	}
 }

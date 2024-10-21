@@ -86,7 +86,7 @@ class SpotlightManager {
 		for object in objects  {
 			if modelType == .client, let client = object as? Client {
 				let attributes = CSSearchableItemAttributeSet(contentType: .content)
-				attributes.title = client.name
+				attributes.title = client.socialName
 				attributes.contentDescription = client.cellphone
 				
 				let searchableItem = CSSearchableItem(
@@ -116,6 +116,8 @@ class SpotlightManager {
 			}
 			else if modelType == .lawsuit, let lawsuit = object as? Lawsuit {
 				let attributes = CSSearchableItemAttributeSet(contentType: .content)
+				attributes.title = lawsuit.name
+				attributes.contentDescription = lawsuit.number
 				
 				let searchableItem = CSSearchableItem(
 					uniqueIdentifier: lawsuit.objectID.uriRepresentation().absoluteString,

@@ -12,6 +12,8 @@ import PDFKit
 @main
 struct LawSuitApp: App {
     
+	@Environment(\.openWindow) var openWindow
+	
     @StateObject var dataViewModel = DataViewModel()
     @StateObject var folderViewModel = FolderViewModel()
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
@@ -42,6 +44,7 @@ struct LawSuitApp: App {
 					 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
                     hotkey.keyDownHandler = eventManager.hotkeyDownHandler
+						 dataViewModel.printUsers()
                 }
                 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
                     SpotlightSearchbarView()
@@ -51,20 +54,24 @@ struct LawSuitApp: App {
 					 .sheet(isPresented: $dataViewModel.spotlightManager.shouldShowFilePreview) {
 						 OpenFilePDFView(selectedFile: $dataViewModel.spotlightManager.fileToShow)
 					 }
-					 .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("HandleSpotlightSearch")), perform: { notification in
+					 .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("HandleSpotlightSearch"))) { notification in
 						 if let uniqueIdentifier = notification.object as? String {
-							 print(uniqueIdentifier)
-							 let currentRecordable = dataViewModel.getObjectByURI(uri: uniqueIdentifier)
-							 print(currentRecordable)
+							 print(uniqueIdentifier, "summoned via Spotlight")
 							 
-							 if let client = currentRecordable as? Client {
-//								 self.currentClient = client
+							 let recordable = dataViewModel.getObjectByURI(uri: uniqueIdentifier)
+						 
+							 if let client = recordable as? Client {
 								 navigationViewModel.selectedClient = client
-							 } else {
-								 print("Object is not a client, \(type(of: currentRecordable))")
+							 } else
+							 if let file = recordable as? FilePDF {
+								 openWindow(value: file.content!)
+							 } else
+							 if let lawsuit = recordable as? Lawsuit {
+								 navigationViewModel.lawsuitToShow = lawsuit
+								 navigationViewModel.isShowingDetailedLawsuitView = true
 							 }
 						 }
-					 })
+					 }
                 
         }
 		 WindowGroup(id: "FileWindow", for: Data.self) { fileData in

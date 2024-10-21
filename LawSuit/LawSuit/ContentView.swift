@@ -33,6 +33,8 @@ struct ContentView: View {
 			false
 		case .lawsuits:
 			true
+		case .settings:
+			false
 		}
 	}
 	
@@ -87,6 +89,9 @@ struct ContentView: View {
 										DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category)!)
 									}
 								}
+							
+						case .settings:
+							SettingsView()
 						}
 						
 					}
@@ -98,11 +103,17 @@ struct ContentView: View {
 		.sheet(isPresented: $addClient, content: {
 			AddClientView()
 		})
+		.onAppear {
+			dataViewModel.indexObjectsToSpotlight(objects: dataViewModel.fetchCoreDataObjects(for: .client), for: .client)
+			dataViewModel.indexObjectsToSpotlight(objects: dataViewModel.fetchCoreDataObjects(for: .file), for: .file)
+			dataViewModel.indexObjectsToSpotlight(objects: dataViewModel.fetchCoreDataObjects(for: .lawsuit), for: .lawsuit)
+		}
 	}
 }
 
 enum SelectedView: String {
 	case clients = "clients"
 	case lawsuits = "lawsuits"
+	case settings = "settings"
 }
 

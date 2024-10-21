@@ -127,6 +127,8 @@
 		E94C01642CA1E2AE00F6316F /* CoreDataModelsEnumerator2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C01632CA1E2AE00F6316F /* CoreDataModelsEnumerator2.swift */; };
 		E94C01662CA1E2C100F6316F /* EventMonitorProtocol2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C01652CA1E2C100F6316F /* EventMonitorProtocol2.swift */; };
 		E94C01682CA1E2D800F6316F /* AppDelegate2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94C01672CA1E2D800F6316F /* AppDelegate2.swift */; };
+		E97871BE2CBF0990004DC97F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97871BD2CBF0990004DC97F /* SettingsView.swift */; };
+		E97871C02CC05517004DC97F /* UsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97871BF2CC05517004DC97F /* UsernameView.swift */; };
 		E981580F2C77A2680039C2FD /* RecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E981580E2C77A2680039C2FD /* RecordManager.swift */; };
 		E9A949BA2C7CFB310006BC99 /* CloudDataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */; };
 		E9A949BC2C7E3DE00006BC99 /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */; };
@@ -297,6 +299,8 @@
 		E94C01632CA1E2AE00F6316F /* CoreDataModelsEnumerator2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModelsEnumerator2.swift; sourceTree = "<group>"; };
 		E94C01652CA1E2C100F6316F /* EventMonitorProtocol2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitorProtocol2.swift; sourceTree = "<group>"; };
 		E94C01672CA1E2D800F6316F /* AppDelegate2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate2.swift; sourceTree = "<group>"; };
+		E97871BD2CBF0990004DC97F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E97871BF2CC05517004DC97F /* UsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameView.swift; sourceTree = "<group>"; };
 		E981580E2C77A2680039C2FD /* RecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordManager.swift; sourceTree = "<group>"; };
 		E9A949B92C7CFB310006BC99 /* CloudDataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDataConverter.swift; sourceTree = "<group>"; };
 		E9A949BB2C7E3DE00006BC99 /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
@@ -615,6 +619,8 @@
 				08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */,
 				E9F94A7F2CB8513A00FB3C83 /* AuthenticationView.swift */,
 				E9F94A812CB86A2600FB3C83 /* MainView.swift */,
+				E97871BF2CC05517004DC97F /* UsernameView.swift */,
+				E97871BD2CBF0990004DC97F /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -848,6 +854,7 @@
 				3BD40B2F2C6D3FB8004048FA /* ClientManager.swift in Sources */,
 				08E657342C7D08D800313FCB /* LabeledPickerField.swift in Sources */,
 				6A4FE1692CB5BE4C00A9E9AB /* ClientRowNotSelectView.swift in Sources */,
+				E97871C02CC05517004DC97F /* UsernameView.swift in Sources */,
 				E94C01622CA1E28300F6316F /* SpotlightSearchBarView2.swift in Sources */,
 				DC1572BB2C6E96BB007815E1 /* PendentDocumentStyleView.swift in Sources */,
 				0897CB3A2C8BA21D00B488A9 /* MailManager.swift in Sources */,
@@ -927,6 +934,7 @@
 				6AC0BB8F2C9238CC00FAF3E6 /* DocumentView.swift in Sources */,
 				3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */,
 				E93FFB0F2C98C949004F96FC /* EventMonitor.swift in Sources */,
+				E97871BE2CBF0990004DC97F /* SettingsView.swift in Sources */,
 				08E657302C792A1200313FCB /* EditClientViewFormsFields.swift in Sources */,
 				DC1320E42C8F876600BBA8E0 /* TextFieldDataViewModel.swift in Sources */,
 				3BC731042C6A9A9200923BB2 /* FilePDFManager.swift in Sources */,

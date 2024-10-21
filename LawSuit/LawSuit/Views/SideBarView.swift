@@ -61,7 +61,23 @@ struct SideBarView: View {
                 }
             }
             Spacer()
-        }
+			  ZStack {
+				  if selectedView == .settings {
+					  Color.white
+						  .opacity(0.2)
+						  .cornerRadius(10)
+				  }
+				  Image(systemName: "gearshape")
+					  .font(.system(size: 19))
+					  .foregroundStyle(.white)
+			  }
+			  .frame(width: 55, height: 46)
+			  .onTapGesture {
+				  withAnimation(.bouncy) {
+					  selectedView = .settings
+				  }
+			  }
+		  }
         .padding()
         .padding(.trailing,5)
         .background(Color(hex: "932425").blendMode(.multiply))

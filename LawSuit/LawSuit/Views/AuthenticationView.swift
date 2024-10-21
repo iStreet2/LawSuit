@@ -15,22 +15,24 @@ struct AuthenticationView: View {
 	@Binding var authenticationStatus: Bool
 	@State var authenticationDidFail: Bool = false
 	
-	@State var animationProgress = 0
+	@State var animationProgress: CGFloat = 0
+	@Binding var transitionProgress: Double
 	
 	var body: some View {
 		ZStack {
-			
-			Color.white
-			
-			Image("ArqionBackgroundPattern")
-				.resizable(resizingMode: .tile)
-				.opacity(0.4)
+//			Color.white
+//			
+//			Image("ArqionBackgroundPattern")
+//				.resizable(resizingMode: .tile)
+//				.opacity(0.4)
 			
 			VStack {
 				Image("ArqionLogo")
 					.resizable()
 					.scaledToFit()
 					.frame(width: 260, height: 100)
+					.scaleEffect(authenticationStatus == true ? 120 : 1, anchor: .init(x: 0.44, y: 0.5))
+					.opacity(transitionProgress == 0 ? 1 : 0)
 				
 				SignInWithAppleButton(.signIn) { request in
 					request.requestedScopes = [.fullName, .email]
@@ -38,9 +40,18 @@ struct AuthenticationView: View {
 					switch result {
 					case .success(let authorization):
 						dataViewModel.handleSuccessfulLogin(with: authorization)
-						withAnimation(.easeInOut(duration: 3)) {
-							authenticationStatus = true
+
+						withAnimation(.easeIn(duration: 2)) {
+							animationProgress = NSScreen.main?.visibleFrame.height ?? 1000
 						}
+						
+						DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+							withAnimation(.easeInOut(duration: 3)) {
+								authenticationStatus = true
+								transitionProgress = 1
+							}
+						}
+						
 					case .failure(let error):
 						dataViewModel.handleLoginError(with: error)
 						authenticationStatus = false
@@ -48,6 +59,7 @@ struct AuthenticationView: View {
 					}
 				}
 				.frame(width: 300)
+				.offset(y: animationProgress)
 				
 				if authenticationDidFail {
 					Text("Houve um erro no sign in, tente novamente")
@@ -61,6 +73,6 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-	AuthenticationView(authenticationStatus: .constant(false))
+	AuthenticationView(authenticationStatus: .constant(false), transitionProgress: .constant(0))
 		.environmentObject(DataViewModel())
 }

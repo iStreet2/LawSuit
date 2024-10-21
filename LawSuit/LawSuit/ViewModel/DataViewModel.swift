@@ -81,6 +81,23 @@ class DataViewModel: ObservableObject {
 	func handleLoginError(with error: Error) {
 		authenticationManager.handleLoginError(with: error)
 	}
+	
+	/// DataViewModel.checkAccountStatus() -> Bool
+	/// Utilizada para verificar se a UsernameView deve ser mostrada ou se a ContentView já deve ser apresentada
+	/// Parâmetro de aceitação de status = user possuir username
+	/// 0 = Não foi autenticado ainda, precisa ir para a UsernameView
+	/// 1 = Já foi autenticado, pode ir para a ContentView
+	func checkAccountStatus() -> Bool {
+		return authenticationManager.checkAccountStatus()
+	}
+	
+	func deleteUserAccount() {
+		authenticationManager.deleteUserAccount()
+	}
+	
+	func printUsers() {
+		authenticationManager.printUsers()
+	}
 }
 
 struct StringElement: Identifiable {
