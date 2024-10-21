@@ -111,6 +111,10 @@ struct AddClientView: View {
                             invalidInformation = .invalidRG
                             return
                         }
+                        if textFieldDataViewModel.dateValidation(birthDate) {
+                            invalidInformation = .invalidDate
+                            return
+                        }
                         if stage == 2 {
                             if cep.count < 8 {
                                 invalidInformation = .invalidCEP
@@ -187,7 +191,10 @@ struct AddClientView: View {
                             return Alert(title: Text("Número de CEP não encontrado"),
                                          message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                                          dismissButton: .default(Text("Ok")))
-                            
+                        case .invalidDate: 
+                            return Alert(title: Text("Data de nascimento inválida"),
+                                         message: Text("Por favor, insira uma data válida antes de continuar"),
+                                         dismissButton: .default(Text("Ok")))
                         }
                     }
                 }

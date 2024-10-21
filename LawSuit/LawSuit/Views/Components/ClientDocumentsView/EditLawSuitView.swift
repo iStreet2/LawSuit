@@ -27,6 +27,7 @@ struct EditLawSuitView: View {
     @State var deleteAlert = false
     @State var attributedAuthor = false
     @State var attributedDefendant = false
+    @State var showError: Bool = false
     let textLimit = 100
     
     @State var authorRowState: ClientRowStateEnum = .selected
@@ -39,14 +40,28 @@ struct EditLawSuitView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack {
-                HStack {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .top) {
                     LabeledTextField(label: "Nº do Processo", placeholder: "", textfieldText: $lawsuitNumber)
                         .onReceive(Just(lawsuitNumber)) { _ in lawsuitNumber = textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber) }
-                    LabeledTextField(label: "Data de distribuição", placeholder: "", textfieldText: $lawsuitActionDate)
-                        .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateFormat(newValue)}
-                        .frame(width: 140)
+                    VStack(alignment: .leading, spacing: 0) {
+                        LabeledTextField(label: "Data de distribuição", placeholder: "", textfieldText: $lawsuitActionDate)
+                            .frame(width: 140)
+                            .onReceive(Just(lawsuitActionDate)) { newValue in lawsuitActionDate = textFieldDataViewModel.dateFormat(newValue)}
+                            .onChange(of: lawsuitActionDate) { newValue in
+                                if lawsuitActionDate.count == 10 {
+                                    showError = textFieldDataViewModel.dateValidation(lawsuitActionDate)
+                                } else {
+                                    showError = false
+                                }
+                            }
+                        Text(showError ? "Data inválida" : "")
+                            .foregroundColor(.red)
+                            .font(.callout)
+                            .frame(height: 20)
+                    }
                 }
+                .frame(height: 80)
                 
                 HStack {
                     VStack(alignment: .leading) {
@@ -169,6 +184,10 @@ struct EditLawSuitView: View {
                         invalidInformation = .invalidLawSuitNumber
                         return
                     }
+                    if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
+                        invalidInformation = .invalidDate
+                        return
+                    }
                     if attributedAuthor {
                         if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                             let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
@@ -207,23 +226,27 @@ struct EditLawSuitView: View {
                         
                     case .invalidRG:
                         return Alert(title: Text("RG inválido"),
-                                     message: Text("Por favor, insira um RG válido antes de continuar"),
+                                     message: Text("Por favor, insira um RG válido antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
                     case .invalidEmail:
                         return Alert(title: Text("E-mail inválido"),
-                                     message: Text("Por favor, insira um e-mail válido antes de continuar"),
+                                     message: Text("Por favor, insira um e-mail válido antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
                     case .missingCellphoneNumber:
                         return Alert(title: Text("Número de celular inválido"),
-                                     message: Text("Por favor, insira um número de celular válido antes de continuar"),
+                                     message: Text("Por favor, insira um número de celular válido antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
                     case .invalidLawSuitNumber:
                         return Alert(title: Text("Número do processo inválido"),
-                                     message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                     message: Text("Por favor, insira um número de processo válido antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
                     case .invalidCEP:
                         return Alert(title: Text("Número do CEP inválido"),
-                                     message: Text("Por favor, insira um número de CEP válido antes de continuar"),
+                                     message: Text("Por favor, insira um número de CEP válido antes de continuar."),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidDate:
+                        return Alert(title: Text("Data de distribuição inválida"),
+                                     message: Text("Por favor, insira uma data válida antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
                     }
                 }
