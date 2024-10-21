@@ -63,8 +63,8 @@ struct LawsuitCellComponent: View {
                         if let nsImage {
                             Image(nsImage: nsImage)
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 26)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 26, height: 26)
                                 .clipShape(Circle())
                         }
                         
