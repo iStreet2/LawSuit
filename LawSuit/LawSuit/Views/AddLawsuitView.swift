@@ -37,7 +37,6 @@ struct AddLawsuitView: View {
 
     @State var attributedAuthor = false
     @State var attributedDefendant = false
-
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -110,7 +109,10 @@ struct AddLawsuitView: View {
                         return
                     }
                 }
-                
+                if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
+                    invalidInformation = .invalidDate
+                    return
+                }
                 //MARK: Se o cliente foi atribuido ao autor
                 if attributedAuthor {
                     if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
@@ -179,8 +181,13 @@ struct AddLawsuitView: View {
                                  dismissButton: .default(Text("Ok")))
                 case .invalidCEP:
                     return Alert(title: Text("Número do processo inválido"),
-                    message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                    message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                     dismissButton: .default(Text("Ok")))
+                    
+                case .invalidDate:
+                    return Alert(title: Text("Data de distribuição inválida"),
+                                 message: Text("Por favor, insira uma data válida antes de continuar"),
+                                 dismissButton: .default(Text("Ok")))
                 }
             }
             
