@@ -11,9 +11,11 @@ struct LawsuitListView: View {
     
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     @State var addLawsuit = false
-    @Binding var addClient: Bool
     @State private var hasFetchedUpdates = false  // Adicionado
+    
+    //MARK: ViewModels
     @EnvironmentObject var dataViewModel: DataViewModel
+    @ObservedObject var shortCutsViewModel = ShortCutsViewModel.shared
     
     var isLoading: Bool {
         lawsuits.contains { $0.isLoading }
@@ -48,7 +50,7 @@ struct LawsuitListView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
                 if lawsuits.count == 0 {
-                    LawsuitsEmptyState(addClient: $addClient, addLawsuit: $addLawsuit)
+                    LawsuitsEmptyState(addLawsuit: $addLawsuit)
                 } else {
                     LawsuitListViewHeaderContent(lawsuits: lawsuits)
                 }

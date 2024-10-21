@@ -29,7 +29,6 @@ class LawsuitManager {
     }
     
     func createLawsuit(authorName: String, defendantName: String, number: String, court: String, category: String, lawyer: Lawyer, defendantID: String, authorID: String, actionDate: Date) -> Lawsuit {
-        
         let lawsuit = Lawsuit(context: context)
         lawsuit.authorName = authorName
         lawsuit.defendantName = defendantName

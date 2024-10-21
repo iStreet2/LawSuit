@@ -9,13 +9,9 @@ import SwiftUI
 
 struct LawsuitsEmptyState: View {
     
-    //Fetch de clientes
+    @ObservedObject var shortCutsViewModel = ShortCutsViewModel.shared
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
-    //Fetch de processos
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
-    //Binding de toogle de adicionar cliente
-    @Binding var addClient: Bool
-    //Binding de toogle de adicionar processo
     @Binding var addLawsuit: Bool
     
     var body: some View {
@@ -36,7 +32,7 @@ struct LawsuitsEmptyState: View {
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.gray)
                     Button {
-                        addClient.toggle()
+                        ShortCutsViewModel.shared.addClient.toggle()
                     } label: {
                         Text("Adicionar Cliente")
                     }

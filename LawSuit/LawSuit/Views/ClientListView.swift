@@ -13,7 +13,6 @@ struct ClientListView: View {
     @State var deleteAlert = false
     @State var clientToDelete: Client? = nil
     @State var selectedClients: Set<Client> = []
-    @Binding var addClient: Bool
     @Binding var deleted: Bool
     
     //MARK: ViewModels
@@ -40,7 +39,7 @@ struct ClientListView: View {
                     .font(.title)
                     .bold()
                 Button(action: {
-                    addClient.toggle()
+                    ShortCutsViewModel.shared.addClient.toggle()
                 }, label: {
                     Image(systemName: "plus")
                 })
@@ -48,6 +47,7 @@ struct ClientListView: View {
                 .foregroundStyle(.secondary)
                 .font(.title2)
                 .buttonStyle(PlainButtonStyle())
+//                .keyboardShortcut("n")
             }
             .padding()
             List(clients, id: \.id) { client in

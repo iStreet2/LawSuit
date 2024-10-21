@@ -13,13 +13,13 @@ struct ContentView: View {
     //MARK: Variáveis de estado
     @State private var selectedView = SelectedView.clients
     @State private var selectedClient: Client?
-    @State private var addClient = false
     @State var deleted = false
     
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var contactsManager: ContactsManager
+    @ObservedObject var shortCutsViewModel = ShortCutsViewModel.shared
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -44,7 +44,7 @@ struct ContentView: View {
             ZStack{
                 Color.white
                 NavigationSplitView(columnVisibility: isLawsuit ? .constant(.detailOnly) : $navigationVisibility) {
-                    ClientListView(addClient: $addClient, deleted: $deleted)
+                    ClientListView(deleted: $deleted)
                         .frame(minWidth: 170)
                         .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
                 } detail: {
@@ -82,7 +82,7 @@ struct ContentView: View {
                                                 }
                                             }
                                     } else {
-                                        ClientEmptyState(addClient: $addClient)
+                                        ClientEmptyState()
                                     }
                                 }
                                 .background(.white)
@@ -99,7 +99,7 @@ struct ContentView: View {
                             }
                             
                         case .lawsuits:
-                            LawsuitListView(addClient: $addClient)
+                            LawsuitListView()
                                 .background(.white)
                                 .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
                                     if let lawsuit = navigationViewModel.lawsuitToShow {
@@ -119,7 +119,7 @@ struct ContentView: View {
             
         }
         .navigationTitle("Arqion")
-        .sheet(isPresented: $addClient, content: {
+        .sheet(isPresented: $shortCutsViewModel.addClient, content: {
             AddClientView()
         })
         .alert(isPresented: $contactsManager.showAlert) {

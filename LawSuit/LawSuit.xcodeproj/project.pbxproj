@@ -47,6 +47,7 @@
 		3B24D4B22C73781F00CCA763 /* FilePDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4A62C73781F00CCA763 /* FilePDF.swift */; };
 		3B24D4B42C73781F00CCA763 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4A82C73781F00CCA763 /* Update.swift */; };
 		3B24D4B62C73781F00CCA763 /* Lawyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24D4AA2C73781F00CCA763 /* Lawyer.swift */; };
+		3B3F931C2CC6E0F300860055 /* ShortCutsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F931B2CC6E0F300860055 /* ShortCutsViewModel.swift */; };
 		3B406F9E2C8895BA00160ADE /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */; };
 		3B423E7C2C80E2CF005B1B7F /* DocumentGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */; };
 		3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423E7D2C80E2D8005B1B7F /* FolderView.swift */; };
@@ -219,6 +220,7 @@
 		3B24D4A62C73781F00CCA763 /* FilePDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePDF.swift; sourceTree = "<group>"; };
 		3B24D4A82C73781F00CCA763 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		3B24D4AA2C73781F00CCA763 /* Lawyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lawyer.swift; sourceTree = "<group>"; };
+		3B3F931B2CC6E0F300860055 /* ShortCutsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortCutsViewModel.swift; sourceTree = "<group>"; };
 		3B406F9D2C8895BA00160ADE /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		3B423E7B2C80E2CF005B1B7F /* DocumentGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentGridView.swift; sourceTree = "<group>"; };
 		3B423E7D2C80E2D8005B1B7F /* FolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 				3BD313E32C88FD56001CE5E7 /* DataViewModel.swift */,
 				08A2B0DD2C938D7B00719571 /* LawsuitNetworkingViewModel.swift */,
 				DC1320E32C8F876600BBA8E0 /* TextFieldDataViewModel.swift */,
+				3B3F931B2CC6E0F300860055 /* ShortCutsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -885,6 +888,7 @@
 				6ABD79732C6EA05D00A98BA3 /* SearchBarCheckboxComponent.swift in Sources */,
 				08E8D2042C88981F008F3859 /* LawsuitListViewHeaderContent.swift in Sources */,
 				08B381AA2CAB389D002F2041 /* MovimentationBlock.swift in Sources */,
+				3B3F931C2CC6E0F300860055 /* ShortCutsViewModel.swift in Sources */,
 				DCC1BD322C77BAF700000195 /* AddClientProgressView.swift in Sources */,
 				E94C01682CA1E2D800F6316F /* AppDelegate2.swift in Sources */,
 				3B423E7E2C80E2D8005B1B7F /* FolderView.swift in Sources */,
