@@ -11,7 +11,6 @@ struct LawsuitListView: View {
     
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     @State var addLawsuit = false
-    @State var createProcess = false
     @Binding var addClient: Bool
     @State private var hasFetchedUpdates = false  // Adicionado
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -33,7 +32,7 @@ struct LawsuitListView: View {
                             .font(.title)
                             .bold()
                         Button(action: {
-                            createProcess.toggle()
+                            addLawsuit.toggle()
                         }, label: {
                             Image(systemName: "plus")
                                 .font(.title2)
