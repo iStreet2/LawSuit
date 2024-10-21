@@ -8,10 +8,10 @@
 import SwiftUI
 import CoreData
 
-enum LawsuitType: String {
-    case distributed = "Distribuído"
-    case notDistributed = "Não Distribuído"
-}
+//enum LawsuitType: String {
+//    case distributed = "Distribuído"
+//    case notDistributed = "Não Distribuído"
+//}
 
 struct AddLawsuitView: View {
     
@@ -22,7 +22,6 @@ struct AddLawsuitView: View {
     @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     
     //MARK: Variáveis de estado
-    //@State var lawsuitType: LawsuitType = .distributed
     @State var isDistributed: Bool = true
     @State var lawsuitTypeString: String = ""
     
@@ -37,7 +36,8 @@ struct AddLawsuitView: View {
     @State var tagType: TagType = .civel
 
     @State var attributedAuthor = false
-    @State var attributedDefendant = false 
+    @State var attributedDefendant = false
+
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -119,8 +119,10 @@ struct AddLawsuitView: View {
                         let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
                         let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber), court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: isDistributed)
                         
-                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                        
+                        if lawsuit.isDistributed {
+                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                        }
+
                         dismiss()
                     } else {
                         print("Client not found")
@@ -134,8 +136,11 @@ struct AddLawsuitView: View {
                         let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
                         let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: textFieldDataViewModel.lawSuitNumberValidation(lawsuitNumber), court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: isDistributed)
                         
-                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                         
+                        if lawsuit.isDistributed {
+                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                        }
+
                         dismiss()
                     } else {
                         print("Client not found")

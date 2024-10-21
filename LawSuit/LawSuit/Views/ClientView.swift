@@ -22,9 +22,11 @@ struct ClientView: View {
     @ObservedObject var client: Client
     @Binding var deleted: Bool
     @State var selectedOption = "Processos"
-    @State var lawsuitSelectedOption = "Distribuído"
+    @State var lawsuitSelectedOption = "All"
     @State var createLawsuit = false
     @State var showingGridView = true
+
+    
     var infos = ["Processos", "Documentos"]
     
     //MARK: CoreData
@@ -43,7 +45,6 @@ struct ClientView: View {
     init(client: Client, deleted: Binding<Bool>) {
         self.client = client
         self._deleted = deleted
-        
         _lawsuits = FetchRequest<Lawsuit>(
             sortDescriptors: [],
             predicate: NSPredicate(format: "authorID == %@ OR defendantID == %@", client.id, client.id)

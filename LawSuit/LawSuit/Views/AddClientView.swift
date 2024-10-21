@@ -85,36 +85,36 @@ struct AddClientView: View {
                     Toggle(isOn: $isClientContactsToggleOn) {
                         Text("Adicionar aos Contatos")
                     }
-                    Button {
-                        startTimer()
-                        isTeste1 = true
-                    } label: {
-                        Text("Teste1")
-                            .padding(10)
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .disabled(isRunning)
-                    .buttonStyle(.plain)
-                    
-                    Button {
-                        startTimer()
-                        name = "Gabriel Vicentin Negro"
-                        cpf = "52553733895"
-                        affiliation = "Sônia Maria de Lurdes"
-                        birthDate = "10042003"
-                        email = "gabriel.vic@outlook.com"
-                        cellphone = "11976590460"
-                    } label: {
-                        Text("Teste2")
-                            .padding(10)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .disabled(isRunning)
-                    .buttonStyle(.plain)
+//                    Button {
+//                        startTimer()
+//                        isTeste1 = true
+//                    } label: {
+//                        Text("Teste1")
+//                            .padding(10)
+//                            .background(Color.green)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
+//                    }
+//                    .disabled(isRunning)
+//                    .buttonStyle(.plain)
+//                    
+//                    Button {
+//                        startTimer()
+//                        name = "Gabriel Vicentin Negro"
+//                        cpf = "52553733895"
+//                        affiliation = "Sônia Maria de Lurdes"
+//                        birthDate = "10042003"
+//                        email = "gabriel.vic@outlook.com"
+//                        cellphone = "11976590460"
+//                    } label: {
+//                        Text("Teste2")
+//                            .padding(10)
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
+//                    }
+//                    .disabled(isRunning)
+//                    .buttonStyle(.plain)
 
                     Spacer()
                     Button(action: {

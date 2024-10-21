@@ -16,6 +16,7 @@ struct LawsuitListView: View {
     var segmentedControlInfos = ["Distribuído", "Não distribuído"]
     @State var selectedOption = "Distribuído"
     
+    
     var isLoading: Bool {
         lawsuits.contains { $0.isLoading }
     }
@@ -39,18 +40,21 @@ struct LawsuitListView: View {
                         .buttonStyle(PlainButtonStyle())
                         
                         Spacer()
-                        Button(action: {
-                            for lawsuit in lawsuits {
-                                
-                                if lawsuit.isDistributed {
-                                    dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                        
+                        if selectedOption == "Distribuído" {
+                            Button(action: {
+                                for lawsuit in lawsuits {
+                                    
+                                    if lawsuit.isDistributed {
+                                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                                    }
+                                    
                                 }
-                                
-                            }
-                        }, label: {
-                            Image(systemName: "arrow.clockwise")
-                        })
-                        .disabled(isLoading)
+                            }, label: {
+                                Image(systemName: "arrow.clockwise")
+                            })
+                            .disabled(isLoading)
+                        }
                     }
                     
                     CustomSegmentedControl(selectedOption: $selectedOption, infos: segmentedControlInfos)

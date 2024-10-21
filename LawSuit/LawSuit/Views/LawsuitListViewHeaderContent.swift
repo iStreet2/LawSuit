@@ -14,8 +14,6 @@ struct LawsuitListViewHeaderContent: View {
     @EnvironmentObject var dataViewModel: DataViewModel
     @Environment(\.managedObjectContext) var context
     @Binding var lawsuitTypeString: String
-//    var distributedArray: [Lawsuit]
-//    var notDistributedArray: [Lawsuit]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -50,27 +48,81 @@ struct LawsuitListViewHeaderContent: View {
         
         ScrollView {
             VStack(spacing: 0) {
-                
-                ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
-                    let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
+
+                if lawsuitTypeString == "Distribuído" {
                     
-                    NavigationLink {
-                        if let client = lawsuitData.client, let entity = lawsuitData.entity {
-                            DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
+                    let distributedLawsuits = lawsuits.filter { $0.isDistributed }
+
+                    ForEach(Array(distributedLawsuits.enumerated()), id: \.offset) { index, lawsuit in
+                        let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
+
+                        if lawsuit.isDistributed {
+                            NavigationLink {
+                                if let client = lawsuitData.client, let entity = lawsuitData.entity {
+                                    DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
+                                }
+                            } label: {
+                                if let client = lawsuitData.client {
+                                    LawsuitCellComponent(client: client, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                        .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                                } else {
+                                    Text("Carregando")
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .simultaneousGesture(TapGesture().onEnded({
+                                navigationViewModel.lawsuitToShow = lawsuit
+                            }))
                         }
-                    } label: {
-                        if let client = lawsuitData.client {
-                            LawsuitCellComponent(client: client, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
-                                .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
-                        } else {
-                            Text("Carregando")
+                        
+                    }
+                } else if lawsuitTypeString == "Não distribuído"{
+                    
+                    let notDistributedLawsuits = lawsuits.filter { !$0.isDistributed }
+                    
+                    ForEach(Array(notDistributedLawsuits.enumerated()), id: \.offset) { index, lawsuit in
+                        let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
+                        
+                        if !lawsuit.isDistributed {
+                            NavigationLink {
+                                if let client = lawsuitData.client, let entity = lawsuitData.entity {
+                                    DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
+                                }
+                            } label: {
+                                if let client = lawsuitData.client {
+                                    LawsuitCellComponent(client: client, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                        .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                                } else {
+                                    Text("Carregando")
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .simultaneousGesture(TapGesture().onEnded({
+                                navigationViewModel.lawsuitToShow = lawsuit
+                            }))
                         }
                     }
-                    .buttonStyle(PlainButtonStyle())
-                    .simultaneousGesture(TapGesture().onEnded({
-                        navigationViewModel.lawsuitToShow = lawsuit
-                    }))
+                } else {
+                    ForEach(Array(lawsuits.enumerated()), id: \.offset) { index, lawsuit in
+                        let lawsuitData = dataViewModel.coreDataManager.getClientAndEntity(for: lawsuit)
                     
+                            NavigationLink {
+                                if let client = lawsuitData.client, let entity = lawsuitData.entity {
+                                    DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
+                                }
+                            } label: {
+                                if let client = lawsuitData.client {
+                                    LawsuitCellComponent(client: client, lawyer: lawsuit.parentLawyer!, lawsuit: lawsuit)
+                                        .background(Color(index % 2 == 0 ? .gray : .white).opacity(0.1))
+                                } else {
+                                    Text("Carregando")
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .simultaneousGesture(TapGesture().onEnded({
+                                navigationViewModel.lawsuitToShow = lawsuit
+                            }))
+                    }
                 }
                 
             }

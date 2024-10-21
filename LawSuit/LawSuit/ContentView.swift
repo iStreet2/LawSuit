@@ -23,6 +23,7 @@ struct ContentView: View {
 	
 	//MARK: CoreData
 	@EnvironmentObject var dataViewModel: DataViewModel
+    
 	@Environment(\.managedObjectContext) var context
 	@FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
 	
@@ -60,7 +61,7 @@ struct ContentView: View {
 						switch selectedView {
 						case .clients:
 							if let selectedClient = navigationViewModel.selectedClient {
-								ClientView(client: selectedClient, deleted: $deleted)
+                                ClientView(client: selectedClient, deleted: $deleted)
 									.background(.white)
 									.navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
 										if let lawsuit = navigationViewModel.lawsuitToShow {
@@ -110,7 +111,7 @@ struct ContentView: View {
 							}
 							
 						case .lawsuits:
-							LawsuitListView()
+                            LawsuitListView()
 								.background(.white)
                                 .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
                                     if let lawsuit = navigationViewModel.lawsuitToShow {
