@@ -8,10 +8,10 @@
 import SwiftUI
 import CoreData
 
-enum LawsuitType: String {
-    case distributed = "Distribuído"
-    case notDistributed = "Não Distribuído"
-}
+//enum LawsuitType: String {
+//    case distributed = "Distribuído"
+//    case notDistributed = "Não Distribuído"
+//}
 
 struct AddLawsuitView: View {
     
@@ -22,7 +22,7 @@ struct AddLawsuitView: View {
     @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
     
     //MARK: Variáveis de estado
-    @State var lawsuitType: LawsuitType = .distributed
+    @State var isDistributed: Bool = true
     @State var lawsuitTypeString: String = ""
     
     @State var lawsuitNumber = ""
@@ -58,11 +58,11 @@ struct AddLawsuitView: View {
                 .frame(maxWidth: .infinity)
 
             VStack(spacing: 0) {
-                if lawsuitType == .distributed {
+                if isDistributed {
                     LawsuitDistributedView(tagType: $tagType, lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, lawsuitActionDate: $lawsuitActionDate, attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if lawsuitType == .notDistributed {
-                    LawsuitNotDistributedView(lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, lawsuitActionDate: $lawsuitActionDate)
+                } else {
+                    LawsuitNotDistributedView(tagType: $tagType, lawsuitNumber: $lawsuitNumber, lawsuitCourt: $lawsuitCourt, lawsuitAuthorName: $lawsuitAuthorName, lawsuitDefendantName: $lawsuitDefendantName, lawsuitActionDate: $lawsuitActionDate, attributedAuthor: $attributedAuthor, attributedDefendant: $attributedDefendant)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
@@ -74,13 +74,13 @@ struct AddLawsuitView: View {
         }
         .frame(width: 510, height: 350)
         .onAppear {
-            lawsuitTypeString = lawsuitType.rawValue
+            lawsuitTypeString = "Distribuído"
         }
         .onChange(of: lawsuitTypeString) { oldValue, newValue in
             if newValue == "Distribuído" {
-                lawsuitType = .distributed
+                isDistributed = true
             } else {
-                lawsuitType = .notDistributed
+                isDistributed = false
             }
         }
 
@@ -93,13 +93,21 @@ struct AddLawsuitView: View {
                 Text("Cancelar")
             }
             Button {
-                if !areFieldsFilled() {
-                    invalidInformation = .missingInformation
-                    return
-                }
-                if lawsuitNumber.count < 25 {
-                    invalidInformation = .invalidLawSuitNumber
-                    return
+                
+                if isDistributed {
+                    if !areDistributedFieldsFilled() {
+                        invalidInformation = .missingInformation
+                        return
+                    }
+                    if lawsuitNumber.count < 25 {
+                        invalidInformation = .invalidLawSuitNumber
+                        return
+                    }
+                } else {
+                    if !areNotDistributedFieldsFilled() {
+                        invalidInformation = .missingInformation
+                        return
+                    }
                 }
                 if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
                     invalidInformation = .invalidDate
@@ -111,10 +119,12 @@ struct AddLawsuitView: View {
                         let category = tagType.tagText
                         let lawyer = lawyers[0]
                         let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                        var lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
-                        
-                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                        
+                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: isDistributed)
+                                                
+                        if lawsuit.isDistributed {
+                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                        }
+
                         dismiss()
                     } else {
                         print("Client not found")
@@ -126,10 +136,12 @@ struct AddLawsuitView: View {
                         let category = tagType.tagText
                         let lawyer = lawyers[0]
                         let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
+                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: isDistributed)                        
                         
-                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
-                        
+                        if lawsuit.isDistributed {
+                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                        }
+
                         dismiss()
                     } else {
                         print("Client not found")
@@ -183,11 +195,17 @@ struct AddLawsuitView: View {
         .padding( 10)
      
     }
-    func areFieldsFilled() -> Bool {
+    
+    func areDistributedFieldsFilled() -> Bool {
         return !lawsuitNumber.isEmpty &&
         !lawsuitCourt.isEmpty &&
         !lawsuitActionDate.description.isEmpty &&
         !lawsuitAuthorName.isEmpty &&
+        !lawsuitDefendantName.isEmpty
+    }
+    
+    func areNotDistributedFieldsFilled() -> Bool {
+        return !lawsuitAuthorName.isEmpty &&
         !lawsuitDefendantName.isEmpty
     }
 }

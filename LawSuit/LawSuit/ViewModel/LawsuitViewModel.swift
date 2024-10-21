@@ -16,4 +16,6 @@ class LawsuitViewModel: ObservableObject {
         func updateLawsuitCategory(lawsuit: Lawsuit) {
             lawsuit.category = tagType.tagText
         }
+    
+    
 }

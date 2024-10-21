@@ -22,8 +22,13 @@ struct ClientView: View {
     @ObservedObject var client: Client
     @Binding var deleted: Bool
     @State var selectedOption = "Processos"
+    @State var lawsuitSelectedOption = "All"
     @State var createLawsuit = false
     @State var showingGridView = true
+    var isLoading: Bool {
+        lawsuits.contains { $0.isLoading }
+    }
+    
     var infos = ["Processos", "Documentos"]
     
     //MARK: CoreData
@@ -42,7 +47,6 @@ struct ClientView: View {
     init(client: Client, deleted: Binding<Bool>) {
         self.client = client
         self._deleted = deleted
-        
         _lawsuits = FetchRequest<Lawsuit>(
             sortDescriptors: [],
             predicate: NSPredicate(format: "authorID == %@ OR defendantID == %@", client.id, client.id)
@@ -67,6 +71,18 @@ struct ClientView: View {
                             Spacer()
                             if selectedOption == "Processos" {
                                 Button(action: {
+                                    for lawsuit in lawsuits {
+                                        
+                                        if lawsuit.isDistributed {
+                                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                                        }
+                                        
+                                    }
+                                }, label: {
+                                    Image(systemName: "arrow.clockwise")
+                                })
+                                .disabled(isLoading)
+                                Button(action: {
                                     createLawsuit.toggle()
                                 }, label: {
                                     Image(systemName: "plus")
@@ -75,6 +91,7 @@ struct ClientView: View {
                                 })
                                 .padding(.trailing)
                                 .buttonStyle(PlainButtonStyle())
+                                
                             } else {
                                 if let openFolder = folderViewModel.getOpenFolder(){
                                     DocumentActionButtonsView(folder: openFolder)
@@ -86,7 +103,7 @@ struct ClientView: View {
                     
                     VStack(alignment: .leading, spacing: 0) {
                         if selectedOption == "Processos" {
-                            LawsuitListViewHeaderContent(lawsuits: lawsuits)
+                            LawsuitListViewHeaderContent(lawsuits: lawsuits, lawsuitTypeString: $lawsuitSelectedOption)
                         } else {
                             HStack(spacing: 0) {
                                 Button {

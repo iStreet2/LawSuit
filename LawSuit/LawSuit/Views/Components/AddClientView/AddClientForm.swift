@@ -128,6 +128,8 @@ struct AddClientForm: View {
                                 .frame(height: 80)
                             }
                             .frame(height: 140)
+
+
                         }
                         
                         LabeledTextField(label: "Nome Social", placeholder: "Insira o nome social do Cliente", textfieldText: $socialName)

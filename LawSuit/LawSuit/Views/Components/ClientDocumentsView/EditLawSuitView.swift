@@ -192,7 +192,7 @@ struct EditLawSuitView: View {
                         if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                             let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
                             let category = tagType.tagText
-                            dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
+                            dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: lawsuit.isDistributed)
                             dismiss()
                         } else {
                             print("error achando ou author")
@@ -201,7 +201,7 @@ struct EditLawSuitView: View {
                         if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitDefendantName) {
                             let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
                             let category = tagType.tagText
-                            dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, name: "\(lawsuitAuthorName) X \(lawsuitDefendantName)", number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate())
+                            dataViewModel.coreDataManager.lawsuitManager.editLawSuit(lawsuit: lawsuit, authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: lawsuit.isDistributed)
                             dismiss()
                         } else {
                             print("error achando defendant")

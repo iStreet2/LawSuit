@@ -64,6 +64,7 @@
         <attribute name="defendantID" attributeType="String"/>
         <attribute name="defendantName" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="isDistributed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isLoading" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="number" attributeType="String"/>

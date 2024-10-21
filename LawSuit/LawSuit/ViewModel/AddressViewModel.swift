@@ -18,7 +18,6 @@ class AddressViewModel: ObservableObject {
             print("URL inválida")
             return nil
         }
-        print("URL gerada: \(url)")
         
         do {
             let (data, response) = try await URLSession.shared.data(from: url)

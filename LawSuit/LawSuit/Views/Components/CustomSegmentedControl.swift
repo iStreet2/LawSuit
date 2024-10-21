@@ -83,14 +83,3 @@ struct CustomSegmentedControl: View {
         }
     }
 }
-
-//#Preview {
-//    VStack{
-//        CustomSegmentedControl()
-//            .padding()
-//            .background(.white)
-//
-//    }
-//    //   @State var selectedOption = 0
-////    return VStack{CustomSegmentedControl(selectedOption: $selectedOption, options: ["Processos","Documentos"])}.padding().background(.white)
-//}
