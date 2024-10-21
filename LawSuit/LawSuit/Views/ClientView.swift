@@ -25,7 +25,9 @@ struct ClientView: View {
     @State var lawsuitSelectedOption = "All"
     @State var createLawsuit = false
     @State var showingGridView = true
-
+    var isLoading: Bool {
+        lawsuits.contains { $0.isLoading }
+    }
     
     var infos = ["Processos", "Documentos"]
     
@@ -69,6 +71,18 @@ struct ClientView: View {
                             Spacer()
                             if selectedOption == "Processos" {
                                 Button(action: {
+                                    for lawsuit in lawsuits {
+                                        
+                                        if lawsuit.isDistributed {
+                                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                                        }
+                                        
+                                    }
+                                }, label: {
+                                    Image(systemName: "arrow.clockwise")
+                                })
+                                .disabled(isLoading)
+                                Button(action: {
                                     createLawsuit.toggle()
                                 }, label: {
                                     Image(systemName: "plus")
@@ -77,6 +91,7 @@ struct ClientView: View {
                                 })
                                 .padding(.trailing)
                                 .buttonStyle(PlainButtonStyle())
+                                
                             } else {
                                 if let openFolder = folderViewModel.getOpenFolder(){
                                     DocumentActionButtonsView(folder: openFolder)
