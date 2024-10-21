@@ -99,7 +99,7 @@ struct ContentView: View {
                             }
                             
                         case .lawsuits:
-                            LawsuitListView()
+                            LawsuitListView(addClient: $addClient)
                                 .background(.white)
                                 .navigationDestination(isPresented: $navigationViewModel.isShowingDetailedLawsuitView) {
                                     if let lawsuit = navigationViewModel.lawsuitToShow {

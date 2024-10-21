@@ -10,7 +10,8 @@ import SwiftUI
 struct LawsuitListView: View {
     
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
-    @State var createProcess = false
+    @State var addLawsuit = false
+    @Binding var addClient: Bool
     @State private var hasFetchedUpdates = false  // Adicionado
     @EnvironmentObject var dataViewModel: DataViewModel
     
@@ -27,20 +28,18 @@ struct LawsuitListView: View {
                         .font(.title)
                         .bold()
                     Button(action: {
-                        createProcess.toggle()
+                        addLawsuit.toggle()
                     }, label: {
                         Image(systemName: "plus")
                             .font(.title2)
                             .foregroundStyle(Color(.gray))
                     })
                     .buttonStyle(PlainButtonStyle())
-                    
                     Spacer()
                     Button(action: {
                         for lawsuit in lawsuits {
                             dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
                         }
-                        print("----------------fez o fetch para os lawsuits------------------")
                     }, label: {
                         Image(systemName: "arrow.clockwise")
                     })
@@ -48,12 +47,14 @@ struct LawsuitListView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
-                
-                LawsuitListViewHeaderContent(lawsuits: lawsuits)
+                if lawsuits.count == 0 {
+                    LawsuitsEmptyState(addClient: $addClient, addLawsuit: $addLawsuit)
+                } else {
+                    LawsuitListViewHeaderContent(lawsuits: lawsuits)
+                }
             }
-            
         }
-        .sheet(isPresented: $createProcess, content: {
+        .sheet(isPresented: $addLawsuit, content: {
             AddLawsuitView()
         })
         .toolbar {
