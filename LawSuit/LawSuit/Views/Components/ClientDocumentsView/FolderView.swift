@@ -82,14 +82,6 @@ struct FolderView: View {
                         Text("Renomear")
                         Image(systemName: "pencil")
                     }
-//                    Button(action: {
-//                        withAnimation(.easeIn) {
-//                            dataViewModel.coreDataManager.folderManager.deleteFolder(parentFolder: parentFolder, folder: folder)
-//                        }
-//                    }) {
-//                        Text("Excluir")
-//                        Image(systemName: "trash")
-//                    }
 						 Button(action: {
 							 didTryToDeleteFile = true
 						 }) {
