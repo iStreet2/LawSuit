@@ -11,6 +11,7 @@ struct LawsuitListView: View {
     
     @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     @State var addLawsuit = false
+    @State var createProcess = false
     @Binding var addClient: Bool
     @State private var hasFetchedUpdates = false  // Adicionado
     @EnvironmentObject var dataViewModel: DataViewModel
