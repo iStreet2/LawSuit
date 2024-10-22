@@ -14,6 +14,7 @@ struct LawsuitCellComponent: View {
     @ObservedObject var lawsuit: Lawsuit
     @EnvironmentObject var dataViewModel: DataViewModel
     @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
+	@EnvironmentObject var navigationViewModel: NavigationViewModel
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -53,15 +54,27 @@ struct LawsuitCellComponent: View {
                                 .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
                         }
                     }
-                    if let socialName = client.socialName {
-                        Text(socialName)
-                            .lineLimit(1)
-                            .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
-                    } else {
-                        Text(client.name)
-                            .lineLimit(1)
-                            .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
-                    }
+						 Button {
+							 withAnimation(.bouncy) {
+								 navigationViewModel.navigationVisibility = .all
+								 navigationViewModel.selectedClient = client
+								 navigationViewModel.selectedView = .clients
+							 }
+						 } label: {
+							 if let socialName = client.socialName {
+								  Text(socialName)
+										.lineLimit(1)
+										.frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+										.underline()
+							 } else {
+								  Text(client.name)
+										.lineLimit(1)
+										.frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+										.underline()
+							 }
+						 }
+						 .buttonStyle(PlainButtonStyle())
+                    
                     Text(lawyer.name ?? "Sem nome")
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, minHeight: 47, alignment: .leading)

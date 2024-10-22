@@ -203,9 +203,29 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Text((dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.socialName) ?? client.name)
-                            .font(.subheadline)
-                            .bold()
+							  Button {
+								  let authorIsEntity = dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit)
+								  if authorIsEntity {
+									  print("Authro is entity")
+									  withAnimation(.bouncy()) {
+										  navigationViewModel.navigationVisibility = .all
+										  navigationViewModel.selectedClient = dataViewModel.coreDataManager.clientManager.fetchFromName(name: entity.name)
+										  navigationViewModel.selectedView = .clients
+									  }
+								  } else {
+									  withAnimation(.bouncy()) {
+										  navigationViewModel.navigationVisibility = .all
+										  navigationViewModel.selectedClient = client
+										  navigationViewModel.selectedView = .clients
+									  }
+								  }
+							  } label: {
+								  Text((dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.socialName) ?? client.name)
+										.font(.subheadline)
+										.bold()
+										.underline(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit))
+							  }
+                        
                     }
                     Spacer()
                     VStack(alignment: .leading) {

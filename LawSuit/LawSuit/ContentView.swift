@@ -11,7 +11,7 @@ import SwiftUI
 struct ContentView: View {
     
     //MARK: Variáveis de estado
-    @State private var selectedView = SelectedView.clients
+//    @State private var selectedView = SelectedView.clients
     @State private var selectedClient: Client?
     @State private var addClient = false
     @State var deleted = false
@@ -30,7 +30,7 @@ struct ContentView: View {
     @State var showContactAlert: Bool = false
     
     var isLawsuit: Bool {
-        switch selectedView {
+		 switch navigationViewModel.selectedView {
         case .clients:
             false
         case .lawsuits:
@@ -40,16 +40,16 @@ struct ContentView: View {
     
     var body: some View {
         HStack(spacing: 0){
-            SideBarView(selectedView: $selectedView, navigationVisibility: $navigationVisibility)
+			  SideBarView(selectedView: $navigationViewModel.selectedView, navigationVisibility: $navigationVisibility)
             ZStack{
                 Color.white
-                NavigationSplitView(columnVisibility: isLawsuit ? .constant(.detailOnly) : $navigationVisibility) {
+					NavigationSplitView(columnVisibility: navigationViewModel.isLawsuit() ? .constant(.detailOnly) : $navigationViewModel.navigationVisibility) {
                     ClientListView(addClient: $addClient, deleted: $deleted)
                         .frame(minWidth: 170)
                         .toolbar(removing: isLawsuit ? .sidebarToggle : nil)
                 } detail: {
                     NavigationStack {
-                        switch selectedView {
+							  switch navigationViewModel.selectedView {
                         case .clients:
                             if let selectedClient = navigationViewModel.selectedClient {
                                 ClientView(client: selectedClient, deleted: $deleted)
