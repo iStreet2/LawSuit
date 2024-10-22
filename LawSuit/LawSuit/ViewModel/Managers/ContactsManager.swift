@@ -26,8 +26,7 @@ class ContactsManager: ObservableObject {
             
             if let error = error {
                 DispatchQueue.main.async {
-                    self.alertMessage = "Erro ao solicitar acesso aos contatos: \(error.localizedDescription)"
-                    self.showAlert = true
+                    print("Erro ao solicitar acesso aos contatos: \(error.localizedDescription)")
                 }
                 return
             }
@@ -112,4 +111,3 @@ class ContactsManager: ObservableObject {
     }
     
 }
-

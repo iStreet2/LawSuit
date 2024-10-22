@@ -14,7 +14,7 @@ struct MainView: View {
 	
 	var body: some View {
 		ZStack {
-			if authenticationStatus {
+//			if authenticationStatus {
 				ContentView()
 					.background(MaterialWindow().ignoresSafeArea())
 					.toolbar(){
@@ -26,9 +26,9 @@ struct MainView: View {
 							  }
 						 }
 					}
-			} else {
-				AuthenticationView(authenticationStatus: $authenticationStatus)
-			}
+//			} else {
+				//AuthenticationView(authenticationStatus: $authenticationStatus)
+//			}
 			
 		}
 	}

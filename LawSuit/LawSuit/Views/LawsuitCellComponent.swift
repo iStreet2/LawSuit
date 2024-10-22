@@ -15,6 +15,9 @@ struct LawsuitCellComponent: View {
     @EnvironmentObject var dataViewModel: DataViewModel
     @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
 	@EnvironmentObject var navigationViewModel: NavigationViewModel
+
+    @State var nsImage: NSImage?
+
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -28,12 +31,14 @@ struct LawsuitCellComponent: View {
                         .lineLimit(1)
                         .font(.callout)
                         .bold()
+                    
                     Text(lawsuit.number)
                         .lineLimit(1)
                         .font(.callout)
                         .foregroundStyle(Color(.gray))
                 }
-                .frame(width: geo.size.width * 0.27, height: 47, alignment: .leading)
+                .frame(width: geo.size.width * 0.258, height: 47, alignment: .leading)
+
                 
                 Spacer()
                 TagViewComponent(tagType: TagType(s: lawsuit.category))
@@ -45,15 +50,19 @@ struct LawsuitCellComponent: View {
                         ProgressView()
                             .scaleEffect(0.5, anchor: .center)
                             .frame(width: geo.size.width * 0.17, height: 30)
+
                     } else {
                         if let latestUpdateDate = dataViewModel.coreDataManager.updateManager.getLatestUpdateDate(lawsuit: lawsuit)?.convertToString() {
                             Text(latestUpdateDate)
-                                .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                                .frame(width: geo.size.width * 0.163, height: 47, alignment: .leading)
+
                         } else {
                             Text("Sem atualizações")
-                                .frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+                                .frame(width: geo.size.width * 0.163, height: 47, alignment: .leading)
+                            
                         }
                     }
+
 						 Button {
 							 withAnimation(.bouncy) {
 								 navigationViewModel.navigationVisibility = .all
@@ -76,12 +85,40 @@ struct LawsuitCellComponent: View {
 						 .buttonStyle(PlainButtonStyle())
                     
                     Text(lawyer.name ?? "Sem nome")
+
+                    HStack {
+                        if let nsImage {
+                            Image(nsImage: nsImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 26, height: 26)
+                                .clipShape(Circle())
+                        }
+                        
+                        if let socialName = client.socialName {
+                            Text(socialName)
+                                .lineLimit(1)
+                            
+                        } else {
+                            Text(client.name)
+                                .lineLimit(1)                            
+                        }
+                    }
+                    .frame(width: geo.size.width * 0.163, height: 47, alignment: .leading)
+                    Text(lawsuit.isDistributed ? "Distribuído" : "Não distribuído")
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, minHeight: 47, alignment: .leading)
+                    
                 }
                 .font(.callout)
                 .bold()
                 
+            }
+            .onAppear {
+                nsImage = NSImage(data: client.photo ?? Data())
+            }
+            .onChange(of: client) { client in
+                nsImage = NSImage(data: client.photo ?? Data())
             }
             .padding(.horizontal, 20)
         }

@@ -28,6 +28,7 @@ struct TagViewPickerComponent: View {
             Picker("", selection: $tagType) {
                 ForEach(TagType.allCases, id: \.self){ tag in
                     Text(tag.tagText)
+                        .foregroundStyle(Color.black)
                         .tag(tag)
                 }
             }
