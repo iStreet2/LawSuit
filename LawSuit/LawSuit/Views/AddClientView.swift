@@ -90,6 +90,8 @@ struct AddClientView: View {
                             if let url = url {
                                 pdfViewModel.loadDocument(pdfURL: url)
                                 print("URL do arquivo PDF: \(url)")
+                                
+                                pdfViewModel.updateFieldsFromPDF(clientName: &name, clientCPF: &cpf, clientBirthDate: &birthDate, clientAffiliation: &affiliation, clientTelephone: &telephone, clientEmail: &email)
                             } else {
                                 print("Nenhum arquivo selecionado")
                             }
@@ -178,19 +180,19 @@ struct AddClientView: View {
                             }
                         }
                         if stage == 3 {
-                            stopTimer()
+                            //stopTimer()
                             
-                            if isTeste1 {
-                                if let startTime = startTime {
-                                    tempoTeste1 = elapsedTime
-                                    print("Tempo teste 1: \(tempoTeste1)")
-                                }
-                            } else {
-                                if let startTime = startTime {
-                                    tempoTeste2 = elapsedTime
-                                    print("Tempo teste 2: \(tempoTeste2)")
-                                }
-                            }
+//                            if isTeste1 {
+//                                if let startTime = startTime {
+//                                    tempoTeste1 = elapsedTime
+//                                    print("Tempo teste 1: \(tempoTeste1)")
+//                                }
+//                            } else {
+//                                if let startTime = startTime {
+//                                    tempoTeste2 = elapsedTime
+//                                    print("Tempo teste 2: \(tempoTeste2)")
+//                                }
+//                            }
                             //print(("Tempo decorrido: \(elapsedTime/*, specifier: "%.2f"*/) segundos"))
                             if isClientContactsToggleOn {
                                 let contact = contactsManager.createContact(name: socialName == "" ? name : socialName, cellphone: cellphone, email: email, photo: photo ?? Data(), occupation: occupation)
@@ -206,6 +208,8 @@ struct AddClientView: View {
                                 //MARK: Advogado temporário
                                 let lawyer = lawyers[0]
                                 let _ = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                                
+                                pdfViewModel.resetFields()
                                 dismiss()
                             }
                             return
@@ -271,28 +275,28 @@ struct AddClientView: View {
         }
     }
     
-    func startTimer() {
-        startTime = Date()
-        isRunning = true
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
-            if let startTime = startTime {
-                elapsedTime = Date().timeIntervalSince(startTime)
-            }
-        }
-    }
-    
-    // Função para parar o timer
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil
-        isRunning = false
-        
-        if let startTime = startTime {
-            let finalTime = Date().timeIntervalSince(startTime)
-            //print("Tempo total: \(finalTime) segundos")
-        }
-    }
+//    func startTimer() {
+//        startTime = Date()
+//        isRunning = true
+//        
+//        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
+//            if let startTime = startTime {
+//                elapsedTime = Date().timeIntervalSince(startTime)
+//            }
+//        }
+//    }
+//    
+//    // Função para parar o timer
+//    func stopTimer() {
+//        timer?.invalidate()
+//        timer = nil
+//        isRunning = false
+//        
+//        if let startTime = startTime {
+//            let finalTime = Date().timeIntervalSince(startTime)
+//            //print("Tempo total: \(finalTime) segundos")
+//        }
+//    }
     
     // Função para verificar se todos os campos estão preenchidos de acordo com o stage
     func areFieldsFilled() -> Bool {

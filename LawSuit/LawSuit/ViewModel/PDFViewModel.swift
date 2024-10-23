@@ -10,16 +10,18 @@ import PDFKit
 import UniformTypeIdentifiers
 
 class PDFViewModel: ObservableObject {
-    @Published var name = ""
-    @Published var cpf = ""
-    @Published var birthDate = ""
-    @Published var affiliation = ""
-    @Published var telephone = ""
-    @Published var email = ""
+    @Published var name: String?
+    @Published var cpf: String?
+    @Published var birthDate: String?
+    @Published var affiliation: String?
+    @Published var telephone: String?
+    @Published var email: String?
     
     func loadDocument(pdfURL: URL) {
         if let pdfDocument = PDFDocument(url: pdfURL) {
             extractInfoFromPDF(pdfDocument: pdfDocument)
+        } else {
+            print("Erro ao carregar o pdf")
         }
     }
     
@@ -36,6 +38,24 @@ class PDFViewModel: ObservableObject {
                 completion(nil)
             }
         }
+    }
+    
+    func updateFieldsFromPDF(clientName: inout String, clientCPF: inout String, clientBirthDate: inout String, clientAffiliation: inout String, clientTelephone: inout String, clientEmail: inout String) {
+        clientName = name ?? clientName
+        clientCPF = cpf ?? clientCPF
+        clientBirthDate = birthDate ?? clientBirthDate
+        clientAffiliation = affiliation ?? clientAffiliation
+        clientTelephone = telephone ?? clientTelephone
+        clientEmail = email ?? clientEmail
+    }
+    
+    func resetFields() {
+        name = nil
+        cpf = nil
+        birthDate = nil
+        affiliation = nil
+        telephone = nil
+        email = nil
     }
     
     func extractInfoFromPDF(pdfDocument: PDFDocument) {

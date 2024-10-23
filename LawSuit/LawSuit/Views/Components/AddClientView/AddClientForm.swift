@@ -46,9 +46,7 @@ struct AddClientForm: View {
     @State var isEmailValid = true
     @State var imageData: NSImage?
     @State var edit: Bool = false
-    
-    @EnvironmentObject var pdfViewModel: PDFViewModel
-    
+        
     let textLimit = 50
     let maritalStatusLimit = 10
     
