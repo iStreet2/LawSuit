@@ -60,6 +60,12 @@ struct DocumentGridView: View {
                 }
                 .onTapGesture {
                     dataViewModel.coreDataManager.folderManager.removeSelectedFromAllFolders(folders: folders)
+                    for folder in folders {
+                        dataViewModel.coreDataManager.folderManager.saveNameChanges(folder: folder)
+                    }
+                    for filePDF in filesPDF {
+                        dataViewModel.coreDataManager.filePDFManager.saveNameChanges(filePDF: filePDF)
+                    }
                 }
                 .onChange(of: openFolder) {
                     dataViewModel.coreDataManager.folderManager.removeSelectedFromAllFolders(folders: folders)
