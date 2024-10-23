@@ -14,6 +14,7 @@ struct LawsuitCellComponent: View {
     @ObservedObject var lawsuit: Lawsuit
     @EnvironmentObject var dataViewModel: DataViewModel
     @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     @State var nsImage: NSImage?
     
     //MARK: CoreData
@@ -59,25 +60,39 @@ struct LawsuitCellComponent: View {
                             
                         }
                     }
-                    HStack {
-                        if let nsImage {
-                            Image(nsImage: nsImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 26, height: 26)
-                                .clipShape(Circle())
-                        }
-                        
-                        if let socialName = client.socialName {
-                            Text(socialName)
-                                .lineLimit(1)
+                    
+                    Button {
+                        withAnimation(.bouncy) {
+                            navigationViewModel.navigationVisibility = .all
+                            navigationViewModel.selectedClient = client
+                            navigationViewModel.selectedView = .clients
                             
-                        } else {
-                            Text(client.name)
-                                .lineLimit(1)                            
                         }
+                    } label: {
+                        HStack {
+                            if let nsImage {
+                                Image(nsImage: nsImage)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 26, height: 26)
+                                    .clipShape(Circle())
+                            }
+                            
+                            if let socialName = client.socialName {
+                                Text(socialName)
+                                    .lineLimit(1)
+                                    .underline()
+                                
+                            } else {
+                                Text(client.name)
+                                    .lineLimit(1)
+                                    .underline()
+                            }
+                        }
+                        .frame(width: geo.size.width * 0.163, height: 47, alignment: .leading)
                     }
-                    .frame(width: geo.size.width * 0.163, height: 47, alignment: .leading)
+                    .buttonStyle(.plain)
+                    
                     Text(lawsuit.isDistributed ? "Distribuído" : "Não distribuído")
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, minHeight: 47, alignment: .leading)
