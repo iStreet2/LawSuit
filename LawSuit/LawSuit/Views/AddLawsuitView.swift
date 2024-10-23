@@ -8,11 +8,6 @@
 import SwiftUI
 import CoreData
 
-//enum LawsuitType: String {
-//    case distributed = "Distribuído"
-//    case notDistributed = "Não Distribuído"
-//}
-
 struct AddLawsuitView: View {
     
     //MARK: Variáveis de ambiente

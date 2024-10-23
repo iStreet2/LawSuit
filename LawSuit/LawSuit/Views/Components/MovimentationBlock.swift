@@ -17,6 +17,7 @@ struct MovimentationBlock: View {
             BoxView {
                 VStack(alignment: .leading) {
                     HStack {
+                        
                         VStack(alignment: .leading) {
                             Text("Última Movimentação")
                                 .font(.title2)
