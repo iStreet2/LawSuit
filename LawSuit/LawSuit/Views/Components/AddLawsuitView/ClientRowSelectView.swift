@@ -55,7 +55,7 @@ struct ClientRowSelectView: View {
             }
         }
         .onChange(of: lawsuitAuthorOrDefendantName) { newValue in
-            self.client = dataViewModel.coreDataManager.clientManager.fetchFromName(name: newValue)
+            self.client = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorOrDefendantName)
             if let client = client {
                 self.nsImage = NSImage(data: client.photo ?? Data())
             }

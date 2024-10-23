@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ClientEmptyState: View {
     
+    @EnvironmentObject var shortCutsViewModel: ShortCutsViewModel
     @FetchRequest(sortDescriptors: []) var clients: FetchedResults<Client>
     
     var body: some View {
@@ -24,7 +25,7 @@ struct ClientEmptyState: View {
                         .foregroundStyle(.grayText)
                         .bold()
                     Button {
-                        ShortCutsViewModel.shared.addClient.toggle()
+                        shortCutsViewModel.addClient.toggle()
                     } label: {
                         Text("Adicionar Cliente")
                     }

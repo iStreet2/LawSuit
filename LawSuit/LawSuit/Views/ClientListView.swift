@@ -18,6 +18,7 @@ struct ClientListView: View {
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
+    @EnvironmentObject var shortCutsViewModel: ShortCutsViewModel
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -39,7 +40,7 @@ struct ClientListView: View {
                     .font(.title)
                     .bold()
                 Button(action: {
-                    ShortCutsViewModel.shared.addClient.toggle()
+                    shortCutsViewModel.addClient.toggle()
                 }, label: {
                     Image(systemName: "plus")
                 })

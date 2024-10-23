@@ -10,8 +10,6 @@ import Foundation
 
 class ShortCutsViewModel: ObservableObject {
     
-    static let shared = ShortCutsViewModel()
-    
     @Published var addClient = false
     @Published var addLawsuit = false
     @Published var newFolder = false
@@ -26,6 +24,5 @@ class ShortCutsViewModel: ObservableObject {
     @Published var showClientDocuments = false
     @Published var isShowingGridView = false
     
-    private init() {}
     
 }

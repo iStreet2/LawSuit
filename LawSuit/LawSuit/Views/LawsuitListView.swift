@@ -15,7 +15,7 @@ struct LawsuitListView: View {
     
     //MARK: ViewModels
     @EnvironmentObject var dataViewModel: DataViewModel
-    @ObservedObject var shortCutsViewModel = ShortCutsViewModel.shared
+    @EnvironmentObject var shortCutsViewModel: ShortCutsViewModel
     
     var isLoading: Bool {
         lawsuits.contains { $0.isLoading }

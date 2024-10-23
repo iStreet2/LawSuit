@@ -19,7 +19,7 @@ struct ContentView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var contactsManager: ContactsManager
-    @ObservedObject var shortCutsViewModel = ShortCutsViewModel.shared
+    @EnvironmentObject var shortCutsViewModel: ShortCutsViewModel
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel

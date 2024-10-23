@@ -22,6 +22,7 @@ struct LawSuitApp: App {
     @StateObject var eventManager = EventManager()
     @StateObject var lawsuitViewModel = LawsuitViewModel()
     @StateObject var contactsManager = ContactsManager()
+    @StateObject var shortCutsViewModel = ShortCutsViewModel()
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
@@ -41,6 +42,7 @@ struct LawSuitApp: App {
                 .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
                 .environmentObject(contactsManager)
+                .environmentObject(shortCutsViewModel)
                 .preferredColorScheme(.light)
                 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
@@ -72,6 +74,10 @@ struct LawSuitApp: App {
                 })
             
         }
+        .commands {
+            MenuCommands(shortCutsViewModel: shortCutsViewModel)
+        }
+        
         WindowGroup(id: "FileWindow", for: Data.self) { fileData in
             if let data = fileData.wrappedValue {
                 if let filePDF = PDFDocument(data: data) {
