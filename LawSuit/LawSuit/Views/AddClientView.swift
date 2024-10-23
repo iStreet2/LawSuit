@@ -52,6 +52,7 @@ struct AddClientView: View {
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
+    @EnvironmentObject var pdfViewModel: PDFViewModel
     @Environment(\.managedObjectContext) var context
     @FetchRequest(sortDescriptors: []) var lawyers: FetchedResults<Lawyer>
     
@@ -82,6 +83,23 @@ struct AddClientView: View {
                 Spacer()
                 //MARK: Botões
                 HStack {
+                    
+                    Button {
+                        //abrir pra escolher pdf hehe
+                        pdfViewModel.getPDFurl { url in
+                            if let url = url {
+                                pdfViewModel.loadDocument(pdfURL: url)
+                                print("URL do arquivo PDF: \(url)")
+                            } else {
+                                print("Nenhum arquivo selecionado")
+                            }
+                        }
+                        print("clicou pra abrir pdf")
+                    } label: {
+                        Text("Importar Dados")
+                            .foregroundStyle(.wine)
+                    }
+                    
                     Toggle(isOn: $isClientContactsToggleOn) {
                         Text("Adicionar aos Contatos")
                     }

@@ -22,6 +22,8 @@ struct LawSuitApp: App {
     @StateObject var eventManager = EventManager()
     @StateObject var lawsuitViewModel = LawsuitViewModel()
     @StateObject var contactsManager = ContactsManager()
+    @StateObject var pdfViewModel = PDFViewModel()
+
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
@@ -41,6 +43,7 @@ struct LawSuitApp: App {
                 .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
                 .environmentObject(contactsManager)
+                .environmentObject(pdfViewModel)
                 .preferredColorScheme(.light)
                 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
