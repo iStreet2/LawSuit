@@ -186,7 +186,6 @@ struct EditLawSuitView: View {
                     }
                     if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
                         invalidInformation = .invalidDate
-                        return
                     }
                     if attributedAuthor {
                         if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
@@ -248,6 +247,10 @@ struct EditLawSuitView: View {
                         return Alert(title: Text("Data de distribuição inválida"),
                                      message: Text("Por favor, insira uma data válida antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
+                    case .invalidDate:
+                        return Alert(title: Text("Número da atribuição inválida"),
+                        message: Text("Por favor, insira uma data válida antes de continuar"),
+                        dismissButton: .default(Text("Ok")))
                     }
                 }
             }
