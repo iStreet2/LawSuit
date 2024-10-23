@@ -14,7 +14,10 @@ struct LawsuitCellComponent: View {
     @ObservedObject var lawsuit: Lawsuit
     @EnvironmentObject var dataViewModel: DataViewModel
     @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
+	@EnvironmentObject var navigationViewModel: NavigationViewModel
+
     @State var nsImage: NSImage?
+
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -59,6 +62,30 @@ struct LawsuitCellComponent: View {
                             
                         }
                     }
+
+						 Button {
+							 withAnimation(.bouncy) {
+								 navigationViewModel.navigationVisibility = .all
+								 navigationViewModel.selectedClient = client
+								 navigationViewModel.selectedView = .clients
+							 }
+						 } label: {
+							 if let socialName = client.socialName {
+								  Text(socialName)
+										.lineLimit(1)
+										.frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+										.underline()
+							 } else {
+								  Text(client.name)
+										.lineLimit(1)
+										.frame(width: geo.size.width * 0.17, height: 47, alignment: .leading)
+										.underline()
+							 }
+						 }
+						 .buttonStyle(PlainButtonStyle())
+                    
+                    Text(lawyer.name ?? "Sem nome")
+
                     HStack {
                         if let nsImage {
                             Image(nsImage: nsImage)
@@ -88,7 +115,10 @@ struct LawsuitCellComponent: View {
                 
             }
             .onAppear {
-                self.nsImage = NSImage(data: client.photo ?? Data())
+                nsImage = NSImage(data: client.photo ?? Data())
+            }
+            .onChange(of: client) { client in
+                nsImage = NSImage(data: client.photo ?? Data())
             }
             .padding(.horizontal, 20)
         }

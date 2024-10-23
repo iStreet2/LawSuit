@@ -15,7 +15,6 @@ struct EditClientView: View {
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var addressViewModel: AddressViewModel
     @EnvironmentObject var folderViewModel: FolderViewModel
-    @EnvironmentObject var contactsManager: ContactsManager
     
     //MARK: Variáveis de ambiente
     @Environment(\.dismiss) var dismiss
@@ -56,6 +55,7 @@ struct EditClientView: View {
     @Binding var deleted: Bool
     @Binding var clientNSImage: NSImage?
     @State var clientNSImageBakcup: NSImage?
+    @State var showError: Bool = false
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -124,8 +124,19 @@ struct EditClientView: View {
                         .onReceive(Just(clientName)) { _ in textFieldDataViewModel.limitText(text: &clientName, upper: textLimit) }
                     LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $clientBirthDate)
                         .onReceive(Just(clientBirthDate)) { _ in
-                            clientBirthDate = textFieldDataViewModel.dateFormat(clientBirthDate)
-                        }
+                            clientBirthDate = textFieldDataViewModel.dateFormat(clientBirthDate)}
+                        .onChange(of: clientBirthDate) { newValue in
+                                    if clientBirthDate.count > 00 && clientBirthDate.count == 10  {
+                                        showError = textFieldDataViewModel.dateValidation(clientBirthDate)
+                                    } else {
+                                        showError = false
+                                    }
+                                }
+                            Text(showError ? "Data inválida" : "")
+                                .foregroundColor(.red)
+                                .font(.callout)
+                                .frame(height: 20)
+                        
                 }
                 .padding()
             }
@@ -169,7 +180,9 @@ struct EditClientView: View {
                             }
                             // Após deletar os processos, deletar o cliente
                             dataViewModel.coreDataManager.clientManager.deleteClient(client: client)
-                            dataViewModel.spotlightManager.removeIndexedObject(client)
+                                    
+                                    dataViewModel.spotlightManager.removeIndexedObject(client)
+                                    
                             navigationViewModel.selectedClient = nil
                             deleted.toggle()
                             dismiss()
@@ -217,38 +230,6 @@ struct EditClientView: View {
                         let clientCurrentEmail = client.email
                         
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone, photo: clientImageData)
-                                                
-                        //Para todos os processos que esse cliente está envolvido
-                        let lawsuits = dataViewModel.coreDataManager.lawsuitManager.fetchAllLawsuitsFrom(client: client)
-                        for lawsuit in lawsuits {
-                            //Se ele tiver socialName
-                            if clientSocialName != "" {
-                                //Se o cliente estiver no autor
-                                if dataViewModel.coreDataManager.lawsuitManager.authorIsClient(lawsuit: lawsuit) {
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawsuitAuthorName(lawsuit: lawsuit, authorName: clientSocialName)
-                                //Se o cliente estiver no réu
-                                } else {
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawsuitDefendantName(lawsuit: lawsuit, defendantName: clientSocialName)
-                                }
-                            //Se ele não tiver social name
-                            } else {
-                                //Se ele é autor
-                                if dataViewModel.coreDataManager.lawsuitManager.authorIsClient(lawsuit: lawsuit) {
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawsuitAuthorName(lawsuit: lawsuit, authorName: clientName)
-                                //Se ele é reu
-                                } else {
-                                    dataViewModel.coreDataManager.lawsuitManager.editLawsuitDefendantName(lawsuit: lawsuit, defendantName: clientName)
-                                }
-                            }
-                        }
-                        
-                        do {
-                            try contactsManager.updateClientContact(client: client, oldClientEmail: clientCurrentEmail)
-                            print("contato atualizado com sucesso")
-                        } catch {
-                            print("Erro ao atualizar o contato: \(error)")
-                        }
-                        
                         dismiss()
                         return
                     }

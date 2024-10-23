@@ -106,39 +106,32 @@ struct AddClientForm: View {
                                     .buttonStyle(.plain)
                                 }
                             }
-                                VStack(alignment: .leading, spacing: 8) {
-                                    LabeledTextField(label: "Nome Civil", placeholder: "Insira o nome civil do Cliente", mandatory: true, textfieldText: $name)
-                                        .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
-                                    
-                                    VStack(alignment: .leading, spacing: 0) {
-                                        LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $birthDate)
-                                            .onReceive(Just(birthDate)) { newValue in birthDate = textFieldDataViewModel.dateFormat(newValue)}
-                                            .onChange(of: birthDate) { newValue in
-                                                
-                                                if birthDate.count > 00 && birthDate.count == 10  {
-                                                    showError = textFieldDataViewModel.dateValidation(birthDate)
-                                                } else {
-                                                    showError = false
-                                                }
+                            VStack(alignment: .leading, spacing: 8) {
+                                LabeledTextField(label: "Nome Civil", placeholder: "Insira o nome civil do Cliente", mandatory: true, textfieldText: $name)
+                                    .onReceive(Just(name)) { _ in textFieldDataViewModel.limitText(text: &name, upper: textLimit) }
+                                
+                                VStack(alignment: .leading, spacing: 0) {
+                                    LabeledTextField(label: "Data de nascimento", placeholder: "Insira a data de nascimento do Cliente", mandatory: true, textfieldText: $birthDate)
+                                        .onReceive(Just(birthDate)) { newValue in birthDate = textFieldDataViewModel.dateFormat(newValue)}
+                                        .onChange(of: birthDate) { newValue in
+                                            if birthDate.count > 00 && birthDate.count == 10  {
+                                                showError = textFieldDataViewModel.dateValidation(birthDate)
+                                            } else {
+                                                showError = false
                                             }
-                                        if showError {
-                                            Text("Data inválida")
-                                                .foregroundColor(.red)
-                                                .font(.caption)
-                                        } 
-                                        else {
-                                            Text(" ")
-                                                .font(.callout)
                                         }
-                                    }
-                                    .frame(height: 80)
-
+                                    Text(showError ? "Data inválida" : "")
+                                        .foregroundColor(.red)
+                                        .font(.caption)
+                                        .frame(height: 20)
                                 }
-
+                                .frame(height: 80)
+                            }
                             .frame(height: 140)
 
 
                         }
+                        
                         LabeledTextField(label: "Nome Social", placeholder: "Insira o nome social do Cliente", textfieldText: $socialName)
                             .onReceive(Just(socialName)) { _ in textFieldDataViewModel.limitText(text: &socialName, upper: textLimit) }
                         

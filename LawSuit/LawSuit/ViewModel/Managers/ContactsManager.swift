@@ -111,4 +111,3 @@ class ContactsManager: ObservableObject {
     }
     
 }
-
