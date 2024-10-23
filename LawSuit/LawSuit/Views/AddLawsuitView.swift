@@ -8,11 +8,6 @@
 import SwiftUI
 import CoreData
 
-//enum LawsuitType: String {
-//    case distributed = "Distribuído"
-//    case notDistributed = "Não Distribuído"
-//}
-
 struct AddLawsuitView: View {
     
     //MARK: Variáveis de ambiente
@@ -102,7 +97,7 @@ struct AddLawsuitView: View {
                         invalidInformation = .invalidLawSuitNumber
                         return
                     }
-                    if !textFieldDataViewModel.dateValidation(lawsuitActionDate) {
+                    if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
                         invalidInformation = .invalidDate
                         return
                     }
@@ -111,10 +106,6 @@ struct AddLawsuitView: View {
                         invalidInformation = .missingInformation
                         return
                     }
-                }
-                if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
-                    invalidInformation = .invalidDate
-                    return
                 }
                 //MARK: Se o cliente foi atribuido ao autor
                 if attributedAuthor {

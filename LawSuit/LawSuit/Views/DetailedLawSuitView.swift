@@ -29,6 +29,7 @@ struct DetailedLawSuitView: View {
     @State var lawsuitAuthorSocialName: String = ""
     @State var lawsuitDefendantName: String = ""
     @State var showingGridView = true
+    @State var selectedSegment: String = ""
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -41,8 +42,9 @@ struct DetailedLawSuitView: View {
                 if !deleted {
                     HStack(alignment: .top, spacing: 22) {
                         mainBlock
-                        
                         VStack(spacing: 10) {
+                            CustomSegmentedControl(selectedOption: $selectedSegment, infos: ["Movimentações", "Notas"])
+
                             MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
                                 .frame(maxHeight: .infinity)
                         }
