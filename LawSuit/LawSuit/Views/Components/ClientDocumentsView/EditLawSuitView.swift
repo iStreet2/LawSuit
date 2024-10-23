@@ -85,7 +85,6 @@ struct EditLawSuitView: View {
                         if attributedDefendant {
                             LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", textfieldText: $lawsuitAuthorName)
                                 .frame(width: 218)
-                                .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                             
                             //MARK: - Caso o usuário atribuir cliente para o autor
                         } else {
@@ -113,7 +112,6 @@ struct EditLawSuitView: View {
                         if attributedAuthor {
                             LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
                                 .frame(width: 218)
-                                .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                             
                         } else {
                             ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorOrDefendantName: $lawsuitDefendantName)

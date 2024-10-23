@@ -64,7 +64,6 @@ struct LawsuitNotDistributedView: View {
                     
                     
                     LabeledTextField(label: "Réu", placeholder: "Adicionar réu ", textfieldText: $lawsuitDefendantName)
-                        .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                 }
               
             }
