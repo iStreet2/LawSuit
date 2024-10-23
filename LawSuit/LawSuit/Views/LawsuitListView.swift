@@ -9,18 +9,23 @@ import SwiftUI
 
 struct LawsuitListView: View {
     
-    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
-    @State var addLawsuit = false
-    @Binding var addClient: Bool
+    //MARK: Variáveis de estado
     @State private var hasFetchedUpdates = false  // Adicionado
-    @EnvironmentObject var dataViewModel: DataViewModel
-    var segmentedControlInfos = ["Distribuído", "Não distribuído"]
+    @State var addLawsuit = false
     @State var selectedOption = "Distribuído"
-    
-    
+    @State var noInternetAlert: Bool = false
+    @Binding var addClient: Bool
+    var segmentedControlInfos = ["Distribuído", "Não distribuído"]
     var isLoading: Bool {
         lawsuits.contains { $0.isLoading }
     }
+    
+    //MARK: ViewModels
+    @EnvironmentObject var networkMonitorViewModel: NetworkMonitorViewModel
+    
+    //MARK: CoreData
+    @EnvironmentObject var dataViewModel: DataViewModel
+    @FetchRequest(sortDescriptors: []) var lawsuits: FetchedResults<Lawsuit>
     
     var body: some View {
         
@@ -44,12 +49,18 @@ struct LawsuitListView: View {
                         
                         if selectedOption == "Distribuído" {
                             Button(action: {
-                                for lawsuit in lawsuits {
+                                
+                                if networkMonitorViewModel.isConnected == false {
+                                    noInternetAlert.toggle()
+                                } else {
                                     
-                                    if lawsuit.isDistributed {
-                                        dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                                    for lawsuit in lawsuits {
+                                        
+                                        if lawsuit.isDistributed {
+                                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                                        }
+                                        
                                     }
-                                    
                                 }
                             }, label: {
                                 Image(systemName: "arrow.clockwise")
@@ -72,6 +83,9 @@ struct LawsuitListView: View {
             }
   
         }
+        .sheet(isPresented: $noInternetAlert, content: {
+            NoInternetView()
+        })
         .sheet(isPresented: $addLawsuit, content: {
             AddLawsuitView()
         })

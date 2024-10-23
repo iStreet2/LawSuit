@@ -17,6 +17,7 @@ struct ClientView: View {
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var dragAndDropViewModel: DragAndDropViewModel
+    @EnvironmentObject var networkMonitorViewModel: NetworkMonitorViewModel
     
     //MARK: Variáveis de estado
     @ObservedObject var client: Client
@@ -25,6 +26,7 @@ struct ClientView: View {
     @State var lawsuitSelectedOption = "All"
     @State var createLawsuit = false
     @State var showingGridView = true
+    @State var noInternetAlert: Bool = false
     var isLoading: Bool {
         lawsuits.contains { $0.isLoading }
     }
@@ -71,12 +73,18 @@ struct ClientView: View {
                             Spacer()
                             if selectedOption == "Processos" {
                                 Button(action: {
-                                    for lawsuit in lawsuits {
+                                    
+                                    if networkMonitorViewModel.isConnected == false {
+                                        noInternetAlert.toggle()
+                                    } else {
                                         
-                                        if lawsuit.isDistributed {
-                                            dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                                        for lawsuit in lawsuits {
+                                            
+                                            if lawsuit.isDistributed {
+                                                dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
+                                            }
+                                            
                                         }
-                                        
                                     }
                                 }, label: {
                                     Image(systemName: "arrow.clockwise")
@@ -160,6 +168,9 @@ struct ClientView: View {
                 }
             }
         }
+        .sheet(isPresented: $noInternetAlert, content: {
+            NoInternetView()
+        })
         .sheet(isPresented: $createLawsuit, content: {
             AddLawsuitView()
         })
