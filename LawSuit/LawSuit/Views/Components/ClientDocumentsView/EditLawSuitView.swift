@@ -85,7 +85,6 @@ struct EditLawSuitView: View {
                         if attributedDefendant {
                             LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", textfieldText: $lawsuitAuthorName)
                                 .frame(width: 218)
-                                .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                             
                             //MARK: - Caso o usuário atribuir cliente para o autor
                         } else {
@@ -113,7 +112,6 @@ struct EditLawSuitView: View {
                         if attributedAuthor {
                             LabeledTextField(label: "Réu", placeholder: "Adicionar réu", textfieldText: $lawsuitDefendantName)
                                 .frame(width: 218)
-                                .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                             
                         } else {
                             ClientRowSelectView(clientRowState: $defendantRowState, lawsuitAuthorOrDefendantName: $lawsuitDefendantName)
@@ -186,7 +184,6 @@ struct EditLawSuitView: View {
                     }
                     if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
                         invalidInformation = .invalidDate
-                        return
                     }
                     if attributedAuthor {
                         if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
@@ -248,6 +245,10 @@ struct EditLawSuitView: View {
                         return Alert(title: Text("Data de distribuição inválida"),
                                      message: Text("Por favor, insira uma data válida antes de continuar."),
                                      dismissButton: .default(Text("Ok")))
+                    case .invalidDate:
+                        return Alert(title: Text("Número da atribuição inválida"),
+                        message: Text("Por favor, insira uma data válida antes de continuar"),
+                        dismissButton: .default(Text("Ok")))
                     }
                 }
             }

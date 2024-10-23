@@ -43,10 +43,16 @@ struct ClientMoreInfoView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 17) {
-            HStack(alignment: .top, spacing: 20) {
+        VStack(spacing: 20) {
+            VStack(alignment: .leading) {
                 BoxView {
                     info
+                }
+                .frame(height: 200)
+            }
+            HStack(alignment: .top, spacing: 20) {
+                BoxView {
+                    address
                 }
                 .frame(maxHeight: .infinity)
                 BoxView {
@@ -56,101 +62,208 @@ struct ClientMoreInfoView: View {
             }
             .fixedSize(horizontal: false, vertical: true)
             .frame(minHeight: 160)
-            
-            BoxView {
-                address
-            }
-            .frame(minHeight: 222)
             Spacer()
         }
         .sheet(isPresented: $editClient, content: {
             EditClientView(client: client, deleted: $deleted, clientNSImage: $nsImage)
         })
-        .frame(maxWidth: .infinity, minHeight: 450, maxHeight: .infinity)  // MARK: Frame da View inteira
+        .frame(minWidth: 800, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity)  // MARK: Frame da View inteira
         .padding()
     }
 }
 
 extension ClientMoreInfoView {
-   
+    
     private var info: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                if client.socialName != nil {
-                    Text(client.socialName!)
-                        .font(.largeTitle)
-                        .bold()
-                        .padding(0)
-                } else {
-                    Text(client.name)
-                        .font(.largeTitle)
-                        .bold()
-                        .padding(0)
-                }
-                Button {
-                    editClient.toggle()
-                } label: {
-                    Image(systemName: "square.and.pencil")
+                if let nsImage {
+                    Image(nsImage: nsImage)
                         .resizable()
-                        .scaledToFit()
-                        .frame(height: 27)
-                        .foregroundStyle(.secondary)
+                        .scaledToFill()
+                        .frame(width: 90, height: 90)
+                        .cornerRadius(10)
                 }
-                .buttonStyle(PlainButtonStyle())
-                .padding(0)
+                VStack(alignment: .leading) {
+                    HStack {
+                        if client.socialName != nil {
+                            Text(client.socialName!)
+                                .font(.largeTitle)
+                                .bold()
+                                .padding(0)
+                        } else {
+                            Text(client.name)
+                                .font(.largeTitle)
+                                .bold()
+                                .padding(0)
+                        }
+                        Spacer()
+                        Button {
+                            editClient.toggle()
+                        } label: {
+                            Image(systemName: "square.and.pencil")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 27)
+                                .foregroundStyle(.secondary)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(0)
+                    }
+                    HStack {
+                        Text("\(client.age) anos")
+                            .font(.headline)
+                            .bold()
+                        Text("\(client.birthDate, formatter: dateFormatter)")
+                            .font(.headline)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.bottom, 1)
+                }
             }
             .padding(0)
-            
-            Text(client.maritalStatus)
-                .padding(.bottom, 2)
-            
-            HStack {
-                Text("\(client.age) anos")
-                    .font(.headline)
-                    .bold()
-                Text("\(client.birthDate, formatter: dateFormatter)")
-                    .font(.headline)
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.bottom, 1)
-            
-            Text(client.occupation)
-                .font(.headline)
-                .bold()
-                .padding(.bottom, 4)
-            
-            HStack {
+            GeometryReader { geometry in
                 VStack(alignment: .leading) {
-                    Text("RG")
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                        .bold()
-                    Text(client.rg)
-                        .padding(.bottom, 4)
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading) {
+                            if client.socialName != nil {
+                                Text("Nome Civil")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                Text(client.name)
+                                    .padding(.bottom, 4)
+                            } else {
+                                Text("Profissão")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                Text(client.occupation)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(width: geometry.size.width * 0.20)
+                        
+                        VStack(alignment: .leading) {
+                            Text("RG")
+                                .font(.body)
+                                .foregroundStyle(.secondary)
+                                .bold()
+                            Text(client.rg)
+                                .padding(.bottom, 4)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(width: geometry.size.width * 0.20)
+
+                        VStack(alignment: .leading) {
+                            Text("CPF")
+                                .font(.body)
+                                .foregroundStyle(.secondary)
+                                .bold()
+                            Text(client.cpf)
+                                .padding(.bottom, 4)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(width: geometry.size.width * 0.20)
+                    }
                     
-                    Text("Filiação")
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                        .bold()
-                    Text(client.affiliation)
-                }
-                Spacer()
-                VStack(alignment: .leading) {
-                    Text("CPF")
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                        .bold()
-                    Text(client.cpf)
-                        .padding(.bottom, 4)
-                    
-                    Text("Nacionalidade")
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-                        .bold()
-                    Text(client.nationality)
+                    //MARK: Estado civil e profissão
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading) {
+                            if client.socialName == nil {
+                                Text("Estado civil")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Text(client.maritalStatus)
+                                    .padding(.bottom, 4)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            } 
+                            else {
+                                Text("Profissão")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Text(client.occupation)
+                                    .padding(.bottom, 4)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                        .frame(width: geometry.size.width * 0.20)
+                        
+                        //MARK: Nacionalidade e Estado civil
+                        VStack(alignment: .leading) {
+                            if client.socialName == nil {
+                                Text("Nacionalidade")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Text(client.nationality)
+                                    .padding(.bottom, 4)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            else {
+                                Text("Estado civil")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Text(client.maritalStatus)
+                                    .padding(.bottom, 4)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                        .frame(width: geometry.size.width * 0.20)
+                        
+                        //MARK: Filiação e Nacionalidade
+                        VStack(alignment: .leading) {
+                            if client.socialName == nil {
+                                Text("Filiação")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                Text(client.affiliation)
+                                    .padding(.bottom, 4)
+                            }
+                            else {
+                                Text("Nacionalidade")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                Text(client.nationality)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(width: geometry.size.width * 0.20)
+                        
+                        //MARK: apenas Filiação
+                        VStack(alignment: .leading) {
+                            if client.socialName == nil {
+                            }
+                            else {
+                                Text("Filiação")
+                                    .font(.body)
+                                    .foregroundStyle(.secondary)
+                                    .bold()
+                                Text(client.affiliation)
+                                    .padding(.bottom, 4)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(width: geometry.size.width * 0.20)
+                    }
                 }
             }
-            
+//            .border(.gray)
+//            .frame(height: 100)
+        }
+        .onAppear {
+            self.nsImage = NSImage(data: client.photo ?? Data())
         }
         .onChange(of: deleted) { change in
             dismiss()
@@ -187,8 +300,17 @@ extension ClientMoreInfoView {
             Text(client.cellphone)
                 .font(.body)
                 .padding(.bottom, 22)
+            
+            Text("Quer ter fácil acesso às informações de seu cliente?")
+                .foregroundStyle(.secondary)
+            Button {
+            } label: {
+                Text("Adicionar aos Contatos")
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.black)
         }
-        .padding(.trailing, 30)
+        .padding(.trailing, 10)
     }
     
     private var address: some View {
@@ -197,21 +319,18 @@ extension ClientMoreInfoView {
                 .font(.title2)
                 .bold()
                 .padding(.bottom, 7)
-            
             Text("CEP")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .bold()
             Text(client.cep)
                 .padding(.bottom, 7)
-            
             Text("Endereço")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .bold()
             Text("\(client.address), \(client.addressNumber)")
                 .padding(.bottom, 7)
-            
             HStack {
                 VStack(alignment: .leading) {
                     Text("Bairro")
@@ -227,9 +346,7 @@ extension ClientMoreInfoView {
                         .bold()
                     Text(client.city)
                 }
-                
                 Spacer()
-                
                 VStack(alignment: .leading) {
                     Text("Complemento")
                         .font(.body)
@@ -244,9 +361,9 @@ extension ClientMoreInfoView {
                         .bold()
                     Text(client.state)
                 }
-                
                 Spacer()
             }
         }
+        .padding(.bottom, 30)
     }
 }

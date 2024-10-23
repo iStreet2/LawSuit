@@ -29,6 +29,7 @@ struct DetailedLawSuitView: View {
     @State var lawsuitAuthorSocialName: String = ""
     @State var lawsuitDefendantName: String = ""
     @State var showingGridView = true
+    @State var selectedSegment: String = ""
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -41,8 +42,9 @@ struct DetailedLawSuitView: View {
                 if !deleted {
                     HStack(alignment: .top, spacing: 22) {
                         mainBlock
-                        
                         VStack(spacing: 10) {
+                            CustomSegmentedControl(selectedOption: $selectedSegment, infos: ["Movimentações", "Notas"])
+
                             MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
                                 .frame(maxHeight: .infinity)
                         }
@@ -203,9 +205,29 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Text((dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.socialName) ?? client.name)
-                            .font(.subheadline)
-                            .bold()
+							  Button {
+								  let authorIsEntity = dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit)
+								  if authorIsEntity {
+									  print("Authro is entity")
+									  withAnimation(.bouncy()) {
+										  navigationViewModel.navigationVisibility = .all
+										  navigationViewModel.selectedClient = dataViewModel.coreDataManager.clientManager.fetchFromName(name: entity.name)
+										  navigationViewModel.selectedView = .clients
+									  }
+								  } else {
+									  withAnimation(.bouncy()) {
+										  navigationViewModel.navigationVisibility = .all
+										  navigationViewModel.selectedClient = client
+										  navigationViewModel.selectedView = .clients
+									  }
+								  }
+							  } label: {
+								  Text((dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.socialName) ?? client.name)
+										.font(.subheadline)
+										.bold()
+										.underline(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit))
+							  }
+                        
                     }
                     Spacer()
                     VStack(alignment: .leading) {

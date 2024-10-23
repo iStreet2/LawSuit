@@ -221,12 +221,14 @@ struct EditClientView: View {
                     if clientCellphone.count < 15 {
                         invalidInformation = .missingCellphoneNumber
                         
-                    }
+                    } 
                     if textFieldDataViewModel.dateValidation(clientBirthDate) {
                         invalidInformation = .invalidDate
-                        return
                     }
                     else {
+                        
+                        let clientCurrentEmail = client.email
+                        
                         dataViewModel.coreDataManager.clientManager.editClient(client: client, name: clientName, socialName: clientSocialName == "" ? nil : clientSocialName, occupation: clientOccupation, rg: clientRg, cpf: clientCpf, affiliation: clientAffiliation, maritalStatus: clientMaritalStatus, nationality: clientNationality, birthDate: clientBirthDate.convertBirthDateToDate(), cep: clientCep, address: clientAddress, addressNumber: clientAddressNumber, neighborhood: clientNeighborhood, complement: clientComplement, state: clientState, city: clientCity, email: clientEmail, telephone: clientTelephone, cellphone: clientCellphone, photo: clientImageData)
                         dismiss()
                         return

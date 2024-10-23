@@ -106,6 +106,11 @@ class FolderManager {
         }
     }
     
+    func saveNameChanges(folder: Folder) {
+        self.editFolderName(folder: folder, name: folder.name)
+        folder.isEditing = false
+    }
+    
     func saveContext() {
         do {
             try context.save()

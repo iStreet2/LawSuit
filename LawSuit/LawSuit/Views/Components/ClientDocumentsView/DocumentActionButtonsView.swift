@@ -20,33 +20,33 @@ struct DocumentActionButtonsView: View {
     
     var body: some View {
         HStack{
-            Button {
-                folderViewModel.showingGridView = true
-            } label: {
-                Image(systemName: "square.grid.2x2")
-                    .padding(4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(Color.gray)
-                            .opacity(folderViewModel.showingGridView ? 0.4 : 0.0)
-                    )
-            }
-            .buttonStyle(PlainButtonStyle())
-            
-            Button(action: {
-                folderViewModel.showingGridView = false
-            }, label: {
-                Image(systemName: "list.bullet")
-                    .padding(4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(Color.gray)
-                            .opacity(folderViewModel.showingGridView ? 0.0 : 0.4) 
-
-                    )
-            })
-            .buttonStyle(PlainButtonStyle())
-            .foregroundStyle(.gray)
+//            Button {
+//                folderViewModel.showingGridView = true
+//            } label: {
+//                Image(systemName: "square.grid.2x2")
+//                    .padding(4)
+//                    .background(
+//                        RoundedRectangle(cornerRadius: 8)
+//                            .foregroundStyle(Color.gray)
+//                            .opacity(folderViewModel.showingGridView ? 0.4 : 0.0)
+//                    )
+//            }
+//            .buttonStyle(PlainButtonStyle())
+//            
+//            Button(action: {
+//                folderViewModel.showingGridView = false
+//            }, label: {
+//                Image(systemName: "list.bullet")
+//                    .padding(4)
+//                    .background(
+//                        RoundedRectangle(cornerRadius: 8)
+//                            .foregroundStyle(Color.gray)
+//                            .opacity(folderViewModel.showingGridView ? 0.0 : 0.4) 
+//
+//                    )
+//            })
+//            .buttonStyle(PlainButtonStyle())
+//            .foregroundStyle(.gray)
             
             
             Menu(content: {
