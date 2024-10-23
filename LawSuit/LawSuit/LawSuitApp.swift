@@ -45,7 +45,6 @@ struct LawSuitApp: App {
                 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
                     hotkey.keyDownHandler = eventManager.hotkeyDownHandler
-                    contactsManager.requestContactsAuthorization()
                 }
                 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
                     SpotlightSearchbarView()

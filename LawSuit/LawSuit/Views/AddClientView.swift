@@ -39,6 +39,7 @@ struct AddClientView: View {
     @State var isClientContactsToggleOn: Bool = false
     @State var photo: Data?
     @EnvironmentObject var contactsManager: ContactsManager
+    @State var isAuthorizationRequested: Bool = false
     
     
     //MARK: CoreData
@@ -75,6 +76,12 @@ struct AddClientView: View {
                 HStack {
                     Toggle(isOn: $isClientContactsToggleOn) {
                         Text("Adicionar aos Contatos")
+                    }
+                    .onChange(of: isClientContactsToggleOn) {
+                        if isClientContactsToggleOn && !isAuthorizationRequested {
+                            contactsManager.requestContactsAuthorization()
+                            isAuthorizationRequested = true
+                        }
                     }
                     
                     Spacer()
