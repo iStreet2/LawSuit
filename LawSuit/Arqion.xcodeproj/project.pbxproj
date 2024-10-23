@@ -1127,7 +1127,7 @@
 				INFOPLIST_FILE = LawSuit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Arqion;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Este aplicativo precisa acessar seus contatos para adicionar clientes.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Permita acesso aos seus contatos para adicionar um cliente à sua lista pessoal de contatos";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1163,7 +1163,7 @@
 				INFOPLIST_FILE = LawSuit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Arqion;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Este aplicativo precisa acessar seus contatos para adicionar clientes.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Permita acesso aos seus contatos para adicionar um cliente à sua lista pessoal de contatos";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
