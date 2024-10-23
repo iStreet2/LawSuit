@@ -8,11 +8,6 @@
 import SwiftUI
 import CoreData
 
-//enum LawsuitType: String {
-//    case distributed = "Distribuído"
-//    case notDistributed = "Não Distribuído"
-//}
-
 struct AddLawsuitView: View {
     
     //MARK: Variáveis de ambiente
@@ -102,7 +97,7 @@ struct AddLawsuitView: View {
                         invalidInformation = .invalidLawSuitNumber
                         return
                     }
-                    if !textFieldDataViewModel.dateValidation(lawsuitActionDate) {
+                    if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
                         invalidInformation = .invalidDate
                         return
                     }
@@ -111,10 +106,6 @@ struct AddLawsuitView: View {
                         invalidInformation = .missingInformation
                         return
                     }
-                }
-                if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
-                    invalidInformation = .invalidDate
-                    return
                 }
                 //MARK: Se o cliente foi atribuido ao autor
                 if attributedAuthor {
@@ -187,7 +178,7 @@ struct AddLawsuitView: View {
                     message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                     dismissButton: .default(Text("Ok")))
                 case .invalidDate:
-                    return Alert(title: Text("Número da atribuição inválida"),
+                    return Alert(title: Text("Data de distribuição inválida"),
                     message: Text("Por favor, insira uma data válida antes de continuar"),
                     dismissButton: .default(Text("Ok")))
                 }
