@@ -208,7 +208,11 @@ struct EditClientView: View {
                     if clientCellphone.count < 15 {
                         invalidInformation = .missingCellphoneNumber
                         
-                    } else {
+                    } 
+                    if textFieldDataViewModel.dateValidation(clientBirthDate) {
+                        invalidInformation = .invalidDate
+                    }
+                    else {
                         
                         let clientCurrentEmail = client.email
                         
@@ -283,6 +287,10 @@ struct EditClientView: View {
                     case .invalidCEP:
                         return Alert(title: Text("Número do processo inválido"),
                                      message: Text("Por favor, insira um número de processo válido antes de continuar"),
+                                     dismissButton: .default(Text("Ok")))
+                    case .invalidDate:
+                        return Alert(title: Text("Data de nascimento inválida"),
+                                     message: Text("Por favor, insira uma data válida antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
                     }
                 }

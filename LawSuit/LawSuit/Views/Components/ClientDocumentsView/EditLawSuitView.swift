@@ -168,6 +168,9 @@ struct EditLawSuitView: View {
                         invalidInformation = .invalidLawSuitNumber
                         return
                     }
+                    if textFieldDataViewModel.dateValidation(lawsuitActionDate) {
+                        invalidInformation = .invalidDate
+                    }
                     if attributedAuthor {
                         if let author = dataViewModel.coreDataManager.clientManager.fetchFromName(name: lawsuitAuthorName) {
                             let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
@@ -224,6 +227,10 @@ struct EditLawSuitView: View {
                         return Alert(title: Text("Número do CEP inválido"),
                                      message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                                      dismissButton: .default(Text("Ok")))
+                    case .invalidDate:
+                        return Alert(title: Text("Número da atribuição inválida"),
+                        message: Text("Por favor, insira uma data válida antes de continuar"),
+                        dismissButton: .default(Text("Ok")))
                     }
                 }
             }
