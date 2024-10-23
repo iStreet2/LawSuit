@@ -93,7 +93,6 @@ struct AddLawsuitView: View {
                 Text("Cancelar")
             }
             Button {
-                
                 if isDistributed {
                     if !areDistributedFieldsFilled() {
                         invalidInformation = .missingInformation
@@ -101,6 +100,10 @@ struct AddLawsuitView: View {
                     }
                     if lawsuitNumber.count < 25 {
                         invalidInformation = .invalidLawSuitNumber
+                        return
+                    }
+                    if !textFieldDataViewModel.dateValidation(lawsuitActionDate) {
+                        invalidInformation = .invalidDate
                         return
                     }
                 } else {
@@ -183,11 +186,10 @@ struct AddLawsuitView: View {
                     return Alert(title: Text("Número do processo inválido"),
                     message: Text("Por favor, insira um número de CEP válido antes de continuar"),
                     dismissButton: .default(Text("Ok")))
-                    
                 case .invalidDate:
-                    return Alert(title: Text("Data de distribuição inválida"),
-                                 message: Text("Por favor, insira uma data válida antes de continuar"),
-                                 dismissButton: .default(Text("Ok")))
+                    return Alert(title: Text("Número da atribuição inválida"),
+                    message: Text("Por favor, insira uma data válida antes de continuar"),
+                    dismissButton: .default(Text("Ok")))
                 }
             }
             
