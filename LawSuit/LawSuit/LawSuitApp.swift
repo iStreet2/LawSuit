@@ -15,13 +15,13 @@ struct LawSuitApp: App {
     @StateObject var dataViewModel = DataViewModel()
     @StateObject var folderViewModel = FolderViewModel()
     @StateObject var dragAndDropViewModel = DragAndDropViewModel()
-    @StateObject var networkMonitor = NetworkMonitorViewModel()
     @StateObject var navigationViewModel = NavigationViewModel()
     @StateObject var clientDataViewModel = TextFieldDataViewModel()
     @StateObject var addressViewModel = AddressViewModel()
     @StateObject var eventManager = EventManager()
     @StateObject var lawsuitViewModel = LawsuitViewModel()
     @StateObject var contactsManager = ContactsManager()
+    @StateObject var networkMonitorViewModel = NetworkMonitorViewModel()
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
@@ -34,13 +34,13 @@ struct LawSuitApp: App {
                 .environmentObject(dataViewModel)
                 .environmentObject(folderViewModel)
                 .environmentObject(dragAndDropViewModel)
-                .environmentObject(networkMonitor)
                 .environmentObject(navigationViewModel)
                 .environmentObject(clientDataViewModel)
                 .environmentObject(addressViewModel)
                 .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
                 .environmentObject(contactsManager)
+                .environmentObject(networkMonitorViewModel)
                 .preferredColorScheme(.light)
                 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
