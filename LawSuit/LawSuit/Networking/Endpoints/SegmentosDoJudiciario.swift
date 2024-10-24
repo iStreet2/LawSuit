@@ -31,6 +31,7 @@ enum SegmentosDoJudiciario {
             if let tribunal = TribunalDaJusticaEstadual(rawValue: codigoTribunal) {
                 return .justicaEstadual(tribunal)
             }
+        
         default:
             return nil
         }
