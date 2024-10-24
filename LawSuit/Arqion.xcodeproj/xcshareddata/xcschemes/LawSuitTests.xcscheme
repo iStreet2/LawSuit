@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1600"
-   version = "1.8">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
@@ -20,9 +20,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3B98F1182C668B1100C45121"
-               BuildableName = "LawSuitTests.xctest"
-               BlueprintName = "LawSuitTests"
-               ReferencedContainer = "container:LawSuit.xcodeproj">
+               BuildableName = "ArqionTests.xctest"
+               BlueprintName = "ArqionTests"
+               ReferencedContainer = "container:Arqion.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -42,9 +42,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3B98F1072C668B1000C45121"
-            BuildableName = "LawSuit.app"
-            BlueprintName = "LawSuit"
-            ReferencedContainer = "container:LawSuit.xcodeproj">
+            BuildableName = "Arqion.app"
+            BlueprintName = "Arqion"
+            ReferencedContainer = "container:Arqion.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
