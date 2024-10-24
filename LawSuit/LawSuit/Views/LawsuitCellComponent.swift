@@ -74,7 +74,7 @@ struct LawsuitCellComponent: View {
       .onAppear {
         nsImage = NSImage(data: client.photo ?? Data())
       }
-      .onChange(of: client) { client in
+      .onChange(of: client.photo) {
         nsImage = NSImage(data: client.photo ?? Data())
       }
       .padding(.horizontal, 20)
