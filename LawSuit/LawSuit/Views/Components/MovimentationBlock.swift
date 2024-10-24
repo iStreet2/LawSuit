@@ -36,7 +36,6 @@ struct MovimentationBlock: View {
                                 Text("Movimentações Anteriores")
                                     .font(.headline)
                                     .foregroundStyle(Color(.secondaryLabelColor))
-                                
                                 ForEach(dataViewModel.coreDataManager.updateManager.sortUpdates(lawsuit: lawsuit).prefix(3)) { update in
                                     Text(update.date?.convertToString() ?? "Sem movimentações")
                                         .font(.subheadline)

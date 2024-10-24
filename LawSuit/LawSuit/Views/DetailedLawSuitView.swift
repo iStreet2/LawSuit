@@ -14,6 +14,7 @@ struct DetailedLawSuitView: View {
     @Environment(\.dismiss) var dismiss
     
     //MARK: ViewModels
+    @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
@@ -257,6 +258,7 @@ extension DetailedLawSuitView {
                 }
                 else {
                     NoteBlock(note: $note, placeholder: "Notas")
+                    
                 }
             }
         }

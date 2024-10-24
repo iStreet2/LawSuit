@@ -32,6 +32,7 @@ struct AddLawsuitView: View {
 
     @State var attributedAuthor = false
     @State var attributedDefendant = false
+    @State var note = ""
     
     //MARK: CoreData
     @Environment(\.managedObjectContext) var context
@@ -113,7 +114,7 @@ struct AddLawsuitView: View {
                         let category = tagType.tagText
                         let lawyer = lawyers[0]
                         let defendant = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitDefendantName)
-                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: isDistributed)
+                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: isDistributed, note: note)
                                                 
                         if lawsuit.isDistributed {
                             dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)
@@ -130,7 +131,7 @@ struct AddLawsuitView: View {
                         let category = tagType.tagText
                         let lawyer = lawyers[0]
                         let author = dataViewModel.coreDataManager.entityManager.createAndReturnEntity(name: lawsuitAuthorName)
-                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: isDistributed)                        
+                        let lawsuit = dataViewModel.coreDataManager.lawsuitManager.createLawsuit(authorName: lawsuitAuthorName, defendantName: lawsuitDefendantName, number: lawsuitNumber, court: lawsuitCourt, category: category, lawyer: lawyer, defendantID: defendant.id, authorID: author.id, actionDate: lawsuitActionDate.convertBirthDateToDate(), isDistributed: isDistributed, note: note)                        
                         
                         if lawsuit.isDistributed {
                             dataViewModel.coreDataManager.lawsuitNetworkingViewModel.fetchAndSaveUpdatesFromAPI(fromLawsuit: lawsuit)

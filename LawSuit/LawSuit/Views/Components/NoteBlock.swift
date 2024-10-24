@@ -30,14 +30,10 @@ struct NoteBlock: View {
         .background {
             ZStack {
                 RoundedRectangle(cornerRadius: 5)
-                    .foregroundStyle(.secondary)
-                    .shadow(color: .black.opacity(0.3), radius: 2.5)
+                    .foregroundStyle(.black.opacity(0.05))
+
             }
         }
     }
         
-}
-
-#Preview {
-    NoteBlock(note: .constant("OL"), placeholder: "ss")
 }
