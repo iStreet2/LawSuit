@@ -106,10 +106,10 @@ struct ClientInfoView: View {
         .onAppear {
             nsImage = NSImage(data: client.photo ?? Data())
         }
-        .onChange(of: client) { client in
+        .onChange(of: client.photo) {
             nsImage = NSImage(data: client.photo ?? Data())
         }
-        .onChange(of: deleted) { _ in
+        .onChange(of: deleted) {
             dismiss()
         }
         .sheet(isPresented: $sendMailSheet, content: {

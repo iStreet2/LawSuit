@@ -13,6 +13,8 @@ struct ClientListView: View {
     @State var deleteAlert = false
     @State var clientToDelete: Client? = nil
     @State var selectedClients: Set<Client> = []
+    @State var editClient = false
+    @State var nsImage: NSImage?
     @Binding var addClient: Bool
     @Binding var deleted: Bool
     
@@ -124,7 +126,10 @@ struct ClientListView: View {
                                 Text("Deletar")
                             }
                             Button {
-                                
+                                if let clientPhoto = client.photo {
+                                    self.nsImage = NSImage(data: clientPhoto)
+                                }
+                                editClient.toggle()
                             } label: {
                                 Image(systemName: "pencil")
                                 Text("Editar")
@@ -132,6 +137,9 @@ struct ClientListView: View {
                         }
                     }
                     .tint(.red)
+                }
+                .sheet(isPresented: $editClient) {
+                    EditClientView(client: client, deleted: $deleted, clientNSImage: $nsImage)
                 }
             }
             .alert(isPresented: $deleteAlert, content: {

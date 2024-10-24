@@ -213,7 +213,7 @@ struct AddClientView: View {
                             else {
                                 //MARK: Advogado temporário
                                 let lawyer = lawyers[0]
-                                let _ = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone)
+                                let _ = dataViewModel.coreDataManager.clientManager.createClient(name: name, socialName: socialName == "" ? nil : socialName, occupation: occupation, rg: rg, cpf: cpf, lawyer: lawyer, affiliation: affiliation, maritalStatus: maritalStatus, nationality: nationality, birthDate: birthDate.convertBirthDateToDate(), cep: cep, address: address, addressNumber: addressNumber, neighborhood: neighborhood, complement: complement, state: state, city: city, email: email, telephone: telephone, cellphone: cellphone, photo: photo)
                                 
                                 pdfViewModel.resetFields()
                                 dismiss()

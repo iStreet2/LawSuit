@@ -91,8 +91,7 @@ struct DetailedLawSuitView: View {
         }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
-            EditLawSuitView(tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted)
-//            EditLawSuitView( tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted, authorRowState: lawsuitAuthorName, defendantRowState: lawsuitDefendantName)
+            EditLawSuitView(lawsuit: lawsuit, deleted: $deleted)
                 .frame(minWidth: 495)
         })
         .onAppear {
@@ -100,15 +99,18 @@ struct DetailedLawSuitView: View {
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
             navigationViewModel.isShowingDetailedLawsuitView = true
         }
-        .onChange(of: deleted) { _ in
+        .onChange(of: deleted) {
             dismiss()
         }
-        .onChange(of: navigationViewModel.isShowingDetailedLawsuitView, perform: { newValue in
-            if !newValue {
+        .onChange(of: navigationViewModel.isShowingDetailedLawsuitView) {
+            if !navigationViewModel.isShowingDetailedLawsuitView {
                 dismiss()
             }
-        })
+        }
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
+        .contextMenu {
+            
+        }
     }
 
     func updateNames() {
