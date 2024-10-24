@@ -32,6 +32,7 @@ public class Lawsuit: NSManagedObject, Identifiable, Recordable {
     @NSManaged public var isLoading: Bool
     @NSManaged public var recordName: String?
     @NSManaged public var isDistributed: Bool
+    @NSManaged public var note: String?
 
 }
 

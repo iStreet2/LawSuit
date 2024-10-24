@@ -18,14 +18,18 @@ struct SendMailSheet: View {
                 .font(.footnote)
             Spacer()
             HStack {
-                Spacer()
                 
                 Toggle(isOn: $doNotShowAgain) {
                     Text("Não mostrar isso novamente")
                 }
                 .toggleStyle(.checkbox)
                 .tint(.black)
-                
+                Spacer()
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Cancelar")
+                }
                 Button {
                     UserDefaults.standard.set(doNotShowAgain, forKey: "DoNotShowAgainPreference")
                     dismiss()
@@ -38,6 +42,7 @@ struct SendMailSheet: View {
                 .tint(.black)
             }
         }
+        .frame(width: 400, height: 100)
         .padding()
     }
 }

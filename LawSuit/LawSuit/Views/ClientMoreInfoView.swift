@@ -301,14 +301,15 @@ extension ClientMoreInfoView {
                 .font(.body)
                 .padding(.bottom, 22)
             
-            Text("Quer ter fácil acesso às informações de seu cliente?")
-                .foregroundStyle(.secondary)
-            Button {
-            } label: {
-                Text("Adicionar aos Contatos")
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.black)
+            //Text("Quer ter fácil acesso às informações de seu cliente?")
+              //  .foregroundStyle(.secondary)
+//            Button {
+//            } label: {
+//                Text("Adicionar aos Contatos")
+//            }
+//            .buttonStyle(.borderedProminent)
+//            .tint(.black)
+            Spacer()
         }
         .padding(.trailing, 10)
     }
