@@ -48,7 +48,7 @@ struct AddClientView: View {
     @State private var isTeste1: Bool = false
     @State private var tempoTeste1: TimeInterval = 0
     @State private var tempoTeste2: TimeInterval = 0
-    
+    @State var isAuthorizationRequested: Bool = false
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -104,6 +104,12 @@ struct AddClientView: View {
                     
                     Toggle(isOn: $isClientContactsToggleOn) {
                         Text("Adicionar aos Contatos")
+                    }
+                    .onChange(of: isClientContactsToggleOn) {
+                        if isClientContactsToggleOn && !isAuthorizationRequested {
+                            contactsManager.requestContactsAuthorization()
+                            isAuthorizationRequested = true
+                        }
                     }
 //                    Button {
 //                        startTimer()
