@@ -93,7 +93,7 @@ struct ContentView: View {
                                         if let client = lawsuitData.client, let entity = lawsuitData.entity {
                                             DetailedLawSuitView(lawsuit: lawsuit, lawsuitCategory: TagType(s: lawsuit.category), client: client, entity: entity)
                                         }
-                                        
+                                            
                                     }
                                 }
                             }

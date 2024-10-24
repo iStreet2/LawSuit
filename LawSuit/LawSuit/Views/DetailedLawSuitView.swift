@@ -29,7 +29,9 @@ struct DetailedLawSuitView: View {
     @State var lawsuitAuthorSocialName: String = ""
     @State var lawsuitDefendantName: String = ""
     @State var showingGridView = true
-    @State var selectedSegment: String = ""
+    @State var selectedSegment: String = "Movimentações"
+    @State var note: String = ""
+    var infos = ["Movimentações", "Notas"]
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -43,10 +45,7 @@ struct DetailedLawSuitView: View {
                     HStack(alignment: .top, spacing: 22) {
                         mainBlock
                         VStack(spacing: 10) {
-                            CustomSegmentedControl(selectedOption: $selectedSegment, infos: ["Movimentações", "Notas"])
-
-                            MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
-                                .frame(maxHeight: .infinity)
+                            activeSegment
                         }
                         .frame(maxHeight: .infinity)
                         .fixedSize(horizontal: false, vertical: true)
@@ -244,6 +243,20 @@ extension DetailedLawSuitView {
                         //                                            }
                     }
                     Spacer()
+                }
+            }
+        }
+    }
+    private var activeSegment: some View{
+        BoxView{
+            VStack(alignment: .leading) {
+                CustomSegmentedControl(selectedOption: $selectedSegment, infos: infos)
+                
+                if selectedSegment == "Movimentações" {
+                    MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
+                }
+                else {
+                    NoteBlock(note: $note, placeholder: "Notas")
                 }
             }
         }

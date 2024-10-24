@@ -13,11 +13,8 @@ struct MovimentationBlock: View {
     @ObservedObject var lawsuit: Lawsuit
     
     var body: some View {
-        
-            BoxView {
                 VStack(alignment: .leading) {
                     HStack {
-                        
                         VStack(alignment: .leading) {
                             Text("Última Movimentação")
                                 .font(.title2)
@@ -34,6 +31,7 @@ struct MovimentationBlock: View {
                                 .buttonStyle(.borderedProminent)
                                 .tint(.black)
                             }
+                        }
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("Movimentações Anteriores")
                                     .font(.headline)
@@ -46,13 +44,13 @@ struct MovimentationBlock: View {
                                 }
                             }
                             .padding(.top, 10)
-                        }
+                        
                         
                         Spacer()
                     }
                     .padding(.bottom, 3)
                 }
-            }
+            
         }
     }
 
