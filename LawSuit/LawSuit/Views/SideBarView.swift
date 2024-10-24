@@ -1,14 +1,13 @@
 //
-//  SideBarView.swift
-//  LawSuit
+// SideBarView.swift
+// LawSuit
 //
-//  Created by Gabriel Vicentin Negro on 27/08/24.
+// Created by Gabriel Vicentin Negro on 27/08/24.
 //
+
 
 import SwiftUI
-
 struct SideBarView: View {
-    
     //MARK: ViewModels:
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -16,7 +15,6 @@ struct SideBarView: View {
     
     //MARK: Variáveis de estado
     @Binding var selectedView: SelectedView
-    @Binding var navigationVisibility: NavigationSplitViewVisibility
     
     var body: some View {
         VStack {
@@ -35,12 +33,11 @@ struct SideBarView: View {
                 withAnimation(.bouncy) {
                     selectedView = .clients
                     navigationViewModel.isShowingDetailedLawsuitView = false
-                    
                     if let selectedClient = navigationViewModel.selectedClient {
                         folderViewModel.resetFolderStack()
                         folderViewModel.openFolder(folder: selectedClient.rootFolder)
                     }
-                    navigationVisibility = .automatic
+                    self.navigationViewModel.navigationVisibility = . automatic
                 }
             }
             ZStack {
@@ -67,4 +64,3 @@ struct SideBarView: View {
         .background(Color(hex: "932425").blendMode(.multiply))
     }
 }
-

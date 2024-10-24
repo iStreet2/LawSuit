@@ -97,7 +97,6 @@ struct LawsuitDistributedView: View {
                     if attributedDefendant {
                         LabeledTextField(label: "Autor", placeholder: "Adicionar Autor", mandatory: true, textfieldText: $lawsuitAuthorName)
                             .frame(width: 218)
-                            .onReceive(Just(lawsuitAuthorName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitAuthorName, upper: textLimit) }
                             .transition(.scale)
                     } else {
                         ClientRowSelectView(clientRowState: $authorRowState, lawsuitAuthorOrDefendantName: $lawsuitAuthorName)
@@ -124,7 +123,6 @@ struct LawsuitDistributedView: View {
                     if attributedAuthor {
                         LabeledTextField(label: "Réu", placeholder: "Adicionar réu", mandatory: true ,textfieldText: $lawsuitDefendantName)
                             .frame(width: 218)
-                            .onReceive(Just(lawsuitDefendantName)) { _ in textFieldDataViewModel.limitText(text: &lawsuitDefendantName, upper: textLimit) }
                             .transition(.scale)
                         
                         

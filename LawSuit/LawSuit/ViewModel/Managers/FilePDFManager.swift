@@ -46,6 +46,11 @@ class FilePDFManager {
         saveContext()
     }
     
+    func saveNameChanges(filePDF: FilePDF) {
+        self.editFilePDFName(filePDF: filePDF, name: filePDF.name ?? "Sem nome")
+        filePDF.isEditing = false
+    }
+    
     func saveContext() {
         do {
             try context.save()

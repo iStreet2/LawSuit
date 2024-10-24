@@ -101,15 +101,18 @@ struct DetailedLawSuitView: View {
             folderViewModel.openFolder(folder: lawsuit.rootFolder)
             navigationViewModel.isShowingDetailedLawsuitView = true
         }
-        .onChange(of: deleted) { _ in
+        .onChange(of: deleted) {
             dismiss()
         }
-        .onChange(of: navigationViewModel.isShowingDetailedLawsuitView, perform: { newValue in
-            if !newValue {
+        .onChange(of: navigationViewModel.isShowingDetailedLawsuitView) {
+            if !navigationViewModel.isShowingDetailedLawsuitView {
                 dismiss()
             }
-        })
+        }
         .navigationTitle(folderViewModel.getPath().getItens().first?.name ?? "Sem nome")
+        .contextMenu {
+            
+        }
     }
     
     func updateNames() {
@@ -206,28 +209,30 @@ extension DetailedLawSuitView {
                             .foregroundStyle(.secondary)
                             .bold()
                         //Aqui agora lawsuit apenas tem um id, preciso fazer o fetch
-                        Button {
-                            let authorIsEntity = dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit)
-                            if authorIsEntity {
-                                print("Authro is entity")
-                                withAnimation(.bouncy()) {
-                                    navigationViewModel.navigationVisibility = .all
-                                    navigationViewModel.selectedClient = dataViewModel.coreDataManager.clientManager.fetchFromName(name: entity.name)
-                                    navigationViewModel.selectedView = .clients
-                                }
-                            } else {
-                                withAnimation(.bouncy()) {
-                                    navigationViewModel.navigationVisibility = .all
-                                    navigationViewModel.selectedClient = client
-                                    navigationViewModel.selectedView = .clients
-                                }
-                            }
-                        } label: {
-                            Text((dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.socialName) ?? client.name)
-                                .font(.subheadline)
-                                .bold()
-                                .underline(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit))
-                        }
+							  Button {
+								  let authorIsEntity = dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit)
+								  if authorIsEntity {
+									  print("Authro is entity")
+									  withAnimation(.bouncy()) {
+										  navigationViewModel.navigationVisibility = .all
+										  navigationViewModel.selectedClient = dataViewModel.coreDataManager.clientManager.fetchFromName(name: entity.name)
+										  navigationViewModel.selectedView = .clients
+									  }
+								  } else {
+									  withAnimation(.bouncy()) {
+										  navigationViewModel.navigationVisibility = .all
+										  navigationViewModel.selectedClient = client
+										  navigationViewModel.selectedView = .clients
+									  }
+								  }
+							  } label: {
+								  Text((dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit) ? entity.name : client.socialName) ?? client.name)
+										.font(.subheadline)
+										.bold()
+										.underline(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit))
+							  }
+                              .buttonStyle(.plain)
+                              .underline()
                         
                     }
                     Spacer()

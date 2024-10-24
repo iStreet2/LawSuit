@@ -116,7 +116,7 @@ struct FolderIconView: View {
         }
     }
     
-    private func saveChanges() {
+    func saveChanges() {
         dataViewModel.coreDataManager.folderManager.editFolderName(folder: folder, name: folder.name)
         folder.isEditing = false
     }

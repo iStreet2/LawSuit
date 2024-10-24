@@ -133,7 +133,7 @@ struct FilePDFIconView: View {
         }
     }
     
-    private func saveChanges() {
+    func saveChanges() {
         dataViewModel.coreDataManager.filePDFManager.editFilePDFName(filePDF: filePDF, name: filePDF.name ?? "Sem nome")
         filePDF.isEditing = false // Salva e encerra a edição
     }

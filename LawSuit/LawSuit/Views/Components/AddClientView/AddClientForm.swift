@@ -46,7 +46,7 @@ struct AddClientForm: View {
     @State var isEmailValid = true
     @State var imageData: NSImage?
     @State var edit: Bool = false
-    
+        
     let textLimit = 50
     let maritalStatusLimit = 10
     
@@ -75,7 +75,7 @@ struct AddClientForm: View {
                                                 .cornerRadius(19)
                                         }
                                     }
-                                    .transition(.scale)
+                                    .transition(.asymmetric(insertion: .scale, removal: .opacity))
                                     .buttonStyle(.plain)
                                     .onHover { hovering in
                                         if hovering {

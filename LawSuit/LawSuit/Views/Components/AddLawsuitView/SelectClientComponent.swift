@@ -62,6 +62,20 @@ struct SelectClientComponent: View {
                             dismiss()
                         }
                         .background(isEditing ? Color.blue : Color(.white))
+                    } else {
+                        Text(displayName)
+                            .onTapGesture {
+                                withAnimation {
+                                    if authorOrDefendant == "author" {
+                                        lawsuitAuthorName = displayName
+                                        attributedAuthor = true
+                                    } else {
+                                        lawsuitDefendantName = displayName
+                                        attributedDefendant = true
+                                    }
+                                }
+                                dismiss()
+                            }
                     }
                 }
                 .padding(2)
