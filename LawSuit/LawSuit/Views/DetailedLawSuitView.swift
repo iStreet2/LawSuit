@@ -92,7 +92,7 @@ struct DetailedLawSuitView: View {
         }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
-            EditLawSuitView(tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted)
+            EditLawSuitView(tagType: lawsuitCategory, lawsuit: lawsuit, deleted: $deleted)
             //            EditLawSuitView( tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted, authorRowState: lawsuitAuthorName, defendantRowState: lawsuitDefendantName)
                 .frame(minWidth: 495)
         })
