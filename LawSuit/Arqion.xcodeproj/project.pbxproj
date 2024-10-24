@@ -183,9 +183,9 @@
 		0801941D2CB84DC80084ADA4 /* SendMailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMailSheet.swift; sourceTree = "<group>"; };
 		08079F222CA4A1F4004EDF98 /* RequestDocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDocumentsView.swift; sourceTree = "<group>"; };
 		08079F252CA5EFCB004EDF98 /* MailMessageEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailMessageEnum.swift; sourceTree = "<group>"; };
-		084D404F2C8A4AAE00C96111 /* LawSuit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LawSuit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LawSuitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		084D404F2C8A4AAE00C96111 /* Arqion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arqion.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		084D40502C8A4AAE00C96111 /* ArqionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArqionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		084D40512C8A4AAE00C96111 /* ArqionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArqionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0897CB392C8BA21D00B488A9 /* MailManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailManager.swift; sourceTree = "<group>"; };
 		0898CE4A2C7FBDED004CC1A5 /* LawsuitNameCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawsuitNameCellComponent.swift; sourceTree = "<group>"; };
 		089B8A9B2C9E312D00FEBCAB /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
@@ -479,9 +479,9 @@
 				3B98F10A2C668B1000C45121 /* LawSuit */,
 				3B98F11C2C668B1100C45121 /* LawSuitTests */,
 				3B98F1262C668B1100C45121 /* LawSuitUITests */,
-				084D404F2C8A4AAE00C96111 /* LawSuit.app */,
-				084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */,
-				084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */,
+				084D404F2C8A4AAE00C96111 /* Arqion.app */,
+				084D40502C8A4AAE00C96111 /* ArqionTests.xctest */,
+				084D40512C8A4AAE00C96111 /* ArqionUITests.xctest */,
 				3BAFF2CC2CC057920093D3BD /* Recovered References */,
 			);
 			sourceTree = "<group>";
@@ -714,9 +714,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3B98F1072C668B1000C45121 /* LawSuit */ = {
+		3B98F1072C668B1000C45121 /* Arqion */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3B98F12D2C668B1100C45121 /* Build configuration list for PBXNativeTarget "LawSuit" */;
+			buildConfigurationList = 3B98F12D2C668B1100C45121 /* Build configuration list for PBXNativeTarget "Arqion" */;
 			buildPhases = (
 				3B98F1042C668B1000C45121 /* Sources */,
 				3B98F1052C668B1000C45121 /* Frameworks */,
@@ -727,17 +727,17 @@
 			);
 			dependencies = (
 			);
-			name = LawSuit;
+			name = Arqion;
 			packageProductDependencies = (
 				08B3820A2CB44FDA002F2041 /* HotKey */,
 			);
 			productName = LawSuit;
-			productReference = 084D404F2C8A4AAE00C96111 /* LawSuit.app */;
+			productReference = 084D404F2C8A4AAE00C96111 /* Arqion.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3B98F1182C668B1100C45121 /* LawSuitTests */ = {
+		3B98F1182C668B1100C45121 /* ArqionTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3B98F1302C668B1100C45121 /* Build configuration list for PBXNativeTarget "LawSuitTests" */;
+			buildConfigurationList = 3B98F1302C668B1100C45121 /* Build configuration list for PBXNativeTarget "ArqionTests" */;
 			buildPhases = (
 				3B98F1152C668B1100C45121 /* Sources */,
 				3B98F1162C668B1100C45121 /* Frameworks */,
@@ -748,14 +748,14 @@
 			dependencies = (
 				3B98F11B2C668B1100C45121 /* PBXTargetDependency */,
 			);
-			name = LawSuitTests;
+			name = ArqionTests;
 			productName = LawSuitTests;
-			productReference = 084D40502C8A4AAE00C96111 /* LawSuitTests.xctest */;
+			productReference = 084D40502C8A4AAE00C96111 /* ArqionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3B98F1222C668B1100C45121 /* LawSuitUITests */ = {
+		3B98F1222C668B1100C45121 /* ArqionUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3B98F1332C668B1100C45121 /* Build configuration list for PBXNativeTarget "LawSuitUITests" */;
+			buildConfigurationList = 3B98F1332C668B1100C45121 /* Build configuration list for PBXNativeTarget "ArqionUITests" */;
 			buildPhases = (
 				3B98F11F2C668B1100C45121 /* Sources */,
 				3B98F1202C668B1100C45121 /* Frameworks */,
@@ -766,9 +766,9 @@
 			dependencies = (
 				3B98F1252C668B1100C45121 /* PBXTargetDependency */,
 			);
-			name = LawSuitUITests;
+			name = ArqionUITests;
 			productName = LawSuitUITests;
-			productReference = 084D40512C8A4AAE00C96111 /* LawSuitUITests.xctest */;
+			productReference = 084D40512C8A4AAE00C96111 /* ArqionUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -794,7 +794,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3B98F1032C668B1000C45121 /* Build configuration list for PBXProject "LawSuit" */;
+			buildConfigurationList = 3B98F1032C668B1000C45121 /* Build configuration list for PBXProject "Arqion" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -810,9 +810,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3B98F1072C668B1000C45121 /* LawSuit */,
-				3B98F1182C668B1100C45121 /* LawSuitTests */,
-				3B98F1222C668B1100C45121 /* LawSuitUITests */,
+				3B98F1072C668B1000C45121 /* Arqion */,
+				3B98F1182C668B1100C45121 /* ArqionTests */,
+				3B98F1222C668B1100C45121 /* ArqionUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1006,12 +1006,12 @@
 /* Begin PBXTargetDependency section */
 		3B98F11B2C668B1100C45121 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3B98F1072C668B1000C45121 /* LawSuit */;
+			target = 3B98F1072C668B1000C45121 /* Arqion */;
 			targetProxy = 3B98F11A2C668B1100C45121 /* PBXContainerItemProxy */;
 		};
 		3B98F1252C668B1100C45121 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3B98F1072C668B1000C45121 /* LawSuit */;
+			target = 3B98F1072C668B1000C45121 /* Arqion */;
 			targetProxy = 3B98F1242C668B1100C45121 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1223,7 +1223,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LawSuit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LawSuit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Arqion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Arqion";
 			};
 			name = Debug;
 		};
@@ -1241,7 +1241,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LawSuit.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LawSuit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Arqion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Arqion";
 			};
 			name = Release;
 		};
@@ -1282,7 +1282,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3B98F1032C668B1000C45121 /* Build configuration list for PBXProject "LawSuit" */ = {
+		3B98F1032C668B1000C45121 /* Build configuration list for PBXProject "Arqion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B98F12B2C668B1100C45121 /* Debug */,
@@ -1291,7 +1291,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3B98F12D2C668B1100C45121 /* Build configuration list for PBXNativeTarget "LawSuit" */ = {
+		3B98F12D2C668B1100C45121 /* Build configuration list for PBXNativeTarget "Arqion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B98F12E2C668B1100C45121 /* Debug */,
@@ -1300,7 +1300,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3B98F1302C668B1100C45121 /* Build configuration list for PBXNativeTarget "LawSuitTests" */ = {
+		3B98F1302C668B1100C45121 /* Build configuration list for PBXNativeTarget "ArqionTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B98F1312C668B1100C45121 /* Debug */,
@@ -1309,7 +1309,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3B98F1332C668B1100C45121 /* Build configuration list for PBXNativeTarget "LawSuitUITests" */ = {
+		3B98F1332C668B1100C45121 /* Build configuration list for PBXNativeTarget "ArqionUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B98F1342C668B1100C45121 /* Debug */,

@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3B98F1072C668B1000C45121"
-               BuildableName = "LawSuit.app"
-               BlueprintName = "LawSuit"
-               ReferencedContainer = "container:LawSuit.xcodeproj">
+               BuildableName = "Arqion.app"
+               BlueprintName = "Arqion"
+               ReferencedContainer = "container:Arqion.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3B98F1072C668B1000C45121"
-            BuildableName = "LawSuit.app"
-            BlueprintName = "LawSuit"
-            ReferencedContainer = "container:LawSuit.xcodeproj">
+            BuildableName = "Arqion.app"
+            BlueprintName = "Arqion"
+            ReferencedContainer = "container:Arqion.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3B98F1072C668B1000C45121"
-            BuildableName = "LawSuit.app"
-            BlueprintName = "LawSuit"
-            ReferencedContainer = "container:LawSuit.xcodeproj">
+            BuildableName = "Arqion.app"
+            BlueprintName = "Arqion"
+            ReferencedContainer = "container:Arqion.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
