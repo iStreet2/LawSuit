@@ -43,8 +43,6 @@ struct DetailedLawSuitView: View {
                     HStack(alignment: .top, spacing: 22) {
                         mainBlock
                         VStack(spacing: 10) {
-                            CustomSegmentedControl(selectedOption: $selectedSegment, infos: ["Movimentações", "Notas"])
-
                             MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
                                 .frame(maxHeight: .infinity)
                         }
@@ -227,6 +225,8 @@ extension DetailedLawSuitView {
 										.bold()
 										.underline(dataViewModel.coreDataManager.entityManager.authorIsEntity(lawsuit: lawsuit))
 							  }
+                              .buttonStyle(.plain)
+                              .underline()
                         
                     }
                     Spacer()
