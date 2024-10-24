@@ -45,6 +45,7 @@ struct SubscriptionPlanView: View {
 						Text("Clientes cadastrados ")
 						Text("ilimitados").bold()
 					}
+					Spacer()
 				}
 				
 				HStack {
@@ -110,16 +111,21 @@ struct SubscriptionPlanView: View {
 				Spacer()
 				
 				VStack {
-					Button {
-						planManager.updatePlan(to: .solo, for: dataViewModel.context)
-					} label: {
-						Text(planManager.isFreePlan() ? "Aprimorar para o plano Solo" : "Continuar com o plano Solo")
-							.foregroundStyle(.white)
-							.tint(.black)
+					if planManager.isNotSoloPlan() {
+						Button {
+							planManager.updatePlan(to: .solo, for: dataViewModel.context)
+						} label: {
+							Text(planManager.isFreePlan() ? "Aprimorar para o plano Solo" : "Continuar com o plano Solo")
+								.tint(.black)
+						}
+						.padding(.top, 8)
+						.buttonStyle(.borderedProminent)
+						.tint(.black)
+					} else {
+						Text("Seu plano atual")
+							.bold()
+							.padding(.top, 12)
 					}
-					.padding(.top, 8)
-					.buttonStyle(.borderedProminent)
-					.tint(.black)
 					
 					if navigationViewModel.selectedView != .plans {
 						Button {

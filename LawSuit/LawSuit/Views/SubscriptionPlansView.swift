@@ -15,8 +15,11 @@ struct SubscriptionPlansView: View {
 	var body: some View {
 		ZStack {
 			
-			Image("ArqionBackgroundPattern")
-				.resizable(resizingMode: .tile)
+//			Color.secondary
+//			Image("ArqionBackgroundPattern")
+//				.resizable(resizingMode: .tile)
+			Image("clientEmptyStateBackground")
+				.resizable()
 			
 			VStack {
 				Text("Escolha o seu plano")
@@ -26,15 +29,20 @@ struct SubscriptionPlansView: View {
 				Text("Otimize o seu escritório")
 					.font(.largeTitle)
 					.foregroundStyle(.secondary)
+					.padding(.bottom, 30)
 				
-				HStack {
+				HStack(alignment: .top) {
 					Spacer()
 					
 					freePlanView
+						.clipShape(RoundedRectangle(cornerRadius: 10))
+						.shadow(radius: 10)
 					
 					Spacer()
 					
 					SubscriptionPlanView()
+						.clipShape(RoundedRectangle(cornerRadius: 10))
+						.shadow(radius: 10)
 					
 					Spacer()
 				}
@@ -102,6 +110,7 @@ extension SubscriptionPlansView {
 						Text("Armazenamento: ")
 						Text("Local").bold()
 					}
+					Spacer()
 				}
 			}
 			.padding()
@@ -110,10 +119,19 @@ extension SubscriptionPlansView {
 			HStack {
 				Spacer()
 				
-				Button {
-					planManager.updatePlan(to: .free, for: dataViewModel.context)
-				} label: {
-					Text(planManager.isFreePlan() ? "Continuar Free" : "Voltar para o plano Free")
+				if planManager.isFreePlan() {
+					Text("Seu plano atual")
+						.bold()
+						.padding(.top, 7)
+				} else {
+					Button {
+						planManager.updatePlan(to: .free, for: dataViewModel.context)
+					} label: {
+						Text("Voltar para o plano Free")
+					}
+					.buttonStyle(BorderedProminentButtonStyle())
+					.tint(.black)
+					.padding(.top, 3)
 				}
 				
 				Spacer()

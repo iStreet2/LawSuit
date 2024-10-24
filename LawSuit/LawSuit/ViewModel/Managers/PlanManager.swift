@@ -45,6 +45,14 @@ class PlanManager: ObservableObject {
 		return plan == .free
 	}
 	
+	func isSoloPlan() -> Bool {
+		return plan == .solo
+	}
+	
+	func isNotSoloPlan() -> Bool {
+		return plan != .solo
+	}
+	
 	func getSavedPlan(using context: NSManagedObjectContext) {
 		let userFetchRequest: NSFetchRequest<User> = User.fetchRequest()
 		userFetchRequest.fetchLimit = 1
