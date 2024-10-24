@@ -12,6 +12,7 @@ struct AddClientView: View {
     
     //MARK: Environments
     @EnvironmentObject var textFieldDataViewModel: TextFieldDataViewModel
+	 @EnvironmentObject var planManager: PlanManager
     @Environment(\.dismiss) var dismiss
     
     //MARK: Variáveis de estado
@@ -85,6 +86,15 @@ struct AddClientView: View {
                     Toggle(isOn: $isClientContactsToggleOn) {
                         Text("Adicionar aos Contatos")
                     }
+						  .onChange(of: isClientContactsToggleOn) { newValue in
+							  if newValue {
+								  if planManager.isFreePlan() {
+									  isClientContactsToggleOn = false
+									  planManager.showPlanView()
+									  dismiss()
+								  }
+							  }
+						  }
 //                    Button {
 //                        startTimer()
 //                        isTeste1 = true

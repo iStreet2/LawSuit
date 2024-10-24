@@ -61,6 +61,23 @@ struct SideBarView: View {
                 }
             }
             Spacer()
+			  ZStack {
+				  if selectedView == .plans {
+					  Color.white
+						  .opacity(0.2)
+						  .cornerRadius(10)
+				  }
+				  Image(systemName: "diamond.circle")
+					  .font(.system(size: 19))
+					  .foregroundStyle(.white)
+			  }
+			  .frame(width: 55, height: 46)
+			  .onTapGesture {
+				  withAnimation(.bouncy) {
+					  selectedView = .plans
+					  navigationViewModel.isShowingDetailedLawsuitView = false
+				  }
+			  }
         }
         .padding()
         .padding(.trailing,5)

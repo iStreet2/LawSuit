@@ -19,6 +19,7 @@ struct ClientListView: View {
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
+	 @EnvironmentObject var planManager: PlanManager
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -40,7 +41,11 @@ struct ClientListView: View {
                     .font(.title)
                     .bold()
                 Button(action: {
-                    addClient.toggle()
+						 if planManager.canAddClient(using: dataViewModel.context) {
+							 addClient.toggle()
+						 } else {
+							 planManager.showPlanView()
+						 }
                 }, label: {
                     Image(systemName: "plus")
                 })

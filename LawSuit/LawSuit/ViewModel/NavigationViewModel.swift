@@ -28,6 +28,8 @@ class NavigationViewModel: ObservableObject {
 			return false
 		case .lawsuits:
 			return true
+		case .plans:
+			return false
 		}
 	}
 }

@@ -35,6 +35,8 @@ struct ContentView: View {
             false
         case .lawsuits:
             true
+		 case .plans:
+			 false
         }
     }
     
@@ -111,6 +113,9 @@ struct ContentView: View {
                                         
                                     }
                                 }
+								  
+							  case .plans:
+								  SubscriptionPlansView()
                         }
                         
                     }
@@ -133,5 +138,6 @@ struct ContentView: View {
 enum SelectedView: String {
     case clients = "clients"
     case lawsuits = "lawsuits"
+	 case plans = "plans"
 }
 

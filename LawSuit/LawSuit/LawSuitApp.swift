@@ -22,6 +22,7 @@ struct LawSuitApp: App {
     @StateObject var eventManager = EventManager()
     @StateObject var lawsuitViewModel = LawsuitViewModel()
     @StateObject var contactsManager = ContactsManager()
+	 @StateObject var planManager = PlanManager()
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     let hotkey = HotKey(key: .i, modifiers: [.command, .shift])
@@ -41,11 +42,14 @@ struct LawSuitApp: App {
                 .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
                 .environmentObject(contactsManager)
+					 .environmentObject(planManager)
                 .preferredColorScheme(.light)
                 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
                 .onAppear {
                     hotkey.keyDownHandler = eventManager.hotkeyDownHandler
                     contactsManager.requestContactsAuthorization()
+						 
+						  planManager.getSavedPlan(using: dataViewModel.context)
                 }
                 .sheet(isPresented: $eventManager.spotlightBarIsPresented) {
                     SpotlightSearchbarView()
@@ -56,11 +60,17 @@ struct LawSuitApp: App {
                 .sheet(isPresented: $dataViewModel.spotlightManager.shouldShowFilePreview) {
                     OpenFilePDFView(selectedFile: $dataViewModel.spotlightManager.fileToShow)
                 }
+					 .sheet(isPresented: $planManager.isPlanSheetPresented) {
+						 SubscriptionPlanView()
+							 .environmentObject(planManager)
+							 .environmentObject(dataViewModel)
+							 .environmentObject(navigationViewModel)
+					 }
                 .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("HandleSpotlightSearch")), perform: { notification in
                     if let uniqueIdentifier = notification.object as? String {
-                        print(uniqueIdentifier)
+//                        print(uniqueIdentifier)
                         let currentRecordable = dataViewModel.getObjectByURI(uri: uniqueIdentifier)
-                        print(currentRecordable)
+//                        print(currentRecordable)
                         
                         if let client = currentRecordable as? Client {
                             //								 self.currentClient = client

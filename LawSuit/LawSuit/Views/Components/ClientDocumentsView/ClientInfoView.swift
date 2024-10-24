@@ -15,6 +15,7 @@ struct ClientInfoView: View {
     //MARK: ViewModels
     @EnvironmentObject var folderViewModel: FolderViewModel
     @EnvironmentObject var dataViewModel: DataViewModel
+	 @EnvironmentObject var planManager: PlanManager
     @Environment(\.managedObjectContext) var context
     
     
@@ -92,7 +93,11 @@ struct ClientInfoView: View {
                     .tint(.black)
                     
                     Button {
-                        requestDocument.toggle()
+							  if planManager.isNotFreePlan() {
+								  requestDocument.toggle()
+							  } else {
+								  planManager.showPlanView()
+							  }
                     } label: {
                         Text("Solicitar documentos")
                     }
