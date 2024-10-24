@@ -40,7 +40,7 @@ struct ContentView: View {
     
     var body: some View {
         HStack(spacing: 0){
-			  SideBarView(selectedView: $navigationViewModel.selectedView, navigationVisibility: $navigationVisibility)
+			  SideBarView(selectedView: $navigationViewModel.selectedView)
             ZStack{
                 Color.white
 					NavigationSplitView(columnVisibility: navigationViewModel.isLawsuit() ? .constant(.detailOnly) : $navigationViewModel.navigationVisibility) {
