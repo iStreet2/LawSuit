@@ -84,23 +84,24 @@ struct AddClientView: View {
                 //MARK: Botões
                 HStack {
                     
-                    Button {
-                        //abrir pra escolher pdf hehe
-                        pdfViewModel.getPDFurl { url in
-                            if let url = url {
-                                pdfViewModel.loadDocument(pdfURL: url)
-                                print("URL do arquivo PDF: \(url)")
-                                
-                                pdfViewModel.updateFieldsFromPDF(clientName: &name, clientCPF: &cpf, clientBirthDate: &birthDate, clientAffiliation: &affiliation, clientTelephone: &telephone, clientEmail: &email)
-                            } else {
-                                print("Nenhum arquivo selecionado")
-                            }
-                        }
-                        print("clicou pra abrir pdf")
-                    } label: {
-                        Text("Importar Dados")
-                            .foregroundStyle(.wine)
-                    }
+                    //MARK: BOTÃO DE IMPORTAR DADOS DESCOMENTAR DEPOIS
+//                    Button {
+//                        //abrir pra escolher pdf hehe
+//                        pdfViewModel.getPDFurl { url in
+//                            if let url = url {
+//                                pdfViewModel.loadDocument(pdfURL: url)
+//                                print("URL do arquivo PDF: \(url)")
+//                                
+//                                pdfViewModel.updateFieldsFromPDF(clientName: &name, clientCPF: &cpf, clientBirthDate: &birthDate, clientAffiliation: &affiliation, clientTelephone: &telephone, clientEmail: &email)
+//                            } else {
+//                                print("Nenhum arquivo selecionado")
+//                            }
+//                        }
+//                        print("clicou pra abrir pdf")
+//                    } label: {
+//                        Text("Importar Dados")
+//                            .foregroundStyle(.wine)
+//                    }
                     
                     Toggle(isOn: $isClientContactsToggleOn) {
                         Text("Adicionar aos Contatos")
