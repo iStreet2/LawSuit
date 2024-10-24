@@ -127,7 +127,7 @@ struct ClientListView: View {
                             }
                             Button {
                                 if let clientPhoto = client.photo {
-                                    self.nsImage = NSImage(data: client.photo!)
+                                    self.nsImage = NSImage(data: clientPhoto)
                                 }
                                 editClient.toggle()
                             } label: {

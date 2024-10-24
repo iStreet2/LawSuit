@@ -21,7 +21,7 @@ struct EditLawSuitView: View {
     @State var lawsuitDefendantName = ""
     @State var lawsuitActionDate = ""
     @State var selectTag = false
-    @Binding var tagType: TagType
+    @State var tagType: TagType = TagType(s: "trabalhista")
     @ObservedObject var lawsuit: Lawsuit
     @Binding var deleted: Bool
     @State var deleteAlert = false
@@ -274,7 +274,7 @@ struct EditLawSuitView: View {
             lawsuitNumber = lawsuit.number
             lawsuitCourt = lawsuit.court
             lawsuitActionDate = lawsuit.actionDate.convertBirthDateToString()
-            //            tagType = TagType(s: lawsuit.category)!
+            self.tagType = TagType(s: lawsuit.category)
         }
         .padding()
     }
