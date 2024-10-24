@@ -21,6 +21,8 @@ struct LawSuitApp: App {
     @StateObject var eventManager = EventManager()
     @StateObject var lawsuitViewModel = LawsuitViewModel()
     @StateObject var contactsManager = ContactsManager()
+    @StateObject var pdfViewModel = PDFViewModel()
+
     @StateObject var networkMonitorViewModel = NetworkMonitorViewModel()
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
@@ -40,6 +42,7 @@ struct LawSuitApp: App {
                 .environmentObject(eventManager)
                 .environmentObject(lawsuitViewModel)
                 .environmentObject(contactsManager)
+                .environmentObject(pdfViewModel)
                 .environmentObject(networkMonitorViewModel)
                 .preferredColorScheme(.light)
                 .frame(/*minWidth: 850, */minHeight: 530) // TODO: Setar o minWidth do jeito certo, aqui quebra rs
