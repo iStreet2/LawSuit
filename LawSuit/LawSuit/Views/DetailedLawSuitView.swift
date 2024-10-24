@@ -14,6 +14,7 @@ struct DetailedLawSuitView: View {
     @Environment(\.dismiss) var dismiss
     
     //MARK: ViewModels
+    @EnvironmentObject var lawsuitViewModel: LawsuitViewModel
     @EnvironmentObject var navigationViewModel: NavigationViewModel
     @EnvironmentObject var folderViewModel: FolderViewModel
     //MARK: Variáveis de estado
@@ -29,7 +30,9 @@ struct DetailedLawSuitView: View {
     @State var lawsuitAuthorSocialName: String = ""
     @State var lawsuitDefendantName: String = ""
     @State var showingGridView = true
-    @State var selectedSegment: String = ""
+    @State var selectedSegment: String = "Movimentações"
+    @State var note: String = ""
+    var infos = ["Movimentações", "Notas"]
     
     //MARK: CoreData
     @EnvironmentObject var dataViewModel: DataViewModel
@@ -43,8 +46,8 @@ struct DetailedLawSuitView: View {
                     HStack(alignment: .top, spacing: 22) {
                         mainBlock
                         VStack(spacing: 10) {
+                            //                            activeSegment
                             MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
-                                .frame(maxHeight: .infinity)
                         }
                         .frame(maxHeight: .infinity)
                         .fixedSize(horizontal: false, vertical: true)
@@ -60,7 +63,7 @@ struct DetailedLawSuitView: View {
                     
                     LawsuitFoldersHeaderComponent()
                         .padding(.vertical, 10)
-                                        
+                    
                     // MARK: - View/Grid de Pastas
                     DocumentView()
                     
@@ -89,7 +92,8 @@ struct DetailedLawSuitView: View {
         }
         .sheet(isPresented: $editLawSuit, content: {
             //MARK: CHAMAR A VIEW DE EDITAR PROCESSOOOO
-            EditLawSuitView(lawsuit: lawsuit, deleted: $deleted)
+            EditLawSuitView(tagType: lawsuitCategory, lawsuit: lawsuit, deleted: $deleted)
+            //            EditLawSuitView( tagType: $lawsuitCategory, lawsuit: lawsuit, deleted: $deleted, authorRowState: lawsuitAuthorName, defendantRowState: lawsuitDefendantName)
                 .frame(minWidth: 495)
         })
         .onAppear {
@@ -110,7 +114,7 @@ struct DetailedLawSuitView: View {
             
         }
     }
-
+    
     func updateNames() {
         //Se o cliente do processo estiver no autor
         if lawsuit.authorID.hasPrefix("client:") {
@@ -123,8 +127,8 @@ struct DetailedLawSuitView: View {
         } else {
             if let defendant = dataViewModel.coreDataManager.clientManager.fetchFromId(id: lawsuit.defendantID),
                let authorEntity = dataViewModel.coreDataManager.entityManager.fetchFromID(id: lawsuit.authorID),
-            
-            let author = authorEntity as? Client {
+               
+                let author = authorEntity as? Client {
                 
                 lawsuitAuthorSocialName = author.socialName ?? author.name
                 lawsuitDefendantName = defendant.name
@@ -197,7 +201,7 @@ extension DetailedLawSuitView {
                 Text("\(lawsuit.actionDate.convertBirthDateToString())")
                 
                 Spacer()
-
+                
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Autor")
@@ -250,6 +254,21 @@ extension DetailedLawSuitView {
             }
         }
     }
+//    private var activeSegment: some View{
+//                BoxView{
+//                    VStack(alignment: .leading) {
+//                        CustomSegmentedControl(selectedOption: $selectedSegment, infos: infos)
+//        
+//                        if selectedSegment == "Movimentações" {
+//                            MovimentationBlock(dataViewModel: _dataViewModel, lawsuit: lawsuit)
+//                        }
+//                        else {
+//                            NoteBlock(note: $note, placeholder: "Notas")
+//        
+//                        }
+//                    }
+//                }
+//    }
 }
 
 
